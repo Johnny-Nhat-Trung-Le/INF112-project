@@ -1,6 +1,7 @@
 # A0
 Gruppenavn: The Googlers	
 Discord-Server: 8.1 The Googlers
+Gruppe: 8
 Gruppemedlemmer:
 	Fredrik Rød
 	Isak Yau
