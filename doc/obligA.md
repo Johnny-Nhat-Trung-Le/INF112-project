@@ -23,7 +23,6 @@ Kompetanse:
 # A1
 
 # A2
-
 # A3
     * Par programmering
     * Testing

@@ -1,7 +1,7 @@
 # INF112 Project – *Kurt-Mario in the Land of the Mushroom Princess*
 
-* Team: *De hundre tollerne* (Gruppe 5): *Ole-Per Javasen, Jon-Jan Gitland, Nils-Katrine Mavensen, Birgitte-Ingrid C. Sharpee*
-* Lenke til GitLab/Trello/etc.
+* Team: *The Googlers* (Gruppe 8): *, Fredrik Rød, Johnny Nhat Trung Le, Isak Yau*
+* Lenke til GitLab: https://git.app.uib.no/Isak.Yau/the_googlers.
 
 ## Om spillet
 *«Kurt-Mario er i trøbbel igjen! Han er sent ute til eksamen, han har ikke lest nok – og hvor er egentlig eksamenslokalet? Hjelp Kurt-Mario å hoppe fra etasje til etasje på Høyteknologisenteret, plukke opp viktig kunnskap (og snacks!) på veien og nå frem til eksamen i tide. Men pass opp for de skumle professorene – vi har ikke tid til å høre om flere teoremer nå!»*
