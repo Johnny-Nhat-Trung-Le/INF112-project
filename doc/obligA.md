@@ -91,13 +91,20 @@ Kompetanse:
 # A3
     * Par programmering
     * Testing
-    * Ukentlig oppmøte: Tirsdag
+    * Ukentlig oppmøte: Tirsdag evt. mer
     * Kommunikasjon:
         * Discord, text-message
     * Deling;
         * Git
         * Word document
+	* Arbeidsfordeling:
+		* Fleksible, tar det som det kommer
+		* Møter og avgjør hvilke oppgaver
 
+	Oppfølgning:
+		- Merge request
+		- Discord
+	
 	Kanban and Scrum, kombinasjon
 		Kanban + deadlines
 		Scrum uten roller
