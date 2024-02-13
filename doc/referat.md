@@ -1,5 +1,4 @@
 ## Date: Tirsday 6 Februar 2024
-
 # Oppmøte:
     - Isak Yau
     - Johnny Nhat Trung Le
@@ -17,3 +16,16 @@
 # TODO
     * Må forke prosjekt mal
     * Må velge Issue Board
+
+## Date: Tirsdag 13 Februar 2024
+# Oppmøte:
+    - Fredirk Rød
+    - Isak Yau
+    - Johnny Nhat Trung Le
+
+# Diskutering
+    
+
+# Dagens fremgang:
+
+# TODO
