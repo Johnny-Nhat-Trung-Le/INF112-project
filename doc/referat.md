@@ -23,8 +23,7 @@
     - Isak Yau
     - Johnny Nhat Trung Le
 
-# Diskutering
-    
+# Diskutering 
 
 # Dagens fremgang:
 

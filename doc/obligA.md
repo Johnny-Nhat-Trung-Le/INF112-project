@@ -99,10 +99,9 @@ Kompetanse:
         * Word document
 
 	Kanban and Scrum, kombinasjon
-		* Tidfrister fra Scrum
-		* Men en tidsfrist på oppgave
-		* Hvis man ikke får fullført den, ta opp i møte finne ut hvorfor, fordele resurser.
-		* Kanban dedikere roller 
+		Kanban + deadlines
+		Scrum uten roller
+
 	
 
 	MVP - Minimum Viable Product 
@@ -115,7 +114,7 @@ Kompetanse:
 	7. Spiller kan dø (ved kontakt med fiender, eller ved å falle utfor skjermen/ feller)
 	8. Start-skjerm ved oppstart / game over
 	9. Plukke opp "items" som skal gi en egenskap (raskere movement, høyere hopp, etc.)
-	10.Vise fiender/monstre; de skal interagere med terreng og spillerfiguren
+
 	
 
 
