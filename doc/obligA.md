@@ -88,8 +88,6 @@ Kompetanse:
 			* movement
 		* Win condition/ death
 		
-
-
 # A3
     * Par programmering
     * Testing
