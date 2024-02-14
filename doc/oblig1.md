@@ -126,13 +126,22 @@ Kompetanse:
 	9. Plukke opp "items" som skal gi en egenskap (raskere movement, høyere hopp, etc.)
 
 	Brukerhistorier
-	Personas:
-		Spiller
-			- Vite hvordan spillet funker (altså taster)
-			- Vite hva som er målet med spillet (altså komme seg til enden uten å dø)
-			- Vite hvilke plattformer som spiller kan stå på og dens egenskaper
-			- Vite hva slags egenskaper ulike "power-ups" gir
-		Programmør
+	Spiller:
+		- Som spiller trenger jeg å vite hva slags elementer tilhører bakgrunnen slik at jeg kan vite hvor jeg kan bevege meg.
+		- Som spiller trenger jeg å vite hvordan man beveger karakteren og hva karakteren kan gjøre slik at jeg kan spille spillet. (meny som viser kontroll?)
+		- Som spiller trenger jeg å vite hva som er målet med spillet slik at jeg kan vinne/tape
+		- Som spiller trenger jeg å vite hva de ulike egenskapene gjør og eventuelt hvordan jeg kan bruke dem.
+		- Som spiller trenger jeg å vite hva de ulike plattformene/elementers funksjonalitet er slik at jeg kan vite hva som er trygge å gå på og hva som ikke er trygge.
+	
+	Programmør:
+		- Som programmør trenger jeg å vite hvilke klasser og grensesnitter tilhører hverandre slik at jeg kan ha god innkapsling. 
+		- Som programmør trenger jeg å vite hva slags plattformer/elementer vi skal ha med slik at jeg kan programmere funksjonaliteter knyttet til de ulike plattformene/elementer. (eks: hvis det er traps, så skal man dø, eller hvis det er trapdoor så kan man bevege opp eller ned.)
+		- Som programmør trenger jeg å vite hva slags egenskaper en spiller skal ha slik at jeg kan ha med de nødvendige funksjonalitetene knyttet til en spiller.
+	
+
+	Tester:
+		- Som tester trenger jeg å vite hva som er formålet med testobjektet, slik at jeg kan lage tester som tester om testobjektet utføre det den skal.
+	
 			
 
 
