@@ -118,7 +118,7 @@ Kompetanse:
 		Spiller skal gjennom ulike hindringer og utfordringer rømme fra fangenskap ved å komme seg til den ene utgangen.
 
 
-	MVP - Minimum Viable Product 
+	MVP - Minimum Viable Product (Prioritert i denne rekkefølgen)
 	1. Vise et spillebrett/ verden
 	2. Vise spiller på spillebrett/ verden
 	3. Flytte spiller (vha taster e.l.)
@@ -204,6 +204,7 @@ Kompetanse:
 				- Lage tester knyttet til testobjekt
 				- God kommunikasjon mellom formål med testobjekt og hvordan man tester det.
 			Mvp krav: Alt
+
 
 	
 			
