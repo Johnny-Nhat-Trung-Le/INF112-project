@@ -1,10 +1,10 @@
-# INF112 Project – *MOCK-TITLE*
+# INF112 Project – *Escape the room (work in progress)*
 
 * Team: *The Googlers* (Gruppe 8): *, Fredrik Rød, Johnny Nhat Trung Le, Isak Yau*
 * Lenke til GitLab: https://git.app.uib.no/Isak.Yau/the_googlers.
 
 ## Om spillet
-* TODO
+* Spiller skal gjennom ulike hindringer og utfordringer rømme fra fangenskap ved å komme seg til den   ene utgangen som eksisterer.
 
 ## Kjøring
 * Kompileres med `mvn package`.
@@ -15,4 +15,4 @@
 * TODO
 
 ## Credits
-* TODO
+* Heftig inspirasjon fra mario
