@@ -130,9 +130,9 @@ Kompetanse:
 	9. Er mulig å generere verden ved hjelp av en objektfabrikk.
 	10. Hopp/run lyd avhengig av terreng.
 
-	Brukerhistorier
+	Brukerhistorier (tall viser prioritering)
 	#Spiller:
-		- Som spiller trenger jeg å vite hva slags elementer tilhører bakgrunnen slik at jeg kan vite hvor jeg kan bevege meg.
+		5) Som spiller trenger jeg å vite hva slags elementer tilhører bakgrunnen slik at jeg kan vite hvor jeg kan bevege meg.
 			Kriterier: 
 				- Man må kunne se spilleren samt verden. Ha mulighet til å skille mellom bakgrunn og terreng.
 			Arbeidsoppgaver:
@@ -141,20 +141,21 @@ Kompetanse:
 				- Lage en visning for verden og spilleren (skille mellom dem)
 				- MVP krav 1,2,4
 
-		- Som spiller trenger jeg å vite hvordan man beveger karakteren og hva karakteren kan gjøre slik at jeg kan spille spillet. 
+		9) Som spiller trenger jeg å vite hvordan man beveger karakteren og hva karakteren kan gjøre slik at jeg kan spille spillet. 
 			Kriterier:
 				- Ha en oversikt hvordan man kan kontrollere spilleren.
 			Arbeidsoppgaver:
 				- Lage en hjelpemeny hvor den gir beskrivelse av hvordan spilleren skal bevege seg. 
 				- MVP krav: 7
-		- Som spiller trenger jeg å vite hva som er målet med spillet slik at jeg kan vinne/tape
+
+		7) Som spiller trenger jeg å vite hva som er målet med spillet slik at jeg kan vinne/tape
 				Kriterier:
 					- Er mulig å finne ut hva som er målet med spillet enten README.md eller i startskjerm.
 				Arbeidsoppgaver:
 					- SKrive i README eller i startskjerm scenen.
 					MVP krav: 5
 
-		- Som spiller trenger jeg å vite hva de ulike items gjør og eventuelt hvordan jeg kan bruke dem.
+		8) Som spiller trenger jeg å vite hva de ulike items gjør og eventuelt hvordan jeg kan bruke dem.
 			 Kriterier:
 			 	- Det må være en måte å vise fram abstrakt hva den gjør og hvordan den brukes
 				- Vite hva slags taster man skal trykke for å bruke den.
@@ -162,7 +163,8 @@ Kompetanse:
 				- Ha en ikon for item hver gang man plukke dem opp
 				- Lage visining som gir riktig info
 				MVP krav: 8?
-		- Som spiller trenger jeg å vite hva de ulike plattformene/elementer sine funksjonalitet er slik at jeg kan vite hva som er trygge å gå på og hva som ikke er trygge.
+
+		6) Som spiller trenger jeg å vite hva de ulike plattformene/elementer sine funksjonalitet er slik at jeg kan vite hva som er trygge å gå på og hva som ikke er trygge.
 			Kriterier:
 				- Skille mellom solide og ikke solide objekter
 				- Ulike objekter representere ulike terreng i objektfabrikken
@@ -171,7 +173,7 @@ Kompetanse:
 				MVP krav: 1,2
 	
 	#Systemutvikler:
-		- Som systemutvikler trenger jeg å vite hvilke klasser og grensesnitter tilhører hverandre slik at jeg kan ha god innkapsling. 
+		1) Som systemutvikler trenger jeg å vite hvilke klasser og grensesnitter tilhører hverandre slik at jeg kan ha god innkapsling. 
 			Kriterier:
 				- Tydelig og oversiktlig klasser og grensesnitt
 				- God mappestruktur
@@ -179,13 +181,13 @@ Kompetanse:
 				- Tydelig og beskrivende filer og mapper.
 			Mvp krav: Ingen men greit å ha for oversiktlighetens skyld.
 
-		- Som systemutvikler trenger jeg å vite hva slags plattformer/elementer vi skal ha med slik at jeg kan programmere funksjonaliteter knyttet til de ulike plattformene/elementer. (eks: hvis det er traps, så skal man dø, eller hvis det er trapdoor så kan man bevege opp eller ned.)
+		3) Som systemutvikler trenger jeg å vite hva slags plattformer/elementer vi skal ha med slik at jeg kan programmere funksjonaliteter knyttet til de ulike plattformene/elementer. (eks: hvis det er traps, så skal man dø, eller hvis det er trapdoor så kan man bevege opp eller ned.)
 			Kriterier:
 				- Ha en veldetaljert plan på hvilke typer terreng, platform og elementer som skal være med.
 			Arbeidsoppgave:
 				- Et dokument/notat hvor man har oversikt over hva som skal være med i programmet når det gjelder platform, terreng, spiller osv.
 				Mvp krav: 1?
-		- Som systemutvikler trenger jeg å vite hva slags egenskaper en spiller skal ha slik at jeg kan ha med de nødvendige funksjonalitetene knyttet til en spiller.(Items, eneimes, movement)
+		2) Som systemutvikler trenger jeg å vite hva slags egenskaper en spiller skal ha slik at jeg kan ha med de nødvendige funksjonalitetene knyttet til en spiller.(Items, eneimes, movement)
 				Kriterier:
 					- Ha en veldetaljert plan og oversikt over egenskapene til spilleren.
 				Arbeidsoppgaver:
@@ -195,7 +197,7 @@ Kompetanse:
 	
 
 	#Tester:
-		- Som tester trenger jeg å vite hva som er formålet med testobjektet, slik at jeg kan lage tester som tester om testobjektet/testsystem utføre det den skal.
+		4) Som tester trenger jeg å vite hva som er formålet med testobjektet, slik at jeg kan lage tester som tester om testobjektet/testsystem utføre det den skal.
 			Kriterier:
 				- Veldefinerte grensesnitt
 			Arbeidsoppgave:
