@@ -208,6 +208,14 @@ Kompetanse:
 	Testet ut controller (keypressed, keyjustpressed, osv.). Testet ut om eksempelet kjørte uten problemer. Sett gjennom vindu oppsettet. 
 	Utforsket libgdx og utforsket biblioteket/ rammeverket dens. Eksperimentert med template og sett hva som skjer.
 
+# A5
+	Fullørte oppgave A :D. Funnet konseptet til spillet.
+	Ting som var utfordrende var at forventet ikek at oppgaven skulle ta lengre tid. 
+	Å skrive brukerhistorie, akseptansekriteriene og arbeidsoppgave var utfordrende og oppgavene var vage.
+	For neste oblig så vil vi gå dypere inn i libgdx og bli bedre kjent med den. 
+	Synes vi traffe alle punkter, men det vil bli klarere desto lengre inn i prosjektet vi kommer.
+	Nye aktiviteter/ verktøy tenker vi ER-diagram, fysikk biblioteket og fylle ut oversikt over hva klasser, metoder, etc. vi skal ha.
+
 # Roller
     Team Leader: Fredrik Rød
     Referat skriver: Johnny Nhat Trung Le
