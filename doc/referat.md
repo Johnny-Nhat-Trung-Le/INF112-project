@@ -23,8 +23,7 @@
     - Isak Yau
     - Johnny Nhat Trung Le
 
-# Diskutering 
-
-# Dagens fremgang:
-
-# TODO
+    Diskuterte om de ulike delene av prosjeket jobbet videre med del A oppgavene. Produktiv diskusjon og kom fram til et spill konsept og prosjektmetodikk.
+    
+## Date: Torsdag 15 Februar 2024
+    Dagens mål var å bli ferdig med resten av del A, hvor vi diskuterte om brukerhistorie (akseptansekriterie og arbeidskrav), prosjektet i prosess og et MVP. Alle var tilstede og ingen problemer oppstod. 
