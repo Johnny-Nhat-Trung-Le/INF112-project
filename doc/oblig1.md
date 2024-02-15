@@ -112,6 +112,8 @@ Kompetanse:
 		Kanban + deadlines
 		Scrum uten roller
 
+	Vi planlegger å ha flere møter i første omgang slik at vi kan ha en oversikt over hvordan vi skal fordele oppgaver, estimasjon på arbeidsoppgavene og oppfølging av arbeid. Oppfølging av arbeid blir kommunikasjon når man møter hverandre, discord og eventuelt merge requests. Vi skal prøve å bruke issue board slik at vi vet hva slags arbeidsoppgaver som bør prioriteres og hvor vi er i utviklingsprosessen.
+	
 	Målet for applikasjonen:
 		Spiller skal gjennom ulike hindringer og utfordringer rømme fra fangenskap ved å komme seg til den ene utgangen.
 
