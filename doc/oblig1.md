@@ -112,35 +112,40 @@ Kompetanse:
 		Kanban + deadlines
 		Scrum uten roller
 
-	
+	Målet for applikasjonen:
+		Spiller skal gjennom ulike hindringer og utfordringer rømme fra fangenskap ved å komme seg til den ene utgangen.
+
 
 	MVP - Minimum Viable Product 
-	1. Vise et spillebrett/ map
-	2. Vise spiller på spillebrett/ mappet
+	1. Vise et spillebrett/ verden
+	2. Vise spiller på spillebrett/ verden
 	3. Flytte spiller (vha taster e.l.)
 	4. Spiller interagerer med terreng
-	5. Mål for spillbrett/ spiller (komme seg til enden)
-	6. Nytt spillbrett når forrige er ferdig
-	7. Spiller kan dø (ved kontakt med fiender, eller ved å falle utfor skjermen/ feller)
-	8. Start-skjerm ved oppstart / game over
-	9. Plukke opp "items" som skal gi en egenskap (raskere movement, høyere hopp, etc.)
+	5. Mål for spiller (komme seg til enden og rømme)
+	6. Spiller kan dø (ved kontakt med fiender, eller ved å falle utfor skjermen/ feller)
+	7. Start-skjerm (instruksjoner) ved oppstart / game over /vinne 
+	8. Plukke opp "items" som skal gi en egenskap (raskere movement, høyere hopp, etc.)
+	9. Er mulig å generere verden ved hjelp av en objektfabrikk.
+	10. Hopp/run lyd avhengig av terreng.
 
 	Brukerhistorier
-	Spiller:
+	#Spiller:
 		- Som spiller trenger jeg å vite hva slags elementer tilhører bakgrunnen slik at jeg kan vite hvor jeg kan bevege meg.
 		- Som spiller trenger jeg å vite hvordan man beveger karakteren og hva karakteren kan gjøre slik at jeg kan spille spillet. (meny som viser kontroll?)
 		- Som spiller trenger jeg å vite hva som er målet med spillet slik at jeg kan vinne/tape
-		- Som spiller trenger jeg å vite hva de ulike egenskapene gjør og eventuelt hvordan jeg kan bruke dem.
-		- Som spiller trenger jeg å vite hva de ulike plattformene/elementers funksjonalitet er slik at jeg kan vite hva som er trygge å gå på og hva som ikke er trygge.
+		- Som spiller trenger jeg å vite hva de ulike items gjør og eventuelt hvordan jeg kan bruke dem. (Ikon av aktiv effekt evt deskrpisjon av den)
+		- Som spiller trenger jeg å vite hva de ulike plattformene/elementer sine  funksjonalitet er slik at jeg kan vite hva som er trygge å gå på og hva som ikke er trygge.
 	
-	Programmør:
-		- Som programmør trenger jeg å vite hvilke klasser og grensesnitter tilhører hverandre slik at jeg kan ha god innkapsling. 
-		- Som programmør trenger jeg å vite hva slags plattformer/elementer vi skal ha med slik at jeg kan programmere funksjonaliteter knyttet til de ulike plattformene/elementer. (eks: hvis det er traps, så skal man dø, eller hvis det er trapdoor så kan man bevege opp eller ned.)
-		- Som programmør trenger jeg å vite hva slags egenskaper en spiller skal ha slik at jeg kan ha med de nødvendige funksjonalitetene knyttet til en spiller.
+	#Systemutvikler:
+		- Som systemutvikler trenger jeg å vite hvilke klasser og grensesnitter tilhører hverandre slik at jeg kan ha god innkapsling. 
+		- Som systemutvikler trenger jeg å vite hva slags plattformer/elementer vi skal ha med slik at jeg kan programmere funksjonaliteter knyttet til de ulike plattformene/elementer. (eks: hvis det er traps, så skal man dø, eller hvis det er trapdoor så kan man bevege opp eller ned.)
+		- Som systemutvikler trenger jeg å vite hva slags egenskaper en spiller skal ha slik at jeg kan ha med de nødvendige funksjonalitetene knyttet til en spiller.(Items, eneimes, movement)
+		-
 	
 
-	Tester:
-		- Som tester trenger jeg å vite hva som er formålet med testobjektet, slik at jeg kan lage tester som tester om testobjektet utføre det den skal.
+	#Tester:
+		- Som tester trenger jeg å vite hva som er formålet med testobjektet, slik at jeg kan lage tester som tester om testobjektet/testsystem utføre det den skal.
+	
 	
 			
 
