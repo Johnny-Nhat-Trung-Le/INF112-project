@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -18,7 +19,7 @@ public class HelloWorld implements ApplicationListener {
 	private Sound bellSound;
 	private Rectangle spriteRect;
 	private Rectangle screenRect = new Rectangle();
-	private float dx = 1, dy = 1;
+	private float dx = 20, dy = 20;
 
 	@Override
 	public void create() {
@@ -31,6 +32,7 @@ public class HelloWorld implements ApplicationListener {
 		spriteRect = new Rectangle(1, 1, spriteImage.getWidth() / 2, spriteImage.getHeight() / 2);
 		bellSound = Gdx.audio.newSound(Gdx.files.internal("blipp.ogg"));
 		Gdx.graphics.setForegroundFPS(60);
+		
 	}
 
 	@Override
@@ -62,6 +64,7 @@ public class HelloWorld implements ApplicationListener {
 		// Draw calls should be wrapped in batch.begin() ... batch.end()
 		batch.begin();
 		font.draw(batch, "Hello, World!", 200, 200);
+		font.draw(batch,"BOI",(screenRect.width/4)*2, (screenRect.height/4)*3);
 		batch.draw(spriteImage, spriteRect.x, spriteRect.y, spriteRect.width, spriteRect.height);
 		batch.end();
 
@@ -72,14 +75,26 @@ public class HelloWorld implements ApplicationListener {
 		Rectangle.tmp.x += dx;
 		Rectangle.tmp2.set(spriteRect);
 		Rectangle.tmp2.y += dy;
-		if (screenRect.contains(Rectangle.tmp))
+		if(Gdx.input.isKeyPressed(Keys.D)){
+			spriteRect.x += dx;
+		}
+		else if(Gdx.input.isKeyPressed(Keys.A)){
+			spriteRect.x -= dx;
+		}
+		else if(Gdx.input.isKeyPressed(Keys.S)){
+			spriteRect.y +=dy;
+		}
+		else if(Gdx.input.isKeyPressed(Keys.W)){
+			spriteRect.y -=dy;
+		}
+	/* 	if (screenRect.contains(Rectangle.tmp))
 			spriteRect.x += dx;
 		else
 			dx = -dx;
 		if (screenRect.contains(Rectangle.tmp2))
 			spriteRect.y += dy;
 		else
-			dy = -dy;
+			dy = -dy; */
 
 		// Don't handle input this way – use event handlers!
 		if (Gdx.input.justTouched()) { // check for mouse click
