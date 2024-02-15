@@ -204,13 +204,9 @@ Kompetanse:
 				- Lage tester knyttet til testobjekt
 				- God kommunikasjon mellom formål med testobjekt og hvordan man tester det.
 			Mvp krav: Alt
-
-
-	
-			
-
-
-
+# A4
+	Testet ut controller (keypressed, keyjustpressed, osv.). Testet ut om eksempelet kjørte uten problemer. Sett gjennom vindu oppsettet. 
+	Utforsket libgdx og utforsket biblioteket/ rammeverket dens. Eksperimentert med template og sett hva som skjer.
 
 # Roller
     Team Leader: Fredrik Rød
