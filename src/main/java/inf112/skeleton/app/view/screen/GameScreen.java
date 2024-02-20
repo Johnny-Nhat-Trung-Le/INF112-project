@@ -12,17 +12,18 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 
-public class GameScreen implements Screen{
+public class GameScreen implements Screen {
     private ViewableGameModel model;
     private ViewablePlayerModel player;
     private OrthographicCamera gameCam;
     //ViewPort viser hvordan grafikken skal se ut mtp skjermen til enheten
     private Viewport gamePort;
     //private Hud hud;
-    public GameScreen(ViewableGameModel model, ViewablePlayerModel player) {
+
+    public GameScreen(ViewableGameModel model) {
         Gdx.graphics.setForegroundFPS(60);
         this.model = model;
-        this.player = player;
+        this.player = model.getPlayer();
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(this.model.getWidth(),this.model.getHeight(), gameCam);
         //Vil at gamecamera ikke skal alltid holde seg til pos (0,0)

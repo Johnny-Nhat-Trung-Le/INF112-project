@@ -1,5 +1,20 @@
 package inf112.skeleton.app.view;
 
-public interface ViewableItem {
-    
+import inf112.skeleton.app.model.Durability;
+
+public interface ViewableItem extends Positionable, Sizeable {
+    /**
+     * @return a description of the item
+     */
+    String getDescription();
+
+    /**
+     * @return the name of the item to be displayed
+     */
+    String getName();
+
+    /**
+     * @return the current durability of the item
+     */
+    Durability getDurability();
 }

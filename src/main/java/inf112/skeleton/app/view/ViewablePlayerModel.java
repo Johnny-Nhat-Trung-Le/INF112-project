@@ -1,5 +1,5 @@
 package inf112.skeleton.app.view;
 
-public interface ViewablePlayerModel {
+public interface ViewablePlayerModel extends Sizeable, Positionable {
     
 }
