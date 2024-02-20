@@ -14,23 +14,20 @@ import inf112.skeleton.app.view.ViewablePlayerModel;
 
 public class GameScreen implements Screen{
     private ViewableGameModel model;
+    private ViewablePlayerModel player;
     private OrthographicCamera gameCam;
     //ViewPort viser hvordan grafikken skal se ut mtp skjermen til enheten
     private Viewport gamePort;
-    
-
-    private Texture spriteImage;
-    private Rectangle spriteRect;
-    private ViewablePlayerModel player;
     //private Hud hud;
     public GameScreen(ViewableGameModel model, ViewablePlayerModel player) {
         Gdx.graphics.setForegroundFPS(60);
         this.model = model;
         this.player = player;
         gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(model.getWidth(), model.getHeight(), gameCam);
+        gamePort = new FitViewport(this.model.getWidth(),this.model.getHeight(), gameCam);
         //Vil at gamecamera ikke skal alltid holde seg til pos (0,0)
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
+        this.player.toString();
        // hud = new Hud(model.getSpriteBatch(), model.getWidth(), model.getHeight());
        
 
@@ -67,31 +64,27 @@ public class GameScreen implements Screen{
 
     @Override
     public void dispose() {
-		spriteImage.dispose();
+		
     }
 
     @Override
     public void resize(int width, int height) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'resize'");
+        gamePort.update(width,height);
     }
 
     @Override
     public void pause() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pause'");
+        
     }
 
     @Override
     public void resume() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'resume'");
+        
     }
 
     @Override
     public void hide() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hide'");
+        
     }
 
 }
