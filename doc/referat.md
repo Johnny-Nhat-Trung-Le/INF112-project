@@ -27,3 +27,11 @@
     
 ## Date: Torsdag 15 Februar 2024
     Dagens mål var å bli ferdig med resten av del A, hvor vi diskuterte om brukerhistorie (akseptansekriterie og arbeidskrav), prosjektet i prosess og et MVP. Alle var tilstede og ingen problemer oppstod. 
+
+## Date: Tirsdag 20 Februar 2024
+	Alle møtte opp for dagen gruppe møte
+	Dagens agenda, sette opp og diskutere oppsett til packages og Classes/ Interfaces. 
+    Diskutere hva som knytter sammen og hvordan ulike klasser/ interfaces interagerer med hverandre. 
+    Hvordan ting skal vises på skjermen med tanke på typ bilde/animmasjon/ texture. Til slutt lagte/ begynte å lage en prioritert liste og tildelte noen få oppgaver
+
+    
