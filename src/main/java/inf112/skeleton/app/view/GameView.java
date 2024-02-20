@@ -6,13 +6,13 @@ import inf112.skeleton.app.view.screen.GameScreen;
 public class GameView extends Game{
     private ViewableGameModel model;
     private ViewablePlayerModel player;
-    public GameView(ViewableGameModel model, ViewablePlayerModel player){
+    public GameView(ViewableGameModel model){
         this.model = model;
-        this.player = player;
+        this.player = model.getPlayer();
     }
     @Override
     public void create() {
-        setScreen(new GameScreen(model,player));
+        setScreen(new GameScreen(model));
     }
     public void render(){
         super.render();

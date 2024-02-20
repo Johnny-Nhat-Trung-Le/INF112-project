@@ -14,6 +14,6 @@ public class Main {
         cfg.setWindowedMode(480, 320);
         GameModel model = new GameModel();
         PlayerModel player = new PlayerModel();
-        new Lwjgl3Application(new GameView(model,player), cfg);
+        new Lwjgl3Application(new GameView(model), cfg);
     }
 }
