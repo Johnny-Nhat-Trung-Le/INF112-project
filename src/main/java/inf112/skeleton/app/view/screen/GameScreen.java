@@ -31,7 +31,6 @@ public class GameScreen implements Screen {
         this.player.toString();
        // hud = new Hud(model.getSpriteBatch(), model.getWidth(), model.getHeight());
        
-
     }
 
     @Override
