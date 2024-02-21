@@ -34,4 +34,11 @@
     Diskutere hva som knytter sammen og hvordan ulike klasser/ interfaces interagerer med hverandre. 
     Hvordan ting skal vises på skjermen med tanke på typ bilde/animmasjon/ texture. Til slutt lagte/ begynte å lage en prioritert liste og tildelte noen få oppgaver
 
+## Date: Onsdag 21 Februrar 2024
+    Vi bestemte oss spontant for å holde et møte i dag fordi vi ikke ble helt ferdig med forrige møte.
+    Mye er fortsatt på planleggingsstadie, og vi tenkte å få oversikt over alle klasser og interface samt skrive javadocs og starte å legge fram metoder som kan være relevant.
+    Vi endte opp med å få oversikt over klasser og interfaces, samt lagt til javadoc på dem. Noe er mer tydelig på plass enn andre, men for nå så sier vi oss fornøyd. I tillegg diskuterte vi hva vi skulle gjøre for neste møte (i morgen).
+
+## Date: Torsdag 22 Februrar 2024
+
     
