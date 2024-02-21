@@ -1,8 +1,10 @@
 package inf112.skeleton.app.grid;
 
-public class Grid implements IGrid {
+import java.util.Iterator;
+
+public class Grid<E> implements IGrid<E> {
     @Override
-    public Object get(CellPosition pos) {
+    public E get(CellPosition pos) {
         return null;
     }
 
@@ -19,5 +21,10 @@ public class Grid implements IGrid {
     @Override
     public int getCols() {
         return 0;
+    }
+
+    @Override
+    public Iterator<GridCell<E>> iterator() {
+        return null;
     }
 }

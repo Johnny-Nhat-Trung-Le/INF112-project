@@ -1,6 +1,6 @@
 package inf112.skeleton.app.grid;
 
-public interface IGrid<E> extends Iterable<E>{
+public interface IGrid<E> extends Iterable<GridCell<E>>{
     /**
      * Gets the value from the grid in the specified position.
      * @param pos position of cell in grid
