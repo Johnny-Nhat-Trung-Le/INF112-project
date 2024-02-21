@@ -7,58 +7,38 @@ import com.badlogic.gdx.Input.Keys;
 public class Controller extends InputAdapter {
     private ControllableGameModel model;
     private ControllablePlayerModel playerModel;
+
     public Controller(ControllableGameModel model){
         this.model = model;
-        this.playerModel = this.model.getPlayer();
-
+        this.playerModel = this.model.getControllablePlayer();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-       
-        // TODO legg på mer cases for ulike taster. (eks. useItem, pause, exit etc)
-        if(Keys.W == keycode){
-            this.playerModel.moveUp();
-        }
-        else if(Keys.A == keycode){
-            this.playerModel.moveLeft();
-        }
-        else if(Keys.S == keycode){
-            this.playerModel.moveDown();
-        }
-        else if(Keys.D == keycode){
-            this.playerModel.moveRight();
-        }
-        /* 
+        // TODO - legg på mer cases for ulike taster. (eks. useItem, pause, exit etc)
         switch(keycode){
-            case Keys.W: this.playerModel.moveUp();
-            case Keys.A: this.playerModel.moveLeft();
-            case Keys.S: this.playerModel.moveDown();
-            case Keys.D: this.playerModel.moveRight(); 
+            case Keys.W: this.playerModel.moveUp(true);
+            case Keys.A: this.playerModel.moveLeft(true);
+            case Keys.S: this.playerModel.moveDown(true);
+            case Keys.D: this.playerModel.moveRight(true);
         }
-        */
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
         if(Keys.W == keycode){
-            this.playerModel.moveUp();
+            this.playerModel.moveUp(false);
         }
         else if(Keys.A == keycode){
-            this.playerModel.moveLeft();
+            this.playerModel.moveLeft(false);
         }
         else if(Keys.S == keycode){
-            this.playerModel.moveDown();
+            this.playerModel.moveDown(false);
         }
         else if(Keys.D == keycode){
-            this.playerModel.moveRight();
+            this.playerModel.moveRight(false);
         }
         return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-      return false;
     }
 }

@@ -1,38 +1,37 @@
 package inf112.skeleton.app.model;
 
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 
-public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel {
+public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable {
+
+    public PlayerModel(World world){}
 
     @Override
-    public void moveUp() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'moveUp'");
+    public void moveUp(boolean value) {
+
     }
 
     @Override
-    public void moveDown() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'moveDown'");
+    public void moveDown(boolean value) {
+
     }
 
     @Override
-    public void moveLeft() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'moveLeft'");
+    public void moveLeft(boolean value) {
+
     }
 
     @Override
-    public void moveRight() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'moveRight'");
+    public void moveRight(boolean value) {
+
     }
 
     @Override
     public void useItem() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'useItem'");
+
     }
 
     @Override
@@ -53,5 +52,15 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     @Override
     public float getHeight() {
         return 0;
+    }
+
+    @Override
+    public Body getBody() {
+        return null;
+    }
+
+    @Override
+    public void step() {
+
     }
 }

@@ -13,7 +13,6 @@ public class Main {
         cfg.setTitle("game");
         cfg.setWindowedMode(480, 320);
         GameModel model = new GameModel();
-        PlayerModel player = new PlayerModel();
         new Lwjgl3Application(new GameView(model), cfg);
     }
 }
