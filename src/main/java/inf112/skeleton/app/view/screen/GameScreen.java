@@ -30,7 +30,6 @@ public class GameScreen implements Screen {
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
        // hud = new Hud(model.getSpriteBatch(), model.getWidth(), model.getHeight());
        
-
     }
 
     @Override
