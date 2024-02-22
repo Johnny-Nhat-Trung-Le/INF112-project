@@ -40,5 +40,6 @@
     Vi endte opp med å få oversikt over klasser og interfaces, samt lagt til javadoc på dem. Noe er mer tydelig på plass enn andre, men for nå så sier vi oss fornøyd. I tillegg diskuterte vi hva vi skulle gjøre for neste møte (i morgen).
 
 ## Date: Torsdag 22 Februrar 2024
-
+    Felles møte, alle var tilstede og vi fikset en box2D problem i pom.xml. Diskuterte prioriteringliste/ begynne på mvp.
+    Begynte å fordele oppgave :D
     
