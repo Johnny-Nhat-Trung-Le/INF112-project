@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="10">
+ <tileset firstgid="1" source="Terrain (32x32).tsx"/>
+ <layer id="1" name="background" width="20" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFlAJXIHZDw+5EqMOmhlqAEYiZqWiWJBCLUMk8ISAWhpoHMpuJCIzsF3Q9kkjmKQOxChFYFck8XHpAagAwxgZT
+  </data>
+ </layer>
+ <objectgroup id="3" name="objects">
+  <object id="3" x="32" y="128">
+   <polygon points="0,0 192,0 192,32 0,32"/>
+  </object>
+  <object id="4" x="352" y="128">
+   <polygon points="0,0 160,0 160,32 0,32"/>
+  </object>
+  <object id="5" x="0" y="256">
+   <polygon points="0,0 352,0 352,64 0,64"/>
+  </object>
+  <object id="7" x="416" y="256">
+   <polygon points="0,0 224,0 224,64 0,64"/>
+  </object>
+  <object id="8" x="544" y="192">
+   <polygon points="0,0 96,0 96,64 0,64"/>
+  </object>
+  <object id="9" x="576" y="160">
+   <polygon points="0,0 64,0 64,32 0,32"/>
+  </object>
+ </objectgroup>
+</map>
