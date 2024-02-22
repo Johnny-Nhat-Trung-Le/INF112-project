@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="10">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="26">
  <tileset firstgid="1" source="Terrain (32x32).tsx"/>
- <layer id="1" name="background" width="20" height="10">
+ <layer id="7" name="background" width="20" height="10">
   <data encoding="base64" compression="zlib">
    eJxjYBgFlAJXIHZDw+5EqMOmhlqAEYiZqWiWJBCLUMk8ISAWhpoHMpuJCIzsF3Q9kkjmKQOxChFYFck8XHpAagAwxgZT
   </data>
@@ -25,5 +25,6 @@
   <object id="9" x="576" y="160">
    <polygon points="0,0 64,0 64,32 0,32"/>
   </object>
+  <object id="22" name="player" x="64" y="208.127" width="30.1587" height="31.746"/>
  </objectgroup>
 </map>

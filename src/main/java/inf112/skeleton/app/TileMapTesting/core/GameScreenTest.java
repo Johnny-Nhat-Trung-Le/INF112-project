@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.TileMapTesting.helper.TileMapHelper;
+import inf112.skeleton.app.TileMapTesting.objects.player.Player;
 
 import static inf112.skeleton.app.TileMapTesting.helper.Constants.PPM;
 
@@ -24,6 +25,10 @@ public class GameScreenTest extends ScreenAdapter {
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
+
+    // Game Objects
+    private Player player;
+
     public GameScreenTest(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
@@ -70,5 +75,9 @@ public class GameScreenTest extends ScreenAdapter {
 
     public World getWorld() {
         return world;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }
