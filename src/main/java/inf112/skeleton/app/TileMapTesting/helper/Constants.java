@@ -1,4 +1,4 @@
-package inf112.skeleton.app.helper;
+package inf112.skeleton.app.TileMapTesting.helper;
 
 public class Constants {
 

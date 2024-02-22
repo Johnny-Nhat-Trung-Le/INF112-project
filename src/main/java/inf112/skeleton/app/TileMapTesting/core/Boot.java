@@ -1,4 +1,4 @@
-package inf112.skeleton.app.core;
+package inf112.skeleton.app.TileMapTesting.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -18,7 +18,7 @@ public class Boot extends Game {
         this.widthScreen = Gdx.graphics.getWidth();
         this.heightScreen = Gdx.graphics.getHeight();
         this.orthographicCamera = new OrthographicCamera();
-        this.orthographicCamera.setToOrtho(false,widthScreen,heightScreen);
-        setScreen(new GameScreen(orthographicCamera));
+        this.orthographicCamera.setToOrtho(false, widthScreen, heightScreen);
+        setScreen(new GameScreenTest(orthographicCamera));
     }
 }
