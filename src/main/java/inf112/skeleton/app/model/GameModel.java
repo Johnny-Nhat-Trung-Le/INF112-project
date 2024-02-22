@@ -12,7 +12,7 @@ import inf112.skeleton.app.view.ViewablePlayerModel;
 import inf112.skeleton.app.view.ViewableTile;
 
 import java.util.Iterator;
-import java.util.List;
+
 
 public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener {
     private int width = 600;

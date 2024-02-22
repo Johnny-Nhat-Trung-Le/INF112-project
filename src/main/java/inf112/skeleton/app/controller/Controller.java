@@ -1,7 +1,7 @@
 package inf112.skeleton.app.controller;
 
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
+
 import com.badlogic.gdx.Input.Keys;
 
 public class Controller extends InputAdapter {

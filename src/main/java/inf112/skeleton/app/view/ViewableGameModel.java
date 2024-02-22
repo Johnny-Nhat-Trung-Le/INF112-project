@@ -1,10 +1,10 @@
 package inf112.skeleton.app.view;
 
-import inf112.skeleton.app.grid.IGrid;
+
 import inf112.skeleton.app.model.GameStateGettable;
 
 import java.util.Iterator;
-import java.util.List;
+
 
 public interface ViewableGameModel extends Sizeable, GameStateGettable {
     /**
