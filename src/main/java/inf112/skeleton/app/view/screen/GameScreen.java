@@ -26,13 +26,7 @@ public class GameScreen implements Screen {
         gamePort = new FitViewport(this.model.getWidth(),this.model.getHeight(), gameCam);
         //Vil at gamecamera ikke skal alltid holde seg til pos (0,0)
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> 6e1f1cd (main funker nå)
-=======
->>>>>>> 5cd4b5f05b4380da3ba831de084f135c7266f585
        // hud = new Hud(model.getSpriteBatch(), model.getWidth(), model.getHeight());
        
     }
