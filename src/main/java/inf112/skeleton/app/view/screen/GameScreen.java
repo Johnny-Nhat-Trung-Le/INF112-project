@@ -21,7 +21,7 @@ public class GameScreen implements Screen {
     public GameScreen(ViewableGameModel model) {
         Gdx.graphics.setForegroundFPS(60);
         this.model = model;
-        this.player = model.getPlayer();
+        this.player = model.getViewablePlayer();
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(this.model.getWidth(),this.model.getHeight(), gameCam);
         //Vil at gamecamera ikke skal alltid holde seg til pos (0,0)
