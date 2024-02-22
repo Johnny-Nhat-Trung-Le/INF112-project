@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="26">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="26">
  <tileset firstgid="1" source="Terrain (32x32).tsx"/>
+ <tileset firstgid="86" source="background_001.tsx"/>
+ <tileset firstgid="306" source="background_009.tsx"/>
+ <tileset firstgid="526" source="background_005.tsx"/>
+ <tileset firstgid="746" source="background_004.tsx"/>
+ <tileset firstgid="966" source="background_002.tsx"/>
+ <layer id="11" name="blueBackground" width="20" height="10">
+  <data encoding="base64" compression="zlib">
+   eJwLY2BgCBtBeBmV8a5RTBZmoKG5uAA55gEAyDhygQ==
+  </data>
+ </layer>
+ <layer id="12" name="sun" width="20" height="10">
+  <data encoding="base64" compression="zlib">
+   eJwzYmRgMAZiagE3oFnuVDRvFIyCgQQA1VoA9w==
+  </data>
+ </layer>
+ <layer id="15" name="bigClouds" width="20" height="10">
+  <data encoding="base64" compression="zlib">
+   eJytw4dWjgEAANCPflEos0ESlRUNKxpSZokyG0hkyypbqYTsZJPEC1KIqOg+hHvODYL/60tYEHy1z36/+d0fDvjTXw762z8OOeyIf/1nEAqCMY41zJDjDHe8E4ww0olOcrJRRjvFqU5zujOcaYyxxhnvLGeb4BwTnWuS85xvsimmusCFLnKxS0xzqctMN8NMs1zuCle6ytVmu8a15phrnvmus8D1FlrkBje6yc1ucavFlrjNUre7wzLL3ekud7vHve6zwkqrrHa/BzxojYes9bBHrPOoxzzuCU96ytOesd6znvO8F7xog41e8rJXvOo1r3vDmzbZ7C1bbLXN27Z7x7ves8P7PvChj3zsE5/a6TO7fO4LX/rK177xre98b7cf7PGjvX7ys6N5MUcF
+  </data>
+ </layer>
+ <layer id="14" name="mountain" width="20" height="10">
+  <data encoding="base64" compression="zlib">
+   eJzNw4dWDQAAANB3Tv/SXpIWCiFSSUNURjsjFCoyo7QoNCmyGtrJSkbRf7mf0T3nBgJbW3BQIBBiqGGGG2GkUUYbY6zbjHO78e4wwUSTTDbFne5yt6mmuce97jPd/R7woBke8rCZHjHLbHM8aq7HzDPfAgs9bpEnPGmxJZZ6ytOe8axlllthpVVWW2Ot5zzvBS9a5yUve8V6G7zqNa/baJPN3vCmLd7ytne86z3v2+oDH9pmu4/ssNMuu+3xsU/stc+nPvO5/Q446JDDjvjCl4465itfO+4b3/rO935wwkmnnPajM84657wLLrrksp9c8bNf/Oo3v7vqD9f86S9/+8d1N/zrPzf9D+sHS1E=
+  </data>
+ </layer>
+ <layer id="13" name="backgroundGrass" width="20" height="10">
+  <data encoding="base64" compression="zlib">
+   eJztw4VVAlAAAMD/2H8WukNKkA5pFCmpLbgRGIB770J4e3tdNBJCzLgJk6ZMmzFrzrwFi5YsW/HDqjXrNmz6acu2X3bs2rPvwKEjx06c+u3MuQuXrly7ceuPv+78c+/BoyfP/nvx6s27D5/euzAr
+  </data>
+ </layer>
  <layer id="7" name="background" width="20" height="10">
   <data encoding="base64" compression="zlib">
    eJxjYBgFlAJXIHZDw+5EqMOmhlqAEYiZqWiWJBCLUMk8ISAWhpoHMpuJCIzsF3Q9kkjmKQOxChFYFck8XHpAagAwxgZT
