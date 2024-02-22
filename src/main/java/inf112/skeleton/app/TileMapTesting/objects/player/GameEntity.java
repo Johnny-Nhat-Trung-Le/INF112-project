@@ -14,6 +14,7 @@ public abstract class GameEntity {
         this.y = body.getPosition().y;
         this.width = width;
         this.height = height;
+        this.body = body;
         this.velX = 0;
         this.velY = 0;
         this.speed = 0;

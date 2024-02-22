@@ -21,4 +21,5 @@ public class Player extends GameEntity {
     public void render(SpriteBatch batch) {
 
     }
+
 }

@@ -52,7 +52,11 @@ public class GameScreenTest extends ScreenAdapter {
     }
 
     public void cameraUpdate() {
-        camera.position.set(new Vector3(0,0,0));
+        Vector3 position = camera.position;
+        position.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f;
+        position.y = Math.round(player.getBody().getPosition().y * PPM * 10) / 10f;
+        camera.position.set(position);
+//        camera.position.scl(new Vector3(0,0,0));
         camera.update();
     }
 
