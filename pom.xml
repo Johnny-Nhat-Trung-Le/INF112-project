@@ -97,6 +97,12 @@
 			<artifactId>gdx-box2d</artifactId>
 			<version>1.12.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.aya-prover.gdx-box2d</groupId>
+			<artifactId>box2d</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<!-- Thanks for using https://jar-download.com -->
 	</dependencies>
 	<build>
 		<plugins>
