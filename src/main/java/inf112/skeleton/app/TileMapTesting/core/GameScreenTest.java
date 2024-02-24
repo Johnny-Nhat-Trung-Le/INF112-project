@@ -22,6 +22,7 @@ public class GameScreenTest extends ScreenAdapter {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private World world;
+    private WorldDef def;
     private Box2DDebugRenderer box2DDebugRenderer;
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -33,7 +34,8 @@ public class GameScreenTest extends ScreenAdapter {
     public GameScreenTest(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
-        this.world = new World(new Vector2(0, -25f), false);
+        this.def = new WorldDef(new Vector2(0, -25f), false);
+        this.world = new World(def);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 
         this.tileMapHelper = new TileMapHelper(this);

@@ -55,6 +55,6 @@
   <object id="9" x="576" y="160">
    <polygon points="0,0 64,0 64,32 0,32"/>
   </object>
-  <object id="22" name="player" x="96" y="32.127" width="30.1587" height="31.746"/>
+  <object id="22" name="player" x="116.41" y="201.08" width="10.8821" height="10.2016"/>
  </objectgroup>
 </map>
