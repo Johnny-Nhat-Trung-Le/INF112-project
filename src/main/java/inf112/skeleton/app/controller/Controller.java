@@ -21,6 +21,7 @@ public class Controller extends InputAdapter {
             case Keys.A: this.playerModel.moveLeft(true);
             case Keys.S: this.playerModel.moveDown(true);
             case Keys.D: this.playerModel.moveRight(true);
+
         }
         return true;
     }
@@ -41,4 +42,5 @@ public class Controller extends InputAdapter {
         }
         return false;
     }
+
 }

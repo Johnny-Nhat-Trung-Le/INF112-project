@@ -4,11 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewablePlayerModel;
+import inf112.skeleton.app.view.texturepack.PlayerAnimation;
 
 public class GameScreen implements Screen {
     private ViewableGameModel model;
@@ -17,7 +20,9 @@ public class GameScreen implements Screen {
     //ViewPort viser hvordan grafikken skal se ut mtp skjermen til enheten
     private Viewport gamePort;
     //private Hud hud;
-
+    private SpriteBatch batch;
+    private PlayerAnimation playerAnimation;
+    private float dt;
     public GameScreen(ViewableGameModel model) {
         Gdx.graphics.setForegroundFPS(60);
         this.model = model;
@@ -26,8 +31,11 @@ public class GameScreen implements Screen {
         gamePort = new FitViewport(this.model.getWidth(),this.model.getHeight(), gameCam);
         //Vil at gamecamera ikke skal alltid holde seg til pos (0,0)
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
+        this.playerAnimation = new PlayerAnimation();
+        this.batch = new SpriteBatch();
 
        // hud = new Hud(model.getSpriteBatch(), model.getWidth(), model.getHeight());
+
        
     }
 
@@ -47,8 +55,11 @@ public class GameScreen implements Screen {
        /*  this.model.getSpriteBatch().begin();
 		this.model.getSpriteBatch().draw(spriteImage, player.getPosX(), player.getPosY(), spriteRect.width, spriteRect.height);
 		this.model.getSpriteBatch().end(); */
+        this.dt+=Gdx.graphics.getDeltaTime();
+        this.batch.begin();
+        this.batch.draw(this.playerAnimation.getLeftAnimation().getKeyFrame(dt,true),0,0, 80, 80);
+        this.batch.end();
 
-    
         //object.render();
     }
 
@@ -56,15 +67,15 @@ public class GameScreen implements Screen {
     private void update(float delta) {
         // TODO her kalle på PLayerController.java handleINput.
         gameCam.update();
+        
         // renderer.setView(gameCam); MÅ finne ut hva som skal være renderer object
     }
     
 
     @Override
     public void dispose() {
-		
+        this.batch.dispose();
     }
-
     @Override
     public void resize(int width, int height) {
         gamePort.update(width,height);

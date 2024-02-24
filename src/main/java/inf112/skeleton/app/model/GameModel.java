@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.controller.ControllableGameModel;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
+import inf112.skeleton.app.controller.Controller;
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
@@ -20,10 +21,13 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private final List<TileModel> foreground;
     private final World world;
 
+    private PlayerModel playerModel;
     public GameModel() {
         // TODO - fix initSize after game size
         foreground = new ArrayList<>();
         world = new World(new Vector2(0, GRAVITY), true);
+        this.playerModel = new PlayerModel(this.world);
+
     }
 
     @Override
@@ -50,7 +54,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
 
     @Override
     public ControllablePlayerModel getControllablePlayer() {
-        return null;
+        return this.playerModel;
     }
 
     @Override
@@ -63,7 +67,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
 
     @Override
     public ViewablePlayerModel getViewablePlayer() {
-        return null;
+        return this.playerModel;
     }
 
     @Override

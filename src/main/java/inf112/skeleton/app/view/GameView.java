@@ -2,17 +2,25 @@ package inf112.skeleton.app.view;
 
 import com.badlogic.gdx.Game;
 
+import com.badlogic.gdx.Gdx;
+import inf112.skeleton.app.controller.ControllableGameModel;
+import inf112.skeleton.app.controller.Controller;
+import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.view.screen.GameScreen;
 public class GameView extends Game {
-    private ViewableGameModel model;
+    private ViewableGameModel viewModel;
+    private ControllableGameModel controlModel;
 
-    public GameView(ViewableGameModel model){
-        this.model = model;
+    public GameView(GameModel model){
+        this.viewModel = model;
+        this.controlModel = model;
     }
 
     @Override
     public void create() {
-        setScreen(new GameScreen(model));
+        setScreen(new GameScreen(viewModel));
+
+        Gdx.input.setInputProcessor(new Controller(this.controlModel));
     }
 
     public void render(){

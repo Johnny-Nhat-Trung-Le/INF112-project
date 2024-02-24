@@ -5,6 +5,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
 import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.PlayerModel;
+import inf112.skeleton.app.view.AnimationTest;
 import inf112.skeleton.app.view.GameView;
 
 public class Main {
@@ -13,6 +14,7 @@ public class Main {
         cfg.setTitle("game");
         cfg.setWindowedMode(480, 320);
         GameModel model = new GameModel();
+        //new Lwjgl3Application(new AnimationTest(),cfg);
         new Lwjgl3Application(new GameView(model), cfg);
     }
 }
