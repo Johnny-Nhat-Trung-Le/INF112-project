@@ -31,6 +31,7 @@ public class GameScreen implements Screen {
         gamePort = new FitViewport(this.model.getWidth(),this.model.getHeight(), gameCam);
         //Vil at gamecamera ikke skal alltid holde seg til pos (0,0)
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
+
         this.playerAnimation = new PlayerAnimation();
         this.batch = new SpriteBatch();
 
@@ -55,9 +56,10 @@ public class GameScreen implements Screen {
        /*  this.model.getSpriteBatch().begin();
 		this.model.getSpriteBatch().draw(spriteImage, player.getPosX(), player.getPosY(), spriteRect.width, spriteRect.height);
 		this.model.getSpriteBatch().end(); */
+        // Tegner spilleren
         this.dt+=Gdx.graphics.getDeltaTime();
         this.batch.begin();
-        this.batch.draw(this.playerAnimation.getLeftAnimation().getKeyFrame(dt,true),0,0, 80, 80);
+        this.batch.draw(this.playerAnimation.getAnimation(this.player.getPlayerState()).getKeyFrame(dt,true),this.player.getX(),this.player.getY(), this.player.getWidth(), this.player.getHeight());
         this.batch.end();
 
         //object.render();

@@ -32,6 +32,11 @@ public interface ControllablePlayerModel extends Stepable {
     void moveRight(boolean value);
 
     /**
+     * Sets the player in the idle state
+     */
+    void moveIdle(boolean value);
+
+    /**
      * Uses the player's item. If the player does
      * not have an item nothing happens.
      */

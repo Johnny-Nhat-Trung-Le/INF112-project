@@ -16,12 +16,25 @@ public class Controller extends InputAdapter {
     @Override
     public boolean keyDown(int keycode) {
         // TODO - legg på mer cases for ulike taster. (eks. useItem, pause, exit etc)
-        switch(keycode){
-            case Keys.W: this.playerModel.moveUp(true);
-            case Keys.A: this.playerModel.moveLeft(true);
-            case Keys.S: this.playerModel.moveDown(true);
-            case Keys.D: this.playerModel.moveRight(true);
-
+        //TODO problem SWITCH er messed up den registrerer alle keys
+//        switch(keycode){
+//            case Keys.W: this.playerModel.moveUp(true);
+//            case Keys.A: this.playerModel.moveLeft(true);
+//            case Keys.S: this.playerModel.moveDown(true);
+//            case Keys.D: this.playerModel.moveRight(true);
+//
+//        }
+        if(Keys.W == keycode){
+            this.playerModel.moveUp(false);
+        }
+        else if(Keys.A == keycode){
+            this.playerModel.moveLeft(false);
+        }
+        else if(Keys.S == keycode){
+            this.playerModel.moveDown(false);
+        }
+        else if(Keys.D == keycode){
+            this.playerModel.moveRight(false);
         }
         return true;
     }
@@ -39,6 +52,9 @@ public class Controller extends InputAdapter {
         }
         else if(Keys.D == keycode){
             this.playerModel.moveRight(false);
+        }
+        else {
+            this.playerModel.moveIdle(false);
         }
         return false;
     }
