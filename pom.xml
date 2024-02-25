@@ -93,11 +93,7 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 		<!-- libGDX Box2D -->
-		<dependency>
-			<groupId>com.badlogicgames.gdx</groupId>
-			<artifactId>gdx-box2d</artifactId>
-			<version>1.12.1</version>
-		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.aya-prover.gdx-box2d/box2d -->
 		<dependency>
 			<groupId>org.aya-prover.gdx-box2d</groupId>
