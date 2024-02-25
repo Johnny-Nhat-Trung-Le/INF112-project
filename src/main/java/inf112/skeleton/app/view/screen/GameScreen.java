@@ -59,7 +59,8 @@ public class GameScreen implements Screen {
         // Tegner spilleren
         this.dt+=Gdx.graphics.getDeltaTime();
         this.batch.begin();
-        this.batch.draw(this.playerAnimation.getAnimation(this.player.getPlayerState()).getKeyFrame(dt,true),this.player.getX(),this.player.getY(), this.player.getWidth(), this.player.getHeight());
+        this.batch.draw(this.playerAnimation.getAnimation(this.player.getPlayerState()).getKeyFrame(dt,true),
+                this.player.getX(),this.player.getY(), this.player.getWidth(), this.player.getHeight());
         this.batch.end();
 
         //object.render();
@@ -69,6 +70,7 @@ public class GameScreen implements Screen {
     private void update(float delta) {
         // TODO her kalle på PLayerController.java handleINput.
         gameCam.update();
+
         
         // renderer.setView(gameCam); MÅ finne ut hva som skal være renderer object
     }

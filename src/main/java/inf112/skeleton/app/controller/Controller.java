@@ -41,21 +41,22 @@ public class Controller extends InputAdapter {
 
     @Override
     public boolean keyUp(int keycode) {
-        if(Keys.W == keycode){
-            this.playerModel.moveUp(false);
-        }
-        else if(Keys.A == keycode){
-            this.playerModel.moveLeft(false);
-        }
-        else if(Keys.S == keycode){
-            this.playerModel.moveDown(false);
-        }
-        else if(Keys.D == keycode){
-            this.playerModel.moveRight(false);
-        }
-        else {
-            this.playerModel.moveIdle(false);
-        }
+//        if(Keys.W == keycode){
+//            this.playerModel.moveUp(false);
+//        }
+//        else if(Keys.A == keycode){
+//            this.playerModel.moveLeft(false);
+//        }
+//        else if(Keys.S == keycode){
+//            this.playerModel.moveDown(false);
+//        }
+//        else if(Keys.D == keycode){
+//            this.playerModel.moveRight(false);
+//        }
+//        else {
+//            this.playerModel.moveIdle(false);
+//        }
+        this.playerModel.moveIdle(false);
         return false;
     }
 

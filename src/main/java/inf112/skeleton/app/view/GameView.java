@@ -19,7 +19,6 @@ public class GameView extends Game {
     @Override
     public void create() {
         setScreen(new GameScreen(viewModel));
-
         Gdx.input.setInputProcessor(new Controller(this.controlModel));
     }
 
