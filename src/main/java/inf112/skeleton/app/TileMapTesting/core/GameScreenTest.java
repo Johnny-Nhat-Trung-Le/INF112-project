@@ -19,14 +19,14 @@ import static inf112.skeleton.app.TileMapTesting.helper.Constants.PPM;
 
 public class GameScreenTest extends ScreenAdapter {
 
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private World world;
-    private WorldDef def;
-    private Box2DDebugRenderer box2DDebugRenderer;
+    private final OrthographicCamera camera;
+    private final SpriteBatch batch;
+    private final World world;
+    private final WorldDef def;
+    private final Box2DDebugRenderer box2DDebugRenderer;
 
-    private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-    private TileMapHelper tileMapHelper;
+    private final OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
+    private final TileMapHelper tileMapHelper;
 
     // Game Objects
     private Player player;
@@ -34,7 +34,7 @@ public class GameScreenTest extends ScreenAdapter {
     public GameScreenTest(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
-        this.def = new WorldDef(new Vector2(0, -25f), false);
+        this.def = new WorldDef(new Vector2(0, -25f * PPM), false);
         this.world = new World(def);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 
@@ -81,7 +81,7 @@ public class GameScreenTest extends ScreenAdapter {
     }
 
     public World getWorld() {
-        return world;
+        return this.world;
     }
 
     public void setPlayer(Player player) {

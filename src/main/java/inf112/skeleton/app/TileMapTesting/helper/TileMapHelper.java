@@ -21,7 +21,7 @@ import static inf112.skeleton.app.TileMapTesting.helper.Constants.PPM;
 public class TileMapHelper {
 
     private TiledMap tiledMap;
-    private GameScreenTest gameScreenTest;
+    private final GameScreenTest gameScreenTest;
 
     public TileMapHelper(GameScreenTest gameScreenTest) {
         this.gameScreenTest = gameScreenTest;
