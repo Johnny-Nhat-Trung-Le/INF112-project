@@ -16,6 +16,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     private World world;
     private final Body body;
+    private PolygonShape shape;
 
     private PlayerState playerState;
     public PlayerModel(World world){
@@ -24,8 +25,8 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         this.playerState = PlayerState.IDLE;
         this.body = this.world.createBody(createBodyDef(this.x,this.y));
         body.createFixture(createFixtureDef(this.width,this.height));
-        /*this.body = world.createBody(createBodyDef(x,y));
-        body.createFixture(createFixtureDef(w, h));*/
+        this.shape.dispose();
+
         
     }
 
@@ -94,26 +95,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     public void step() {
 
     }
-   /* protected BodyDef createBodyDef() {
-        BodyDef def = new BodyDef();
-        def.type = BodyDef.BodyType.StaticBody;
-        def.position.set(this.x,this.y);
-        return def;
-    }
 
-    protected FixtureDef createFixtureDef() {
-        FixtureDef def = new FixtureDef();
-        def.density = 0.5f;
-        def.friction = 0.5f;
-        def.shape = createShape(this.width,this.height);
-        return def;
-    }
-
-    public PolygonShape createShape(float w, float h) {
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(w, h);
-        return shape;
-    }*/
     protected BodyDef createBodyDef(float x, float y) {
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.StaticBody;
@@ -123,17 +105,15 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     protected FixtureDef createFixtureDef(float w, float h) {
         FixtureDef def = new FixtureDef();
+        this.shape = new PolygonShape();
+        shape.setAsBox(w, h);
         def.density = 0.5f;
         def.friction = 0.5f;
-        def.shape = createShape(w, h);
+        def.shape = shape;
         return def;
     }
 
-    protected Shape createShape(float w, float h) {
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(w, h);
-        return shape;
-    }
+
     @Override
     public PlayerState getPlayerState() {
         return this.playerState;

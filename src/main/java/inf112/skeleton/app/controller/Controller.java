@@ -16,14 +16,22 @@ public class Controller extends InputAdapter {
     @Override
     public boolean keyDown(int keycode) {
         // TODO - legg på mer cases for ulike taster. (eks. useItem, pause, exit etc)
-        //TODO problem SWITCH er messed up den registrerer alle keys
-//        switch(keycode){
-//            case Keys.W: this.playerModel.moveUp(true);
-//            case Keys.A: this.playerModel.moveLeft(true);
-//            case Keys.S: this.playerModel.moveDown(true);
-//            case Keys.D: this.playerModel.moveRight(true);
-//
-//        }
+        switch(keycode){
+            case Keys.W: this.playerModel.moveUp(true);
+                        break;
+            case Keys.A: this.playerModel.moveLeft(true);
+                        break;
+            case Keys.S: this.playerModel.moveDown(true);
+                        break;
+            case Keys.D: this.playerModel.moveRight(true);
+                        break;
+
+        }
+        return true;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
         if(Keys.W == keycode){
             this.playerModel.moveUp(false);
         }
@@ -36,26 +44,9 @@ public class Controller extends InputAdapter {
         else if(Keys.D == keycode){
             this.playerModel.moveRight(false);
         }
-        return true;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-//        if(Keys.W == keycode){
-//            this.playerModel.moveUp(false);
-//        }
-//        else if(Keys.A == keycode){
-//            this.playerModel.moveLeft(false);
-//        }
-//        else if(Keys.S == keycode){
-//            this.playerModel.moveDown(false);
-//        }
-//        else if(Keys.D == keycode){
-//            this.playerModel.moveRight(false);
-//        }
-//        else {
-//            this.playerModel.moveIdle(false);
-//        }
+        else {
+            this.playerModel.moveIdle(false);
+        }
         this.playerModel.moveIdle(false);
         return false;
     }

@@ -29,7 +29,8 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         this.playerModel = new PlayerModel(this.world);
 
     }
-
+    @Override
+    public World getWorld(){return this.world;}
     @Override
     public float getWidth() {
        return this.width;
