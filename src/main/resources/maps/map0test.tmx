@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="26">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="26">
  <tileset firstgid="1" source="Terrain (32x32).tsx"/>
- <tileset firstgid="86" source="background_001.tsx"/>
+ <tileset firstgid="86" name="background_001" tilewidth="32" tileheight="32" tilecount="220" columns="20">
+  <image source="background_001.png" width="640" height="360"/>
+ </tileset>
  <tileset firstgid="306" source="background_005.tsx"/>
  <tileset firstgid="526" source="background_004.tsx"/>
  <tileset firstgid="746" source="background_002.tsx"/>
+ <tileset firstgid="966" source="background_001.tsx"/>
+ <layer id="17" name="blue" width="20" height="10">
+  <data encoding="base64" compression="zlib">
+   eJwNwwdXDgAAAMCPhMwi0fC3SLKKbEpmlC2FKDt7pIyyZZedvUeIVCgqIXvee3f9AoFAf2MdYJwDjXeQgx3iUIeZYKLDHWGSIx3laMc41nGOd4ITTTbFSaY62SlOdZrTnWGaM51luhnOdo5zned8F7jQRWa62CyzXeJSl5njcleYa54rXeVq17jWda433w1udJOb3eJWt7ndHe60wF0WWuRu97jXfRZb4n4PeNBDHvaIRz1mqcc94UlPedoznrXMcs953gte9JKXvWKFV73mdW9401ve9o53ved9H/jQRz72iZU+9ZnPrfKFL632lTXWWudr3/jWeht853sbbbLZD7b40U9+ttUvfvWb3/3hT3/52z/+9Z+BNtjWINsZbHs72NEQO9nZLna1m90NNcwe9jTcXkbY2z5GGmW0Mfb1P7Lzcws=
+  </data>
+ </layer>
+ <layer id="18" name="clouds" width="20" height="10">
+  <data encoding="base64" compression="zlib">
+   eJzNw4dWDQAAANB3Tn/QXpIWCiFSSUNURjsjFCoyo7QoNCmyGtrJSkbRH7qf0T3nBgJbW3BQIBBiqGGGG2GkUUYbY6zbjHO78e4wwUSTTDbFne5yt6mmuce97jPd/R7woBke8rCZHjHLbHM8aq7HzDPfAgs9bpEnPGmxJZZ6ytOe8axlllthpVVWW2Ot5zzvBS9a5yUve8V6G7zqNa/baJPN3vCmLd7ytne86z3v2+oDH9pmu4/ssNMuu+3xsU/stc+nPvO5/Q446JDDjvjCl4465itfO+4b3/rO935wwkmnnPajM84657wLLrrksp9c8bNf/Oo3v7vqD9f86S9/+8d1N/zrPzf9DzEmPtE=
+  </data>
+ </layer>
+ <layer id="19" name="mount" width="20" height="10">
+  <data encoding="base64" compression="zlib">
+   eJzNw4dWDQAAANB3+rz2krRQCJFKGqIy2hmhUJEZpUWhSZHV0E5WMor+wv2M7jk3ENjagoMCgRBDDTPcCCONMtoYY91mnNuNd4cJJppksinudJe7TTXNPe51n+nu94AHzfCQh830iFlmm+NRcz1mnvkWWOhxizzhSYstsdRTnvaMZy2z3AorrbLaGms953kveNE6L3nZK9bb4FWved1Gm2z2hjdt8Za3veNd73nfVh/40DbbfWSHnXbZbY+PfWKvfT71mc/td8BBhxx2xBe+dNQxX/nacd/41ne+94MTTjrltB+dcdY5511w0SWX/eSKn/3iV7/53VV/uOZPf/nbP6674V//uel/cQthMQ==
+  </data>
+ </layer>
+ <layer id="20" name="grass" width="20" height="10">
+  <data encoding="base64" compression="zlib">
+   eJztw4VRA0EAAMD7uPbfV1wJxN0VCGFLSAG/MxtCLPa+ShRC1Zp1GzZt2bZj1559Pxz46ZdDR46dOHXm3IVLV67duHXn3oNHT569ePXm3Yff/vjr0z9fhkQIkQmTpkybMWvOvAWLliz7DyWCKm0=
+  </data>
+ </layer>
  <layer id="7" name="background" width="20" height="10">
   <data encoding="base64" compression="zlib">
    eJxjYBgFlAJXIHZDw+5EqMOmhlqAEYiZqWiWJBCLUMk8ISAWhpoHMpuJCIzsF3Q9kkjmKQOxChFYFck8XHpAagAwxgZT
