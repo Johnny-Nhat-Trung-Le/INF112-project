@@ -26,7 +26,7 @@ public class GameScreen implements Screen {
     private PlayerAnimation playerAnimation;
     private float dt;
     private World world;
-    private Box2DDebugRenderer debugRenderer;
+
     public GameScreen(ViewableGameModel model) {
         Gdx.graphics.setForegroundFPS(60);
         this.model = model;
@@ -35,22 +35,15 @@ public class GameScreen implements Screen {
         gamePort = new FitViewport(this.model.getWidth(),this.model.getHeight(), gameCam);
         //Vil at gamecamera ikke skal alltid holde seg til pos (0,0)
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2,0);
-
         this.world = this.model.getWorld();
         this.playerAnimation = new PlayerAnimation();
         this.batch = new SpriteBatch();
-
-       // hud = new Hud(model.getSpriteBatch(), model.getWidth(), model.getHeight());
 
        
     }
 
     @Override
     public void show() {
-
-        this.debugRenderer = new Box2DDebugRenderer();
-        this.model.getWorld();
-        gameCam.position.set(gameCam.viewportWidth / 2, gameCam.viewportHeight / 2, 0f);
         gameCam.update();
     }
 
@@ -67,7 +60,6 @@ public class GameScreen implements Screen {
         this.batch.draw(this.playerAnimation.getAnimation(this.player.getPlayerState()).getKeyFrame(dt,true),
                 this.player.getX(),this.player.getY(), this.player.getWidth(), this.player.getHeight());
         this.batch.end();
-        this.debugRenderer.render(world, gameCam.combined);
         //object.render();
     }
 
