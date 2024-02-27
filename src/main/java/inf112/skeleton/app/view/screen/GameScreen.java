@@ -49,7 +49,7 @@ public class GameScreen implements Screen {
         //FIXME må fikse slik at kamera følger playermodel
         this.debug = new Box2DDebugRenderer();
         this.model.getWorld();
-        gameCam.position.set(gameCam.viewportWidth ,gameCam.viewportHeight,0f);
+        gameCam.position.set(gameCam.viewportWidth/2 ,gameCam.viewportHeight/2,0f);
 
         gameCam.update();
     }
@@ -77,6 +77,7 @@ public class GameScreen implements Screen {
         // TODO her kalle på PLayerController.java handleINput.
         gameCam.update();
 
+        gameCam.position.set(gameCam.viewportWidth/2 ,gameCam.viewportHeight/2,0f);
         
         // renderer.setView(gameCam); MÅ finne ut hva som skal være renderer object
     }
