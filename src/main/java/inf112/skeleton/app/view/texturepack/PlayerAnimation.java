@@ -4,9 +4,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import inf112.skeleton.app.model.PlayerState;
-
-public class PlayerAnimation implements ITexturePack{
+//TODO er det Actor dette objectet skal implementere??
+public class PlayerAnimation implements ITexturePack {
 
     private Texture img;
     private final int tileWidth = 32;
@@ -17,24 +18,21 @@ public class PlayerAnimation implements ITexturePack{
 
 
     public Animation<TextureRegion> getAnimation(PlayerState playerState){
-        Animation<TextureRegion> currentTexture;
-        if(playerState.equals(PlayerState.JUMP)){
-            currentTexture = getJumpAnimation();
-        }
-        else if(playerState.equals(PlayerState.LEFT)){
-            currentTexture = getLeftAnimation();
-        }
-        else if(playerState.equals(PlayerState.RIGHT)){
-            currentTexture = getRightAnimation();
-        }
-        else if(playerState.equals(PlayerState.DOWN)){
-            currentTexture = getDownAnimation();
-        }
-        else{
-            currentTexture = getIdleAnimation();
-        }
-        return currentTexture;
+        return switch (playerState) {
+            case JUMP -> getJumpAnimation();
+            case DOWN -> getDownAnimation();
+            case LEFT -> getLeftAnimation();
+            case RIGHT -> getRightAnimation();
+            default -> getIdleAnimation();
+        };
+
+
     }
+    // Ha en private static metode som gjør alt
+    private static Animation<TextureRegion> loadAnimation(Texture img, int frames){
+
+
+    };
     private Animation<TextureRegion> getRightAnimation(){
         this.img = new Texture("Pink_Monster/Pink_Monster_Run_6.png");
         //frames represent the amount of picture an animation sequence have

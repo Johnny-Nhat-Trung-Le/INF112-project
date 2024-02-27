@@ -61,10 +61,6 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //this.model.getSpriteBatch().setProjectionMatrix(hud.getStage().getCamera().combined);
         //hud.getStage().draw();
-
-       /*  this.model.getSpriteBatch().begin();
-		this.model.getSpriteBatch().draw(spriteImage, player.getPosX(), player.getPosY(), spriteRect.width, spriteRect.height);
-		this.model.getSpriteBatch().end(); */
         // Tegner spilleren
         this.dt+=Gdx.graphics.getDeltaTime();
         this.batch.begin();
