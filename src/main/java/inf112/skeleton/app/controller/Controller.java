@@ -1,10 +1,12 @@
 package inf112.skeleton.app.controller;
 
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
+import inf112.skeleton.app.event.Event;
+import inf112.skeleton.app.event.EventHandler;
+import inf112.skeleton.app.model.event.EventStep;
 
-public class Controller extends InputAdapter {
+public class Controller extends InputAdapter implements EventHandler {
     private ControllableGameModel model;
     private ControllablePlayerModel playerModel;
 
@@ -15,7 +17,6 @@ public class Controller extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        // TODO - legg på mer cases for ulike taster. (eks. useItem, pause, exit etc)
         switch(keycode){
             case Keys.W: this.playerModel.moveUp(true);
             case Keys.A: this.playerModel.moveLeft(true);
@@ -40,5 +41,12 @@ public class Controller extends InputAdapter {
             this.playerModel.moveRight(false);
         }
         return false;
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+        if (event instanceof EventStep e) {
+            model.step(e.timeStep());
+        }
     }
 }
