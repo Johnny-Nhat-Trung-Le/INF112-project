@@ -45,7 +45,7 @@ public class TileMapHelper {
                 Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
                 String rectangleName = mapObject.getName();
 
-                if (rectangleName.equals("player")) {
+                if (rectangleName.equals("player1")) {
                     Body body = BodyHelperService.createBody(
                             rectangle.getX() + rectangle.getWidth() / 2,
                             rectangle.getY() + rectangle.getHeight() / 2,

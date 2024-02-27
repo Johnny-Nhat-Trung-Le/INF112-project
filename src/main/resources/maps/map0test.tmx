@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="26">
  <tileset firstgid="1" source="Terrain (32x32).tsx"/>
- <tileset firstgid="86" name="background_001" tilewidth="32" tileheight="32" tilecount="220" columns="20">
+ <tileset firstgid="72" name="background_001" tilewidth="32" tileheight="32" tilecount="0" columns="20">
   <image source="background_001.png" width="640" height="360"/>
  </tileset>
- <tileset firstgid="306" source="background_005.tsx"/>
- <tileset firstgid="526" source="background_004.tsx"/>
- <tileset firstgid="746" source="background_002.tsx"/>
- <tileset firstgid="966" source="background_001.tsx"/>
+ <tileset firstgid="272" source="background_005.tsx"/>
+ <tileset firstgid="492" source="background_004.tsx"/>
+ <tileset firstgid="712" source="background_002.tsx"/>
+ <tileset firstgid="912" source="background_001.tsx"/>
  <layer id="17" name="blue" width="20" height="10">
   <data encoding="base64" compression="zlib">
-   eJwNwwdXDgAAAMCPhMwi0fC3SLKKbEpmlC2FKDt7pIyyZZedvUeIVCgqIXvee3f9AoFAf2MdYJwDjXeQgx3iUIeZYKLDHWGSIx3laMc41nGOd4ITTTbFSaY62SlOdZrTnWGaM51luhnOdo5zned8F7jQRWa62CyzXeJSl5njcleYa54rXeVq17jWda433w1udJOb3eJWt7ndHe60wF0WWuRu97jXfRZb4n4PeNBDHvaIRz1mqcc94UlPedoznrXMcs953gte9JKXvWKFV73mdW9401ve9o53ved9H/jQRz72iZU+9ZnPrfKFL632lTXWWudr3/jWeht853sbbbLZD7b40U9+ttUvfvWb3/3hT3/52z/+9Z+BNtjWINsZbHs72NEQO9nZLna1m90NNcwe9jTcXkbY2z5GGmW0Mfb1P7Lzcws=
+   eJwNwwdXDgAAAMCPhMy/VSQaSLKKbEpmlC2FKDt7pIyyZZedvUeIVCgqIXvee3ehgUAgzB72NNxeRtjbPkYaZbQx9rWf/Y11gHEONN5BDnaIQx1mgokOd4RJjnSUox3jWMc53glONNkUJ5nqZKc41WlOd4ZpznSW6WY42znOdZ7zXeBCF5npYrPMdolLXWaOy11hrnmudJWrXeNa17nefDe40U1udotb3eZ2d7jTAndZaJG73eNe91lsifs94EEPedgjHvWYpR73hCc95WnPeNYyyz3neS940Ute9ooVXvWa173hTW952zve9Z73feBDH/nYJ1b61Gc+t8oXvrTaV9ZYa52vfeNb623wne9ttMlmP9jiRz/52Va/+NVvfveHP/3lb//4138G2mBbg2xnsO3tYEdD7GRnu9jVbnb3P6RJdg0=
   </data>
  </layer>
  <layer id="18" name="clouds" width="20" height="10">
   <data encoding="base64" compression="zlib">
-   eJzNw4dWDQAAANB3Tn/QXpIWCiFSSUNURjsjFCoyo7QoNCmyGtrJSkbRH7qf0T3nBgJbW3BQIBBiqGGGG2GkUUYbY6zbjHO78e4wwUSTTDbFne5yt6mmuce97jPd/R7woBke8rCZHjHLbHM8aq7HzDPfAgs9bpEnPGmxJZZ6ytOe8axlllthpVVWW2Ot5zzvBS9a5yUve8V6G7zqNa/baJPN3vCmLd7ytne86z3v2+oDH9pmu4/ssNMuu+3xsU/stc+nPvO5/Q446JDDjvjCl4465itfO+4b3/rO935wwkmnnPajM84657wLLrrksp9c8bNf/Oo3v7vqD9f86S9/+8d1N/zrPzf9DzEmPtE=
+   eJzNw4dWjgEAANBPv7REirIy0pSEkNHQUEnam1TSoOwGpczIyqsWhQZ1H8M95wbB/20hLAgW/eFPl1z2l7/944qrrrnuX/+5YRAKgi2GGXKr4W4zwkijjDbG7ca6w53Guct4E9ztHhNNcq/73O8BD5rsIQ97xKOmeMxU00w3w0yzPG62J8zxpLme8rRnzPOs5zxvvhe86CUvW2ChRRZ7xRJLLbPcq1ZYaZXXrPa6Nd6w1jrrbbDRJpttsdU22+2w05vessvbdttjr3fs8679DjjokPe877AjPvChj3zsE5/6zFHHHHfC575w0ilfOu2Mr3ztG9/6zvfO+sGPzvnJz37xq9+c97ubcTs5gQ==
   </data>
  </layer>
  <layer id="19" name="mount" width="20" height="10">
   <data encoding="base64" compression="zlib">
-   eJzNw4dWDQAAANB3+rz2krRQCJFKGqIy2hmhUJEZpUWhSZHV0E5WMor+wv2M7jk3ENjagoMCgRBDDTPcCCONMtoYY91mnNuNd4cJJppksinudJe7TTXNPe51n+nu94AHzfCQh830iFlmm+NRcz1mnvkWWOhxizzhSYstsdRTnvaMZy2z3AorrbLaGms953kveNE6L3nZK9bb4FWved1Gm2z2hjdt8Za3veNd73nfVh/40DbbfWSHnXbZbY+PfWKvfT71mc/td8BBhxx2xBe+dNQxX/nacd/41ne+94MTTjrltB+dcdY5511w0SWX/eSKn/3iV7/53VV/uOZPf/nbP6674V//uel/cQthMQ==
+   eJzNw4dWDQAAANB3+pr2krRQCJFKGqIy2hmhUJEZpUWhSZHV0E5WMop+y/2M7jk3ENjagoMCgRBDDTPcCCONMtoYY91mnNuNd4cJJppksinudJe7TTXNPe51n+nu94AHzfCQh830iFlmm+NRcz1mnvkWWOhxizzhSYstsdRTnvaMZy2z3AorrbLaGms953kveNE6L3nZK9bb4FWved1Gm2z2hjdt8Za3veNd73nfVh/40DbbfWSHnXbZbY+PfWKvfT71mc/td8BBhxx2xBe+dNQxX/nacd/41ne+94MTTjrltB+dcdY5511w0SWX/eSKn/3iV7/53VV/uOZPf/nbP6674V//uel/tPZL8Q==
   </data>
  </layer>
  <layer id="20" name="grass" width="20" height="10">
   <data encoding="base64" compression="zlib">
-   eJztw4VRA0EAAMD7uPbfV1wJxN0VCGFLSAG/MxtCLPa+ShRC1Zp1GzZt2bZj1559Pxz46ZdDR46dOHXm3IVLV67duHXn3oNHT569ePXm3Yff/vjr0z9fhkQIkQmTpkybMWvOvAWLliz7DyWCKm0=
+   eJztw4VVAlAAAMDP/svQHVKCdEijSEktwY3AANx7F8Lb2+uikRBixk2YNGXajFlz5i1YtGTZih9WrVm3YdNPW7b9smPXnn0HDh05duLUb2fOXbh05dqNW3/8deefew8ePXn234tXb959+AT7jzBn
   </data>
  </layer>
  <layer id="7" name="background" width="20" height="10">
@@ -40,6 +40,6 @@
   <object id="7" x="416" y="256">
    <polygon points="0,0 224,0 224,64 0,64"/>
   </object>
-  <object id="22" name="player" x="116.41" y="201.08" width="10.8821" height="10.2016"/>
+  <object id="22" name="player1" x="116.41" y="201.08" width="10.8821" height="10.2016"/>
  </objectgroup>
 </map>
