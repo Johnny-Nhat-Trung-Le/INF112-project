@@ -24,7 +24,7 @@ public class PlayerAnimation implements ITexturePack {
             {
                 put(PlayerState.DOWN,loadAnimation("Pink_Monster/Pink_Monster_Climb_4.png",4,tileWidth,tileHeight));
                 put(PlayerState.JUMP,loadAnimation("Pink_Monster/Pink_Monster_Jump_8.png",8,tileWidth,tileHeight));
-                put(PlayerState.LEFT,loadAnimation(null,0,tileWidth,tileHeight));
+                //put(PlayerState.LEFT,loadAnimation("",0,tileWidth,tileHeight));
                 put(PlayerState.RIGHT, loadAnimation("Pink_Monster/Pink_Monster_Run_6.png",6,tileWidth,tileHeight));
                 put(PlayerState.IDLE,loadAnimation("Pink_Monster/Pink_Monster_Idle_4.png",4,tileWidth,tileHeight));
             }
@@ -52,6 +52,7 @@ public class PlayerAnimation implements ITexturePack {
      */
     private static Animation<TextureRegion> loadAnimation(String imgSrc, int frames, int tileWidth, int tileHeight){
         Texture img = new Texture(imgSrc);
+
         //frames represent the amount of picture an animation sequence have
         TextureRegion[][] tmpFrames = TextureRegion.split(img,tileWidth,tileHeight);
         TextureRegion[] animationFrames = new TextureRegion[frames];

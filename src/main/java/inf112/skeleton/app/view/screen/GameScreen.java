@@ -26,6 +26,7 @@ public class GameScreen implements Screen {
     private PlayerAnimation playerAnimation;
     private float dt;
     private World world;
+    private Box2DDebugRenderer debug;
 
     public GameScreen(ViewableGameModel model) {
         Gdx.graphics.setForegroundFPS(60);
@@ -38,12 +39,18 @@ public class GameScreen implements Screen {
         this.world = this.model.getWorld();
         this.playerAnimation = new PlayerAnimation();
         this.batch = new SpriteBatch();
+        this.player.getBody().setUserData(this.batch);
 
        
     }
 
     @Override
     public void show() {
+        //FIXME må fikse slik at kamera følger playermodel
+        this.debug = new Box2DDebugRenderer();
+        this.model.getWorld();
+        gameCam.position.set(gameCam.viewportWidth ,gameCam.viewportHeight,0f);
+
         gameCam.update();
     }
 
@@ -60,6 +67,8 @@ public class GameScreen implements Screen {
         this.batch.draw(this.playerAnimation.getAnimation(this.player.getPlayerState()).getKeyFrame(dt,true),
                 this.player.getX(),this.player.getY(), this.player.getWidth(), this.player.getHeight());
         this.batch.end();
+        this.debug.render(world,gameCam.combined);
+
         //object.render();
     }
 

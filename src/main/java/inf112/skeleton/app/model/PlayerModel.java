@@ -13,7 +13,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     private float height = 40;
 
-
+    private boolean moveUp, moveDown, moveLeft, moveRight;
     private World world;
     private final Body body;
     private PolygonShape shape;
@@ -27,25 +27,30 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         body.createFixture(createFixtureDef(this.width,this.height));
         this.shape.dispose();
 
-        
+        moveUp = false;
+        moveDown = false;
+        moveLeft = false;
+        moveRight = false;
     }
-
+    //FIXME når vi har lagt til fysikk, fiks sånn at spiller er idle når man trykker høyre venstre og lignende
     @Override
     public void moveUp(boolean value) {
-        System.out.println("PlayerModel.moveUp");
+        System.out.println("PlayerModel.moveUp\n");
+        moveUp = value;
         this.playerState = PlayerState.JUMP;
     }
 
     @Override
     public void moveDown(boolean value) {
         System.out.println("PlayerModel.moveDown");
-        //TODO HVORDAN TENKE VI DOWN
+        moveDown = value;
         this.playerState = PlayerState.DOWN;
     }
 
     @Override
     public void moveLeft(boolean value) {
         System.out.println("PlayerModel.moveLeft");
+        moveLeft = value;
         this.playerState = PlayerState.LEFT;
 
 
@@ -54,6 +59,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     @Override
     public void moveRight(boolean value) {
         System.out.println("PlayerModel.moveRight");
+        moveRight = value;
         this.playerState = PlayerState.RIGHT;
     }
     @Override
@@ -96,14 +102,14 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     }
 
-    protected BodyDef createBodyDef(float x, float y) {
+    private BodyDef createBodyDef(float x, float y) {
         BodyDef def = new BodyDef();
-        def.type = BodyDef.BodyType.StaticBody;
+        def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(x, y);
         return def;
     }
 
-    protected FixtureDef createFixtureDef(float w, float h) {
+    private FixtureDef createFixtureDef(float w, float h) {
         FixtureDef def = new FixtureDef();
         this.shape = new PolygonShape();
         shape.setAsBox(w, h);
