@@ -10,30 +10,34 @@ import inf112.skeleton.app.view.ViewablePlayerModel;
 import inf112.skeleton.app.view.ViewableTile;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener {
-    private static final float GRAVITY = 10;
-    private int width = 600;
-    private int height = 750;
+    private static final float GRAVITY = -9.81f;
+    private static final float WIND = 0;
+    private static final int VELOCITY_ITERATIONS = 1;
+    private static final int POSITION_ITERATIONS = 1;
+    private static final float WIDTH = 20;
+    private static final float HEIGHT = 20;
+
     private final List<TileModel> foreground;
     private final World world;
+    private final PlayerModel player;
 
     public GameModel() {
-        // TODO - fix initSize after game size
         foreground = new ArrayList<>();
-        world = new World(new Vector2(0, GRAVITY), true);
+        world = new World(new Vector2(WIND, GRAVITY), true);
+        player = new PlayerModel(world);
     }
 
     @Override
     public float getWidth() {
-       return this.width;
+       return WIDTH;
     }
 
     @Override
     public float getHeight() {
-        return this.height;
+        return HEIGHT;
     }
 
     @Override
@@ -67,20 +71,23 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     }
 
     @Override
-    public Iterator<ViewableTile> getForegroundTiles() {
-        return foreground.stream().map((tile) -> (ViewableTile) tile).iterator();
+    public Iterable<ViewableTile> getForegroundTiles() {
+        return foreground.stream().map((t) -> (ViewableTile) t).toList();
     }
 
     @Override
-    public Iterator<ViewableTile> getBackgroundTiles() {
+    public Iterable<ViewableTile> getBackgroundTiles() {
         return null;
     }
 
     @Override
-    public Iterator<ViewableItem> getItems() {
+    public Iterable<ViewableItem> getItems() {
         return null;
     }
 
     @Override
-    public void step() {}
+    public void step(float timeStep) {
+        world.step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+        player.step(timeStep);
+    }
 }

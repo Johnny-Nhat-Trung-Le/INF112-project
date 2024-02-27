@@ -60,7 +60,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     @Override
-    public void step() {
+    public void step(float timeStep) {
 
     }
 }

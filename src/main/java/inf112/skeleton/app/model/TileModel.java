@@ -68,5 +68,5 @@ public class TileModel implements ViewableTile, Physicable, Stepable {
     }
 
     @Override
-    public void step() {}
+    public void step(float timeStep) {}
 }
