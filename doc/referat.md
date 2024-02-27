@@ -43,5 +43,7 @@
     Felles møte, alle var tilstede og vi fikset en box2D problem i pom.xml. Diskuterte prioriteringliste/ begynte på mvp.
     Vi prøvde å tegne en playerBody på skjermen, men det funket ikke. Endte opp med å finne spriteSheet og tileSheets.
     Har prøvd å fordele oppgaver, men akkurat nå så har vi en oversikt over hva som må til.
-    
-    
+
+## Dato: Tirsdag 27 Februar 2024
+    Dagens agenda, alle møttet opp, viste frem hva vi har jobet med individuelt og diskuterte hva som var brukbar.
+    Vi gjorde litt parprogrammering for å tilpasse koden for prosjektet. Kom til enighet om hva som skal være fokus videre og diskuerte eventuelt et ekstra møte.
