@@ -48,6 +48,7 @@ public class GameScreenTest extends ScreenAdapter {
 
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
+        player.update();
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
@@ -87,4 +88,6 @@ public class GameScreenTest extends ScreenAdapter {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+
 }
