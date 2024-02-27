@@ -39,6 +39,7 @@ public class GameScreen implements Screen {
         this.world = this.model.getWorld();
         this.playerAnimation = new PlayerAnimation();
         this.batch = new SpriteBatch();
+        //Må finne en bedre måte å legge inn spritebatch
         this.player.getBody().setUserData(this.batch);
 
        
@@ -77,7 +78,7 @@ public class GameScreen implements Screen {
         // TODO her kalle på PLayerController.java handleINput.
         gameCam.update();
 
-        gameCam.position.set(gameCam.viewportWidth/2 ,gameCam.viewportHeight/2,0f);
+        gameCam.position.set(this.player.getX() ,this.player.getY(),0f);
         
         // renderer.setView(gameCam); MÅ finne ut hva som skal være renderer object
     }

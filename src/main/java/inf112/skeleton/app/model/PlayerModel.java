@@ -61,8 +61,9 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         System.out.println("PlayerModel.moveRight");
         moveRight = value;
         this.x+= 10;
-        this.body.setLinearVelocity(240,-25f);
+
         this.playerState = PlayerState.RIGHT;
+
     }
     @Override
     public void moveIdle(boolean value){
