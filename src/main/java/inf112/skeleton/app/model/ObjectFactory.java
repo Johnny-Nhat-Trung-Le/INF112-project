@@ -1,15 +1,16 @@
 package inf112.skeleton.app.model;
 
 import com.badlogic.gdx.physics.box2d.World;
-import inf112.skeleton.app.grid.IGrid;
+
+import java.util.List;
 
 public abstract class ObjectFactory {
     /**
-     * Creates an {@link IGrid} containing {@link TileModel}s.
+     * Creates a {@link List} containing {@link TileModel}s.
      * Where the tiles are created in the specified {@link World}.
      * @param s string where each character represents a {@link TileModel}
      * @param world the {@link World} the tiles are created in
-     * @return the generated {@link IGrid}
+     * @return the generated {@link List}
      */
-    abstract IGrid<TileModel> generate(String s, World world);
+    abstract List<TileModel> generate(String s, World world);
 }
