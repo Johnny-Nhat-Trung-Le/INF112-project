@@ -15,19 +15,44 @@ import java.util.List;
 public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener {
     private static final float GRAVITY = -9.81f;
     private static final float WIND = 0;
-    private static final int VELOCITY_ITERATIONS = 1;
-    private static final int POSITION_ITERATIONS = 1;
+    private static final int VELOCITY_ITERATIONS = 6;
+    private static final int POSITION_ITERATIONS = 2;
     private static final float WIDTH = 20;
     private static final float HEIGHT = 20;
 
     private final List<TileModel> foreground;
+    private final List<TileModel> background;
+    private final List<Item> items;
     private final World world;
     private final PlayerModel player;
+    private GameState state;
 
     public GameModel() {
         foreground = new ArrayList<>();
+        background = new ArrayList<>();
+        items = new ArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
         player = new PlayerModel(world);
+        state = GameState.ACTIVE;
+
+        fillWorld();
+    }
+
+    /**
+     * Used for testing
+     */
+    private void fillWorld() {
+        float w = 2;
+        float h = 2;
+
+        TileModel sb = new TileModel(world, WIDTH / 2, -5, WIDTH + 20, 10);
+        foreground.add(sb);
+
+        TileModel sl = new TileModel(world, -5, HEIGHT / 2, 10, HEIGHT + 20);
+        foreground.add(sl);
+
+        TileModel t2 = new TileModel(world, 8, 8, w, h);
+        foreground.add(t2);
     }
 
     @Override
@@ -54,20 +79,22 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
 
     @Override
     public ControllablePlayerModel getControllablePlayer() {
-        return null;
+        return player;
     }
 
     @Override
-    public void setState(GameState state) {}
+    public void setState(GameState state) {
+        this.state = state;
+    }
 
     @Override
     public GameState getState() {
-        return null;
+        return state;
     }
 
     @Override
     public ViewablePlayerModel getViewablePlayer() {
-        return null;
+        return player;
     }
 
     @Override
@@ -77,17 +104,17 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
 
     @Override
     public Iterable<ViewableTile> getBackgroundTiles() {
-        return null;
+        return background.stream().map((t) -> (ViewableTile) t).toList();
     }
 
     @Override
     public Iterable<ViewableItem> getItems() {
-        return null;
+        return items.stream().map((i) -> (ViewableItem) i).toList();
     }
 
     @Override
     public void step(float timeStep) {
-        world.step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
         player.step(timeStep);
+        world.step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     }
 }

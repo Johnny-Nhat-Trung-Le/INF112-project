@@ -1,44 +1,59 @@
 package inf112.skeleton.app.model;
 
 import com.badlogic.gdx.physics.box2d.*;
+import inf112.skeleton.app.event.Event;
+import inf112.skeleton.app.event.EventHandler;
+import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.ViewableTile;
 
-public class TileModel implements ViewableTile, Physicable, Stepable {
+public class TileModel implements ViewableTile, Physicable, Stepable, EventHandler {
     private final World world;
     private final Body body;
-    private float x;
-    private float y;
-    private float width;
-    private float height;
+    private final Shape shape;
+    private final float width;
+    private final float height;
 
+    /**
+     * Creates a {@link TileModel} and places its body in
+     * the specified {@link World}.
+     *
+     * @param world that the body is added to
+     * @param x center position in the horizontal axis
+     * @param y center position in the vertical axis
+     * @param w width of body
+     * @param h height of body
+     */
     public TileModel(World world, float x, float y, float w, float h) {
         this.world = world;
-        this.x = x;
-        this.y = y;
         width = w;
         height = h;
-        this.body = world.createBody(createBodyDef(x,y));
-        body.createFixture(createFixtureDef(w, h));
+        shape = createShape(w,h);
+        body = createBody(x,y);
     }
 
-    protected BodyDef createBodyDef(float x, float y) {
-        BodyDef def = new BodyDef();
-        def.type = BodyDef.BodyType.StaticBody;
-        def.position.set(x, y);
-        return def;
-    }
+    /**
+     * Must be called after {@link Shape} has been initialized
+     * to set the body's shape.
+     */
+    protected Body createBody(float x, float y) {
+        BodyDef bDef = new BodyDef();
+        bDef.type = BodyDef.BodyType.StaticBody;
+        bDef.position.set(x, y);
 
-    protected FixtureDef createFixtureDef(float w, float h) {
-        FixtureDef def = new FixtureDef();
-        def.density = 0.5f;
-        def.friction = 0.5f;
-        def.shape = createShape(w, h);
-        return def;
+        FixtureDef fDef = new FixtureDef();
+        fDef.density = 0.5f;
+        fDef.friction = 0.5f;
+        fDef.shape = shape;
+
+        Body b = world.createBody(bDef);
+        b.createFixture(fDef);
+
+        return b;
     }
 
     protected Shape createShape(float w, float h) {
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(w, h);
+        shape.setAsBox(w / 2, h / 2);
         return shape;
     }
 
@@ -49,12 +64,12 @@ public class TileModel implements ViewableTile, Physicable, Stepable {
 
     @Override
     public float getX() {
-        return x;
+        return body.getPosition().x - width / 2;
     }
 
     @Override
     public float getY() {
-        return y;
+        return body.getPosition().y - height / 2;
     }
 
     @Override
@@ -69,4 +84,11 @@ public class TileModel implements ViewableTile, Physicable, Stepable {
 
     @Override
     public void step(float timeStep) {}
+
+    @Override
+    public void handleEvent(Event event) {
+        if (event instanceof EventDispose) {
+            shape.dispose();
+        }
+    }
 }
