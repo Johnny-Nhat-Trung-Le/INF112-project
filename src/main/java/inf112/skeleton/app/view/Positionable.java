@@ -7,7 +7,7 @@ public interface Positionable {
     float getX();
 
     /**
-     * @return vertical top-most position
+     * @return vertical bottom-most position
      */
     float getY();
 }
