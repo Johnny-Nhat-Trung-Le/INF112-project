@@ -31,7 +31,7 @@ public class GameScreenTest extends ScreenAdapter {
     public GameScreenTest(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
-        this.world = new World(new Vector2(0, -25f * PPM), false);
+        this.world = new World(new Vector2(0, -20f), false);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 
         this.tileMapHelper = new TileMapHelper(this);
