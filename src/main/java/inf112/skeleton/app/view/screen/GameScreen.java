@@ -19,7 +19,8 @@ import inf112.skeleton.app.view.ViewableTile;
 import inf112.skeleton.app.view.texturepack.PlayerAnimation;
 
 public class GameScreen implements Screen {
-    private static final float ASPECT_RATIO = 1.5f;
+    private static final float VIEWPORT_WIDTH = 20;
+    private static final float VIEWPORT_HEIGHT = 20;
     private final EventBus eventBus;
     private final ShapeRenderer sRenderer;
     private final ViewableGameModel model;
@@ -35,8 +36,8 @@ public class GameScreen implements Screen {
         this.model = model;
         eventBus = bus;
 
-        gameCam = new OrthographicCamera(model.getWidth(), model.getHeight());
-        gamePort = new FillViewport(model.getWidth(), model.getWidth() / ASPECT_RATIO, gameCam);
+        gameCam = new OrthographicCamera();
+        gamePort = new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam);
 
         sRenderer = new ShapeRenderer();
 
@@ -92,12 +93,12 @@ public class GameScreen implements Screen {
 
     private void renderBackground() {
         sRenderer.setColor(Color.TEAL);
-        sRenderer.rect(-model.getWidth(), -model.getHeight(), model.getWidth() * 3, model.getHeight() * 3);
+        sRenderer.rect(-VIEWPORT_WIDTH, -VIEWPORT_HEIGHT, VIEWPORT_WIDTH * 3, VIEWPORT_HEIGHT * 3);
     }
 
     private void renderWorld() {
         sRenderer.setColor(Color.BROWN);
-        sRenderer.rect(0, 0, model.getWidth(), model.getHeight());
+        sRenderer.rect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     }
 
     private void renderTiles() {
@@ -108,7 +109,7 @@ public class GameScreen implements Screen {
 
     private void renderTile(ViewableTile tile) {
         sRenderer.setColor(Color.BLUE);
-        sRenderer.rect(tile.getX(), tile.getY(), tile.getHeight(), tile.getWidth());
+        sRenderer.rect(tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
     }
 
     private void renderPlayer() {

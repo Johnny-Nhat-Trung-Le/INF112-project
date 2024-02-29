@@ -16,7 +16,6 @@ public class PlayerAnimation implements ITexturePack {
     private final static int tileWidth = 32;
     private final static int tileHeight = 32;
     private static final Map<PlayerState,Animation<TextureRegion>> animationMap;
-    private float l, r, u, d;
 
     static{
         animationMap = new HashMap<PlayerState, Animation<TextureRegion>>(){

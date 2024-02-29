@@ -17,9 +17,6 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private static final float WIND = 0;
     private static final int VELOCITY_ITERATIONS = 6;
     private static final int POSITION_ITERATIONS = 2;
-    private static final float WIDTH = 20;
-    private static final float HEIGHT = 20;
-
     private final List<TileModel> foreground;
     private final List<TileModel> background;
     private final List<Item> items;
@@ -46,29 +43,14 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         float w = 2;
         float h = 2;
 
-        TileModel sb = new TileModel(world, WIDTH / 2, -5, WIDTH + 20, 10);
+        TileModel sb = new TileModel(world, 10, -5, 20, 10);
         foreground.add(sb);
 
-        TileModel sl = new TileModel(world, -5, HEIGHT / 2, 10, HEIGHT + 20);
+        TileModel sl = new TileModel(world, -5, 10, 10, 20);
         foreground.add(sl);
 
         TileModel t2 = new TileModel(world, 8, 8, w, h);
         foreground.add(t2);
-    }
-
-    @Override
-    public World getWorld(){
-        return this.world;
-    }
-
-    @Override
-    public float getWidth() {
-       return WIDTH;
-    }
-
-    @Override
-    public float getHeight() {
-        return HEIGHT;
     }
 
     @Override

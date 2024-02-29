@@ -5,9 +5,7 @@ import inf112.skeleton.app.model.GameStateGettable;
 import inf112.skeleton.app.model.PlayerModel;
 
 
-public interface ViewableGameModel extends Sizeable, GameStateGettable {
-    World getWorld();
-
+public interface ViewableGameModel extends GameStateGettable {
     /**
      * @return the active {@link ViewablePlayerModel} in the game
      */
