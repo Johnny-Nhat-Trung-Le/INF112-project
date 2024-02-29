@@ -1,8 +1,13 @@
 package inf112.skeleton.app.view;
 
+import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.model.GameStateGettable;
+import inf112.skeleton.app.model.PlayerModel;
+
 
 public interface ViewableGameModel extends Sizeable, GameStateGettable {
+    World getWorld();
+
     /**
      * @return the active {@link ViewablePlayerModel} in the game
      */

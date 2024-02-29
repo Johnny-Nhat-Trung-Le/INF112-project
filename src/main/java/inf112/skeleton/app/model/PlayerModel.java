@@ -9,7 +9,6 @@ import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 
-
 public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler {
     private static final float WIDTH = 3;
     private static final float HEIGHT = 3;
@@ -18,15 +17,21 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private static final float MAX_DX = 8;
     private static final float MAX_DY = 8;
 
-    private boolean moveUp, moveDown, moveLeft, moveRight;
     private final World world;
+    private Shape shape;
     private final Body body;
-    private final Shape shape;
+    private PlayerState playerState;
+    private boolean moveUp, moveDown, moveLeft, moveRight;
 
-    public PlayerModel(World world) {
+    /**
+     * @param world which the {@link Body} is created
+     * @param x left-most position of player
+     * @param y bottom-most position of player
+     */
+    public PlayerModel(World world, float x, float y) {
         this.world = world;
-        shape = createShape();
-        body = createBody(WIDTH / 2, HEIGHT / 2);
+        body = createBody(x + WIDTH / 2, y + HEIGHT / 2);
+        playerState = PlayerState.IDLE;
         moveUp = false;
         moveDown = false;
         moveLeft = false;
@@ -95,6 +100,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         if (moveLeft && !moveRight) {
             move(-DX,0);
         }
+        updateState();
     }
 
     private void move(float dx, float dy) {
@@ -111,9 +117,18 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     /**
-     * Must be called after {@link Shape} has been initialized.
+     * Initializes the {@code shape}-variable and creates
+     * a {@link Body} with its fixture.
+     *
+     * @param x left-most position of player
+     * @param y bottom-most position of player
+     * @return the newly created {@link Body}
      */
     private Body createBody(float x, float y) {
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(WIDTH / 2, HEIGHT / 2);
+        this.shape = shape;
+
         BodyDef bDef = new BodyDef();
         bDef.type = BodyDef.BodyType.DynamicBody;
         bDef.position.set(x, y);
@@ -130,16 +145,19 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         return b;
     }
 
-    private Shape createShape() {
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(WIDTH / 2, HEIGHT / 2);
-        return shape;
-    }
-
     @Override
     public void handleEvent(Event event) {
         if (event instanceof EventDispose) {
             shape.dispose();
         }
+    }
+
+    @Override
+    public PlayerState getPlayerState() {
+        return this.playerState;
+    }
+
+    private void updateState() {
+        // TODO - implement
     }
 }

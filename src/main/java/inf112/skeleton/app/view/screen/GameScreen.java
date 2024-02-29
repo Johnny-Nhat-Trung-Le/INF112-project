@@ -5,54 +5,61 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 import inf112.skeleton.app.event.EventBus;
-import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.model.event.EventStep;
+import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 import inf112.skeleton.app.view.ViewableTile;
+import inf112.skeleton.app.view.texturepack.PlayerAnimation;
 
 public class GameScreen implements Screen {
     private static final float ASPECT_RATIO = 1.5f;
     private final EventBus eventBus;
     private final ShapeRenderer sRenderer;
-    private final GameModel model;
+    private final ViewableGameModel model;
     private final OrthographicCamera gameCam;
     private final Viewport gamePort;
+    private final SpriteBatch batch;
+    private float dt;
 
-    public GameScreen(GameModel model, EventBus bus, InputProcessor processor) {
+    public GameScreen(ViewableGameModel model, EventBus bus, InputProcessor processor) {
         Gdx.graphics.setForegroundFPS(60);
         Gdx.input.setInputProcessor(processor);
 
         this.model = model;
         eventBus = bus;
-        sRenderer = new ShapeRenderer();
 
-        gameCam = new OrthographicCamera();
-        gameCam.zoom = 1f;
-
+        gameCam = new OrthographicCamera(model.getWidth(), model.getHeight());
         gamePort = new FillViewport(model.getWidth(), model.getWidth() / ASPECT_RATIO, gameCam);
 
-        gameCam.update();
+        sRenderer = new ShapeRenderer();
 
+        batch = new SpriteBatch();
+        dt = 0;
     }
 
     @Override
-    public void show() {}
+    public void show() {
+        gameCam.zoom = 2f;
+
+        updateCamToPlayer();
+    }
 
     @Override
     public void render(float delta) {
         eventBus.post(new EventStep(delta));
         updateCamToPlayer();
 
-        ScreenUtils.clear(0,0,0,0);
+        ViewablePlayerModel player = model.getViewablePlayer();
 
-        sRenderer.setProjectionMatrix(gameCam.combined);
+        ScreenUtils.clear(0, 0, 0, 0);
+
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         renderBackground();
@@ -61,11 +68,25 @@ public class GameScreen implements Screen {
         renderPlayer();
 
         sRenderer.end();
+
+        this.dt += Gdx.graphics.getDeltaTime();
+        this.batch.begin();
+        // Draws the player
+        this.batch.draw(
+                PlayerAnimation.getAnimation(player.getPlayerState()).getKeyFrame(dt, true),
+                player.getX(),
+                player.getY(),
+                player.getWidth(),
+                player.getHeight()
+        );
+        this.batch.end();
     }
 
     private void updateCamToPlayer() {
         ViewablePlayerModel p = model.getViewablePlayer();
         gameCam.position.set(p.getX() + p.getWidth() / 2, p.getY() + p.getHeight() / 2, 0);
+        sRenderer.setProjectionMatrix(gameCam.combined);
+        batch.setProjectionMatrix(gameCam.combined);
         gameCam.update();
     }
 
@@ -76,7 +97,7 @@ public class GameScreen implements Screen {
 
     private void renderWorld() {
         sRenderer.setColor(Color.BROWN);
-        sRenderer.rect(0,0, model.getWidth(), model.getHeight());
+        sRenderer.rect(0, 0, model.getWidth(), model.getHeight());
     }
 
     private void renderTiles() {
@@ -100,22 +121,26 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         sRenderer.dispose();
+        batch.dispose();
         eventBus.post(new EventDispose());
     }
 
     @Override
     public void resize(int width, int height) {
-        gamePort.update(width,height);
+        gamePort.update(width, height);
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
 }
 

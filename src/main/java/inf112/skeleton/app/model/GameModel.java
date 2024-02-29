@@ -26,13 +26,14 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private final World world;
     private final PlayerModel player;
     private GameState state;
+    private PlayerModel playerModel;
 
     public GameModel() {
         foreground = new ArrayList<>();
         background = new ArrayList<>();
         items = new ArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
-        player = new PlayerModel(world);
+        player = new PlayerModel(world, 1.5f, 1.5f);
         state = GameState.ACTIVE;
 
         fillWorld();
@@ -53,6 +54,11 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
 
         TileModel t2 = new TileModel(world, 8, 8, w, h);
         foreground.add(t2);
+    }
+
+    @Override
+    public World getWorld(){
+        return this.world;
     }
 
     @Override
