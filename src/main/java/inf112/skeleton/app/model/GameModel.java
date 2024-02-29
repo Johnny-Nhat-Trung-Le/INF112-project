@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.controller.ControllableGameModel;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
+import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
@@ -30,7 +31,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         background = new ArrayList<>();
         items = new ArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
-        player = new PlayerModel(world, 1.5f, 1.5f);
+        player = new PlayerModel(world, 1.5f, 6.5f);
         state = GameState.ACTIVE;
 
         fillWorld();
@@ -40,17 +41,14 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
      * Used for testing
      */
     private void fillWorld() {
-        float w = 2;
-        float h = 2;
-
-        TileModel sb = new TileModel(world, 10, -5, 20, 10);
-        foreground.add(sb);
-
-        TileModel sl = new TileModel(world, -5, 10, 10, 20);
-        foreground.add(sl);
-
-        TileModel t2 = new TileModel(world, 8, 8, w, h);
-        foreground.add(t2);
+        List<TileModel> tiles = TileFactory.generate(
+                """
+                       -0--
+                       ---0
+                       0000
+                       """,
+                world,new EventBus());
+        foreground.addAll(tiles);
     }
 
     @Override

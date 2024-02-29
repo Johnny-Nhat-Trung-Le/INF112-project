@@ -7,7 +7,7 @@ import inf112.skeleton.app.utils.Function4;
 import java.util.*;
 
 public class TileFactory {
-    private static final Map<Character, Function4<World, EventBus, Float, Float, TileModel>> translation = new HashMap<>();
+    public static final Map<Character, Function4<World, EventBus, Float, Float, TileModel>> translation = new HashMap<>();
 
     /**
      * Creates a {@link List} containing {@link TileModel}s.
@@ -17,7 +17,7 @@ public class TileFactory {
      * @param world the {@link World} the tiles are created in
      * @return the generated {@link List}
      */
-    public static List<TileModel> generate(String s, World world, EventBus bus, float width, float height) {
+    public static List<TileModel> generate(String s, World world, EventBus bus) {
         String[] lines = s.split("\n");
 
         int rows = lines.length;
@@ -33,7 +33,7 @@ public class TileFactory {
 
                 if (translation.containsKey(key)) {
                     float x = TileModel.TILE_WIDTH * j;
-                    float y = TileModel.TILE_HEIGHT * i;
+                    float y = TileModel.TILE_HEIGHT * (rows - 1 - i);
                     TileModel tile = translation.get(key).apply(world, bus, x, y);
                     tiles.add(tile);
                 }

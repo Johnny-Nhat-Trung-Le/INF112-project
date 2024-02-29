@@ -6,10 +6,13 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import inf112.skeleton.app.controller.Controller;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.GameModel;
+import inf112.skeleton.app.model.TileModel;
 import inf112.skeleton.app.view.GameView;
 
 public class Main {
     public static void main(String[] args) {
+        loadClasses();
+
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setTitle("game");
         cfg.setWindowedMode(480, 320);
@@ -24,5 +27,9 @@ public class Main {
         GameView view = new GameView(model, bus, controller);
 
         new Lwjgl3Application(view, cfg);
+    }
+
+    private static void loadClasses() {
+        TileModel.loadStatic();
     }
 }

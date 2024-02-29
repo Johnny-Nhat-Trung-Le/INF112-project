@@ -15,6 +15,14 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
     private final float width;
     private final float height;
 
+    public static void loadStatic(){}
+
+    static {
+        TileFactory.register('0', (world, eventBus, x, y) -> {
+            return new TileModel(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT);
+        });
+    }
+
     /**
      * Creates a {@link TileModel} and places its body in
      * the specified {@link World}.
