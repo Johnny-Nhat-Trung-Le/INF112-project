@@ -4,36 +4,52 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.controller.ControllableGameModel;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
+import inf112.skeleton.app.event.EventBus;
+import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 import inf112.skeleton.app.view.ViewableTile;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener {
-    private static final float GRAVITY = 10;
-    private int width = 600;
-    private int height = 750;
+    private static final float GRAVITY = -9.81f;
+    private static final float WIND = 0;
+    private static final int VELOCITY_ITERATIONS = 6;
+    private static final int POSITION_ITERATIONS = 2;
     private final List<TileModel> foreground;
+    private final List<TileModel> background;
+    private final List<Item> items;
     private final World world;
+    private final PlayerModel player;
+    private GameState state;
+    private PlayerModel playerModel;
 
     public GameModel() {
-        // TODO - fix initSize after game size
         foreground = new ArrayList<>();
-        world = new World(new Vector2(0, GRAVITY), true);
+        background = new ArrayList<>();
+        items = new ArrayList<>();
+        world = new World(new Vector2(WIND, GRAVITY), true);
+        player = new PlayerModel(world, 1.5f, 6.5f);
+        state = GameState.ACTIVE;
+
+        fillWorld();
     }
 
-    @Override
-    public float getWidth() {
-       return this.width;
-    }
-
-    @Override
-    public float getHeight() {
-        return this.height;
+    /**
+     * Used for testing
+     */
+    private void fillWorld() {
+        List<TileModel> tiles = TileFactory.generate(
+                """
+                       -0--
+                       ---0
+                       0000
+                       """,
+                world,new EventBus());
+        foreground.addAll(tiles);
     }
 
     @Override
@@ -50,37 +66,42 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
 
     @Override
     public ControllablePlayerModel getControllablePlayer() {
-        return null;
+        return player;
     }
 
     @Override
-    public void setState(GameState state) {}
+    public void setState(GameState state) {
+        this.state = state;
+    }
 
     @Override
     public GameState getState() {
-        return null;
+        return state;
     }
 
     @Override
     public ViewablePlayerModel getViewablePlayer() {
-        return null;
+        return player;
     }
 
     @Override
-    public Iterator<ViewableTile> getForegroundTiles() {
-        return foreground.stream().map((tile) -> (ViewableTile) tile).iterator();
+    public Iterable<ViewableTile> getForegroundTiles() {
+        return foreground.stream().map((t) -> (ViewableTile) t).toList();
     }
 
     @Override
-    public Iterator<ViewableTile> getBackgroundTiles() {
-        return null;
+    public Iterable<ViewableTile> getBackgroundTiles() {
+        return background.stream().map((t) -> (ViewableTile) t).toList();
     }
 
     @Override
-    public Iterator<ViewableItem> getItems() {
-        return null;
+    public Iterable<ViewableItem> getItems() {
+        return items.stream().map((i) -> (ViewableItem) i).toList();
     }
 
     @Override
-    public void step() {}
+    public void step(float timeStep) {
+        player.step(timeStep);
+        world.step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    }
 }

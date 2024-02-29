@@ -1,44 +1,65 @@
 package inf112.skeleton.app.controller;
 
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
+import inf112.skeleton.app.event.Event;
+import inf112.skeleton.app.event.EventHandler;
+import inf112.skeleton.app.model.event.EventStep;
 
-public class Controller extends InputAdapter {
-    private ControllableGameModel model;
-    private ControllablePlayerModel playerModel;
+public class Controller extends InputAdapter implements EventHandler {
+    private final ControllableGameModel model;
 
     public Controller(ControllableGameModel model){
         this.model = model;
-        this.playerModel = this.model.getControllablePlayer();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        // TODO - legg på mer cases for ulike taster. (eks. useItem, pause, exit etc)
+        ControllablePlayerModel player = model.getControllablePlayer();
+
         switch(keycode){
-            case Keys.W: this.playerModel.moveUp(true);
-            case Keys.A: this.playerModel.moveLeft(true);
-            case Keys.S: this.playerModel.moveDown(true);
-            case Keys.D: this.playerModel.moveRight(true);
+            case Keys.W:
+                player.moveUp(true);
+                break;
+            case Keys.A:
+                player.moveLeft(true);
+                break;
+            case Keys.S:
+                player.moveDown(true);
+                break;
+            case Keys.D:
+                player.moveRight(true);
+                break;
         }
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        if(Keys.W == keycode){
-            this.playerModel.moveUp(false);
+        ControllablePlayerModel player = model.getControllablePlayer();
+
+        switch (keycode){
+            case Keys.W:
+                player.moveUp(false);
+                break;
+            case Keys.A:
+                player.moveLeft(false);
+                break;
+            case Keys.S:
+                player.moveDown(false);
+                break;
+            case Keys.D:
+                player.moveRight(false);
+                break;
         }
-        else if(Keys.A == keycode){
-            this.playerModel.moveLeft(false);
-        }
-        else if(Keys.S == keycode){
-            this.playerModel.moveDown(false);
-        }
-        else if(Keys.D == keycode){
-            this.playerModel.moveRight(false);
-        }
-        return false;
+        return true;
     }
+
+    @Override
+    public void handleEvent(Event event) {
+        if (event instanceof EventStep e) {
+            model.step(e.timeStep());
+        }
+    }
+
 }
