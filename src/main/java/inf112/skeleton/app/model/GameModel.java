@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.controller.ControllableGameModel;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.EventBus;
+import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;

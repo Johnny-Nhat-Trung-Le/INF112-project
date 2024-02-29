@@ -1,8 +1,11 @@
-package inf112.skeleton.app.model;
+package inf112.skeleton.app.model.tiles;
 
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventHandler;
+import inf112.skeleton.app.model.Physicable;
+import inf112.skeleton.app.model.Stepable;
+import inf112.skeleton.app.model.TileFactory;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.ViewableTile;
 

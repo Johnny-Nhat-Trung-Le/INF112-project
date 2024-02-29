@@ -6,7 +6,8 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import inf112.skeleton.app.controller.Controller;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.GameModel;
-import inf112.skeleton.app.model.TileModel;
+import inf112.skeleton.app.model.tiles.TileGround;
+import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.view.GameView;
 
 public class Main {
@@ -31,5 +32,6 @@ public class Main {
 
     private static void loadClasses() {
         TileModel.loadStatic();
+        TileGround.loadStatic();
     }
 }
