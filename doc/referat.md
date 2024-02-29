@@ -34,4 +34,3 @@
     Diskutere hva som knytter sammen og hvordan ulike klasser/ interfaces interagerer med hverandre. 
     Hvordan ting skal vises på skjermen med tanke på typ bilde/animmasjon/ texture. Til slutt lagte/ begynte å lage en prioritert liste og tildelte noen få oppgaver
 
-    
