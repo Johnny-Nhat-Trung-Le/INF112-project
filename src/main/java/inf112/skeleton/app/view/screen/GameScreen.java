@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -73,20 +74,22 @@ public class GameScreen implements Screen {
 
         ScreenUtils.clear(0, 0, 0, 0);
 
+        renderTiles();
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         renderBackground();
         renderWorld();
-        renderTiles();
+
         renderPlayer();
 
         sRenderer.end();
 
         this.dt += Gdx.graphics.getDeltaTime();
         this.batch.begin();
-        TextureRegion tileTexture = texturePack.getTexture("tile_0");
-        batch.draw(tileTexture, 0, 0, 20, 20);
 
+
+//        this.batch.draw(texturePack.getTexture("tile_0"),0,0,16,16);
+        this.batch.draw(texturePack.test(),0,0,16,16);
         // Draws the player
         this.batch.draw(
                 PlayerAnimation.getAnimation(player.getPlayerState()).getKeyFrame(dt, true),
@@ -96,8 +99,6 @@ public class GameScreen implements Screen {
                 player.getHeight()
         );
         this.batch.end();
-        // Testing
-        batch.flush();
     }
 
     private void updateCamToPlayer() {
@@ -126,18 +127,21 @@ public class GameScreen implements Screen {
 
     private void renderTile(ViewableTile tile) {
         TextureRegion tileTexture = texturePack.getTileTexture(tile);
+        System.out.println(tile.getTextureKey());
 
-        sRenderer.setColor(Color.BLUE);
-        sRenderer.rect(tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
+//        sRenderer.setColor(Color.BLUE);
+//        sRenderer.rect(tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
         // Testing
         if (tileTexture != null) {
+            System.out.println("meow meow n");
             // I`WHY DOESNT INT FUCKGIN DRAW THIS RETARDED PIREFE OF ODGSHIT
+            // Idiont se
             batch.begin();
             batch.draw(tileTexture, tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
             batch.end();
         } else {
             // fuck my life
-            System.out.println("Texture not found " + tile.getTextureKey());
+            System.out.println("Texture not found muddafukka raaahhhh" + tile.getTextureKey());
         }
 
     }

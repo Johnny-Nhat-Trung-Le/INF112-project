@@ -3,6 +3,7 @@ package inf112.skeleton.app.view.texturepack;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import inf112.skeleton.app.model.PlayerState;
@@ -68,6 +69,11 @@ public class PlayerAnimation implements ITexturePack {
 
     @Override
     public TextureRegion getTileTexture(ViewableTile tile) {
+        return null;
+    }
+
+    @Override
+    public TextureRegion test() {
         return null;
     }
 
