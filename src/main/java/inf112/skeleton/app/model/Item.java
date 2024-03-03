@@ -3,7 +3,7 @@ package inf112.skeleton.app.model;
 import inf112.skeleton.app.model.event.EventItemUsedUp;
 import inf112.skeleton.app.view.ViewableItem;
 
-public interface Item extends ViewableItem {
+public interface Item extends ViewableItem, Physicable {
     /**
      * Uses the item and decreases its durability. If
      * the item is used up an {@link EventItemUsedUp} will

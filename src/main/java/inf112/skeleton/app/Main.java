@@ -3,7 +3,6 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
-import inf112.skeleton.app.TileMapTesting.core.Boot;
 import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.PlayerModel;
 import inf112.skeleton.app.view.GameView;
@@ -15,6 +14,6 @@ public class Main {
         cfg.setWindowedMode(480, 320);
         GameModel model = new GameModel();
         PlayerModel player = new PlayerModel();
-        new Lwjgl3Application(new Boot(), cfg);
+        new Lwjgl3Application(new GameView(model), cfg);
     }
 }
