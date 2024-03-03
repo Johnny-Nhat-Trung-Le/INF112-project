@@ -15,7 +15,7 @@ public class TexturePack implements ITexturePack {
     public static final String TILE_0 = "tile_0";
 
     static {
-        textureRegionMap.put(TILE_0, new TextureRegion(new Texture("/Users/trung/Desktop/the_googlers/src/main/resources/Tiles/tile_0080.png")));
+        textureRegionMap.put(TILE_0, new TextureRegion(new Texture("/Users/trung/Desktop/the_googlers/src/main/resources/Tiles/tile_0000.png")));
     }
 
 
