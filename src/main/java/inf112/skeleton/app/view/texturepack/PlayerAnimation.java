@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import inf112.skeleton.app.model.PlayerState;
+import inf112.skeleton.app.view.ViewableTile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +22,9 @@ public class PlayerAnimation implements ITexturePack {
         animationMap = new HashMap<PlayerState, Animation<TextureRegion>>(){
             {
                 put(PlayerState.DOWN,loadAnimation("Pink_Monster/Pink_Monster_Climb_4.png",4,tileWidth,tileHeight));
-                put(PlayerState.JUMP,loadAnimation("Pink_Monster/Pink_Monster_Jump_8.png",8,tileWidth,tileHeight));
-                put(PlayerState.LEFT,loadAnimation("Pink_Monster/Pink_Monster_Run_6.png",6,tileWidth,tileHeight));
+                put(PlayerState.JUMPRIGHT,loadAnimation("Pink_Monster/Pink_Monster_Jump_8.png",8,tileWidth,tileHeight));
+                put(PlayerState.JUMPLEFT,loadAnimation("Pink_Monster/Pink_Monster_Jump_8_LEFT.png",8,tileWidth,tileHeight));
+                put(PlayerState.LEFT,loadAnimation("Pink_Monster/Pink_Monster_Run_6_LEFT.png",6,tileWidth,tileHeight));
                 put(PlayerState.RIGHT, loadAnimation("Pink_Monster/Pink_Monster_Run_6.png",6,tileWidth,tileHeight));
                 put(PlayerState.IDLE,loadAnimation("Pink_Monster/Pink_Monster_Idle_4.png",4,tileWidth,tileHeight));
             }
@@ -58,6 +60,16 @@ public class PlayerAnimation implements ITexturePack {
         }
         return  new Animation<TextureRegion>(1f/16f,animationFrames);
     };
+
+    @Override
+    public TextureRegion getTexture(String key) {
+        return null;
+    }
+
+    @Override
+    public TextureRegion getTileTexture(ViewableTile tile) {
+        return null;
+    }
 
 
 }

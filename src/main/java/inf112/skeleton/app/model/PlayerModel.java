@@ -16,12 +16,14 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private static final float DY = 4f;
     private static final float MAX_DX = 8;
     private static final float MAX_DY = 8;
-
+    // Testing
+    private float velX;
     private final World world;
     private Shape shape;
     private final Body body;
     private PlayerState playerState;
     private boolean moveUp, moveDown, moveLeft, moveRight;
+    private int jumpCounter;
 
     /**
      * @param world which the {@link Body} is created
@@ -36,6 +38,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         moveDown = false;
         moveLeft = false;
         moveRight = false;
+        jumpCounter = 0;
     }
 
     @Override
@@ -107,13 +110,23 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         Vector2 d = body.getLinearVelocity();
         float x = body.getPosition().x;
         float y = body.getPosition().y;
+        velX = 0;
 
-        if (dx > 0 && d.x < MAX_DX || dx < 0 && d.x > -MAX_DX){
-            body.applyLinearImpulse(dx, 0, x, y, true);
+//        if (dx > 0 && d.x < MAX_DX || dx < 0 && d.x > -MAX_DX){
+//            body.applyLinearImpulse(dx, 0, x, y, true);
+//        }
+        if (dx > 0) {
+            velX = DX;
         }
+        if (dx < 0) {
+            velX = -DX;
+        }
+
+        // THIS MUDDAFUKKA IS JUST RETARDED LIEK ON GOOOOOODDDDDD
         if (dy > 0 && d.y < MAX_DY || dy < 0 && d.y > -MAX_DY){
             body.applyLinearImpulse(0, dy, x, y, true);
         }
+        body.setLinearVelocity(velX, body.getLinearVelocity().y);
     }
 
     /**
@@ -158,6 +171,24 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     private void updateState() {
-        // TODO - implement
+        Vector2 velocity = body.getLinearVelocity();
+
+        if (isPlayerOnGround()) {
+            if (velocity.x > 0.1f) {
+                playerState = PlayerState.LEFT;
+            } else if (velocity.x < -0.1f) {
+                playerState = PlayerState.RIGHT;
+            } else {
+                playerState = PlayerState.IDLE;
+            }
+        } else if (velocity.x < 0.1f) {
+            playerState = PlayerState.JUMPLEFT;
+        } else {
+            playerState = PlayerState.JUMPRIGHT;
+        }
+    }
+
+    private boolean isPlayerOnGround() {
+        return Math.abs(body.getLinearVelocity().y) < 0.1f;
     }
 }

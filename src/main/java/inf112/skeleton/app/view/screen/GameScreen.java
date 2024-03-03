@@ -5,7 +5,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -16,8 +18,11 @@ import inf112.skeleton.app.model.event.EventStep;
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 import inf112.skeleton.app.view.ViewableTile;
+import inf112.skeleton.app.view.texturepack.ITexturePack;
 import inf112.skeleton.app.view.texturepack.PlayerAnimation;
+import inf112.skeleton.app.view.texturepack.TexturePack;
 
+//some imports
 public class GameScreen implements Screen {
     private static final float VIEWPORT_WIDTH = 20;
     private static final float VIEWPORT_HEIGHT = 20;
@@ -28,6 +33,9 @@ public class GameScreen implements Screen {
     private final Viewport gamePort;
     private final SpriteBatch batch;
     private float dt;
+
+    // Testing
+    private final ITexturePack texturePack;
 
     public GameScreen(ViewableGameModel model, EventBus bus, InputProcessor processor) {
         Gdx.graphics.setForegroundFPS(60);
@@ -40,6 +48,10 @@ public class GameScreen implements Screen {
         gamePort = new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam);
 
         sRenderer = new ShapeRenderer();
+
+        //Here
+        this.texturePack = new TexturePack();
+
 
         batch = new SpriteBatch();
         dt = 0;
@@ -72,6 +84,9 @@ public class GameScreen implements Screen {
 
         this.dt += Gdx.graphics.getDeltaTime();
         this.batch.begin();
+        TextureRegion tileTexture = texturePack.getTexture("tile_0");
+        batch.draw(tileTexture, 0, 0, 20, 20);
+
         // Draws the player
         this.batch.draw(
                 PlayerAnimation.getAnimation(player.getPlayerState()).getKeyFrame(dt, true),
@@ -81,6 +96,8 @@ public class GameScreen implements Screen {
                 player.getHeight()
         );
         this.batch.end();
+        // Testing
+        batch.flush();
     }
 
     private void updateCamToPlayer() {
@@ -92,7 +109,7 @@ public class GameScreen implements Screen {
     }
 
     private void renderBackground() {
-        sRenderer.setColor(Color.TEAL);
+        sRenderer.setColor(Color.BLACK);
         sRenderer.rect(-VIEWPORT_WIDTH, -VIEWPORT_HEIGHT, VIEWPORT_WIDTH * 3, VIEWPORT_HEIGHT * 3);
     }
 
@@ -108,8 +125,21 @@ public class GameScreen implements Screen {
     }
 
     private void renderTile(ViewableTile tile) {
+        TextureRegion tileTexture = texturePack.getTileTexture(tile);
+
         sRenderer.setColor(Color.BLUE);
         sRenderer.rect(tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
+        // Testing
+        if (tileTexture != null) {
+            // I`WHY DOESNT INT FUCKGIN DRAW THIS RETARDED PIREFE OF ODGSHIT
+            batch.begin();
+            batch.draw(tileTexture, tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
+            batch.end();
+        } else {
+            // fuck my life
+            System.out.println("Texture not found " + tile.getTextureKey());
+        }
+
     }
 
     private void renderPlayer() {
