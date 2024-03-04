@@ -13,9 +13,12 @@ public class TexturePack implements ITexturePack {
     public static final String TILE = "tile";
     // Legg til mer hvis vi vil ha andre sprite
 
-    // Maybe switch-case :D
+    // DO not use tilemode :D stupid fortids-Johnny (acoustic fuck)
+    // future note to self, add "tile".loadStatic into main
     @Override
     public TextureRegion getTileTexture(ViewableTile tile) {
+
+        // testing indices 8bytt ut til riktig når tiden er inne)
         if (tile instanceof TileGroundCornerLeft) {
             return new TextureRegion(atlas.findRegion(TILE, 49));
         }

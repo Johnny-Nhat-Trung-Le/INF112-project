@@ -23,6 +23,7 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
     }
 
     static {
+        // kanskje en annen key
         TileFactory.register('0', (world, eventBus, x, y) -> {
             return new TileModel(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT);
         });
