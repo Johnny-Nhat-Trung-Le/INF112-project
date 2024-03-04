@@ -62,9 +62,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         gameCam.zoom = 2f;
-
         updateCamToPlayer();
-
     }
 
     @Override
@@ -78,19 +76,15 @@ public class GameScreen implements Screen {
 
 
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
+        // flytt over til batch når implementering er ferdig
         renderBackground();
         renderWorld();
-
         renderPlayer();
-
         sRenderer.end();
 
         this.dt += Gdx.graphics.getDeltaTime();
         this.batch.begin();
-
-
-        //Draw the tiles
+        // Draw the tiles
         renderTiles();
         // Draws the player
         this.batch.draw(
@@ -128,26 +122,16 @@ public class GameScreen implements Screen {
         }
     }
 
+    // TODO
+    // Skriv java doc
+    // Tegner tile noe sånt OwO
     private void renderTile(ViewableTile tile) {
         TextureRegion tileTexture = texturePack.getTileTexture(tile);
-        //Problemet ligger her. Fordi eg flytta på renderTile slik at den ligger under spritebatch call.
-        //For når du lager en ny spritebatch tror eg det messer opp
-        //+ du kalte denne renderTiles metoden under debugRender.begin() and debugRender.end() istedet for batch.begin osv
-        /*   sRenderer.setColor(Color.BLUE);
-        sRenderer.rect(tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());*/
-        // Testing
         if (tileTexture != null) {
-            System.out.println("meow meow n");
-
-            // I`WHY DOESNT INT FUCKGIN DRAW THIS  PIREFE OF ODGSHIT
-            // Idiont se
             batch.draw(tileTexture, tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
-
         } else {
-            // fuck my life
-            System.out.println("Texture not found muddafukka raaahhhh" + tile.getTextureKey());
+            System.out.println("no draw");
         }
-
     }
 
     private void renderPlayer() {

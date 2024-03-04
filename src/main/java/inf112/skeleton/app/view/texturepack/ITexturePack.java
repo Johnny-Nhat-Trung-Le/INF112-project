@@ -1,6 +1,5 @@
 package inf112.skeleton.app.view.texturepack;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.view.ViewableTile;
 
@@ -12,9 +11,6 @@ public interface ITexturePack {
     */
 
     /// MEOW MEOW CRASXY CRSAYZ IM CRUAS
-    TextureRegion getTexture(String key);
     TextureRegion getTileTexture(ViewableTile tile);
-    // remove this muddafukka after good implementation, this fucker useless asFFUFUFUFUFUFUF
-    TextureRegion test();
 
 }

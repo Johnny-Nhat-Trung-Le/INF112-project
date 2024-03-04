@@ -63,17 +63,7 @@ public class PlayerAnimation implements ITexturePack {
     };
 
     @Override
-    public TextureRegion getTexture(String key) {
-        return null;
-    }
-
-    @Override
     public TextureRegion getTileTexture(ViewableTile tile) {
-        return null;
-    }
-
-    @Override
-    public TextureRegion test() {
         return null;
     }
 

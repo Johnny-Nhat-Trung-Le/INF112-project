@@ -1,6 +1,5 @@
 package inf112.skeleton.app.model.tiles;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventHandler;
@@ -9,9 +8,7 @@ import inf112.skeleton.app.model.Stepable;
 import inf112.skeleton.app.model.TileFactory;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.ViewableTile;
-import inf112.skeleton.app.view.texturepack.TexturePack;
 
-import static inf112.skeleton.app.view.texturepack.TexturePack.TILE_0;
 
 public class TileModel implements ViewableTile, Physicable, Stepable, EventHandler {
     public static final float TILE_WIDTH = 5;
@@ -21,16 +18,13 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
     private final Shape shape;
     private final float width;
     private final float height;
-    //Testing
-    private final String textureKey;
-
 
     public static void loadStatic() {
     }
 
     static {
         TileFactory.register('0', (world, eventBus, x, y) -> {
-            return new TileModel(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT, TILE_0);
+            return new TileModel(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT);
         });
     }
 
@@ -44,14 +38,12 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
      * @param w     width of body
      * @param h     height of body
      */
-    public TileModel(World world, float x, float y, float w, float h, String textureKey) {
+    public TileModel(World world, float x, float y, float w, float h) {
         this.world = world;
         width = w;
         height = h;
         shape = createShape(w, h);
         body = createBody(x, y);
-        // index when atlas works
-        this.textureKey = textureKey;
     }
 
     /**
@@ -114,13 +106,6 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
         if (event instanceof EventDispose) {
             shape.dispose();
         }
-    }
-
-
-    // MEWO MEWO INNOCENT METHOD
-    @Override
-    public String getTextureKey() {
-        return textureKey;
     }
 
 }
