@@ -44,7 +44,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private void fillWorld() {
         List<TileModel> tiles = TileFactory.generate(
                 """
-                       -----
+                       -----00
                        -----
                        000000000000000000000000
                        """,
