@@ -37,9 +37,10 @@ public class MenuScreen implements Screen{
 
     @Override
     public void show() {
-        gameCam.zoom = 2f;
+
     }
     private void update(){
+        gameCam.position.set(VIEWPORT_WIDTH/2, VIEWPORT_HEIGHT / 2, 0);
         batch.setProjectionMatrix(gameCam.combined);
         gameCam.update();
     }
@@ -47,17 +48,16 @@ public class MenuScreen implements Screen{
     public void render(float delta) {
         update();
         ScreenUtils.clear(0, 0, 0, 0);
-
         batch.begin();
         //Fills the whole screen
         batch.draw(texture,0,0,VIEWPORT_WIDTH,VIEWPORT_HEIGHT);
         batch.end();
-
     }
 
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height,true);
+        gameCam.update();
     }
 
     @Override
