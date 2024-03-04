@@ -122,4 +122,5 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
     public String getTextureKey() {
         return textureKey;
     }
+
 }

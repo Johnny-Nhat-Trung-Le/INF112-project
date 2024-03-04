@@ -19,7 +19,7 @@ public class TexturePack implements ITexturePack {
 
     static {
         new TextureRegion(atlas.findRegion("tile", 0));
-        textureRegionMap.put(TILE_0, new TextureRegion(new Texture("/Users/trung/Desktop/the_googlers/src/main/resources/Tiles/tile_0000.png")));
+        textureRegionMap.put(TILE_0, new TextureRegion(new Texture("Tiles/tile_0000.png")));
     }
 
 

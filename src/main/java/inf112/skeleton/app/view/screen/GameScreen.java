@@ -79,7 +79,7 @@ public class GameScreen implements Screen {
 
         renderBackground();
         renderWorld();
-        renderTiles();
+
         renderPlayer();
 
         sRenderer.end();
@@ -88,8 +88,8 @@ public class GameScreen implements Screen {
         this.batch.begin();
 
 
-//        this.batch.draw(texturePack.getTexture("tile_0"),0,0,16,16);
-//        this.batch.draw(texturePack.test(),0,0,16,16);
+        //Draw the tiles
+        renderTiles();
         // Draws the player
         this.batch.draw(
                 PlayerAnimation.getAnimation(player.getPlayerState()).getKeyFrame(dt, true),
@@ -98,6 +98,7 @@ public class GameScreen implements Screen {
                 player.getWidth(),
                 player.getHeight()
         );
+
         this.batch.end();
     }
 
@@ -127,17 +128,19 @@ public class GameScreen implements Screen {
 
     private void renderTile(ViewableTile tile) {
         TextureRegion tileTexture = texturePack.getTileTexture(tile);
-
-        sRenderer.setColor(Color.BLUE);
-        sRenderer.rect(tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
+        //Problemet ligger her. Fordi eg flytta på renderTile slik at den ligger under spritebatch call.
+        //For når du lager en ny spritebatch tror eg det messer opp
+        //+ du kalte denne renderTiles metoden under debugRender.begin() and debugRender.end() istedet for batch.begin osv
+        /*   sRenderer.setColor(Color.BLUE);
+        sRenderer.rect(tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());*/
         // Testing
         if (tileTexture != null) {
             System.out.println("meow meow n");
+
             // I`WHY DOESNT INT FUCKGIN DRAW THIS  PIREFE OF ODGSHIT
             // Idiont se
-            batch.begin();
             batch.draw(tileTexture, tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
-            batch.end();
+
         } else {
             // fuck my life
             System.out.println("Texture not found muddafukka raaahhhh" + tile.getTextureKey());
