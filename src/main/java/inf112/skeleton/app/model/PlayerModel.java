@@ -9,29 +9,36 @@ import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 
-public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler {
+public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
     private static final float WIDTH = 3;
     private static final float HEIGHT = 3;
-    private static final float DX = 4f;
-    private static final float DY = 4f;
-    private static final float MAX_DX = 8;
-    private static final float MAX_DY = 8;
+    private static final float DX = 10;
+    private static final float DY = 40;
+    private static final float AIR_CONTROL = 0.5f;
+    private static final float MAX_DX = 10;
+    private static final float MAX_DY = 30;
+    private static final float DENSITY = 0.5f;
+    private static final float FRICTION = 0;
+    private static final float FRICTION_BOTTOM = 10;
+    private static final float RESTITUTION = 0;
 
     private final World world;
-    private Shape shape;
     private final Body body;
-    private PlayerState playerState;
+    private Shape shapeTop, shapeBottom, shapeLeft, shapeRight;
+    private Shape shapeSensor;
+    private PlayerState state;
     private boolean moveUp, moveDown, moveLeft, moveRight;
+    private int contactCountSensor = 0;
 
     /**
-     * @param world which the {@link Body} is created
+     * @param world which the player-{@link Body} is created in
      * @param x left-most position of player
      * @param y bottom-most position of player
      */
     public PlayerModel(World world, float x, float y) {
         this.world = world;
-        body = createBody(x + WIDTH / 2, y + HEIGHT / 2);
-        playerState = PlayerState.IDLE;
+        body = createBody(x  + WIDTH / 2, y  + HEIGHT / 2);
+        state = PlayerState.IDLE;
         moveUp = false;
         moveDown = false;
         moveLeft = false;
@@ -88,19 +95,16 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     @Override
     public void step(float timeStep) {
-        if (moveUp && !moveDown) {
-            move(0,DY);
-        }
-        if (moveDown && !moveUp) {
-            move(0,-DY);
-        }
-        if (moveRight && !moveLeft) {
-            move(DX,0);
-        }
-        if (moveLeft && !moveRight) {
-            move(-DX,0);
-        }
+        if (moveUp && !moveDown && isGrounded()) move(0,DY);
+        if (moveDown && !moveUp && !isGrounded()) move(0,-DY);
+        if (moveRight && !moveLeft) move(isGrounded() ? DX : DX * AIR_CONTROL,0);
+        if (moveLeft && !moveRight) move(isGrounded() ? - DX : - DX * AIR_CONTROL,0);
+
         updateState();
+    }
+
+    private boolean isGrounded() {
+        return contactCountSensor > 0;
     }
 
     private void move(float dx, float dy) {
@@ -120,44 +124,175 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
      * Initializes the {@code shape}-variable and creates
      * a {@link Body} with its fixture.
      *
-     * @param x left-most position of player
-     * @param y bottom-most position of player
+     * @param x horizontal center-position of player
+     * @param y vertical center-position of player
      * @return the newly created {@link Body}
      */
     private Body createBody(float x, float y) {
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(WIDTH / 2, HEIGHT / 2);
-        this.shape = shape;
+        createShapes();
 
         BodyDef bDef = new BodyDef();
         bDef.type = BodyDef.BodyType.DynamicBody;
         bDef.position.set(x, y);
         bDef.fixedRotation = true;
 
-        FixtureDef fDef = new FixtureDef();
-        fDef.density = 0.5f;
-        fDef.friction = 0.5f;
-        fDef.shape = shape;
+        Body body = world.createBody(bDef);
+        createFixtures(body);
 
-        Body b = world.createBody(bDef);
-        b.createFixture(fDef);
+        return body;
+    }
 
-        return b;
+    /**
+     * Creates and fills the {@link Shape}-variables.
+     */
+    private void createShapes() {
+        float e = 0.02f;
+
+        // SENSOR
+        PolygonShape shapeSensor = new PolygonShape();
+        shapeSensor.setAsBox(WIDTH / 2 - e, e, new Vector2(0, -HEIGHT / 2), 0);
+        this.shapeSensor = shapeSensor;
+
+        // BOTTOM
+        Vector2[] vecBottom = new Vector2[3];
+        vecBottom[0] = new Vector2(- WIDTH / 2 + e, - HEIGHT / 2); // BL
+        vecBottom[1] = new Vector2(WIDTH / 2 - e, - HEIGHT / 2); // BR
+        vecBottom[2] = new Vector2(0,0); // C
+        PolygonShape shapeBottom = new PolygonShape();
+        shapeBottom.set(vecBottom);
+        this.shapeBottom = shapeBottom;
+
+        // TOP
+        Vector2[] vecTop = new Vector2[3];
+        vecTop[0] = new Vector2(- WIDTH / 2, HEIGHT / 2); // TL
+        vecTop[1] = new Vector2(WIDTH / 2, HEIGHT / 2); // TR
+        vecTop[2] = new Vector2(0,0); // C
+        PolygonShape shapeTop = new PolygonShape();
+        shapeTop.set(vecTop);
+        this.shapeTop = shapeTop;
+
+        // LEFT
+        Vector2[] vecLeft = new Vector2[3];
+        vecLeft[0] = new Vector2(- WIDTH / 2, HEIGHT / 2 - e); // TL
+        vecLeft[1] = new Vector2(0, 0); // C
+        vecLeft[2] = new Vector2(- WIDTH / 2, - HEIGHT / 2 + e); // BL
+        PolygonShape shapeLeft = new PolygonShape();
+        shapeLeft.set(vecLeft);
+        this.shapeLeft = shapeLeft;
+
+        // RIGHT
+        Vector2[] vecRight = new Vector2[3];
+        vecRight[0] = new Vector2(WIDTH / 2, HEIGHT / 2 - e); // TR
+        vecRight[1] = new Vector2(WIDTH / 2, - HEIGHT / 2 + e); // BR
+        vecRight[2] = new Vector2(0,0); // C
+        PolygonShape shapeRight = new PolygonShape();
+        shapeRight.set(vecRight);
+        this.shapeRight = shapeRight;
+    }
+
+    /**
+     * Creates fixtures and applies them to the {@link Body}.
+     */
+    private void createFixtures(Body body) {
+        FixtureDef fDefSensor = new FixtureDef();
+        fDefSensor.isSensor = true;
+        fDefSensor.shape = shapeSensor;
+
+        FixtureDef fDefBottom = new FixtureDef();
+        fDefBottom.density = DENSITY;
+        fDefBottom.friction = FRICTION_BOTTOM;
+        fDefBottom.restitution = RESTITUTION;
+        fDefBottom.shape = shapeBottom;
+
+        FixtureDef fDefTop = new FixtureDef();
+        fDefTop.density = DENSITY;
+        fDefTop.friction = FRICTION;
+        fDefTop.restitution = RESTITUTION;
+        fDefTop.shape = shapeTop;
+
+        FixtureDef fDefLeft = new FixtureDef();
+        fDefLeft.density = DENSITY;
+        fDefLeft.friction = FRICTION;
+        fDefLeft.restitution = RESTITUTION;
+        fDefLeft.shape = shapeLeft;
+
+        FixtureDef fDefRight = new FixtureDef();
+        fDefRight.density = DENSITY;
+        fDefRight.friction = FRICTION;
+        fDefRight.restitution = RESTITUTION;
+        fDefRight.shape = shapeRight;
+
+        body.createFixture(fDefSensor).setUserData("PlayerSensor");
+        body.createFixture(fDefBottom).setUserData("PlayerBottom");
+        body.createFixture(fDefTop).setUserData("PlayerTop");
+        body.createFixture(fDefLeft).setUserData("PlayerLeft");
+        body.createFixture(fDefRight).setUserData("PlayerRight");
     }
 
     @Override
     public void handleEvent(Event event) {
         if (event instanceof EventDispose) {
-            shape.dispose();
+            shapeSensor.dispose();
+            shapeBottom.dispose();
+            shapeTop.dispose();
+            shapeLeft.dispose();
+            shapeRight.dispose();
         }
     }
 
     @Override
-    public PlayerState getPlayerState() {
-        return this.playerState;
+    public PlayerState getState() {
+        return this.state;
     }
 
     private void updateState() {
-        // TODO - implement
+        Vector2 d = body.getLinearVelocity();
+
+        if (isGrounded()) {
+            if (body.getLinearVelocity().x > 0) {
+                state = PlayerState.RIGHT;
+            } else if (body.getLinearVelocity().x < 0) {
+                state = PlayerState.LEFT;
+            } else {
+                state = PlayerState.IDLE;
+            }
+        } else { // TODO - Falling
+            state = PlayerState.JUMP;
+        }
+    }
+
+    @Override
+    public void beginContact(Contact contact) {
+        Fixture fA = contact.getFixtureA();
+        Fixture fB = contact.getFixtureB();
+
+        if (contactPlayerSensor(contact)) contactCountSensor++;
+        if (fA.getUserData() != null) {
+            if (fA.getUserData().equals("PlayerBottom")) body.setLinearVelocity(body.getLinearVelocity().x,0);
+            if (fA.getUserData().equals("PlayerLeft")) body.setLinearVelocity(0,body.getLinearVelocity().y);
+            if (fA.getUserData().equals("PlayerRight")) body.setLinearVelocity(0,body.getLinearVelocity().y);
+        }
+    }
+
+    @Override
+    public void endContact(Contact contact) {
+        if (!contactPlayerSensor(contact)) return;
+        contactCountSensor--;
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold manifold) {}
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse contactImpulse) {}
+
+    private boolean contactPlayerSensor(Contact contact) {
+        Fixture fA = contact.getFixtureA();
+        Fixture fB = contact.getFixtureB();
+        Object udA = fA.getUserData();
+        Object udB = fB.getUserData();
+
+        return udA != null && udA.equals("PlayerSensor")
+                || udB != null && udB.equals("PlayerSensor");
     }
 }

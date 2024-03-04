@@ -54,8 +54,9 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
         bDef.position.set(x, y);
 
         FixtureDef fDef = new FixtureDef();
-        fDef.density = 0.5f;
+        fDef.density = 1;
         fDef.friction = 0.5f;
+        fDef.restitution = 0;
         fDef.shape = shape;
 
         Body b = world.createBody(bDef);
