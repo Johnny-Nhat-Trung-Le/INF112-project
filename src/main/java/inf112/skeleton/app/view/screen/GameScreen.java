@@ -133,7 +133,7 @@ public class GameScreen implements Screen {
         // Testing
         if (tileTexture != null) {
             System.out.println("meow meow n");
-            // I`WHY DOESNT INT FUCKGIN DRAW THIS RETARDED PIREFE OF ODGSHIT
+            // I`WHY DOESNT INT FUCKGIN DRAW THIS  PIREFE OF ODGSHIT
             // Idiont se
             batch.begin();
             batch.draw(tileTexture, tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
