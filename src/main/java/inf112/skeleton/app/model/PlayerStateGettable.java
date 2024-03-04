@@ -4,5 +4,5 @@ public interface PlayerStateGettable {
     /**
      * @return the player's {@link PlayerState}
      */
-    PlayerState getPlayerState();
+    PlayerState getState();
 }

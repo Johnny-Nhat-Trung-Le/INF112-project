@@ -74,7 +74,7 @@ public class GameScreen implements Screen {
         this.batch.begin();
         // Draws the player
         this.batch.draw(
-                PlayerAnimation.getAnimation(player.getPlayerState()).getKeyFrame(dt, true),
+                PlayerAnimation.getAnimation(player.getState()).getKeyFrame(dt, true),
                 player.getX(),
                 player.getY(),
                 player.getWidth(),
