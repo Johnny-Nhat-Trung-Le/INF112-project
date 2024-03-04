@@ -158,6 +158,24 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     private void updateState() {
-        // TODO - implement
+        // TODO - implement foreløpig en WIP
+        if(moveUp){
+            playerState = PlayerState.JUMP;
+
+        }
+        else if(moveDown){
+            playerState = PlayerState.DOWN;
+
+        }
+        else if(moveLeft){
+            playerState = PlayerState.LEFT;
+        }
+        else if (moveRight){
+            playerState = PlayerState.RIGHT;
+        }
+        else {
+            playerState = PlayerState.IDLE;
+        }
+
     }
 }

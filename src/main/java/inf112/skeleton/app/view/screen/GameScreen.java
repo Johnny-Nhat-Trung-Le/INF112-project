@@ -48,7 +48,6 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         gameCam.zoom = 2f;
-
         updateCamToPlayer();
     }
 
@@ -73,14 +72,20 @@ public class GameScreen implements Screen {
         this.dt += Gdx.graphics.getDeltaTime();
         this.batch.begin();
         // Draws the player
+//        this.batch.draw(
+//                PlayerAnimation.getAnimation(player.getPlayerState()).getKeyFrame(dt, true),
+
+        // Draws the player
         this.batch.draw(
-                PlayerAnimation.getAnimation(player.getPlayerState()).getKeyFrame(dt, true),
+                (PlayerAnimation.getAnimation(delta)),
                 player.getX(),
                 player.getY(),
                 player.getWidth(),
                 player.getHeight()
         );
         this.batch.end();
+
+        //object.render();
     }
 
     private void updateCamToPlayer() {

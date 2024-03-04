@@ -29,13 +29,19 @@ public class PlayerAnimation implements ITexturePack {
         };
     }
 
+
+
     /**
-     * get the animation for the given playerState
-     * @param playerState the playerState the player currently is in
-     * @return The correct Animation<TextureRegion> for the given PlayerState
+     * get the Texture for the given playerState
+     * @return The correct TextureRegion for the given PlayerState
      */
     public static Animation<TextureRegion> getAnimation(PlayerState playerState){
         return animationMap.get(playerState);
+    }
+
+
+    public static TextureRegion getAnimation(float delta){
+        return animationMap.get(PlayerState.JUMP).getKeyFrame(delta,true);
     }
 
     /**
@@ -46,7 +52,7 @@ public class PlayerAnimation implements ITexturePack {
      * @param tileHeight the tileHeight for each frame
      * @return Animation<TextureRegion> for the given Animation
      */
-    private static Animation<TextureRegion> loadAnimation(String imgSrc, int frames, int tileWidth, int tileHeight){
+    private static Animation<TextureRegion> loadAnimation (String imgSrc, int frames, int tileWidth, int tileHeight){
         Texture img = new Texture(imgSrc);
 
         //frames represent the amount of picture an animation sequence have
