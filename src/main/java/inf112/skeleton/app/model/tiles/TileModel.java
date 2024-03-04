@@ -50,6 +50,7 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
         height = h;
         shape = createShape(w, h);
         body = createBody(x, y);
+        // index when atlas works
         this.textureKey = textureKey;
     }
 

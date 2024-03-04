@@ -46,7 +46,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                 """
                        -----
                        -----
-                       000000000
+                       000000000000000000000000
                        """,
                 world,new EventBus());
         foreground.addAll(tiles);

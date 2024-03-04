@@ -74,12 +74,12 @@ public class GameScreen implements Screen {
 
         ScreenUtils.clear(0, 0, 0, 0);
 
-        renderTiles();
+
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         renderBackground();
         renderWorld();
-
+        renderTiles();
         renderPlayer();
 
         sRenderer.end();
@@ -89,7 +89,7 @@ public class GameScreen implements Screen {
 
 
 //        this.batch.draw(texturePack.getTexture("tile_0"),0,0,16,16);
-        this.batch.draw(texturePack.test(),0,0,16,16);
+//        this.batch.draw(texturePack.test(),0,0,16,16);
         // Draws the player
         this.batch.draw(
                 PlayerAnimation.getAnimation(player.getPlayerState()).getKeyFrame(dt, true),
@@ -127,10 +127,9 @@ public class GameScreen implements Screen {
 
     private void renderTile(ViewableTile tile) {
         TextureRegion tileTexture = texturePack.getTileTexture(tile);
-        System.out.println(tile.getTextureKey());
 
-//        sRenderer.setColor(Color.BLUE);
-//        sRenderer.rect(tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
+        sRenderer.setColor(Color.BLUE);
+        sRenderer.rect(tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
         // Testing
         if (tileTexture != null) {
             System.out.println("meow meow n");

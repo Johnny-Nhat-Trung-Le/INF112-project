@@ -1,6 +1,8 @@
 package inf112.skeleton.app.model;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
@@ -23,6 +25,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private final Body body;
     private PlayerState playerState;
     private boolean moveUp, moveDown, moveLeft, moveRight;
+    // Testing
     private int jumpCounter;
 
     /**
@@ -121,12 +124,22 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         if (dx < 0) {
             velX = -DX;
         }
-
-        // THIS MUDDAFUKKA IS JUST RETARDED LIEK ON GOOOOOODDDDDD
-        if (dy > 0 && d.y < MAX_DY || dy < 0 && d.y > -MAX_DY){
-            body.applyLinearImpulse(0, dy, x, y, true);
+        if(dy != 0 && jumpCounter < 2) {
+            body.setLinearVelocity(body.getLinearVelocity().x, 0);
+            body.applyLinearImpulse(new Vector2(0, 40), body.getPosition(), true);
+            jumpCounter++;
+            System.out.println("meow");
         }
-        body.setLinearVelocity(velX, body.getLinearVelocity().y);
+
+        if(body.getLinearVelocity().y == 0) {
+            jumpCounter = 0;
+            System.out.println("meowre");
+        }
+        // THIS MUDDAFUKKA IS JUST RETARDED LIEK ON GOOOOOODDDDDD
+//        if (dy > 0 && d.y < MAX_DY || dy < 0 && d.y > -MAX_DY){
+//            body.applyLinearImpulse(0, dy, x, y, true);
+//        }
+        body.setLinearVelocity(velX, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
     }
 
     /**
