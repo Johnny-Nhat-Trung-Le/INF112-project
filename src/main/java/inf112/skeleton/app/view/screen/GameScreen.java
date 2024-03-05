@@ -1,13 +1,10 @@
 package inf112.skeleton.app.view.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -21,10 +18,8 @@ import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 import inf112.skeleton.app.view.ViewableTile;
 import inf112.skeleton.app.view.texturepack.ITexturePack;
-import inf112.skeleton.app.view.texturepack.PlayerAnimation;
 import inf112.skeleton.app.view.texturepack.TexturePack;
 
-//some imports
 public class GameScreen implements Screen {
     private static final float VIEWPORT_WIDTH = 20;
     private static final float VIEWPORT_HEIGHT = 20;
@@ -34,8 +29,6 @@ public class GameScreen implements Screen {
     private final OrthographicCamera gameCam;
     private final Viewport gamePort;
     private final SpriteBatch batch;
-    private float dt;
-    // Testing
     private final ITexturePack texturePack;
 
     public GameScreen(ViewableGameModel model, EventBus bus, InputProcessor processor) {
@@ -49,12 +42,10 @@ public class GameScreen implements Screen {
         gamePort = new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam);
 
         sRenderer = new ShapeRenderer();
-        //Here
-        this.texturePack = new TexturePack();
 
+        texturePack = new TexturePack();
 
         batch = new SpriteBatch();
-        dt = 0;
     }
 
     @Override
@@ -80,20 +71,18 @@ public class GameScreen implements Screen {
         renderPlayer();
         sRenderer.end();
 
-        this.dt += Gdx.graphics.getDeltaTime();
-        this.batch.begin();
-        // Draw the tiles
+        batch.begin();
         renderTiles();
         // Draws the player
-        this.batch.draw(
-                PlayerAnimation.getAnimation(player.getState()).getKeyFrame(dt, true),
+        batch.draw(
+                texturePack.getPlayerTexture(player.getState(), Gdx.graphics.getDeltaTime()),
                 player.getX(),
                 player.getY(),
                 player.getWidth(),
                 player.getHeight()
         );
 
-        this.batch.end();
+        batch.end();
     }
 
     private void updateCamToPlayer() {
@@ -120,9 +109,6 @@ public class GameScreen implements Screen {
         }
     }
 
-    // TODO
-    // Skriv java doc
-    // Tegner tile noe sånt OwO
     private void renderTile(ViewableTile tile) {
         TextureRegion tileTexture = texturePack.getTileTexture(tile);
         if (tileTexture != null) {
