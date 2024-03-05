@@ -256,7 +256,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
             } else {
                 state = PlayerState.IDLE;
             }
-        } else { // TODO - Falling
+        } else {
             state = PlayerState.JUMP;
         }
     }
