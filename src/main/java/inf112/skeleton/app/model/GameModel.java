@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener {
-    private static final float GRAVITY = -9.81f;
+    private static final float GRAVITY = -20;
     private static final float WIND = 0;
     private static final int VELOCITY_ITERATIONS = 6;
     private static final int POSITION_ITERATIONS = 2;
@@ -35,6 +35,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         player = new PlayerModel(world, 1.5f, 6.5f);
         state = GameState.ACTIVE;
 
+        world.setContactListener(this); // If more bodies need to be ContactListener
         fillWorld();
     }
 
@@ -54,16 +55,24 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     }
 
     @Override
-    public void beginContact(Contact contact) {}
+    public void beginContact(Contact contact) {
+        player.beginContact(contact);
+    }
 
     @Override
-    public void endContact(Contact contact) {}
+    public void endContact(Contact contact) {
+        player.endContact(contact);
+    }
 
     @Override
-    public void preSolve(Contact contact, Manifold manifold) {}
+    public void preSolve(Contact contact, Manifold manifold) {
+        player.preSolve(contact, manifold);
+    }
 
     @Override
-    public void postSolve(Contact contact, ContactImpulse contactImpulse) {}
+    public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+        player.postSolve(contact, contactImpulse);
+    }
 
     @Override
     public ControllablePlayerModel getControllablePlayer() {

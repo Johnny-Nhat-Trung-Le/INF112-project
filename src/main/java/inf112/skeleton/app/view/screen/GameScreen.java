@@ -35,7 +35,6 @@ public class GameScreen implements Screen {
     private final Viewport gamePort;
     private final SpriteBatch batch;
     private float dt;
-
     // Testing
     private final ITexturePack texturePack;
 
@@ -50,7 +49,6 @@ public class GameScreen implements Screen {
         gamePort = new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam);
 
         sRenderer = new ShapeRenderer();
-
         //Here
         this.texturePack = new TexturePack();
 
@@ -88,7 +86,7 @@ public class GameScreen implements Screen {
         renderTiles();
         // Draws the player
         this.batch.draw(
-                PlayerAnimation.getAnimation(player.getPlayerState()).getKeyFrame(dt, true),
+                PlayerAnimation.getAnimation(player.getState()).getKeyFrame(dt, true),
                 player.getX(),
                 player.getY(),
                 player.getWidth(),
