@@ -47,3 +47,7 @@
 ## Dato: Tirsdag 27 Februar 2024
     Dagens agenda, alle møttet opp, viste frem hva vi har jobet med individuelt og diskuterte hva som var brukbar.
     Vi gjorde litt parprogrammering for å tilpasse koden for prosjektet. Kom til enighet om hva som skal være fokus videre og diskuerte eventuelt et ekstra møte.
+
+## Dato: Tirsdag 5 Mars 2024
+    Alle møttet opp, mergen branches. Fullførte Tilefactory og playermovement, samt ulike gamescreen som menu, pause osv.
+    Prøvde å fikse PlayerAnimation, kom til konklusjon at vi bare flipper bildene manuelt.
