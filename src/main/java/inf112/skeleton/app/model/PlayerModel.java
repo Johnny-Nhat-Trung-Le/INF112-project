@@ -249,9 +249,9 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         Vector2 d = body.getLinearVelocity();
 
         if (isGrounded()) {
-            if (body.getLinearVelocity().x > 0) {
+            if (d.x > 0) {
                 state = PlayerState.RIGHT;
-            } else if (body.getLinearVelocity().x < 0) {
+            } else if (d.x < 0) {
                 state = PlayerState.LEFT;
             } else {
                 state = PlayerState.IDLE;
@@ -276,8 +276,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     @Override
     public void endContact(Contact contact) {
-        if (!contactPlayerSensor(contact)) return;
-        contactCountSensor--;
+        if (contactPlayerSensor(contact)) contactCountSensor--;
     }
 
     @Override

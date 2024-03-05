@@ -35,7 +35,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         player = new PlayerModel(world, 1.5f, 6.5f);
         state = GameState.ACTIVE;
 
-        world.setContactListener(this);
+        world.setContactListener(this); // If more bodies need to be ContactListener
         fillWorld();
     }
 
