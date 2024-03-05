@@ -31,7 +31,8 @@ public class TexturePack implements ITexturePack {
             put(PlayerState.JUMP_LEFT, loadAnimation("Pink_Monster/Pink_Monster_LeftJump_8.png", 8));
             put(PlayerState.LEFT, loadAnimation("Pink_Monster/Pink_Monster_LeftRun_6.png", 6));
             put(PlayerState.RIGHT, loadAnimation("Pink_Monster/Pink_Monster_Run_6.png", 6));
-            put(PlayerState.IDLE, loadAnimation("Pink_Monster/Pink_Monster_Idle_4.png", 4));
+            put(PlayerState.IDLE_RIGHT, loadAnimation("Pink_Monster/Pink_Monster_Idle_4.png", 4));
+            put(PlayerState.IDLE_LEFT, loadAnimation("Pink_Monster/Pink_Monster_Idle_Left_4.png", 4));
         }};
     }
 

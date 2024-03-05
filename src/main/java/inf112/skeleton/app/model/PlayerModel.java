@@ -1,8 +1,6 @@
 package inf112.skeleton.app.model;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
@@ -33,13 +31,13 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     /**
      * @param world which the player-{@link Body} is created in
-     * @param x left-most position of player
-     * @param y bottom-most position of player
+     * @param x     left-most position of player
+     * @param y     bottom-most position of player
      */
     public PlayerModel(World world, float x, float y) {
         this.world = world;
-        body = createBody(x  + WIDTH / 2, y  + HEIGHT / 2);
-        state = PlayerState.IDLE;
+        body = createBody(x + WIDTH / 2, y + HEIGHT / 2);
+        state = PlayerState.IDLE_RIGHT;
         moveUp = false;
         moveDown = false;
         moveLeft = false;
@@ -67,7 +65,8 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     @Override
-    public void useItem() {}
+    public void useItem() {
+    }
 
     @Override
     public float getX() {
@@ -96,10 +95,10 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     @Override
     public void step(float timeStep) {
-        if (moveUp && !moveDown && isGrounded()) move(0,DY);
-        if (moveDown && !moveUp && !isGrounded()) move(0,-DY);
-        if (moveRight && !moveLeft) move(isGrounded() ? DX : DX * AIR_CONTROL,0);
-        if (moveLeft && !moveRight) move(isGrounded() ? - DX : - DX * AIR_CONTROL,0);
+        if (moveUp && !moveDown && isGrounded()) move(0, DY);
+        if (moveDown && !moveUp && !isGrounded()) move(0, -DY);
+        if (moveRight && !moveLeft) move(isGrounded() ? DX : DX * AIR_CONTROL, 0);
+        if (moveLeft && !moveRight) move(isGrounded() ? -DX : -DX * AIR_CONTROL, 0);
 
         updateState();
     }
@@ -113,10 +112,10 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         float x = body.getPosition().x;
         float y = body.getPosition().y;
 
-        if (dx > 0 && d.x < MAX_DX || dx < 0 && d.x > -MAX_DX){
+        if (dx > 0 && d.x < MAX_DX || dx < 0 && d.x > -MAX_DX) {
             body.applyLinearImpulse(dx, 0, x, y, true);
         }
-        if (dy > 0 && d.y < MAX_DY || dy < 0 && d.y > -MAX_DY){
+        if (dy > 0 && d.y < MAX_DY || dy < 0 && d.y > -MAX_DY) {
             body.applyLinearImpulse(0, dy, x, y, true);
         }
     }
@@ -156,27 +155,27 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
         // BOTTOM
         Vector2[] vecBottom = new Vector2[3];
-        vecBottom[0] = new Vector2(- WIDTH / 2 + e, - HEIGHT / 2); // BL
-        vecBottom[1] = new Vector2(WIDTH / 2 - e, - HEIGHT / 2); // BR
-        vecBottom[2] = new Vector2(0,0); // C
+        vecBottom[0] = new Vector2(-WIDTH / 2 + e, -HEIGHT / 2); // BL
+        vecBottom[1] = new Vector2(WIDTH / 2 - e, -HEIGHT / 2); // BR
+        vecBottom[2] = new Vector2(0, 0); // C
         PolygonShape shapeBottom = new PolygonShape();
         shapeBottom.set(vecBottom);
         this.shapeBottom = shapeBottom;
 
         // TOP
         Vector2[] vecTop = new Vector2[3];
-        vecTop[0] = new Vector2(- WIDTH / 2, HEIGHT / 2); // TL
+        vecTop[0] = new Vector2(-WIDTH / 2, HEIGHT / 2); // TL
         vecTop[1] = new Vector2(WIDTH / 2, HEIGHT / 2); // TR
-        vecTop[2] = new Vector2(0,0); // C
+        vecTop[2] = new Vector2(0, 0); // C
         PolygonShape shapeTop = new PolygonShape();
         shapeTop.set(vecTop);
         this.shapeTop = shapeTop;
 
         // LEFT
         Vector2[] vecLeft = new Vector2[3];
-        vecLeft[0] = new Vector2(- WIDTH / 2, HEIGHT / 2 - e); // TL
+        vecLeft[0] = new Vector2(-WIDTH / 2, HEIGHT / 2 - e); // TL
         vecLeft[1] = new Vector2(0, 0); // C
-        vecLeft[2] = new Vector2(- WIDTH / 2, - HEIGHT / 2 + e); // BL
+        vecLeft[2] = new Vector2(-WIDTH / 2, -HEIGHT / 2 + e); // BL
         PolygonShape shapeLeft = new PolygonShape();
         shapeLeft.set(vecLeft);
         this.shapeLeft = shapeLeft;
@@ -184,8 +183,8 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         // RIGHT
         Vector2[] vecRight = new Vector2[3];
         vecRight[0] = new Vector2(WIDTH / 2, HEIGHT / 2 - e); // TR
-        vecRight[1] = new Vector2(WIDTH / 2, - HEIGHT / 2 + e); // BR
-        vecRight[2] = new Vector2(0,0); // C
+        vecRight[1] = new Vector2(WIDTH / 2, -HEIGHT / 2 + e); // BR
+        vecRight[2] = new Vector2(0, 0); // C
         PolygonShape shapeRight = new PolygonShape();
         shapeRight.set(vecRight);
         this.shapeRight = shapeRight;
@@ -247,20 +246,22 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     private void updateState() {
-        Vector2 d = body.getLinearVelocity();
-
         if (isGrounded()) {
-            if (d.x > 0) {
+            if (moveRight && !moveLeft) {
                 state = PlayerState.RIGHT;
-            } else if (d.x < 0) {
+            } else if (moveLeft && !moveRight) {
                 state = PlayerState.LEFT;
             } else {
-                state = PlayerState.IDLE;
+                if (state.equals(PlayerState.LEFT) || state.equals(PlayerState.JUMP_LEFT)) {
+                    state = PlayerState.IDLE_LEFT;
+                } else if (state.equals(PlayerState.RIGHT) || state.equals(PlayerState.JUMP_RIGHT)) {
+                    state = PlayerState.IDLE_RIGHT;
+                }
             }
         } else {
-            if (d.x < 0){
+            if (moveLeft && !moveRight) {
                 state = PlayerState.JUMP_LEFT;
-            } else {
+            } else if (moveRight && !moveLeft){
                 state = PlayerState.JUMP_RIGHT;
             }
         }
@@ -273,9 +274,9 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
         if (contactPlayerSensor(contact)) contactCountSensor++;
         if (fA.getUserData() != null) {
-            if (fA.getUserData().equals("PlayerBottom")) body.setLinearVelocity(body.getLinearVelocity().x,0);
-            if (fA.getUserData().equals("PlayerLeft")) body.setLinearVelocity(0,body.getLinearVelocity().y);
-            if (fA.getUserData().equals("PlayerRight")) body.setLinearVelocity(0,body.getLinearVelocity().y);
+            if (fA.getUserData().equals("PlayerBottom")) body.setLinearVelocity(body.getLinearVelocity().x, 0);
+            if (fA.getUserData().equals("PlayerLeft")) body.setLinearVelocity(0, body.getLinearVelocity().y);
+            if (fA.getUserData().equals("PlayerRight")) body.setLinearVelocity(0, body.getLinearVelocity().y);
         }
     }
 
@@ -285,10 +286,12 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     @Override
-    public void preSolve(Contact contact, Manifold manifold) {}
+    public void preSolve(Contact contact, Manifold manifold) {
+    }
 
     @Override
-    public void postSolve(Contact contact, ContactImpulse contactImpulse) {}
+    public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+    }
 
     private boolean contactPlayerSensor(Contact contact) {
         Fixture fA = contact.getFixtureA();
