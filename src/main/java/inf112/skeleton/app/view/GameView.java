@@ -6,10 +6,11 @@ import com.badlogic.gdx.InputProcessor;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.GameState;
+import inf112.skeleton.app.view.screen.GameOverScreen;
 import inf112.skeleton.app.view.screen.GameScreen;
 
 import inf112.skeleton.app.view.screen.MenuScreen;
-
+import inf112.skeleton.app.view.screen.PauseScreen;
 
 
 public class GameView extends Game {
@@ -26,16 +27,17 @@ public class GameView extends Game {
 
     @Override
     public void create() {
-
-        setScreen(new GameScreen(model, bus, processor));
         setScreen(new MenuScreen(processor));
+
     }
     public void render(){
         if(model.getState()!= gameState){
             gameState = model.getState();
             switch(gameState){
-                case ACTIVE -> setScreen(new GameScreen(model, bus, processor));
+                case ACTIVE -> setScreen(new GameScreen(model,bus, processor));
                 case MAIN_MENU -> setScreen(new MenuScreen(processor));
+                case PAUSE -> setScreen(new PauseScreen(processor));
+                case GAME_OVER -> setScreen(new GameOverScreen(processor));
             }
         }
         super.render();

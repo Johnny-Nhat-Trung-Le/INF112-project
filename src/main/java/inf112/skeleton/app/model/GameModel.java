@@ -33,7 +33,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         items = new ArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
         player = new PlayerModel(world, 1.5f, 6.5f);
-        state = GameState.ACTIVE;
+        state = GameState.GAME_OVER;
 
         fillWorld();
     }

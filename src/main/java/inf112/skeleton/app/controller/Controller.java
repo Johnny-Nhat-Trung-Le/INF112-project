@@ -54,13 +54,21 @@ public class Controller extends InputAdapter implements EventHandler {
                     player.moveRight(false);
                     break;
                 case Keys.P:
-                    GameState currentGameState = model.getState();
-                    if (currentGameState.equals(GameState.ACTIVE)) {
-                        model.setState(GameState.MAIN_MENU);
-                    } else if (currentGameState.equals(GameState.MAIN_MENU)) {
-                        model.setState(GameState.ACTIVE);
+                    switch(model.getState()){
+                        case MAIN_MENU:
+                                model.setState(GameState.ACTIVE);
+                                break;
+                        case ACTIVE:
+                                model.setState(GameState.PAUSE);
+                                break;
+                        case PAUSE:
+                            model.setState(GameState.ACTIVE);
+                            break;
                     }
-                    break;
+                case Keys.R:
+                    if(model.getState().equals(GameState.GAME_OVER)){
+                        model.setState(GameState.MAIN_MENU);
+                    }
             }
             return true;
         }
