@@ -258,7 +258,11 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
                 state = PlayerState.IDLE;
             }
         } else {
-            state = PlayerState.JUMP_RIGHT;
+            if (state.equals(PlayerState.LEFT)){
+                state = PlayerState.JUMP_LEFT;
+            } else {
+                state = PlayerState.JUMP_RIGHT;
+            }
         }
     }
 
