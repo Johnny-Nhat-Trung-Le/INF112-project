@@ -26,8 +26,8 @@ public class PlayerAnimation implements ITexturePack {
             {
                 put(PlayerState.DOWN,loadAnimation("Pink_Monster/Pink_Monster_Climb_4.png",4));
                 put(PlayerState.JUMP_RIGHT,loadAnimation("Pink_Monster/Pink_Monster_Jump_8.png",8));
-                put(PlayerState.JUMP_LEFT,loadAnimation("Pink_Monster/Pink_Monster_Jump_8.png",8));
-                put(PlayerState.LEFT,loadAnimation("Pink_Monster/Pink_Monster_Run_6.png",6));
+                put(PlayerState.JUMP_LEFT,loadAnimation("Pink_Monster/Pink_Monster_LeftJump_8.png",8));
+                put(PlayerState.LEFT,loadAnimation("Pink_Monster/Pink_Monster_LeftRun_6.png",6));
                 put(PlayerState.RIGHT, loadAnimation("Pink_Monster/Pink_Monster_Run_6.png",6));
                 put(PlayerState.IDLE,loadAnimation("Pink_Monster/Pink_Monster_Idle_4.png",4));
             }

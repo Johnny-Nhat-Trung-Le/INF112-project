@@ -110,7 +110,7 @@ public class GameScreen implements Screen {
     }
 
     private void renderWorld() {
-        sRenderer.setColor(Color.BROWN);
+        sRenderer.setColor(Color.CLEAR);
         sRenderer.rect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     }
 
