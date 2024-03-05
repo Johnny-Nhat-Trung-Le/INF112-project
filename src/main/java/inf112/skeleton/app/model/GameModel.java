@@ -44,9 +44,10 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private void fillWorld() {
         List<TileModel> tiles = TileFactory.generate(
                 """
-                       -L---G
-                       -----
-                       LGGGGGGGG
+                       ----
+                       -LGR
+                       -----B
+                       LGGGGGR_LGGGR
                        """,
                 world,new EventBus());
         foreground.addAll(tiles);

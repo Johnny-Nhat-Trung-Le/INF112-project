@@ -126,16 +126,13 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         }
         if(dy != 0 && jumpCounter < 2) {
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            body.applyLinearImpulse(new Vector2(0, 40), body.getPosition(), true);
+            body.applyLinearImpulse(new Vector2(0, 50), body.getPosition(), true);
             jumpCounter++;
-            System.out.println("meow");
         }
 
         if(body.getLinearVelocity().y == 0) {
             jumpCounter = 0;
-            System.out.println("meowre");
         }
-        // THIS MUDDAFUKKA IS JUST RETARDED LIEK ON GOOOOOODDDDDD
 //        if (dy > 0 && d.y < MAX_DY || dy < 0 && d.y > -MAX_DY){
 //            body.applyLinearImpulse(0, dy, x, y, true);
 //        }
