@@ -22,12 +22,12 @@ public class PlayerAnimation implements ITexturePack {
     static{
         animationMap = new HashMap<PlayerState, Animation<TextureRegion>>(){
             {
-                put(PlayerState.DOWN,loadAnimation("Pink_Monster/Pink_Monster_Climb_4.png",4,tileWidth,tileHeight));
-                put(PlayerState.JUMPRIGHT,loadAnimation("Pink_Monster/Pink_Monster_Jump_8.png",8,tileWidth,tileHeight));
-                put(PlayerState.JUMPLEFT,loadAnimation("Pink_Monster/Pink_Monster_Jump_8_LEFT.png",8,tileWidth,tileHeight));
-                put(PlayerState.LEFT,loadAnimation("Pink_Monster/Pink_Monster_Run_6_LEFT.png",6,tileWidth,tileHeight));
-                put(PlayerState.RIGHT, loadAnimation("Pink_Monster/Pink_Monster_Run_6.png",6,tileWidth,tileHeight));
-                put(PlayerState.IDLE,loadAnimation("Pink_Monster/Pink_Monster_Idle_4.png",4,tileWidth,tileHeight));
+                put(PlayerState.DOWN,loadAnimation("Pink_Monster/Pink_Monster_Climb_4.png",4));
+                put(PlayerState.JUMPRIGHT,loadAnimation("Pink_Monster/Pink_Monster_Jump_8.png",8));
+                put(PlayerState.JUMPLEFT,loadAnimation("Pink_Monster/Pink_Monster_Jump_8_LEFT.png",8));
+                put(PlayerState.LEFT,loadAnimation("Pink_Monster/Pink_Monster_Run_6_LEFT.png",6));
+                put(PlayerState.RIGHT, loadAnimation("Pink_Monster/Pink_Monster_Run_6.png",6));
+                put(PlayerState.IDLE,loadAnimation("Pink_Monster/Pink_Monster_Idle_4.png",4));
             }
         };
     }
@@ -45,11 +45,9 @@ public class PlayerAnimation implements ITexturePack {
      * Get the specific Texture for the Animation it should be in
      * @param imgSrc the img source for the animation player is in
      * @param frames how many frames there is in that spriteSheet
-     * @param tileWidth the tileWidth for each frame
-     * @param tileHeight the tileHeight for each frame
      * @return Animation<TextureRegion> for the given Animation
      */
-    private static Animation<TextureRegion> loadAnimation(String imgSrc, int frames, int tileWidth, int tileHeight){
+    private static Animation<TextureRegion> loadAnimation(String imgSrc, int frames){
         Texture img = new Texture(imgSrc);
 
         //frames represent the amount of picture an animation sequence have
