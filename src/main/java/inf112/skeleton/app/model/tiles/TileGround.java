@@ -8,7 +8,7 @@ public class TileGround extends TileModel {
     public static void loadStatic(){}
 
     static {
-        TileFactory.register('_', (world, eventBus, x, y) -> {
+        TileFactory.register('G', (world, eventBus, x, y) -> {
             return new TileGround(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT);
         });
     }

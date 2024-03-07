@@ -9,6 +9,7 @@ import inf112.skeleton.app.model.TileFactory;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.ViewableTile;
 
+
 public class TileModel implements ViewableTile, Physicable, Stepable, EventHandler {
     public static final float TILE_WIDTH = 5;
     public static final float TILE_HEIGHT = 5;
@@ -18,9 +19,11 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
     private final float width;
     private final float height;
 
-    public static void loadStatic(){}
+    public static void loadStatic() {
+    }
 
     static {
+        // kanskje en annen key
         TileFactory.register('0', (world, eventBus, x, y) -> {
             return new TileModel(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT);
         });
@@ -31,17 +34,17 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
      * the specified {@link World}.
      *
      * @param world that the body is added to
-     * @param x center position in the horizontal axis
-     * @param y center position in the vertical axis
-     * @param w width of body
-     * @param h height of body
+     * @param x     center position in the horizontal axis
+     * @param y     center position in the vertical axis
+     * @param w     width of body
+     * @param h     height of body
      */
     public TileModel(World world, float x, float y, float w, float h) {
         this.world = world;
         width = w;
         height = h;
-        shape = createShape(w,h);
-        body = createBody(x,y);
+        shape = createShape(w, h);
+        body = createBody(x, y);
     }
 
     /**
@@ -54,8 +57,9 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
         bDef.position.set(x, y);
 
         FixtureDef fDef = new FixtureDef();
-        fDef.density = 0.5f;
+        fDef.density = 1;
         fDef.friction = 0.5f;
+        fDef.restitution = 0;
         fDef.shape = shape;
 
         Body b = world.createBody(bDef);
@@ -96,7 +100,8 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
     }
 
     @Override
-    public void step(float timeStep) {}
+    public void step(float timeStep) {
+    }
 
     @Override
     public void handleEvent(Event event) {
@@ -104,4 +109,5 @@ public class TileModel implements ViewableTile, Physicable, Stepable, EventHandl
             shape.dispose();
         }
     }
+
 }

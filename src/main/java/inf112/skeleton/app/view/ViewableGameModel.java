@@ -4,6 +4,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.model.GameStateGettable;
 import inf112.skeleton.app.model.PlayerModel;
 
+import java.util.List;
+
 
 public interface ViewableGameModel extends GameStateGettable {
     /**
@@ -25,4 +27,5 @@ public interface ViewableGameModel extends GameStateGettable {
      * @return all the active items in the game
      */
     Iterable<ViewableItem> getItems();
+
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="22" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="24" nextobjectid="32">
+ <editorsettings>
+  <export target="map0test.csv" format="csv"/>
+ </editorsettings>
+ <tileset firstgid="1" source="Terrain (32x32).tsx"/>
+ <tileset firstgid="86" name="background_001" tilewidth="32" tileheight="32" tilecount="220" columns="20">
+  <image source="background_001.png" width="640" height="360"/>
+ </tileset>
+ <tileset firstgid="306" source="background_005.tsx"/>
+ <tileset firstgid="526" source="background_004.tsx"/>
+ <tileset firstgid="746" source="background_002.tsx"/>
+ <tileset firstgid="966" source="background_001.tsx"/>
+ <layer id="17" name="blue" width="22" height="12">
+  <data encoding="base64" compression="zlib">
+   eJy1zNVSEGAQgFGwGxsEfC1FsbEVAxUkDCywGws7sLvFVuxADOxARbGwO45X/C/Azp6Zvdj5IiKqb9rRngQ60JFEOtGZLnSlG93pQRI96UVv+tCXfkG3PwMYSDKDGMwQhpLCMIYzglTSGEk6GWSSxaigO5oxjCWbcYxnAhOZRA65TGYKU5nGdGYwk1nMDrpzmMs85pPHAhayiMUsIZ+lLGM5K1jJKlazhrVBdx0FrGcDG9nEZrawlW1sZwc72cVu9rCXfeznQNA9yCEKOcwRjnKM45zgJKc4TRFnOMs5znOBi1wKupe5wlWKuUYJ17nBTW5Rym3ucJd73OcBD3nE46D7hDKe8oznlPOCl1Twite84S3vqOQ9H/jIJz4H3S985Rvf+cFPfvGbP/z9/xhpqUFNalGbOtSlHvUjq7oN3A1pRGOaEEVTmtGcFrSkFa2JJoY2xBJHPG2DbnXMPxkxcws=
+  </data>
+ </layer>
+ <layer id="18" name="clouds" width="22" height="12">
+  <data encoding="base64" compression="zlib">
+   eJztzGdXjwEAxuH/OX0DDZVEqNBSSkbISJKG0VAZWdnZo0ELhUQDpaGBqMg3dL1xer5A79znXOfcr36h0P/924qwUCicCCKJYiXRxBDLKuJYTTxrWEsC61jPBhLDlrpJfjIb2cRmUkgljXQy2EImWWwlmxy2kct2dgS6O/1d5LGbPewln33s5wAHKeAQhRymiCMUc5SSQLfUL6OcYxznBCepoJIqqjlFDbXUcZoznOUc9YHuef8CF7nEZRq4wlWucZ0b3OQWjdzmDne5x30eBLoP/Uc85glNNNNCK095RhvtdNBJF895wUu66Ql0X/mveUMvb+njHe/pZ4BBhvjARz4xzAifGWUs0B33J/jCJFNMM8NXvvGdWX7wkznmWeAXv1nkT6C7HPsLmDs+0Q==
+  </data>
+ </layer>
+ <layer id="23" name="wall" width="22" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYKANEKORmaPmjpo7Es0VImAurQAAm60Byw==
+  </data>
+ </layer>
+ <layer id="19" name="mount" width="22" height="12">
+  <data encoding="base64" compression="zlib">
+   eJztzGdXjwEAxuH/6eNpqCRChZZSMkJGkjSMhsrIys4eDVooJBooDQ1ERb6F643T8wV65z7nOud+9QuF/u/fVoSFQuFEEEkUK4kmhlhWEcdq4lnDWhJYx3o2kBi21E3yk9nIJjaTQipppJPBFjLJYivZ5LCNXLazI9Dd6e8ij93sYS/57GM/BzhIAYco5DBFHKGYo5QEuqV+GeUc4zgnOEkFlVRRzSlqqKWO05zhLOeoD3TP+xe4yCUu08AVrnKN69zgJrdo5DZ3uMs97vMg0H3oP+IxT2iimRZaecoz2ming066eM4LXtJNT6D7yn/NG3p5Sx/veE8/AwwyxAc+8olhRvjMKGOB7rg/wRcmmWKaGb7yje/M8oOfzDHPAr/4zSJ/At3l2F/2EGEx
+  </data>
+ </layer>
+ <layer id="20" name="grass" width="22" height="12">
+  <data encoding="base64" compression="zlib">
+   eJzt0ElOQlEUBND3PyCt+9+XIL1IZ0ffg4DoYSQbYEBCJSep5CY1uCHcc89t5ykKoUiJZ8pUqFKjToMmL7R4pU2HLj36vEX/u+/6B598MWDIiDETpsyYs2DJijUbtuz4vtjd6weO/HDi93yPQ4iISZAkxQNpMmTJkafAY3zd3/4BEEEqbQ==
+  </data>
+ </layer>
+ <layer id="7" name="background" width="22" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFQxm4ArEbGnYnQh02NdQGjEDMTAMzJYFYhMrmCgGxMJq5ILuYiMDMePRIYjFXGYhViMCqROhBVkMLAAD69AZT
+  </data>
+ </layer>
+ <objectgroup id="3" name="objects">
+  <object id="5" x="32" y="288">
+   <polygon points="0,0 352,0 352,64 0,64"/>
+  </object>
+  <object id="7" x="448" y="288">
+   <polygon points="0,0 224,0 224,64 0,64"/>
+  </object>
+  <object id="22" name="player1" x="148.41" y="233.08" width="10.8821" height="10.2016"/>
+  <object id="26" x="576" y="224">
+   <polygon points="0,0 96,0 96,64 0,64"/>
+  </object>
+  <object id="27" x="384" y="160">
+   <polygon points="0,0 160,0 160,32 0,32"/>
+  </object>
+  <object id="28" x="608" y="192">
+   <polygon points="0,0 64,0 64,32 0,32"/>
+  </object>
+  <object id="29" x="64" y="160">
+   <polygon points="0,0 192,0 192,32 0,32"/>
+  </object>
+  <object id="30" x="672" y="32">
+   <polygon points="0,0 32,0 32,320 0,320"/>
+  </object>
+  <object id="31" x="0" y="32">
+   <polygon points="0,0 32,0 32,320 0,320"/>
+  </object>
+ </objectgroup>
+</map>

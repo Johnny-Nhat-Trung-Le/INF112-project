@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -16,7 +17,8 @@ import inf112.skeleton.app.model.event.EventStep;
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 import inf112.skeleton.app.view.ViewableTile;
-import inf112.skeleton.app.view.texturepack.PlayerAnimation;
+import inf112.skeleton.app.view.texturepack.ITexturePack;
+import inf112.skeleton.app.view.texturepack.TexturePack;
 
 public class GameScreen implements Screen {
     private static final float VIEWPORT_WIDTH = 20;
@@ -27,7 +29,7 @@ public class GameScreen implements Screen {
     private final OrthographicCamera gameCam;
     private final Viewport gamePort;
     private final SpriteBatch batch;
-    private float dt;
+    private final ITexturePack texturePack;
 
     public GameScreen(ViewableGameModel model, EventBus bus, InputProcessor processor) {
         Gdx.graphics.setForegroundFPS(60);
@@ -41,14 +43,14 @@ public class GameScreen implements Screen {
 
         sRenderer = new ShapeRenderer();
 
+        texturePack = new TexturePack();
+
         batch = new SpriteBatch();
-        dt = 0;
     }
 
     @Override
     public void show() {
         gameCam.zoom = 2f;
-
         updateCamToPlayer();
     }
 
@@ -61,26 +63,26 @@ public class GameScreen implements Screen {
 
         ScreenUtils.clear(0, 0, 0, 0);
 
-        sRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
+        sRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        // flytt over til batch når implementering er ferdig
         renderBackground();
         renderWorld();
-        renderTiles();
         renderPlayer();
-
         sRenderer.end();
 
-        this.dt += Gdx.graphics.getDeltaTime();
-        this.batch.begin();
+        batch.begin();
+        renderTiles();
         // Draws the player
-        this.batch.draw(
-                PlayerAnimation.getAnimation(player.getPlayerState()).getKeyFrame(dt, true),
+        batch.draw(
+                texturePack.getPlayerTexture(player.getState(), Gdx.graphics.getDeltaTime()),
                 player.getX(),
                 player.getY(),
                 player.getWidth(),
                 player.getHeight()
         );
-        this.batch.end();
+
+        batch.end();
     }
 
     private void updateCamToPlayer() {
@@ -92,12 +94,12 @@ public class GameScreen implements Screen {
     }
 
     private void renderBackground() {
-        sRenderer.setColor(Color.TEAL);
+        sRenderer.setColor(Color.BLACK);
         sRenderer.rect(-VIEWPORT_WIDTH, -VIEWPORT_HEIGHT, VIEWPORT_WIDTH * 3, VIEWPORT_HEIGHT * 3);
     }
 
     private void renderWorld() {
-        sRenderer.setColor(Color.BROWN);
+        sRenderer.setColor(Color.BLUE);
         sRenderer.rect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     }
 
@@ -108,8 +110,12 @@ public class GameScreen implements Screen {
     }
 
     private void renderTile(ViewableTile tile) {
-        sRenderer.setColor(Color.BLUE);
-        sRenderer.rect(tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
+        TextureRegion tileTexture = texturePack.getTileTexture(tile);
+        if (tileTexture != null) {
+            batch.draw(tileTexture, tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
+        } else {
+            System.out.println("no draw");
+        }
     }
 
     private void renderPlayer() {
