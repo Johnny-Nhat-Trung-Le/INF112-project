@@ -46,7 +46,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         List<TileModel> tiles = TileFactory.generate(
                 """
                        ----
-                       -|---qwe----lgr
+                       -|------------lgr
                        -----B-----------b
                        LGGGGGR-I--i---LGGR
                        """,
