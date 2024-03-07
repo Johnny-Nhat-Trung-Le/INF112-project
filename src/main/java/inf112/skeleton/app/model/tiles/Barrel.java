@@ -8,7 +8,7 @@ public class Barrel extends TileModel {
 
     static {
         TileFactory.register('B', (world, eventBus, x, y) -> {
-            return new Barrel(world, x + TILE_WIDTH / 4, y + TILE_HEIGHT / 4, TILE_WIDTH/2, TILE_HEIGHT/2);
+            return new Barrel(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 4, TILE_WIDTH/2, TILE_HEIGHT/2);
         });
     }
 

@@ -3,7 +3,7 @@ package inf112.skeleton.app.model.tiles;
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.model.TileFactory;
 
-public class TileFloatingGroundLeftSlim extends TileModel {
+public class TileFloatingGroundLeftSlim extends TileHalf {
 
     public static void loadStatic(){}
 
