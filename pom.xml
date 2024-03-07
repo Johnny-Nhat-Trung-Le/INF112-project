@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>no.uib.Isak-Yau.the_googlers</groupId>
 	<!-- FIXME - set artifact name -->
-	<artifactId>gdx-app</artifactId>
+	<artifactId>gdx-app-Lil-bros-adventure-home</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<!-- FIXME - set app name -->
-	<name>gdx-app</name>
+	<name>gdx-app-Lil-bros-adventure-home</name>
 	<url>https://git.app.uib.no/Isak.Yau/the_googlers</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
