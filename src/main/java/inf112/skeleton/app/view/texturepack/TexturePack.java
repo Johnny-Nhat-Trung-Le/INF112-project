@@ -51,6 +51,7 @@ public class TexturePack implements ITexturePack {
         if (tile instanceof TileFloatingGroundRightSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 67));
 
         if (tile instanceof Barrel) return new TextureRegion(atlas.findRegion(TILE_NAME, 55));
+        if (tile instanceof Spike) return  new TextureRegion(atlas.findRegion(TILE_NAME,46));
 
         return null;
     }

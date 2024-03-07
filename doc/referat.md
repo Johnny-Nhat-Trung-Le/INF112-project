@@ -47,3 +47,5 @@
 ## Dato: Tirsdag 27 Februar 2024
     Dagens agenda, alle møttet opp, viste frem hva vi har jobet med individuelt og diskuterte hva som var brukbar.
     Vi gjorde litt parprogrammering for å tilpasse koden for prosjektet. Kom til enighet om hva som skal være fokus videre og diskuerte eventuelt et ekstra møte.
+
+## Dato: Torsdag 7 Mars 2024

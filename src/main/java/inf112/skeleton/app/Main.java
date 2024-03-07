@@ -47,6 +47,8 @@ public class Main {
         TileFloatingGroundSlim.loadStatic();
         TileFloatingGroundLeftSlim.loadStatic();
         TileFloatingGroundRightSlim.loadStatic();
+
+        Spike.loadStatic();
         Barrel.loadStatic();
     }
 }
