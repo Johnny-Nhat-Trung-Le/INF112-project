@@ -25,7 +25,6 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private final World world;
     private final PlayerModel player;
     private GameState state;
-    private PlayerModel playerModel;
 
     public GameModel() {
         foreground = new ArrayList<>();

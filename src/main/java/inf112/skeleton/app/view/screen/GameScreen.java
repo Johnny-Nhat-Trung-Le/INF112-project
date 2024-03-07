@@ -65,7 +65,6 @@ public class GameScreen implements Screen {
 
 
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        // flytt over til batch når implementering er ferdig
         renderBackground();
         renderWorld();
         renderPlayer();
@@ -113,8 +112,6 @@ public class GameScreen implements Screen {
         TextureRegion tileTexture = texturePack.getTileTexture(tile);
         if (tileTexture != null) {
             batch.draw(tileTexture, tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
-        } else {
-            System.out.println("no draw");
         }
     }
 
