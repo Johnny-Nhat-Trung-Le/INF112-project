@@ -3,13 +3,13 @@ package inf112.skeleton.app.model.tiles;
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.model.TileFactory;
 
-public class TileGroundCornerRight extends TileModel {
+public class TileFloatingGround extends TileModel {
 
     public static void loadStatic(){}
 
     static {
-        TileFactory.register('R', (world, eventBus, x, y) -> {
-            return new TileGroundCornerRight(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT);
+        TileFactory.register('g', (world, eventBus, x, y) -> {
+            return new TileFloatingGround(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT);
         });
     }
 
@@ -23,7 +23,8 @@ public class TileGroundCornerRight extends TileModel {
      * @param w     width of body
      * @param h     height of body
      */
-    public TileGroundCornerRight(World world, float x, float y, float w, float h) {
+    public TileFloatingGround(World world, float x, float y, float w, float h) {
         super(world, x, y, w, h);
     }
 }
+

@@ -32,9 +32,21 @@ public class Main {
 
     private static void loadClasses() {
         TileModel.loadStatic();
+
+        TileGroundSingle.loadStatic();
         TileGround.loadStatic();
-        TileGroundCornerLeft.loadStatic();
-        TileGroundCornerRight.loadStatic();
+        TileGroundLeft.loadStatic();
+        TileGroundRight.loadStatic();
+
+        TileFloatingGroundSingle.loadStatic();
+        TileFloatingGround.loadStatic();
+        TileFloatingGroundLeft.loadStatic();
+        TileFloatingGroundRight.loadStatic();
+
+        TileFloatingGroundSingleSlim.loadStatic();
+        TileFloatingGroundSlim.loadStatic();
+        TileFloatingGroundLeftSlim.loadStatic();
+        TileFloatingGroundRightSlim.loadStatic();
         Barrel.loadStatic();
     }
 }

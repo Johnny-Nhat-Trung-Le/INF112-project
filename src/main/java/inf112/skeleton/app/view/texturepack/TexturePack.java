@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.model.PlayerState;
-import inf112.skeleton.app.model.tiles.Barrel;
-import inf112.skeleton.app.model.tiles.TileGround;
-import inf112.skeleton.app.model.tiles.TileGroundCornerLeft;
-import inf112.skeleton.app.model.tiles.TileGroundCornerRight;
+import inf112.skeleton.app.model.tiles.*;
 import inf112.skeleton.app.view.ViewableTile;
 
 import java.util.HashMap;
@@ -38,9 +35,21 @@ public class TexturePack implements ITexturePack {
 
     @Override
     public TextureRegion getTileTexture(ViewableTile tile) {
-        if (tile instanceof TileGroundCornerRight) return new TextureRegion(atlas.findRegion(TILE_NAME, 51));
-        if (tile instanceof TileGroundCornerLeft) return new TextureRegion(atlas.findRegion(TILE_NAME, 49));
-        if (tile instanceof TileGround) return new TextureRegion(atlas.findRegion(TILE_NAME, 50));
+        if (tile instanceof TileGroundSingle) return new TextureRegion(atlas.findRegion(TILE_NAME,0));
+        if (tile instanceof TileGround) return new TextureRegion(atlas.findRegion(TILE_NAME, 2));
+        if (tile instanceof TileGroundLeft) return new TextureRegion(atlas.findRegion(TILE_NAME, 1));
+        if (tile instanceof TileGroundRight) return new TextureRegion(atlas.findRegion(TILE_NAME, 3));
+
+        if (tile instanceof TileFloatingGroundSingle) return new TextureRegion(atlas.findRegion(TILE_NAME,48));
+        if (tile instanceof TileFloatingGround) return new TextureRegion(atlas.findRegion(TILE_NAME, 50));
+        if (tile instanceof TileFloatingGroundLeft) return new TextureRegion(atlas.findRegion(TILE_NAME, 49));
+        if (tile instanceof TileFloatingGroundRight) return new TextureRegion(atlas.findRegion(TILE_NAME, 51));
+
+        if (tile instanceof TileFloatingGroundSingleSlim) return new TextureRegion(atlas.findRegion(TILE_NAME,64));
+        if (tile instanceof TileFloatingGroundSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 66));
+        if (tile instanceof TileFloatingGroundLeftSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 65));
+        if (tile instanceof TileFloatingGroundRightSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 67));
+
         if (tile instanceof Barrel) return new TextureRegion(atlas.findRegion(TILE_NAME, 55));
 
         return null;
