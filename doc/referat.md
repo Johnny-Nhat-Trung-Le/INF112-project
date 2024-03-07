@@ -47,5 +47,9 @@
 ## Dato: Tirsdag 5 Mars 2024
     Alle møttet opp, mergen branches. Fullførte Tilefactory og playermovement, samt ulike gamescreen som menu, pause osv.
     Prøvde å fikse PlayerAnimation, kom til konklusjon at vi bare flipper bildene manuelt.
-z
+
 ## Dato: Torsdag 7 Mars 2024
+    I dagen felles møte, hvor alle var tilstede. Gjorde vi ferdig innleveringen for 8 mars 2024.
+    Hvor vi diskuterte hva vi skulle svare på de ulike spørsmålene, og hva slags krav vi skal prioritere.
+    Lit par programmering på ulike små fixes her og der, f.eks. Tiles & PlayerState.
+    Merge sammen de resterende branches og då til slutt leverte det inn.
