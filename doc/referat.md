@@ -1,28 +1,24 @@
 ## Date: Tirsday 6 Februar 2024
-# Oppmøte:
+### Oppmøte:
     - Isak Yau
     - Johnny Nhat Trung Le
-
-# Diskutering:
+### Diskutering:
     Hva vi skal lage/ Hva spill?
     Hvilke Issue Board å velge?
     Hvilken mal?
-    
-
-# Dagens fremgang:
+### Dagens fremgang:
     * Del A0 - FERDIG
     * Del A1 - Nesten Ferdig
-
-# TODO
+### TODO
     * Må forke prosjekt mal
     * Må velge Issue Board
 
 ## Date: Tirsdag 13 Februar 2024
-# Oppmøte:
+### Oppmøte:
     - Fredirk Rød
     - Isak Yau
     - Johnny Nhat Trung Le
-
+### Referat:
     Diskuterte om de ulike delene av prosjeket jobbet videre med del A oppgavene. Produktiv diskusjon og kom fram til et spill konsept og prosjektmetodikk.
     
 ## Date: Torsdag 15 Februar 2024
