@@ -53,3 +53,8 @@
     Hvor vi diskuterte hva vi skulle svare på de ulike spørsmålene, og hva slags krav vi skal prioritere.
     Lit par programmering på ulike små fixes her og der, f.eks. Tiles & PlayerState.
     Merge sammen de resterende branches og då til slutt leverte det inn.
+
+## Dato : Fredag 8 Mars 2024
+    Fullførte resten av innleveringen og sjekket at alt var greit.
+    Merged siste del (pause screen, game over screen og start screen) med Main
+    Lagte noen få manuel/ unit tester.
