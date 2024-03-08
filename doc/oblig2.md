@@ -162,17 +162,16 @@ Er dere kommet forbi MVP? Forklar hvordan dere prioriterer ny funksjonalitet.
     * Når spilleren hopper mot en vegg, kan spilleren "bounce" tilbake. 
 
 # Produkt og kode
-(Evt. tekst / kommentarer til koden kan dere putte i en egen ## Kode-seksjon i doc/obligX.md.)
-
-
 * Utbedring av feil: hvis dere har rettet / forbedret noe som er påpekt tidligere, lag en liste med «Dette har vi fikset siden sist», så det er lett for gruppelederne å få oversikt.
   * Dette har vi fikset sist:
     Til nå har vi ingenting ettersom dette er vår første innlevering med spillkode
 I README.md:
-* Lag og lever et klassediagram. (Hvis det er veldig mange klasser, lager dere for de viktigste.) Det er ikke nødvendig å ta med alle metoder og feltvariabler med mindre dere anser dem som viktige for helheten. (Eclipse har forskjellige verktøy for dette.)
-* Kodekvalitet og testdekning vektlegges.
- - Vi prioriterte å få programmet til å kjøre spillet og få spillet i gang. Dermed  nedprioriterte vi testing.
-    Vi har til nå manuelle tester foreløpig for det visuelle og kontrolleren.
+* Lag og lever et klassediagram.
+  * Vi har laget en [enkel klassediagram](classDiagram.drawio) som inneholder de viktigste klassene, metoder og felt-variabler 
+ - Vi prioriterte å få programmet til å kjøre spillet og få spillet i gang. Dermed  nedprioriterte vi testing for i denne omgang.
+    Vi har til nå noen manuelle tester for det visuelle og kontrolleren.
+    I tillegg har vi lagt til enkle unit-tester for playerModel.
+    
 
 
 
