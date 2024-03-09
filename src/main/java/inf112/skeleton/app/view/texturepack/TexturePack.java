@@ -59,7 +59,12 @@ public class TexturePack implements ITexturePack {
     @Override
     public TextureRegion getPlayerTexture(PlayerState state, float stateTime) {
         updatePlayerVariables(state, stateTime);
-        return PLAYER_ANIMATION_MAP.get(state).getKeyFrame(this.playerStateTime, true);
+        boolean looping = true;
+        if(state.equals(PlayerState.JUMP_RIGHT) || state.equals(PlayerState.JUMP_LEFT)) {
+                looping = false;
+        }
+        return PLAYER_ANIMATION_MAP.get(state).getKeyFrame(this.playerStateTime, looping);
+
     }
 
     private void updatePlayerVariables(PlayerState state, float stateTime) {
