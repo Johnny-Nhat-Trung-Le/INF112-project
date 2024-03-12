@@ -5,9 +5,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.Event;
+import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.event.EventDispose;
+import inf112.skeleton.app.model.event.EventItemContact;
+import inf112.skeleton.app.model.event.EventItemPickedUp;
+import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.view.ViewablePlayerModel;
+
+import java.util.HashSet;
 
 public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
     private static final float WIDTH = 3;
@@ -21,6 +27,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private static final float FRICTION = 0;
     private static final float FRICTION_BOTTOM = 10;
     private static final float RESTITUTION = 0;
+    private final EventBus bus;
     private final World world;
     private final Body body;
     private Shape shapeTop, shapeBottom, shapeLeft, shapeRight;
@@ -28,13 +35,27 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private PlayerState state;
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int contactCountSensor = 0;
+    private ItemModel item;
+    private Effect effect;
+
+    public static boolean isContacted(Contact contact) {
+        HashSet<Object> set = new HashSet<>();
+        set.add("PlayerLeft");
+        set.add("PlayerRight");
+        set.add("PlayerTop");
+        set.add("PlayerBottom");
+
+        return set.contains(contact.getFixtureA().getUserData())
+                || set.contains(contact.getFixtureB().getUserData());
+    }
 
     /**
      * @param world which the player-{@link Body} is created in
      * @param x     left-most position of player
      * @param y     bottom-most position of player
      */
-    public PlayerModel(World world, float x, float y) {
+    public PlayerModel(EventBus bus, World world, float x, float y) {
+        this.bus = bus;
         this.world = world;
         body = createBody(x + WIDTH / 2, y + HEIGHT / 2);
         state = PlayerState.IDLE_RIGHT;
@@ -66,6 +87,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     @Override
     public void useItem() {
+        this.effect = item.use();
     }
 
     @Override
@@ -237,6 +259,11 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
             shapeTop.dispose();
             shapeLeft.dispose();
             shapeRight.dispose();
+        } else if (event instanceof EventItemContact e) {
+            if (!isContacted(e.contact())) return;
+            if (item != null) return;
+            item = e.item();
+            bus.post(new EventItemPickedUp(item));
         }
     }
 
@@ -261,10 +288,10 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         } else {
             if (moveLeft && !moveRight) {
                 state = PlayerState.JUMP_LEFT;
-            } else if (moveRight && !moveLeft){
+            } else if (moveRight && !moveLeft) {
                 state = PlayerState.JUMP_RIGHT;
             } else {
-                if (state.equals(PlayerState.IDLE_LEFT) || state.equals(PlayerState.LEFT) || state.equals(PlayerState.JUMP_LEFT)){
+                if (state.equals(PlayerState.IDLE_LEFT) || state.equals(PlayerState.LEFT) || state.equals(PlayerState.JUMP_LEFT)) {
                     state = PlayerState.JUMP_LEFT;
                 } else {
                     state = PlayerState.JUMP_RIGHT;
@@ -302,10 +329,8 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private boolean contactPlayerSensor(Contact contact) {
         Fixture fA = contact.getFixtureA();
         Fixture fB = contact.getFixtureB();
-        Object udA = fA.getUserData();
-        Object udB = fB.getUserData();
 
-        return udA != null && udA.equals("PlayerSensor")
-                || udB != null && udB.equals("PlayerSensor");
+        return "PlayerSensor".equals(fA.getUserData())
+                || "PlayerSensor".equals(fB.getUserData());
     }
 }

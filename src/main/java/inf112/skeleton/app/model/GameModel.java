@@ -4,7 +4,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.controller.ControllableGameModel;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
+import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
+import inf112.skeleton.app.event.EventHandler;
+import inf112.skeleton.app.model.event.EventItemPickedUp;
+import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewableItem;
@@ -14,24 +18,26 @@ import inf112.skeleton.app.view.ViewableTile;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener {
+public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener, EventHandler {
     private static final float GRAVITY = -20;
     private static final float WIND = 0;
     private static final int VELOCITY_ITERATIONS = 6;
     private static final int POSITION_ITERATIONS = 2;
+    private final EventBus bus;
     private final List<TileModel> foreground;
     private final List<TileModel> background;
-    private final List<Item> items;
+    private final List<ItemModel> items;
     private final World world;
     private final PlayerModel player;
     private GameState state;
 
-    public GameModel() {
+    public GameModel(EventBus bus) {
+        this.bus = bus;
         foreground = new ArrayList<>();
         background = new ArrayList<>();
         items = new ArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
-        player = new PlayerModel(world, 1.5f, 6.5f);
+        player = new PlayerModel(bus, world, 1.5f, 6.5f);
         state = GameState.MAIN_MENU;
 
         world.setContactListener(this); // If more bodies need to be ContactListener
@@ -50,13 +56,16 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                        ----S---------
                        LGGGGGGGGGGGGGGGGGGGGGR
                        """,
-                world,new EventBus());
+                world, bus);
         foreground.addAll(tiles);
     }
 
     @Override
     public void beginContact(Contact contact) {
         player.beginContact(contact);
+        for (ItemModel item : items) {
+            item.beginContact(contact);
+        }
     }
 
     @Override
@@ -113,5 +122,12 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     public void step(float timeStep) {
         player.step(timeStep);
         world.step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+        if (event instanceof EventItemPickedUp e) {
+            items.remove(e.item());
+        }
     }
 }
