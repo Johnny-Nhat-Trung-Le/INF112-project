@@ -18,7 +18,6 @@ public class Controller extends InputAdapter implements EventHandler {
     @Override
     public boolean keyDown(int keycode) {
         ControllablePlayerModel player = model.getControllablePlayer();
-        // TODO - legg på mer cases for ulike taster. (eks. useItem, pause, exit etc)
             switch (keycode) {
                 case Keys.W:
                     player.moveUp(true);
@@ -56,19 +55,21 @@ public class Controller extends InputAdapter implements EventHandler {
                 case Keys.P:
                     switch(model.getState()){
                         case MAIN_MENU:
-                                model.setState(GameState.ACTIVE);
-                                break;
+                            model.setState(GameState.ACTIVE);
+                            break;
                         case ACTIVE:
-                                model.setState(GameState.PAUSE);
-                                break;
+                            model.setState(GameState.PAUSE);
+                            break;
                         case PAUSE:
                             model.setState(GameState.ACTIVE);
                             break;
                     }
+                    break;
                 case Keys.R:
                     if(model.getState().equals(GameState.GAME_OVER)){
                         model.setState(GameState.MAIN_MENU);
                     }
+                    break;
             }
             return true;
         }
