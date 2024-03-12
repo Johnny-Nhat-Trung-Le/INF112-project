@@ -32,7 +32,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         items = new ArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
         player = new PlayerModel(world, 1.5f, 6.5f);
-        state = GameState.GAME_OVER;
+        state = GameState.MAIN_MENU;
 
         world.setContactListener(this); // If more bodies need to be ContactListener
         fillWorld();
