@@ -15,9 +15,9 @@ import inf112.skeleton.app.view.ViewableItem;
 public abstract class ItemModel implements ViewableItem, Physicable, EventHandler, ContactListener {
     private static final float WIDTH = 2;
     private static final float HEIGHT = 2;
-    private final EventBus bus;
     private final Body body;
     private Shape shape;
+    protected final EventBus bus;
 
     /**
      * @param bus   the {@link EventBus} that is used to call {@link EventItemUsedUp}
@@ -28,6 +28,8 @@ public abstract class ItemModel implements ViewableItem, Physicable, EventHandle
     public ItemModel(EventBus bus, World world, float x, float y) {
         this.bus = bus;
         body = createBody(world, x, y);
+
+        bus.addEventHandler(this);
     }
 
     /**
@@ -49,7 +51,7 @@ public abstract class ItemModel implements ViewableItem, Physicable, EventHandle
         fDef.shape = shape;
 
         Body body = world.createBody(bDef);
-        body.createFixture(fDef);
+        body.createFixture(fDef).setUserData(this);
 
         this.shape = shape;
         return body;
@@ -60,7 +62,7 @@ public abstract class ItemModel implements ViewableItem, Physicable, EventHandle
      * the item is used up an {@link EventItemUsedUp} will
      * be posted.
      *
-     * @return effect applied by the use of the item
+     * @return a new {@link Effect} of the item
      */
     public abstract Effect use();
 
@@ -101,6 +103,7 @@ public abstract class ItemModel implements ViewableItem, Physicable, EventHandle
 
     @Override
     public void beginContact(Contact contact) {
+        if (!isContacted(contact)) return;
         bus.post(new EventItemContact(contact, this));
     }
 
@@ -114,5 +117,10 @@ public abstract class ItemModel implements ViewableItem, Physicable, EventHandle
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
+    }
+
+    private boolean isContacted(Contact contact) {
+        return this.equals(contact.getFixtureA().getUserData())
+                || this.equals(contact.getFixtureB().getUserData());
     }
 }

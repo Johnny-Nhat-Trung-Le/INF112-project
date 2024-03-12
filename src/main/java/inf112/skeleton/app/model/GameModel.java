@@ -8,6 +8,7 @@ import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.event.EventItemPickedUp;
+import inf112.skeleton.app.model.item.ItemEnergy;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.view.ViewableGameModel;
@@ -15,8 +16,8 @@ import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 import inf112.skeleton.app.view.ViewableTile;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener, EventHandler {
     private static final float GRAVITY = -20;
@@ -35,11 +36,12 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         this.bus = bus;
         foreground = new ArrayList<>();
         background = new ArrayList<>();
-        items = new ArrayList<>();
+        items = new CopyOnWriteArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
         player = new PlayerModel(bus, world, 1.5f, 6.5f);
         state = GameState.MAIN_MENU;
 
+        bus.addEventHandler(this);
         world.setContactListener(this); // If more bodies need to be ContactListener
         fillWorld();
     }
@@ -58,6 +60,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                        """,
                 world, bus);
         foreground.addAll(tiles);
+        items.add(new ItemEnergy(bus,world,15,7));
     }
 
     @Override

@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.model.PlayerState;
+import inf112.skeleton.app.model.item.ItemEnergy;
 import inf112.skeleton.app.model.tiles.*;
+import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewableTile;
 
 import java.util.HashMap;
@@ -91,5 +93,10 @@ public class TexturePack implements ITexturePack {
         return new Animation<TextureRegion>(1f / 16f, animationFrames);
     }
 
-    ;
+    @Override
+    public TextureRegion getItemTexture(ViewableItem item) {
+        if (item instanceof ItemEnergy) return new TextureRegion(atlas.findRegion(TILE_NAME,156));
+
+        return null;
+    }
 }

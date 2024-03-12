@@ -19,6 +19,9 @@ public class Controller extends InputAdapter implements EventHandler {
     public boolean keyDown(int keycode) {
         ControllablePlayerModel player = model.getControllablePlayer();
             switch (keycode) {
+                case Keys.SPACE:
+                    player.useItem();
+                    break;
                 case Keys.W:
                     player.moveUp(true);
                     break;

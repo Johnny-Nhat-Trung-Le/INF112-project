@@ -10,6 +10,7 @@ import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.model.event.EventItemContact;
 import inf112.skeleton.app.model.event.EventItemPickedUp;
+import inf112.skeleton.app.model.event.EventItemUsedUp;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 
@@ -38,15 +39,14 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private ItemModel item;
     private Effect effect;
 
-    public static boolean isContacted(Contact contact) {
+    public static boolean isContacted(Fixture fixture) {
         HashSet<Object> set = new HashSet<>();
         set.add("PlayerLeft");
         set.add("PlayerRight");
         set.add("PlayerTop");
         set.add("PlayerBottom");
 
-        return set.contains(contact.getFixtureA().getUserData())
-                || set.contains(contact.getFixtureB().getUserData());
+        return set.contains(fixture.getUserData());
     }
 
     /**
@@ -63,6 +63,8 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         moveDown = false;
         moveLeft = false;
         moveRight = false;
+
+        bus.addEventHandler(this);
     }
 
     @Override
@@ -87,6 +89,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     @Override
     public void useItem() {
+        if (item == null) return;
         this.effect = item.use();
     }
 
@@ -117,10 +120,23 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     @Override
     public void step(float timeStep) {
-        if (moveUp && !moveDown && isGrounded()) move(0, DY);
+        // EFFECT
+        if (effect != null) {
+            if (effect.hasEnded()) effect = null;
+            else effect.step();
+        }
+
+        // MOVEMENT
+        float dx = DX;
+        dx *= effect == null ? 1 : effect.getSpeedBoost();
+        dx *= isGrounded() ? 1 : AIR_CONTROL;
+        float dy = DY;
+        dy *=  effect == null ? 1 : effect.getJumpBoost();
+
+        if (moveUp && !moveDown && isGrounded()) move(0, dy);
         if (moveDown && !moveUp && !isGrounded()) move(0, -DY);
-        if (moveRight && !moveLeft) move(isGrounded() ? DX : DX * AIR_CONTROL, 0);
-        if (moveLeft && !moveRight) move(isGrounded() ? -DX : -DX * AIR_CONTROL, 0);
+        if (moveRight && !moveLeft) move(dx, 0);
+        if (moveLeft && !moveRight) move(-dx, 0);
 
         updateState();
     }
@@ -260,10 +276,13 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
             shapeLeft.dispose();
             shapeRight.dispose();
         } else if (event instanceof EventItemContact e) {
-            if (!isContacted(e.contact())) return;
+            if (!isContacted(e.contact().getFixtureA()) && !isContacted(e.contact().getFixtureB())) return;
             if (item != null) return;
             item = e.item();
             bus.post(new EventItemPickedUp(item));
+        } else if (event instanceof EventItemUsedUp e) {
+            if (!e.item().equals(item)) return;
+            item = null;
         }
     }
 
@@ -305,17 +324,13 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         Fixture fA = contact.getFixtureA();
         Fixture fB = contact.getFixtureB();
 
-        if (contactPlayerSensor(contact)) contactCountSensor++;
-        if (fA.getUserData() != null) {
-            if (fA.getUserData().equals("PlayerBottom")) body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            if (fA.getUserData().equals("PlayerLeft")) body.setLinearVelocity(0, body.getLinearVelocity().y);
-            if (fA.getUserData().equals("PlayerRight")) body.setLinearVelocity(0, body.getLinearVelocity().y);
-        }
+        if (isSensorToGroundContact(contact)) contactCountSensor++;
+        if (isBodyToGroundContact(contact)) body.setLinearVelocity(body.getLinearVelocity().x, 0);
     }
 
     @Override
     public void endContact(Contact contact) {
-        if (contactPlayerSensor(contact)) contactCountSensor--;
+        if (isSensorToGroundContact(contact)) contactCountSensor--;
     }
 
     @Override
@@ -326,11 +341,21 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     public void postSolve(Contact contact, ContactImpulse contactImpulse) {
     }
 
-    private boolean contactPlayerSensor(Contact contact) {
+    private boolean isSensorToGroundContact(Contact contact) {
+        String s = "PlayerSensor";
         Fixture fA = contact.getFixtureA();
         Fixture fB = contact.getFixtureB();
 
-        return "PlayerSensor".equals(fA.getUserData())
-                || "PlayerSensor".equals(fB.getUserData());
+        return (s.equals(fA.getUserData()) && !fB.isSensor())
+                || (s.equals(fB.getUserData()) && !fA.isSensor());
+    }
+
+    private boolean isBodyToGroundContact(Contact contact) {
+        String s = "PlayerSensor";
+        Fixture fA = contact.getFixtureA();
+        Fixture fB = contact.getFixtureB();
+
+        return (isContacted(fA) && !fB.isSensor())
+                || (isContacted(fB) && !fA.isSensor());
     }
 }

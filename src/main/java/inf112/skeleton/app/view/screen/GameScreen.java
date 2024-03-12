@@ -15,6 +15,7 @@ import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.model.event.EventStep;
 import inf112.skeleton.app.view.ViewableGameModel;
+import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 import inf112.skeleton.app.view.ViewableTile;
 import inf112.skeleton.app.view.texturepack.ITexturePack;
@@ -72,6 +73,7 @@ public class GameScreen implements Screen {
 
         batch.begin();
         renderTiles();
+        renderItems();
         // Draws the player
         batch.draw(
                 texturePack.getPlayerTexture(player.getState(), Gdx.graphics.getDeltaTime()),
@@ -112,6 +114,19 @@ public class GameScreen implements Screen {
         TextureRegion tileTexture = texturePack.getTileTexture(tile);
         if (tileTexture != null) {
             batch.draw(tileTexture, tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
+        }
+    }
+
+    private void renderItems() {
+        for (ViewableItem item : model.getItems()) {
+            renderItem(item);
+        }
+    }
+
+    private void renderItem(ViewableItem item) {
+        TextureRegion itemTexture = texturePack.getItemTexture(item);
+        if (itemTexture != null) {
+            batch.draw(itemTexture, item.getX(), item.getY(), item.getWidth(), item.getHeight());
         }
     }
 
