@@ -1,17 +1,15 @@
 package inf112.skeleton.app.model.tiles;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
+
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.model.TileFactory;
 
-public class Barrel extends TileModel{
+public class Door1 extends TileModel {
 
     public static void loadStatic(){}
 
     static {
-        TileFactory.register('B', (world, eventBus, x, y) -> {
-            return new Barrel(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 4, TILE_WIDTH/2, TILE_HEIGHT/2);
+        TileFactory.register('9', (world, eventBus, x, y) -> {
+            return new Door1(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT);
         });
     }
 
@@ -25,8 +23,7 @@ public class Barrel extends TileModel{
      * @param w     width of body
      * @param h     height of body
      */
-    public Barrel(World world, float x, float y, float w, float h) {
+    public Door1(World world, float x, float y, float w, float h) {
         super(world, x, y, w, h);
     }
-
 }

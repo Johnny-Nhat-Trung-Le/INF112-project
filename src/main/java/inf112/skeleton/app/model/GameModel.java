@@ -46,8 +46,8 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                 """
                        --i---------------------
                        B---
-                       qwe----lgr--i--|--I-B
-                       ----S---------
+                       qwe--------lgr--i--|--I
+                       ----S---B------
                        LGGGGGGGGGGGGGGGGGGGGGR
                        """,
                 world,new EventBus());
