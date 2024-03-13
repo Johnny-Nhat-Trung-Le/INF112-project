@@ -7,6 +7,7 @@ import inf112.skeleton.app.controller.Controller;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.tiles.*;
+import inf112.skeleton.app.model.tiles.contactableTiles.Spike;
 import inf112.skeleton.app.view.GameView;
 
 public class Main {

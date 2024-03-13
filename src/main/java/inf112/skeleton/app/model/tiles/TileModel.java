@@ -13,7 +13,8 @@ import inf112.skeleton.app.view.ViewableTile;
 public abstract class TileModel implements ViewableTile, Physicable, Stepable, EventHandler {
     public static final float TILE_WIDTH = 5;
     public static final float TILE_HEIGHT = 5;
-    private final World world;
+
+    protected final World world;
     private final Body body;
     private final Shape shape;
     private final float width;

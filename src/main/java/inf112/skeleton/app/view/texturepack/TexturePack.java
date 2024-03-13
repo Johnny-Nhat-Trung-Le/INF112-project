@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.model.PlayerState;
 import inf112.skeleton.app.model.tiles.*;
+import inf112.skeleton.app.model.tiles.contactableTiles.Spike;
 import inf112.skeleton.app.view.ViewableTile;
 
 import java.util.HashMap;

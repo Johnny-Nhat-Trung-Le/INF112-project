@@ -10,6 +10,12 @@ import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 
 public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
+
+    public static String userDataSensor = "PlayerSensor";
+    public static  String userDataTop = "PlayerTop";
+    public static String userDataBottom = "PlayerBottom";
+    public static String userDataLeft = "PlayerLeft";
+    public static String userDataRight = "PlayerRight";
     private static final float WIDTH = 3;
     private static final float HEIGHT = 3;
     private static final float DX = 10;
@@ -222,11 +228,11 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         fDefRight.restitution = RESTITUTION;
         fDefRight.shape = shapeRight;
 
-        body.createFixture(fDefSensor).setUserData("PlayerSensor");
-        body.createFixture(fDefBottom).setUserData("PlayerBottom");
-        body.createFixture(fDefTop).setUserData("PlayerTop");
-        body.createFixture(fDefLeft).setUserData("PlayerLeft");
-        body.createFixture(fDefRight).setUserData("PlayerRight");
+        body.createFixture(fDefSensor).setUserData(userDataSensor);
+        body.createFixture(fDefBottom).setUserData(userDataBottom);
+        body.createFixture(fDefTop).setUserData(userDataTop);
+        body.createFixture(fDefLeft).setUserData(userDataLeft);
+        body.createFixture(fDefRight).setUserData(userDataRight);
     }
 
     @Override
@@ -276,13 +282,12 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     @Override
     public void beginContact(Contact contact) {
         Fixture fA = contact.getFixtureA();
-        Fixture fB = contact.getFixtureB();
 
         if (contactPlayerSensor(contact)) contactCountSensor++;
         if (fA.getUserData() != null) {
-            if (fA.getUserData().equals("PlayerBottom")) body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            if (fA.getUserData().equals("PlayerLeft")) body.setLinearVelocity(0, body.getLinearVelocity().y);
-            if (fA.getUserData().equals("PlayerRight")) body.setLinearVelocity(0, body.getLinearVelocity().y);
+            if (fA.getUserData().equals(userDataBottom)) body.setLinearVelocity(body.getLinearVelocity().x, 0);
+            if (fA.getUserData().equals(userDataLeft)) body.setLinearVelocity(0, body.getLinearVelocity().y);
+            if (fA.getUserData().equals(userDataRight)) body.setLinearVelocity(0, body.getLinearVelocity().y);
         }
     }
 
@@ -305,7 +310,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         Object udA = fA.getUserData();
         Object udB = fB.getUserData();
 
-        return udA != null && udA.equals("PlayerSensor")
-                || udB != null && udB.equals("PlayerSensor");
+        return udA != null && udA.equals(userDataSensor)
+                || udB != null && udB.equals(userDataSensor);
     }
 }

@@ -6,6 +6,7 @@ import inf112.skeleton.app.controller.ControllableGameModel;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.tiles.TileModel;
+import inf112.skeleton.app.model.tiles.contactableTiles.ContactableTiles;
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
@@ -57,6 +58,11 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     @Override
     public void beginContact(Contact contact) {
         player.beginContact(contact);
+        for(TileModel tile : foreground.stream().toList()){
+            if(tile instanceof ContactableTiles){
+                ((ContactableTiles) tile).beginContact(contact);
+            }
+        }
     }
 
     @Override
