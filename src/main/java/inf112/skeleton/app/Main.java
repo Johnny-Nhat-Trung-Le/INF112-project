@@ -51,5 +51,8 @@ public class Main {
 
         Spike.loadStatic();
         Barrel.loadStatic();
+
+        Door1.loadStatic();
+        Door2.loadStatic();
     }
 }
