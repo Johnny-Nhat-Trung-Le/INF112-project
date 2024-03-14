@@ -160,37 +160,39 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         this.shapeSensor = shapeSensor;
 
         // BOTTOM
-        Vector2[] vecBottom = new Vector2[3];
-        vecBottom[0] = new Vector2(-WIDTH / 2 + e, -HEIGHT / 2); // BL
-        vecBottom[1] = new Vector2(WIDTH / 2 - e, -HEIGHT / 2); // BR
-        vecBottom[2] = new Vector2(0, 0); // C
+        Vector2[] vecBottom = new Vector2[5];
+        vecBottom[0] = new Vector2(0, 0); // C
+        vecBottom[1] = new Vector2(WIDTH / 2 - e, - HEIGHT / 2 + e / 4); // BRT
+        vecBottom[2] = new Vector2(WIDTH / 2 - 2 * e, - HEIGHT / 2); // BR
+        vecBottom[3] = new Vector2(- WIDTH / 2 + 2 * e, - HEIGHT / 2); // BL
+        vecBottom[4] = new Vector2(- WIDTH / 2 + e, - HEIGHT / 2 + e / 4); // BLT
         PolygonShape shapeBottom = new PolygonShape();
         shapeBottom.set(vecBottom);
         this.shapeBottom = shapeBottom;
 
         // TOP
         Vector2[] vecTop = new Vector2[3];
-        vecTop[0] = new Vector2(-WIDTH / 2, HEIGHT / 2); // TL
-        vecTop[1] = new Vector2(WIDTH / 2, HEIGHT / 2); // TR
-        vecTop[2] = new Vector2(0, 0); // C
+        vecTop[0] = new Vector2(0, 0); // C
+        vecTop[1] = new Vector2(- WIDTH / 2, HEIGHT / 2); // TL
+        vecTop[2] = new Vector2(WIDTH / 2, HEIGHT / 2); // TR
         PolygonShape shapeTop = new PolygonShape();
         shapeTop.set(vecTop);
         this.shapeTop = shapeTop;
 
         // LEFT
         Vector2[] vecLeft = new Vector2[3];
-        vecLeft[0] = new Vector2(-WIDTH / 2, HEIGHT / 2 - e); // TL
-        vecLeft[1] = new Vector2(0, 0); // C
-        vecLeft[2] = new Vector2(-WIDTH / 2, -HEIGHT / 2 + e); // BL
+        vecLeft[0] = new Vector2(0, 0); // C
+        vecLeft[1] = new Vector2(- WIDTH / 2, - HEIGHT / 2 + e); // BL
+        vecLeft[2] = new Vector2(- WIDTH / 2, HEIGHT / 2 - e); // TL
         PolygonShape shapeLeft = new PolygonShape();
         shapeLeft.set(vecLeft);
         this.shapeLeft = shapeLeft;
 
         // RIGHT
         Vector2[] vecRight = new Vector2[3];
-        vecRight[0] = new Vector2(WIDTH / 2, HEIGHT / 2 - e); // TR
-        vecRight[1] = new Vector2(WIDTH / 2, -HEIGHT / 2 + e); // BR
-        vecRight[2] = new Vector2(0, 0); // C
+        vecRight[0] = new Vector2(0, 0); // C
+        vecRight[1] = new Vector2(WIDTH / 2, HEIGHT / 2 - e); // TR
+        vecRight[2] = new Vector2(WIDTH / 2, - HEIGHT / 2 + e); // BR
         PolygonShape shapeRight = new PolygonShape();
         shapeRight.set(vecRight);
         this.shapeRight = shapeRight;
