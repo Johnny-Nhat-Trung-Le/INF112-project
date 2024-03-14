@@ -17,6 +17,11 @@ import inf112.skeleton.app.view.ViewablePlayerModel;
 import java.util.HashSet;
 
 public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
+    public static final String USER_DATA_BOTTOM = "PlayerBottom";
+    public static final String USER_DATA_LEFT = "PlayerLeft";
+    public static final String USER_DATA_RIGHT = "PlayerRight";
+    public static final String USER_DATA_TOP = "PlayerTop";
+    private static final String USER_DATA_SENSOR = "PlayerSensor";
     private static final float WIDTH = 3;
     private static final float HEIGHT = 3;
     private static final float DX = 10;
@@ -41,10 +46,10 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     public static boolean isContacted(Fixture fixture) {
         HashSet<Object> set = new HashSet<>();
-        set.add("PlayerLeft");
-        set.add("PlayerRight");
-        set.add("PlayerTop");
-        set.add("PlayerBottom");
+        set.add(USER_DATA_BOTTOM);
+        set.add(USER_DATA_LEFT);
+        set.add(USER_DATA_RIGHT);
+        set.add(USER_DATA_TOP);
 
         return set.contains(fixture.getUserData());
     }
@@ -260,11 +265,11 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         fDefRight.restitution = RESTITUTION;
         fDefRight.shape = shapeRight;
 
-        body.createFixture(fDefSensor).setUserData("PlayerSensor");
-        body.createFixture(fDefBottom).setUserData("PlayerBottom");
-        body.createFixture(fDefTop).setUserData("PlayerTop");
-        body.createFixture(fDefLeft).setUserData("PlayerLeft");
-        body.createFixture(fDefRight).setUserData("PlayerRight");
+        body.createFixture(fDefSensor).setUserData(USER_DATA_SENSOR);
+        body.createFixture(fDefBottom).setUserData(USER_DATA_BOTTOM);
+        body.createFixture(fDefTop).setUserData(USER_DATA_TOP);
+        body.createFixture(fDefLeft).setUserData(USER_DATA_LEFT);
+        body.createFixture(fDefRight).setUserData(USER_DATA_RIGHT);
     }
 
     @Override
@@ -321,11 +326,8 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     @Override
     public void beginContact(Contact contact) {
-        Fixture fA = contact.getFixtureA();
-        Fixture fB = contact.getFixtureB();
-
         if (isSensorToGroundContact(contact)) contactCountSensor++;
-        if (isBodyToGroundContact(contact)) body.setLinearVelocity(body.getLinearVelocity().x, 0);
+        if (isBottomToGroundContact(contact)) body.setLinearVelocity(body.getLinearVelocity().x, 0);
     }
 
     @Override
@@ -342,20 +344,18 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     private boolean isSensorToGroundContact(Contact contact) {
-        String s = "PlayerSensor";
         Fixture fA = contact.getFixtureA();
         Fixture fB = contact.getFixtureB();
 
-        return (s.equals(fA.getUserData()) && !fB.isSensor())
-                || (s.equals(fB.getUserData()) && !fA.isSensor());
+        return (USER_DATA_SENSOR.equals(fA.getUserData()) && !fB.isSensor())
+                || (USER_DATA_SENSOR.equals(fB.getUserData()) && !fA.isSensor());
     }
 
-    private boolean isBodyToGroundContact(Contact contact) {
-        String s = "PlayerSensor";
+    private boolean isBottomToGroundContact(Contact contact) {
         Fixture fA = contact.getFixtureA();
         Fixture fB = contact.getFixtureB();
 
-        return (isContacted(fA) && !fB.isSensor())
-                || (isContacted(fB) && !fA.isSensor());
+        return (USER_DATA_BOTTOM.equals(fA.getUserData()) && !fB.isSensor())
+                || (USER_DATA_BOTTOM.equals(fB.getUserData()) && !fA.isSensor());
     }
 }
