@@ -44,6 +44,12 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private ItemModel item;
     private Effect effect;
 
+    /**
+     * Checks if the {@link Fixture} belongs to the contactable player.
+     *
+     * @param fixture to check
+     * @return if the {@link Fixture} belongs to the player
+     */
     public static boolean isContacted(Fixture fixture) {
         HashSet<Object> set = new HashSet<>();
         set.add(USER_DATA_BOTTOM);
@@ -150,6 +156,13 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         return contactCountSensor > 0;
     }
 
+    /**
+     * Applies the speed to the player-{@link Body}, taking into account
+     * the active {@link Effect} to set the maximum possible speed.
+     *
+     * @param dx {@code impulseX} used in {@code Body::applyLinearImpulse}
+     * @param dy {@code impulseY} used in {@code Body::applyLinearImpulse}
+     */
     private void move(float dx, float dy) {
         Vector2 d = body.getLinearVelocity();
 
@@ -193,7 +206,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     /**
-     * Creates and fills the {@link Shape}-variables.
+     * Sets the {@link Shape}-variables.
      */
     private void createShapes() {
         float e = 0.02f;
