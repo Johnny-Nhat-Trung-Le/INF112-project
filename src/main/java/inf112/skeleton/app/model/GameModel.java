@@ -23,7 +23,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private static final float GRAVITY = -20;
     private static final float WIND = 0;
     private static final int VELOCITY_ITERATIONS = 6;
-    private static final int POSITION_ITERATIONS = 2;
+    private static final int POSITION_ITERATIONS = 8;
     private final EventBus bus;
     private final List<TileModel> foreground;
     private final List<TileModel> background;

@@ -24,11 +24,11 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private static final String USER_DATA_SENSOR = "PlayerSensor";
     private static final float WIDTH = 3;
     private static final float HEIGHT = 3;
-    private static final float DX = 10;
+    private static final float DX = 15;
     private static final float DY = 40;
     private static final float AIR_CONTROL = 0.5f;
     private static final float MAX_DX = 10;
-    private static final float MAX_DY = 30;
+    private static final float MAX_DY = 20;
     private static final float DENSITY = 0.5f;
     private static final float FRICTION = 0;
     private static final float FRICTION_BOTTOM = 10;
@@ -136,7 +136,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         dx *= effect == null ? 1 : effect.getSpeedBoost();
         dx *= isGrounded() ? 1 : AIR_CONTROL;
         float dy = DY;
-        dy *=  effect == null ? 1 : effect.getJumpBoost();
+        dy *= effect == null ? 1 : effect.getJumpBoost();
 
         if (moveUp && !moveDown && isGrounded()) move(0, dy);
         if (moveDown && !moveUp && !isGrounded()) move(0, -DY);
@@ -155,11 +155,20 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         float x = body.getPosition().x;
         float y = body.getPosition().y;
 
-        if (dx > 0 && d.x < MAX_DX || dx < 0 && d.x > -MAX_DX) {
-            body.applyLinearImpulse(dx, 0, x, y, true);
+        float maxDx = MAX_DX;
+        maxDx *= effect == null ? 1 : effect.getSpeedBoost();
+        float maxDy = MAX_DY;
+        maxDy *= effect == null ? 1 : effect.getJumpBoost();
+
+        if (dx > 0 && d.x < maxDx || dx < 0 && d.x > -maxDx) {
+            body.applyLinearImpulse(dx, 0, getX(), getY(), true);
+        } else if (dx != 0) {
+            body.setLinearVelocity((dx > 0 ? 1 : -1) * maxDx, d.y);
         }
-        if (dy > 0 && d.y < MAX_DY || dy < 0 && d.y > -MAX_DY) {
-            body.applyLinearImpulse(0, dy, x, y, true);
+        if (dy > 0 && d.y < maxDy || dy < 0 && d.y > -maxDy) {
+            body.applyLinearImpulse(0, dy, getX(), getY(), true);
+        } else if (dy != 0) {
+            body.setLinearVelocity(d.x, (dy > 0 ? 1 : -1) * maxDy);
         }
     }
 

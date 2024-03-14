@@ -7,6 +7,7 @@ import inf112.skeleton.app.model.Effect;
 import inf112.skeleton.app.model.event.EventItemUsedUp;
 
 public class ItemEnergy extends ItemModel {
+    private static final int DURABILITY = 5;
     private static final int DURATION = 600;
     private static final float SPEED_BOOST = 4;
     private static final float JUMP_BOOST = 1.5f;
@@ -20,7 +21,7 @@ public class ItemEnergy extends ItemModel {
      */
     public ItemEnergy(EventBus bus, World world, float x, float y) {
         super(bus, world, x, y);
-        durability = new Durability(1,1);
+        durability = new Durability(DURABILITY,DURABILITY);
     }
 
     private void reduceDurability() {
