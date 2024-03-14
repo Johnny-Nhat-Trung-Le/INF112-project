@@ -152,8 +152,6 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     private void move(float dx, float dy) {
         Vector2 d = body.getLinearVelocity();
-        float x = body.getPosition().x;
-        float y = body.getPosition().y;
 
         float maxDx = MAX_DX;
         maxDx *= effect == null ? 1 : effect.getSpeedBoost();
