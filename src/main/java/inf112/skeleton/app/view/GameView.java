@@ -27,8 +27,6 @@ public class GameView extends Game {
         this.bus = bus;
         this.processor = processor;
         this.gameState =  GameState.MAIN_MENU;
-
-
     }
 
     @Override

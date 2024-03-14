@@ -4,7 +4,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.controller.ControllableGameModel;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
+import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
+import inf112.skeleton.app.event.EventHandler;
+import inf112.skeleton.app.model.event.EventDispose;
+import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.model.tiles.contactableTiles.ContactableTiles;
 import inf112.skeleton.app.view.ViewableGameModel;
@@ -15,7 +19,7 @@ import inf112.skeleton.app.view.ViewableTile;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener {
+public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener, EventHandler {
     private static final float GRAVITY = -20;
     private static final float WIND = 0;
     private static final int VELOCITY_ITERATIONS = 6;
@@ -25,16 +29,20 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private final List<Item> items;
     private final World world;
     private final PlayerModel player;
+    private final EventBus bus;
     private GameState state;
 
-    public GameModel() {
+
+    public GameModel(EventBus bus) {
         foreground = new ArrayList<>();
         background = new ArrayList<>();
         items = new ArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
-        player = new PlayerModel(world, 1.5f, 6.5f);
+        this.bus = bus;
+        bus.addEventHandler(this);
+        player = new PlayerModel(world, bus,1.5f, 6.5f);
+        bus.addEventHandler(this);
         state = GameState.MAIN_MENU;
-
         world.setContactListener(this); // If more bodies need to be ContactListener
         fillWorld();
     }
@@ -51,7 +59,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                        ----S---B------
                        LGGGGGGGGGGGGGGGGGGGGGR
                        """,
-                world,new EventBus());
+                world,bus);
         foreground.addAll(tiles);
     }
 
@@ -119,5 +127,12 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     public void step(float timeStep) {
         player.step(timeStep);
         world.step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+        if(event instanceof EventGameState){
+            state = ((EventGameState) event).gameState();
+        }
     }
 }

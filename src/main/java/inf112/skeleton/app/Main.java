@@ -20,7 +20,7 @@ public class Main {
 
         EventBus bus = new EventBus();
 
-        GameModel model = new GameModel();
+        GameModel model = new GameModel(bus);
 
         Controller controller = new Controller(model);
         bus.addEventHandler(controller);

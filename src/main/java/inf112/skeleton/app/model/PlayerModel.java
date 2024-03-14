@@ -5,17 +5,21 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.Event;
+import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
+import inf112.skeleton.app.model.event.EventDamage;
 import inf112.skeleton.app.model.event.EventDispose;
+import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 
-public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
+import java.util.HashSet;
 
-    public static String userDataSensor = "PlayerSensor";
-    public static  String userDataTop = "PlayerTop";
-    public static String userDataBottom = "PlayerBottom";
-    public static String userDataLeft = "PlayerLeft";
-    public static String userDataRight = "PlayerRight";
+public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
+    private static final String USERDATASENSOR = "PlayerSensor";
+    private static final String USERDATATOP= "PlayerTop";
+    private static final String USERDATABOTTOM = "PlayerBottom";
+    private static final String USERDATALEFT = "PlayerLeft";
+    private static final String USERDATARIGHT = "PlayerRight";
     private static final float WIDTH = 3;
     private static final float HEIGHT = 3;
     private static final float DX = 10;
@@ -32,22 +36,43 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private Shape shapeTop, shapeBottom, shapeLeft, shapeRight;
     private Shape shapeSensor;
     private PlayerState state;
+    private final EventBus bus;
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int contactCountSensor = 0;
+    private Integer Hp;
+    public static  HashSet<String> userDataSet;
 
     /**
      * @param world which the player-{@link Body} is created in
      * @param x     left-most position of player
      * @param y     bottom-most position of player
      */
-    public PlayerModel(World world, float x, float y) {
+    public PlayerModel(World world, EventBus eventbus, float x, float y) {
+        Hp = 3;
         this.world = world;
         body = createBody(x + WIDTH / 2, y + HEIGHT / 2);
+        bus = eventbus;
+        bus.addEventHandler(this);
         state = PlayerState.IDLE_RIGHT;
         moveUp = false;
         moveDown = false;
         moveLeft = false;
         moveRight = false;
+        userDataSet =createUserDataSet();
+    }
+
+    /**
+     * A collection of all the playerUserDatas
+     * @return HashSet<String> of PlayerUserDatas
+     */
+    private HashSet<String> createUserDataSet(){
+        HashSet<String> set = new HashSet<>();
+        set.add(USERDATALEFT);
+        set.add(USERDATARIGHT);
+        set.add(USERDATATOP);
+        set.add(USERDATABOTTOM);
+        set.add(USERDATASENSOR);
+        return set;
     }
 
     @Override
@@ -230,11 +255,11 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         fDefRight.restitution = RESTITUTION;
         fDefRight.shape = shapeRight;
 
-        body.createFixture(fDefSensor).setUserData(userDataSensor);
-        body.createFixture(fDefBottom).setUserData(userDataBottom);
-        body.createFixture(fDefTop).setUserData(userDataTop);
-        body.createFixture(fDefLeft).setUserData(userDataLeft);
-        body.createFixture(fDefRight).setUserData(userDataRight);
+        body.createFixture(fDefSensor).setUserData(USERDATASENSOR);
+        body.createFixture(fDefBottom).setUserData(USERDATABOTTOM);
+        body.createFixture(fDefTop).setUserData(USERDATATOP);
+        body.createFixture(fDefLeft).setUserData(USERDATALEFT);
+        body.createFixture(fDefRight).setUserData(USERDATARIGHT);
     }
 
     @Override
@@ -246,8 +271,20 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
             shapeLeft.dispose();
             shapeRight.dispose();
         }
+        else if (event instanceof EventDamage){
+            updateHp(((EventDamage) event).damage());
+        }
     }
-
+    private void updateHp(int dmg){
+        int newHp = Hp-dmg;
+        System.out.println(Hp);
+        if(newHp<=0){
+            bus.post(new EventGameState(GameState.GAME_OVER));
+        }
+        else{
+            Hp = newHp;
+        }
+    }
     @Override
     public PlayerState getState() {
         return this.state;
@@ -287,9 +324,9 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
         if (contactPlayerSensor(contact)) contactCountSensor++;
         if (fA.getUserData() != null) {
-            if (fA.getUserData().equals(userDataBottom)) body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            if (fA.getUserData().equals(userDataLeft)) body.setLinearVelocity(0, body.getLinearVelocity().y);
-            if (fA.getUserData().equals(userDataRight)) body.setLinearVelocity(0, body.getLinearVelocity().y);
+            if (fA.getUserData().equals(USERDATABOTTOM)) body.setLinearVelocity(body.getLinearVelocity().x, 0);
+            if (fA.getUserData().equals(USERDATALEFT)) body.setLinearVelocity(0, body.getLinearVelocity().y);
+            if (fA.getUserData().equals(USERDATARIGHT)) body.setLinearVelocity(0, body.getLinearVelocity().y);
         }
     }
 
@@ -312,7 +349,12 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         Object udA = fA.getUserData();
         Object udB = fB.getUserData();
 
-        return udA != null && udA.equals(userDataSensor)
-                || udB != null && udB.equals(userDataSensor);
+        return udA != null && udA.equals(USERDATASENSOR)
+                || udB != null && udB.equals(USERDATASENSOR);
+    }
+
+    @Override
+    public Integer getHp() {
+        return Hp;
     }
 }
