@@ -60,4 +60,50 @@ public class TestPlayerModel {
             lastX = player.getX();
         }
     }
+
+    @Test
+    public void testMoveLeft() {
+        float lastX = INIT_X;
+
+        player.moveLeft(true);
+
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+            assertTrue(lastX > player.getX(), "Player is not moving after moveRight(true) has been called!");
+            assertEquals(INIT_Y, player.getY(), "Player is moving in the vertical axis when moveRight(true) has been called!");
+            lastX = player.getX();
+        }
+    }
+
+    @Test
+    public void testMoveDown() {
+        float lastY = INIT_Y;
+
+        player.moveDown(true);
+
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+            assertTrue(lastY > player.getY(), "Player is not moving downwards after moveDown(true) has been called!");
+            assertEquals(INIT_X, player.getX(), "Player is moving in the horizontal axis when moveDown(true) has been called!");
+            lastY = player.getY();
+        }
+    }
+
+    // TODO - FIX ME
+    @Test
+    public void testMoveUp() {
+        world.setGravity(new Vector2(GRAVITY_X, -5));
+        float lastY = INIT_Y;
+
+        player.moveUp(true);
+
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+            assertTrue(lastY < player.getY(), "Player is not moving upwards after moveUp(true) has been called!");
+            assertEquals(INIT_X, player.getX(), "Player is moving in the horizontal axis when moveUp(true) has been called!");
+            lastY = player.getY();
+        }
+
+        world.setGravity(new Vector2(GRAVITY_X, GRAVITY_Y));
+    }
 }
