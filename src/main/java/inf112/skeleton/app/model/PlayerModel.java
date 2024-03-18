@@ -16,7 +16,7 @@ import java.util.HashSet;
 
 public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
     private static final String USERDATASENSOR = "PlayerSensor";
-    private static final String USERDATATOP= "PlayerTop";
+    private static final String USERDATATOP = "PlayerTop";
     private static final String USERDATABOTTOM = "PlayerBottom";
     private static final String USERDATALEFT = "PlayerLeft";
     private static final String USERDATARIGHT = "PlayerRight";
@@ -40,7 +40,9 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int contactCountSensor = 0;
     private Integer Hp;
-    public static  HashSet<String> userDataSet;
+    private float immunityCoolDown = 1;
+    private boolean tookDamage = false;
+    public static HashSet<String> userDataSet;
 
     /**
      * @param world which the player-{@link Body} is created in
@@ -58,14 +60,15 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         moveDown = false;
         moveLeft = false;
         moveRight = false;
-        userDataSet =createUserDataSet();
+        userDataSet = createUserDataSet();
     }
 
     /**
      * A collection of all the playerUserDatas
+     *
      * @return HashSet<String> of PlayerUserDatas
      */
-    private HashSet<String> createUserDataSet(){
+    private HashSet<String> createUserDataSet() {
         HashSet<String> set = new HashSet<>();
         set.add(USERDATALEFT);
         set.add(USERDATARIGHT);
@@ -130,7 +133,8 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         if (moveDown && !moveUp && !isGrounded()) move(0, -DY);
         if (moveRight && !moveLeft) move(isGrounded() ? DX : DX * AIR_CONTROL, 0);
         if (moveLeft && !moveRight) move(isGrounded() ? -DX : -DX * AIR_CONTROL, 0);
-
+        if (immunityCoolDown > 0) immunityCoolDown -= timeStep;
+        else tookDamage = false;
         updateState();
     }
 
@@ -187,10 +191,10 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         // BOTTOM
         Vector2[] vecBottom = new Vector2[5];
         vecBottom[0] = new Vector2(0, 0); // C
-        vecBottom[1] = new Vector2(WIDTH / 2 - e, - HEIGHT / 2 + e / 4); // BRT
-        vecBottom[2] = new Vector2(WIDTH / 2 - 2 * e, - HEIGHT / 2); // BR
-        vecBottom[3] = new Vector2(- WIDTH / 2 + 2 * e, - HEIGHT / 2); // BL
-        vecBottom[4] = new Vector2(- WIDTH / 2 + e, - HEIGHT / 2 + e / 4); // BLT
+        vecBottom[1] = new Vector2(WIDTH / 2 - e, -HEIGHT / 2 + e / 4); // BRT
+        vecBottom[2] = new Vector2(WIDTH / 2 - 2 * e, -HEIGHT / 2); // BR
+        vecBottom[3] = new Vector2(-WIDTH / 2 + 2 * e, -HEIGHT / 2); // BL
+        vecBottom[4] = new Vector2(-WIDTH / 2 + e, -HEIGHT / 2 + e / 4); // BLT
         PolygonShape shapeBottom = new PolygonShape();
         shapeBottom.set(vecBottom);
         this.shapeBottom = shapeBottom;
@@ -198,7 +202,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         // TOP
         Vector2[] vecTop = new Vector2[3];
         vecTop[0] = new Vector2(0, 0); // C
-        vecTop[1] = new Vector2(- WIDTH / 2, HEIGHT / 2); // TL
+        vecTop[1] = new Vector2(-WIDTH / 2, HEIGHT / 2); // TL
         vecTop[2] = new Vector2(WIDTH / 2, HEIGHT / 2); // TR
         PolygonShape shapeTop = new PolygonShape();
         shapeTop.set(vecTop);
@@ -207,8 +211,8 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         // LEFT
         Vector2[] vecLeft = new Vector2[3];
         vecLeft[0] = new Vector2(0, 0); // C
-        vecLeft[1] = new Vector2(- WIDTH / 2, - HEIGHT / 2 + e); // BL
-        vecLeft[2] = new Vector2(- WIDTH / 2, HEIGHT / 2 - e); // TL
+        vecLeft[1] = new Vector2(-WIDTH / 2, -HEIGHT / 2 + e); // BL
+        vecLeft[2] = new Vector2(-WIDTH / 2, HEIGHT / 2 - e); // TL
         PolygonShape shapeLeft = new PolygonShape();
         shapeLeft.set(vecLeft);
         this.shapeLeft = shapeLeft;
@@ -217,7 +221,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         Vector2[] vecRight = new Vector2[3];
         vecRight[0] = new Vector2(0, 0); // C
         vecRight[1] = new Vector2(WIDTH / 2, HEIGHT / 2 - e); // TR
-        vecRight[2] = new Vector2(WIDTH / 2, - HEIGHT / 2 + e); // BR
+        vecRight[2] = new Vector2(WIDTH / 2, -HEIGHT / 2 + e); // BR
         PolygonShape shapeRight = new PolygonShape();
         shapeRight.set(vecRight);
         this.shapeRight = shapeRight;
@@ -270,21 +274,29 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
             shapeTop.dispose();
             shapeLeft.dispose();
             shapeRight.dispose();
+        } else if (event instanceof EventDamage) {
+            if (!tookDamage && immunityCoolDown <= 0) {
+                tookDamage = true;
+                updateHp(((EventDamage) event).damage());
+                immunityCoolDown = 1;
+            }
         }
-        else if (event instanceof EventDamage){
-            updateHp(((EventDamage) event).damage());
-        }
+
     }
-    private void updateHp(int dmg){
-        int newHp = Hp-dmg;
-        System.out.println(Hp);
-        if(newHp<=0){
+
+    /**
+     * Updates the Hp when player takes damage
+     * @param dmg the amount of damage the player should receive
+     */
+    private void updateHp(int dmg) {
+        int newHp = Hp - dmg;
+        if (newHp == 0) {
             bus.post(new EventGameState(GameState.GAME_OVER));
-        }
-        else{
+        } else {
             Hp = newHp;
         }
     }
+
     @Override
     public PlayerState getState() {
         return this.state;
@@ -306,10 +318,10 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         } else {
             if (moveLeft && !moveRight) {
                 state = PlayerState.JUMP_LEFT;
-            } else if (moveRight && !moveLeft){
+            } else if (moveRight && !moveLeft) {
                 state = PlayerState.JUMP_RIGHT;
             } else {
-                if (state.equals(PlayerState.IDLE_LEFT) || state.equals(PlayerState.LEFT) || state.equals(PlayerState.JUMP_LEFT)){
+                if (state.equals(PlayerState.IDLE_LEFT) || state.equals(PlayerState.LEFT) || state.equals(PlayerState.JUMP_LEFT)) {
                     state = PlayerState.JUMP_LEFT;
                 } else {
                     state = PlayerState.JUMP_RIGHT;

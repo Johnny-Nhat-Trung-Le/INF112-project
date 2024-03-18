@@ -55,8 +55,8 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                 """
                        --i---------------------
                        B---
-                       qwe--------lgr--i--|--I
-                       ----S---B------
+                       qwe--------lgr-9i--|--I
+                       ----S---B------8
                        LGGGGGGGGGGGGGGGGGGGGGR
                        """,
                 world,bus);
@@ -132,7 +132,14 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     @Override
     public void handleEvent(Event event) {
         if(event instanceof EventGameState){
-            state = ((EventGameState) event).gameState();
+            GameState gamestate = ((EventGameState) event).gameState();
+            if(gamestate.equals(GameState.VICTORY)){
+                System.out.println("VICTORY ROYALE");
+            }
+            else if(gamestate.equals(GameState.GAME_OVER)){
+                state = GameState.GAME_OVER;
+                //TODO MÅ FIKSE SLIK AT VI KAN RESETTE VERDEN
+            }
         }
     }
 }
