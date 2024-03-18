@@ -89,25 +89,25 @@ public class TestTileFactory {
         assertEquals(TileGround.TILE_WIDTH, tiles.get(1).getWidth(), "Second tile should have correct width");
         assertEquals(TileGround.TILE_HEIGHT, tiles.get(1).getHeight(), "Second tile should have correct height");
 
-        assertTrue(tiles.get(2) instanceof TileFloatingGround, "Third tile should be a TileFloatingGround");
+        assertTrue(tiles.get(2) instanceof TileFloatingGround, "Third tile should be TileFloatingGround");
         assertEquals(5, tiles.get(2).getX(), "Third tile should be at x=5");
         assertEquals(5, tiles.get(2).getY(), "Third tile should be at y=5");
         assertEquals(TileFloatingGround.TILE_WIDTH, tiles.get(2).getWidth(), "Third tile should have correct width");
         assertEquals(TileFloatingGround.TILE_HEIGHT, tiles.get(2).getHeight(), "Third tile should have correct height");
 
-        assertTrue(tiles.get(3) instanceof TileFloatingGround, "Fourth tile should be a TileFloatingGround");
+        assertTrue(tiles.get(3) instanceof TileFloatingGround, "Fourth tile should be TileFloatingGround");
         assertEquals(0, tiles.get(3).getX(), "Fourth tile should be at x=0");
         assertEquals(0, tiles.get(3).getY(), "Fourth tile should be at y=0");
         assertEquals(TileFloatingGround.TILE_WIDTH, tiles.get(3).getWidth(), "Fourth tile should have correct width");
         assertEquals(TileFloatingGround.TILE_HEIGHT, tiles.get(3).getHeight(), "Fourth tile should have correct height");
 
-        assertTrue(tiles.get(4) instanceof TileFloatingGroundSlim, "Fifth tile should be a TileFloatingGroundSlim");
+        assertTrue(tiles.get(4) instanceof TileFloatingGroundSlim, "Fifth tile should be TileFloatingGroundSlim");
         assertEquals(5, tiles.get(4).getX(), "Fifth tile should be at x=5");
         assertEquals(0, tiles.get(4).getY(), "Fifth tile should be at y=0");
         assertEquals(TileFloatingGround.TILE_WIDTH, tiles.get(4).getWidth(), "Fifth tile should have correct width");
         assertEquals(TileFloatingGround.TILE_HEIGHT, tiles.get(4).getHeight(), "Fifth tile should have correct height");
 
-        assertTrue(tiles.get(5) instanceof TileFloatingGroundSingle, "Sixth tile should be a TileFloatingGroundSingle");
+        assertTrue(tiles.get(5) instanceof TileFloatingGroundSingle, "Sixth tile should be TileFloatingGroundSingle");
         assertEquals(10, tiles.get(5).getX(), "Sixth tile should be at x=5");
         assertEquals(0, tiles.get(5).getY(), "Sixth tile should be at y=0");
         assertEquals(TileFloatingGround.TILE_WIDTH, tiles.get(5).getWidth(), "Sixth tile should have correct width");

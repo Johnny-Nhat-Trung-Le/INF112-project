@@ -19,7 +19,7 @@ public class TestTileModel {
     private World world;
 
     @BeforeEach
-    public void setUP() {
+    public void setUp() {
         world = new World(new Vector2(0, 0), true);
     }
 
