@@ -43,17 +43,15 @@ public class GameView extends Game {
             gameState = model.getState();
             switch (gameState) {
                 case ACTIVE -> {
-                    if (!resetGame) {
-                        setScreen(new GameScreen(model, bus, processor));
-                    } else {
-                        //TODO fix reset av game
-                        resetGame = false;
+                    setScreen(new GameScreen(model, bus, processor));
+                }
+                case MAIN_MENU-> {
+                    if (resetGame) {
                         model = new GameModel(bus);
                         updateController();
-                        setScreen(new GameScreen(model, bus, processor));
+                        resetGame = false;
                     }
-                }
-                case MAIN_MENU -> setScreen(new MenuScreen(processor));
+                    setScreen(new MenuScreen(processor));}
                 case PAUSE -> setScreen(new PauseScreen(processor));
                 case GAME_OVER -> {
                     resetGame = true;

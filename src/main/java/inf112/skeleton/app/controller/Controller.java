@@ -79,7 +79,6 @@ public class Controller extends InputAdapter implements EventHandler {
             }
             if (event instanceof EventResetGame e){
                 model = e.gameModel();
-
             }
         }
 
