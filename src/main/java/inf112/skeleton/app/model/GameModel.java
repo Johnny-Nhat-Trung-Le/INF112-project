@@ -74,6 +74,9 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                 ((ContactableTiles) tile).beginContact(contact);
             }
         }
+        for (ItemModel item : items) {
+            item.beginContact(contact);
+        }
     }
 
     @Override
