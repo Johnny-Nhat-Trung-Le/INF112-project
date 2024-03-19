@@ -1,10 +1,13 @@
 package inf112.skeleton.app.model;
 
+import inf112.skeleton.app.view.ViewableEffect;
 import inf112.skeleton.app.view.ViewableItem;
 
 public class Effect implements ViewableEffect {
+    private final ViewableItem item;
     private final float speedBoost;
     private final float jumpBoost;
+    private final int maxDuration;
     private int duration;
 
     /**
@@ -12,9 +15,11 @@ public class Effect implements ViewableEffect {
      * @param speedBoost speed-boost multiplier
      * @param jumpBoost jump-boost multiplier
      */
-    public Effect(int duration, float speedBoost, float jumpBoost) {
+    public Effect(ViewableItem item, int duration, float speedBoost, float jumpBoost) {
+        this.item = item;
         this.speedBoost = speedBoost;
         this.jumpBoost = jumpBoost;
+        this.maxDuration = duration;
         this.duration = duration;
     }
 
@@ -44,5 +49,15 @@ public class Effect implements ViewableEffect {
      */
     public float getJumpBoost() {
         return jumpBoost;
+    }
+
+    @Override
+    public Durability getDuration() {
+        return new Durability(duration, maxDuration);
+    }
+
+    @Override
+    public ViewableItem getItem() {
+        return item;
     }
 }

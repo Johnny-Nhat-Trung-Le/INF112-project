@@ -34,7 +34,7 @@ public class ItemEnergy extends ItemModel {
         if (durability.remaining() <= 0) {
             bus.post(new EventItemUsedUp(this));
         }
-        return new Effect(DURATION,SPEED_BOOST,JUMP_BOOST);
+        return new Effect(this, DURATION, SPEED_BOOST, JUMP_BOOST);
     }
 
     @Override

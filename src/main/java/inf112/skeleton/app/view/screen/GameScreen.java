@@ -51,7 +51,7 @@ public class GameScreen implements Screen {
         sRenderer = new ShapeRenderer();
         batch = new SpriteBatch();
         batchHud = new SpriteBatch();
-        hud = new Hud(batch);
+        hud = new Hud(batch, model, texturePack);
     }
 
     @Override

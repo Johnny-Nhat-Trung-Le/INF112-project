@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.model.PlayerState;
+import inf112.skeleton.app.view.ViewableEffect;
 import inf112.skeleton.app.model.item.ItemEnergy;
 import inf112.skeleton.app.model.tiles.*;
 import inf112.skeleton.app.view.ViewableItem;

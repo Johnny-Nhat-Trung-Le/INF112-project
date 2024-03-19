@@ -9,6 +9,8 @@ import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.event.*;
 import inf112.skeleton.app.model.item.ItemModel;
+import inf112.skeleton.app.view.ViewableEffect;
+import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 
 import java.util.HashSet;
@@ -425,5 +427,15 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     @Override
     public Integer getHp() {
         return Hp;
+    }
+
+    @Override
+    public ViewableEffect getEffect() {
+        return effect;
+    }
+
+    @Override
+    public ViewableItem getItem() {
+        return item;
     }
 }

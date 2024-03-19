@@ -2,6 +2,7 @@ package inf112.skeleton.app.view.texturepack;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.model.PlayerState;
+import inf112.skeleton.app.view.ViewableEffect;
 import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewableTile;
