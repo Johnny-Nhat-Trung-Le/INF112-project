@@ -1,6 +1,9 @@
 package inf112.skeleton.app.model;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.event.EventBus;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,14 +92,34 @@ public class TestPlayerModel {
         }
     }
 
-    // TODO - FIX ME
+    // TODO - FIX ME isGrounded is the problem hmmm...
+    // make static body, tick it down
     @Test
     public void testMoveUp() {
-        world.setGravity(new Vector2(GRAVITY_X, -5));
-        float lastY = INIT_Y;
 
+        // Create Static Body under Player
+        float width = 10;
+        float height = 2;
+        BodyDef ground = new BodyDef();
+        ground.type = BodyDef.BodyType.StaticBody;
+        float groundY = INIT_Y - height;
+        ground.position.set(0, groundY);
+        Body body = world.createBody(ground);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width / 2, height / 2);
+        body.createFixture(shape, 0.0f);
+        shape.dispose();
+
+        world.setGravity(new Vector2(GRAVITY_X, -20));
+        float lastY = INIT_Y;
+        // Check if player gorund owo
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+        }
         player.moveUp(true);
 
+        // Check borh way
+        //
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
             assertTrue(lastY < player.getY(), "Player is not moving upwards after moveUp(true) has been called!");

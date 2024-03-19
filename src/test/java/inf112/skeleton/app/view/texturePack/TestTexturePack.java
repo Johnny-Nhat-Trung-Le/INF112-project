@@ -1,6 +1,10 @@
 package inf112.skeleton.app.view.texturePack;
 
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.headless.HeadlessApplication;
+import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -8,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.model.tiles.*;
 import inf112.skeleton.app.view.ViewableTile;
 import inf112.skeleton.app.view.texturepack.TexturePack;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,15 +26,20 @@ public class TestTexturePack {
     private World world;
     private TexturePack texturePack;
     private static final String TILE_NAME = "tile";
-    private static final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("atlas/gameAtlas.atlas"));
-
+    @BeforeAll
+    public static void beforeAll() {
+        HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
+        ApplicationListener listener = new ApplicationAdapter() {};
+        new HeadlessApplication(listener, config);
+    }
     @BeforeEach
-    public void before() {
+    public void beforeEach() {
         world = new World(new Vector2(0, 0), true);
-        texturePack = new TexturePack();
     }
     @Test
     public void testGetTileTexture() {
+        texturePack = new TexturePack();
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("atlas/gameAtlas.atlas"));;
         List<ViewableTile> tiles = new ArrayList<>();
 
         tiles.add(new TileGround(world, 0, 0, TileModel.TILE_WIDTH, TileModel.TILE_HEIGHT));

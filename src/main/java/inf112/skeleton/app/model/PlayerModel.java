@@ -277,7 +277,6 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
     private void updateHp(int dmg){
         int newHp = Hp-dmg;
-        System.out.println(Hp);
         if(newHp<=0){
             bus.post(new EventGameState(GameState.GAME_OVER));
         }
