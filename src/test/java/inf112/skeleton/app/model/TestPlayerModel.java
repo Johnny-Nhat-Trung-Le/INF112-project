@@ -2,6 +2,7 @@ package inf112.skeleton.app.model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import inf112.skeleton.app.event.EventBus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ public class TestPlayerModel {
     @BeforeEach
     public void reset() {
         world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
-        player = new PlayerModel(world, INIT_X, INIT_Y);
+        player = new PlayerModel(world, new EventBus(),INIT_X, INIT_Y);
     }
 
     @Test

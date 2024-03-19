@@ -7,6 +7,9 @@ import inf112.skeleton.app.controller.Controller;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.tiles.*;
+import inf112.skeleton.app.model.tiles.contactableTiles.Door1;
+import inf112.skeleton.app.model.tiles.contactableTiles.Door2;
+import inf112.skeleton.app.model.tiles.contactableTiles.Spike;
 import inf112.skeleton.app.view.GameView;
 
 public class Main {
@@ -19,7 +22,7 @@ public class Main {
 
         EventBus bus = new EventBus();
 
-        GameModel model = new GameModel();
+        GameModel model = new GameModel(bus);
 
         Controller controller = new Controller(model);
         bus.addEventHandler(controller);
@@ -50,5 +53,8 @@ public class Main {
 
         Spike.loadStatic();
         Barrel.loadStatic();
+
+        Door1.loadStatic();
+        Door2.loadStatic();
     }
 }

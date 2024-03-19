@@ -91,7 +91,6 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(gameCam.combined);
         gameCam.update();
     }
-
     private void renderBackground() {
         sRenderer.setColor(Color.BLACK);
         sRenderer.rect(-VIEWPORT_WIDTH, -VIEWPORT_HEIGHT, VIEWPORT_WIDTH * 3, VIEWPORT_HEIGHT * 3);
