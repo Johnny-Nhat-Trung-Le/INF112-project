@@ -29,7 +29,11 @@ public class TestPlayerModel {
     @BeforeEach
     public void reset() {
         world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
+<<<<<<< HEAD
         player = new PlayerModel(new EventBus(), world, INIT_X, INIT_Y);
+=======
+        player = new PlayerModel(world, new EventBus(),INIT_X, INIT_Y);
+>>>>>>> main
     }
 
     @Test

@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.GameState;
+import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.screen.GameOverScreen;
 import inf112.skeleton.app.view.screen.GameScreen;
 
@@ -17,18 +18,17 @@ public class GameView extends Game {
     public static final float VIEWPORT_WIDTH = 20;
     public static final float VIEWPORT_HEIGHT = 20;
     public static final float ASPECT_RATIO = 2;
-    private GameModel model;
+    private final GameModel model;
     private final EventBus bus;
     private final InputProcessor processor;
     private GameState gameState;
+    private boolean resetGame = false;
 
-    public GameView(GameModel model, EventBus bus, InputProcessor processor){
+    public GameView(GameModel model, EventBus bus, InputProcessor processor) {
         this.model = model;
         this.bus = bus;
         this.processor = processor;
-        this.gameState =  GameState.MAIN_MENU;
-
-
+        this.gameState = GameState.MAIN_MENU;
     }
 
     @Override
@@ -36,15 +36,27 @@ public class GameView extends Game {
         setScreen(new MenuScreen(processor));
 
     }
-    public void render(){
-        if(model.getState()!= gameState){
+
+    public void render() {
+        if (model.getState() != gameState) {
             gameState = model.getState();
-            setScreen(switch(gameState){
-                case ACTIVE -> new GameScreen(model,bus,processor);
-                case MAIN_MENU -> new MenuScreen(processor);
-                case PAUSE -> new PauseScreen(processor);
-                case GAME_OVER -> new GameOverScreen(processor);
-            });
+            switch (gameState) {
+                case ACTIVE -> {
+                    if (!resetGame) {
+                        setScreen(new GameScreen(model, bus, processor));
+                    } else {
+                        //TODO fix reset av game
+                        resetGame = false;
+                        setScreen(new GameScreen(new GameModel(bus), bus, processor));
+                    }
+                }
+                case MAIN_MENU -> setScreen(new MenuScreen(processor));
+                case PAUSE -> setScreen(new PauseScreen(processor));
+                case GAME_OVER -> {
+                    resetGame = true;
+                    setScreen(new GameOverScreen(processor));
+                }
+            }
         }
         super.render();
     }

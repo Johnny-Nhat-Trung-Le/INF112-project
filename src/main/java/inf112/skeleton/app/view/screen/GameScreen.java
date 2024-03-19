@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.model.event.EventStep;
+import inf112.skeleton.app.view.Hud;
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
@@ -30,7 +32,9 @@ public class GameScreen implements Screen {
     private final OrthographicCamera gameCam;
     private final Viewport gamePort;
     private final SpriteBatch batch;
+    private final SpriteBatch batchHud;
     private final ITexturePack texturePack;
+    private final Stage hud;
 
     public GameScreen(ViewableGameModel model, EventBus bus, InputProcessor processor) {
         Gdx.graphics.setForegroundFPS(60);
@@ -42,11 +46,12 @@ public class GameScreen implements Screen {
         gameCam = new OrthographicCamera();
         gamePort = new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam);
 
-        sRenderer = new ShapeRenderer();
-
         texturePack = new TexturePack();
 
+        sRenderer = new ShapeRenderer();
         batch = new SpriteBatch();
+        batchHud = new SpriteBatch();
+        hud = new Hud(batch);
     }
 
     @Override
@@ -64,6 +69,7 @@ public class GameScreen implements Screen {
 
         ScreenUtils.clear(0, 0, 0, 0);
 
+        gamePort.apply();
 
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
         renderBackground();
@@ -84,6 +90,9 @@ public class GameScreen implements Screen {
         );
 
         batch.end();
+
+        hud.getViewport().apply();
+        hud.draw();
     }
 
     private void updateCamToPlayer() {
@@ -91,6 +100,7 @@ public class GameScreen implements Screen {
         gameCam.position.set(p.getX() + p.getWidth() / 2, p.getY() + p.getHeight() / 2, 0);
         sRenderer.setProjectionMatrix(gameCam.combined);
         batch.setProjectionMatrix(gameCam.combined);
+        batchHud.setProjectionMatrix(gameCam.combined);
         gameCam.update();
     }
 
@@ -147,6 +157,7 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+        hud.getViewport().update(width, height);
     }
 
     @Override

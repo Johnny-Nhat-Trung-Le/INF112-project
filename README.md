@@ -11,7 +11,6 @@
 * Krever Java 21 eller senere
 
 ## Kjente feil
-* Det er en bug hvor spilleren sitter fast når man beveger på den
 * Det er en bug når spilleren hopper mot en vegg, så "bouncer" den tilbake
 
 ## Credits

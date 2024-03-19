@@ -54,7 +54,13 @@
     Lit par programmering på ulike små fixes her og der, f.eks. Tiles & PlayerState.
     Merge sammen de resterende branches og då til slutt leverte det inn.
 
-## Dato : Fredag 8 Mars 2024
+## Dato: Fredag 8 Mars 2024
     Fullførte resten av innleveringen og sjekket at alt var greit.
     Merged siste del (pause screen, game over screen og start screen) med Main
     Lagte noen få manuel/ unit tester.
+
+## Dato: Tirsdag 12 Mars 2024
+    Full oppmøte. Startet med å legge til issues i issue board-et. 
+    Deretter så på tester og diskuterte hva som var denne uken plan.
+    Jobbet sammen for å fikse animasjon for hopping og begynte med å tenke på vinn og tap betingelse.
+    Avsluttet med å fordele oppgave som skal jobbes med til neste møte.

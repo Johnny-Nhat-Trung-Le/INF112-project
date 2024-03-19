@@ -8,7 +8,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.model.PlayerState;
 import inf112.skeleton.app.model.item.ItemEnergy;
 import inf112.skeleton.app.model.tiles.*;
+<<<<<<< HEAD
 import inf112.skeleton.app.view.ViewableItem;
+=======
+import inf112.skeleton.app.model.tiles.contactableTiles.Door1;
+import inf112.skeleton.app.model.tiles.contactableTiles.Door2;
+import inf112.skeleton.app.model.tiles.contactableTiles.Spike;
+>>>>>>> main
 import inf112.skeleton.app.view.ViewableTile;
 
 import java.util.HashMap;
@@ -54,6 +60,9 @@ public class TexturePack implements ITexturePack {
 
         if (tile instanceof Barrel) return new TextureRegion(atlas.findRegion(TILE_NAME, 55));
         if (tile instanceof Spike) return  new TextureRegion(atlas.findRegion(TILE_NAME,46));
+
+        if (tile instanceof Door1) return new TextureRegion(atlas.findRegion(TILE_NAME,7));
+        if (tile instanceof Door2) return new TextureRegion(atlas.findRegion(TILE_NAME,23));
 
         return null;
     }

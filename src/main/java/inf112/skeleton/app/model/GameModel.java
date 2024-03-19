@@ -7,16 +7,19 @@ import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
+import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.model.event.EventItemPickedUp;
 import inf112.skeleton.app.model.item.ItemEnergy;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.model.tiles.TileModel;
+import inf112.skeleton.app.model.tiles.contactableTiles.ContactableTiles;
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 import inf112.skeleton.app.view.ViewableTile;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener, EventHandler {
@@ -52,22 +55,24 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private void fillWorld() {
         List<TileModel> tiles = TileFactory.generate(
                 """
-                       --i---------------------
-                       B---
-                       qwe----lgr--i--|--I-B
-                       ----S---------
-                       LGGGGGGGGGGGGGGGGGGGGGR
-                       """,
+                        --i---------------------
+                        B---
+                        qwe--------lgr-9i--|--I
+                        ----S---B------8
+                        LGGGGGGGGGGGGGGGGGGGGGR
+                        """,
                 world, bus);
         foreground.addAll(tiles);
-        items.add(new ItemEnergy(bus,world,15,7));
+        items.add(new ItemEnergy(bus, world, 15, 7));
     }
 
     @Override
     public void beginContact(Contact contact) {
         player.beginContact(contact);
-        for (ItemModel item : items) {
-            item.beginContact(contact);
+        for (TileModel tile : foreground.stream().toList()) {
+            if (tile instanceof ContactableTiles) {
+                ((ContactableTiles) tile).beginContact(contact);
+            }
         }
     }
 
@@ -131,6 +136,14 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     public void handleEvent(Event event) {
         if (event instanceof EventItemPickedUp e) {
             items.remove(e.item());
+        } else if (event instanceof EventGameState e) {
+            GameState gamestate = e.gameState();
+            if (gamestate.equals(GameState.VICTORY)) {
+                System.out.println("VICTORY ROYALE");
+            } else if (gamestate.equals(GameState.GAME_OVER)) {
+                state = GameState.GAME_OVER;
+                //TODO MÅ FIKSE SLIK AT VI KAN RESETTE VERDEN
+            }
         }
     }
 }

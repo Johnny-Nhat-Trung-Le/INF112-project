@@ -7,10 +7,7 @@ import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
-import inf112.skeleton.app.model.event.EventDispose;
-import inf112.skeleton.app.model.event.EventItemContact;
-import inf112.skeleton.app.model.event.EventItemPickedUp;
-import inf112.skeleton.app.model.event.EventItemUsedUp;
+import inf112.skeleton.app.model.event.*;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 
@@ -43,6 +40,10 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private int contactCountSensor = 0;
     private ItemModel item;
     private Effect effect;
+    private Integer Hp;
+    private float immunityCoolDown = 1;
+    private boolean tookDamage = false;
+    public static HashSet<String> userDataSet;
 
     /**
      * Checks if the {@link Fixture} belongs to the contactable player.
@@ -67,6 +68,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
      */
     public PlayerModel(EventBus bus, World world, float x, float y) {
         this.bus = bus;
+        Hp = 3;
         this.world = world;
         body = createBody(x + WIDTH / 2, y + HEIGHT / 2);
         state = PlayerState.IDLE_RIGHT;
@@ -76,6 +78,22 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         moveRight = false;
 
         bus.addEventHandler(this);
+        userDataSet = createUserDataSet();
+    }
+
+    /**
+     * A collection of all the playerUserDatas
+     *
+     * @return {@code HashSet<String>} of PlayerUserDatas
+     */
+    private HashSet<String> createUserDataSet() {
+        HashSet<String> set = new HashSet<>();
+        set.add(USER_DATA_LEFT);
+        set.add(USER_DATA_RIGHT);
+        set.add(USER_DATA_TOP);
+        set.add(USER_DATA_BOTTOM);
+        set.add(USER_DATA_SENSOR);
+        return set;
     }
 
     @Override
@@ -149,6 +167,9 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         if (moveRight && !moveLeft) move(dx, 0);
         if (moveLeft && !moveRight) move(-dx, 0);
 
+        // HP
+        if (immunityCoolDown > 0) immunityCoolDown -= timeStep;
+        else tookDamage = false;
         updateState();
     }
 
@@ -217,37 +238,39 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         this.shapeSensor = shapeSensor;
 
         // BOTTOM
-        Vector2[] vecBottom = new Vector2[3];
-        vecBottom[0] = new Vector2(-WIDTH / 2 + e, -HEIGHT / 2); // BL
-        vecBottom[1] = new Vector2(WIDTH / 2 - e, -HEIGHT / 2); // BR
-        vecBottom[2] = new Vector2(0, 0); // C
+        Vector2[] vecBottom = new Vector2[5];
+        vecBottom[0] = new Vector2(0, 0); // C
+        vecBottom[1] = new Vector2(WIDTH / 2 - e, -HEIGHT / 2 + e / 4); // BRT
+        vecBottom[2] = new Vector2(WIDTH / 2 - 2 * e, -HEIGHT / 2); // BR
+        vecBottom[3] = new Vector2(-WIDTH / 2 + 2 * e, -HEIGHT / 2); // BL
+        vecBottom[4] = new Vector2(-WIDTH / 2 + e, -HEIGHT / 2 + e / 4); // BLT
         PolygonShape shapeBottom = new PolygonShape();
         shapeBottom.set(vecBottom);
         this.shapeBottom = shapeBottom;
 
         // TOP
         Vector2[] vecTop = new Vector2[3];
-        vecTop[0] = new Vector2(-WIDTH / 2, HEIGHT / 2); // TL
-        vecTop[1] = new Vector2(WIDTH / 2, HEIGHT / 2); // TR
-        vecTop[2] = new Vector2(0, 0); // C
+        vecTop[0] = new Vector2(0, 0); // C
+        vecTop[1] = new Vector2(-WIDTH / 2, HEIGHT / 2); // TL
+        vecTop[2] = new Vector2(WIDTH / 2, HEIGHT / 2); // TR
         PolygonShape shapeTop = new PolygonShape();
         shapeTop.set(vecTop);
         this.shapeTop = shapeTop;
 
         // LEFT
         Vector2[] vecLeft = new Vector2[3];
-        vecLeft[0] = new Vector2(-WIDTH / 2, HEIGHT / 2 - e); // TL
-        vecLeft[1] = new Vector2(0, 0); // C
-        vecLeft[2] = new Vector2(-WIDTH / 2, -HEIGHT / 2 + e); // BL
+        vecLeft[0] = new Vector2(0, 0); // C
+        vecLeft[1] = new Vector2(-WIDTH / 2, -HEIGHT / 2 + e); // BL
+        vecLeft[2] = new Vector2(-WIDTH / 2, HEIGHT / 2 - e); // TL
         PolygonShape shapeLeft = new PolygonShape();
         shapeLeft.set(vecLeft);
         this.shapeLeft = shapeLeft;
 
         // RIGHT
         Vector2[] vecRight = new Vector2[3];
-        vecRight[0] = new Vector2(WIDTH / 2, HEIGHT / 2 - e); // TR
-        vecRight[1] = new Vector2(WIDTH / 2, -HEIGHT / 2 + e); // BR
-        vecRight[2] = new Vector2(0, 0); // C
+        vecRight[0] = new Vector2(0, 0); // C
+        vecRight[1] = new Vector2(WIDTH / 2, HEIGHT / 2 - e); // TR
+        vecRight[2] = new Vector2(WIDTH / 2, -HEIGHT / 2 + e); // BR
         PolygonShape shapeRight = new PolygonShape();
         shapeRight.set(vecRight);
         this.shapeRight = shapeRight;
@@ -308,6 +331,26 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         } else if (event instanceof EventItemUsedUp e) {
             if (!e.item().equals(item)) return;
             item = null;
+        } else if (event instanceof EventDamage) {
+            if (!tookDamage && immunityCoolDown <= 0) {
+                tookDamage = true;
+                updateHp(((EventDamage) event).damage());
+                immunityCoolDown = 1;
+            }
+        }
+    }
+
+    /**
+     * Updates the Hp when player takes damage
+     *
+     * @param dmg the amount of damage the player should receive
+     */
+    private void updateHp(int dmg) {
+        int newHp = Hp - dmg;
+        if (newHp == 0) {
+            bus.post(new EventGameState(GameState.GAME_OVER));
+        } else {
+            Hp = newHp;
         }
     }
 
@@ -377,5 +420,10 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
         return (USER_DATA_BOTTOM.equals(fA.getUserData()) && !fB.isSensor())
                 || (USER_DATA_BOTTOM.equals(fB.getUserData()) && !fA.isSensor());
+    }
+
+    @Override
+    public Integer getHp() {
+        return Hp;
     }
 }
