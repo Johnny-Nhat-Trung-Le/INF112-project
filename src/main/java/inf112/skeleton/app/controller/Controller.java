@@ -1,5 +1,6 @@
 package inf112.skeleton.app.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
 import inf112.skeleton.app.event.Event;
@@ -68,6 +69,8 @@ public class Controller extends InputAdapter implements EventHandler {
                         model.setState(GameState.MAIN_MENU);
                     }
                     break;
+                case Keys.ESCAPE:
+                    Gdx.app.exit();
             }
             return true;
         }
