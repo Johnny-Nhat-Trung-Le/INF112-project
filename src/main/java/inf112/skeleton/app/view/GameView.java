@@ -7,6 +7,7 @@ import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.GameState;
 import inf112.skeleton.app.model.event.EventDispose;
+import inf112.skeleton.app.model.event.EventResetGame;
 import inf112.skeleton.app.view.screen.GameOverScreen;
 import inf112.skeleton.app.view.screen.GameScreen;
 
@@ -18,7 +19,7 @@ public class GameView extends Game {
     public static final float VIEWPORT_WIDTH = 20;
     public static final float VIEWPORT_HEIGHT = 20;
     public static final float ASPECT_RATIO = 2;
-    private final GameModel model;
+    private  GameModel model;
     private final EventBus bus;
     private final InputProcessor processor;
     private GameState gameState;
@@ -47,7 +48,9 @@ public class GameView extends Game {
                     } else {
                         //TODO fix reset av game
                         resetGame = false;
-                        setScreen(new GameScreen(new GameModel(bus), bus, processor));
+                        model = new GameModel(bus);
+                        updateController();
+                        setScreen(new GameScreen(model, bus, processor));
                     }
                 }
                 case MAIN_MENU -> setScreen(new MenuScreen(processor));
@@ -59,5 +62,8 @@ public class GameView extends Game {
             }
         }
         super.render();
+    }
+    private void updateController(){
+        bus.post(new EventResetGame(model));
     }
 }

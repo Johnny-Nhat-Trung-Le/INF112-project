@@ -4,12 +4,13 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventHandler;
+import inf112.skeleton.app.model.event.EventResetGame;
 import inf112.skeleton.app.model.event.EventStep;
 import inf112.skeleton.app.model.GameState;
 
 
 public class Controller extends InputAdapter implements EventHandler {
-    private final ControllableGameModel model;
+    private  ControllableGameModel model;
 
     public Controller(ControllableGameModel model) {
         this.model = model;
@@ -75,6 +76,10 @@ public class Controller extends InputAdapter implements EventHandler {
         public void handleEvent (Event event){
             if (event instanceof EventStep e) {
                 model.step(e.timeStep());
+            }
+            if (event instanceof EventResetGame e){
+                model = e.gameModel();
+
             }
         }
 

@@ -3,6 +3,8 @@ package inf112.skeleton.app.model;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.event.EventBus;
+import inf112.skeleton.app.model.tiles.TileModel;
+import inf112.skeleton.app.model.tiles.contactableTiles.Spike;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -75,7 +77,7 @@ public class TestPlayerModel {
     @Test
     public void testMoveUp(){
         World worldG = new World(new Vector2(-0,-20), true);
-        PlayerModel playerG = new PlayerModel(worldG, INIT_X, INIT_Y);
+        PlayerModel playerG = new PlayerModel(worldG,new EventBus() ,INIT_X, INIT_Y);
         float lastY = INIT_Y;
         playerG.moveUp(true);
         playerG.step(DT);
