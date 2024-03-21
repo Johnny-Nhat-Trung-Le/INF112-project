@@ -1,8 +1,10 @@
 package inf112.skeleton.app.view.texturepack;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import inf112.skeleton.app.model.Item;
 import inf112.skeleton.app.model.PlayerState;
 import inf112.skeleton.app.model.tiles.TileModel;
+import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewableTile;
 
 public interface ITexturePack {
@@ -22,4 +24,7 @@ public interface ITexturePack {
      * @return the {@link TextureRegion} for the given {@link PlayerState}
      */
     TextureRegion getPlayerTexture(PlayerState state, float stateTime);
+
+    TextureRegion getItemTexture(ViewableItem item);
+
 }
