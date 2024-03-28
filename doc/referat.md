@@ -64,3 +64,6 @@
     Deretter så på tester og diskuterte hva som var denne uken plan.
     Jobbet sammen for å fikse animasjon for hopping og begynte med å tenke på vinn og tap betingelse.
     Avsluttet med å fordele oppgave som skal jobbes med til neste møte.
+
+## Dato: Tirsdag 19 Mars 2024
+    Full oppmøte. Par programmering, og satte opp ulike "issues" på issue board-et om hva som kan jobbes med i låpet av påsken.
