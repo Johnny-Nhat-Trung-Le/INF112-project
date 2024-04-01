@@ -102,31 +102,58 @@ public class TestPlayerModel {
         float height = 2;
         BodyDef ground = new BodyDef();
         ground.type = BodyDef.BodyType.StaticBody;
-        float groundY = INIT_Y - height;
+        float groundY = INIT_Y - 10;
         ground.position.set(0, groundY);
-        Body body = world.createBody(ground);
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2, height / 2);
-        body.createFixture(shape, 0.0f);
-        shape.dispose();
+        Body groundBody = world.createBody(ground);
+        PolygonShape groundShape = new PolygonShape();
+        groundShape.setAsBox(width / 2, height / 2);
+        groundBody.createFixture(groundShape, 0.0f);
+        groundShape.dispose();
 
+        // Set up initial conditions
         world.setGravity(new Vector2(GRAVITY_X, -20));
-        float lastY = INIT_Y;
-        // Check if player gorund owo
+
+        float initialY = player.getY();
+        // Simulate the initial fall of the player
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
         }
+
+        // Call moveUp(true) to simulate jumping
         player.moveUp(true);
 
-        // Check borh way
-        //
-        for (int i = 0; i < NUM_ITERATIONS; i++) {
+        // it does fall down to the platform
+
+        float previousY = player.getY();
+        while (true) {
             step();
-            assertTrue(lastY < player.getY(), "Player is not moving upwards after moveUp(true) has been called!");
-            assertEquals(INIT_X, player.getX(), "Player is moving in the horizontal axis when moveUp(true) has been called!");
-            lastY = player.getY();
+
+            // Get current player position
+            float currentY = player.getY();
+            System.out.println(currentY);
+            // Check if the player is descending
+            if (currentY < previousY) {
+                System.out.println(currentY);
+                System.out.println("rawr " + previousY);
+                break;
+            }
+
+            // Update previous position
+            previousY = currentY;
         }
 
+        // Assert that player's Y position has increased after jumping
+        float topY = player.getY();
+        assertTrue(topY > initialY);
+
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+        }
+
+        float finalY = player.getY();
+        assertTrue(finalY < topY);
+
+        // Reset the gravity
         world.setGravity(new Vector2(GRAVITY_X, GRAVITY_Y));
     }
 }

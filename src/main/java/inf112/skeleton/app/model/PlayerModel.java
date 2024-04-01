@@ -58,7 +58,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         moveDown = false;
         moveLeft = false;
         moveRight = false;
-        userDataSet =createUserDataSet();
+        userDataSet = createUserDataSet();
     }
 
     /**
