@@ -31,4 +31,9 @@ public interface ITexturePack {
      * @return the {@link TextureRegion} for the given {@link ViewableItem}
      */
     TextureRegion getItemTexture(ViewableItem item);
+
+    /**
+     * @return a {@link TextureRegion} of the inventory slot
+     */
+    TextureRegion getInventorySlot();
 }

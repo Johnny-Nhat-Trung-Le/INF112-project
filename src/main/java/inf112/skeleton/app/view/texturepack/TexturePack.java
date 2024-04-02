@@ -106,4 +106,12 @@ public class TexturePack implements ITexturePack {
 
         return null;
     }
+
+    @Override
+    public TextureRegion getInventorySlot() {
+        return atlas.findRegion(TILE_NAME, 85);
+        /*
+        85,87,101,117,144,148
+         */
+    }
 }
