@@ -67,3 +67,8 @@
 
 ## Dato: Tirsdag 19 Mars 2024
     Full oppmøte. Par programmering, og satte opp ulike "issues" på issue board-et om hva som kan jobbes med i låpet av påsken.
+
+## Dato: Tirsdag 02 April 2024
+    Full oppmøte, så på hva vi hadde gjort i påsken, fikset HUD og diskuterte hvordan vi ville at layout-en skulle være.
+    Fikset music for backgrunn og main menu.
+    Lagte en main menu bilde.
