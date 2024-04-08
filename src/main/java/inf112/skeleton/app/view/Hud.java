@@ -14,21 +14,25 @@ import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.view.texturepack.ITexturePack;
 
 public class Hud extends Stage {
     private static final int IMG_SIZE = 16;
+    private static final int TEXT_WIDTH = 10;
+    private static final int TEXT_HEIGHT = 20;
     private final ViewableGameModel model;
     private final ITexturePack texturePack;
-    private final Table table;
     private final Image itemIcon;
     private final Label itemDurability;
     private final Image effectIcon;
     private final Image effectDuration;
 
     public Hud(SpriteBatch batch, ViewableGameModel model, ITexturePack texturePack) {
-        super(new ScreenViewport(new OrthographicCamera()), batch);
+        super(new ExtendViewport(GameView.VIEWPORT_WIDTH * 20,GameView.VIEWPORT_HEIGHT / GameView.VIEWPORT_WIDTH * 20, new OrthographicCamera()), batch);
         this.model = model;
         this.texturePack = texturePack;
 
@@ -39,18 +43,18 @@ public class Hud extends Stage {
         effectIcon = new Image(new BaseDrawable());
         effectDuration = new Image(new BaseDrawable());
 
-        table = new Table();
+        Table table = new Table();
         table.setFillParent(true);
-        fillTable();
+        table.setDebug(true);
+        fillTable(table);
         addActor(table);
     }
 
-    private void fillTable() {
+    private void fillTable(Table table) {
         Table inventory = new Table();
         inventory.setBackground(new SpriteDrawable(new Sprite(texturePack.getInventorySlot())));
         inventory.add(itemIcon);
         inventory.add(itemDurability);
-        inventory.padRight(4);
 
         Table effects = new Table();
         effects.left();
@@ -59,7 +63,8 @@ public class Hud extends Stage {
         effects.add(effectDuration);
 
         table.top().left();
-        table.add(inventory);
+        table.padLeft(10).padTop(10);
+        table.add(inventory).width(IMG_SIZE + TEXT_WIDTH * 2).height(TEXT_HEIGHT);
         table.row().left();
         table.add(effects);
     }
@@ -90,7 +95,7 @@ public class Hud extends Stage {
                 effectIcon.setDrawable(new SpriteDrawable(new Sprite(texturePack.getItemTexture(effect.getItem()))));
             }
             float wp = model.getViewablePlayer().getEffect().getDuration().remaining() / (float) model.getViewablePlayer().getEffect().getDuration().maximum();
-            Pixmap pm = new Pixmap(IMG_SIZE,IMG_SIZE, Pixmap.Format.RGBA8888);
+            Pixmap pm = new Pixmap(IMG_SIZE,IMG_SIZE / 4, Pixmap.Format.RGBA8888);
             pm.setColor(Color.GREEN);
             pm.fillRectangle(0,0, (int) (IMG_SIZE * wp), IMG_SIZE / 4);
             effectDuration.setDrawable(new SpriteDrawable(new Sprite(new Texture(pm))));
