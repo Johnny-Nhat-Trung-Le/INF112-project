@@ -18,7 +18,7 @@ public class TestPlayerModel {
     private static final int NUM_ITERATIONS = 60;
     private static final float DT = 1 / 60f;
     private static final float INIT_X = 0;
-    private static final float INIT_Y = 0;
+    private static final float INIT_Y = 30;
     private static final float GRAVITY_X = 0;
     private static final float GRAVITY_Y = 0;
     private World world;
@@ -110,40 +110,34 @@ public class TestPlayerModel {
         groundBody.createFixture(groundShape, 0.0f);
         groundShape.dispose();
 
-        // Set up initial conditions
         world.setGravity(new Vector2(GRAVITY_X, -20));
 
         float initialY = player.getY();
-        // Simulate the initial fall of the player
+        System.out.println(initialY + " meow");
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
         }
 
-        // Call moveUp(true) to simulate jumping
-        player.moveUp(true);
-
         // it does fall down to the platform
 
         float previousY = player.getY();
+        System.out.println(previousY + " here");
+//        player.moveUp(true);
         while (true) {
+            player.moveUp(true);
             step();
 
-            // Get current player position
             float currentY = player.getY();
-            System.out.println(currentY);
-            // Check if the player is descending
             if (currentY < previousY) {
-                System.out.println(currentY);
-                System.out.println("rawr " + previousY);
+                System.out.println("meow");
                 break;
             }
 
-            // Update previous position
             previousY = currentY;
         }
 
-        // Assert that player's Y position has increased after jumping
         float topY = player.getY();
+        System.out.println(topY);
         assertTrue(topY > initialY);
 
         for (int i = 0; i < NUM_ITERATIONS; i++) {
