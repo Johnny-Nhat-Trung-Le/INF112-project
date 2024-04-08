@@ -9,7 +9,6 @@ import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
-import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.model.tiles.contactableTiles.ContactableTiles;
@@ -58,7 +57,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                        --i---------------------
                        B---
                        qwe--------lgr-9i--|--I
-                       ----S---B------8
+                       ----Ss--B------8
                        LGGGGGGGGGGGGGGGGGGGGGR
                        """,
                 world,bus);

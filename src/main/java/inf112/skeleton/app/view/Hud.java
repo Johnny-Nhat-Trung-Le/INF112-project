@@ -1,6 +1,5 @@
 package inf112.skeleton.app.view;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -11,9 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import inf112.skeleton.app.model.item.Hp;
 import inf112.skeleton.app.view.texturepack.ITexturePack;
 import java.util.LinkedList;
@@ -23,19 +20,16 @@ public class Hud extends Stage {
     private final ITexturePack texturePack;
     private final Table table;
     private final Hp hpObject = new Hp();
-    private final Label hpCounterL;
     private int hpCounter;
     private final LinkedList<Image> hpIcons;
 
     public Hud(SpriteBatch batch, ViewableGameModel viewableGameModel, ITexturePack texturePack) {
-        super( new ScreenViewport(new OrthographicCamera()), batch);
-        //TODO FIks hud viewports, den er scuffed når man resize
+        super(new ExtendViewport(GameView.VIEWPORT_WIDTH*20,GameView.VIEWPORT_HEIGHT/GameView.VIEWPORT_WIDTH*20,new OrthographicCamera()),batch);
         model = viewableGameModel;
         this.texturePack = texturePack;
 
         hpCounter = model.getViewablePlayer().getHp();
         Label.LabelStyle style = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
-        hpCounterL = new Label("" + hpCounter, style);
 
         hpIcons = new LinkedList<>();
         for (int i = 0; i < hpCounter; i++) {
@@ -43,13 +37,13 @@ public class Hud extends Stage {
         }
         table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
         fillTable();
         addActor(table);
     }
 
     private void fillTable() {
         table.top().left();
+        table.padTop(10); // Add padding to the top and left edges
         drawHp();
     }
 
@@ -71,15 +65,12 @@ public class Hud extends Stage {
     private void drawHp() {
         for (Image hpIcon : hpIcons) {
             hpIcon.setDrawable(new SpriteDrawable(new Sprite(texturePack.getItemTexture(hpObject))));
-            table.add(hpIcon);
+            table.add(hpIcon).padLeft(5);
         }
-        hpCounterL.setText(hpCounter + "");
-        table.add(hpCounterL);
     }
 
     private void update() {
         if (hpCounter != model.getViewablePlayer().getHp()) updateHp();
-
     }
 
     @Override

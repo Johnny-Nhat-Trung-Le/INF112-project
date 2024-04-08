@@ -10,6 +10,7 @@ import inf112.skeleton.app.model.item.Hp;
 import inf112.skeleton.app.model.tiles.*;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door1;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door2;
+import inf112.skeleton.app.model.tiles.contactableTiles.Saw;
 import inf112.skeleton.app.model.tiles.contactableTiles.Spike;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewableTile;
@@ -57,7 +58,7 @@ public class TexturePack implements ITexturePack {
 
         if (tile instanceof Barrel) return new TextureRegion(atlas.findRegion(TILE_NAME, 55));
         if (tile instanceof Spike) return  new TextureRegion(atlas.findRegion(TILE_NAME,46));
-
+        if(tile instanceof Saw) return new TextureRegion(atlas.findRegion(TILE_NAME,45));
         if (tile instanceof Door1) return new TextureRegion(atlas.findRegion(TILE_NAME,7));
         if (tile instanceof Door2) return new TextureRegion(atlas.findRegion(TILE_NAME,23));
 

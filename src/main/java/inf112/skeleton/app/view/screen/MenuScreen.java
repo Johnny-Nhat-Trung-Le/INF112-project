@@ -3,45 +3,45 @@ package inf112.skeleton.app.view.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import inf112.skeleton.app.model.GameState;
+import com.badlogic.gdx.utils.viewport.*;
 import inf112.skeleton.app.view.GameView;
-import inf112.skeleton.app.view.ViewableGameModel;
 
 public class MenuScreen implements Screen {
     private final SpriteBatch batch;
-    private static float ViewPort = 400;
+    private static final float ViewPort = 400;
     private static float VIEWPORT_WIDTH;
     private static float VIEWPORT_HEIGHT;
     private final OrthographicCamera gameCam;
-    private final FillViewport gamePort;
+    private final Viewport gamePort;
     private final Texture texture;
+    //943*689
     private final BitmapFont font;
     private final GlyphLayout layout;
     private final String text;
+    private final String title;
 
     public MenuScreen(InputProcessor processor) {
         batch = new SpriteBatch();
-        VIEWPORT_HEIGHT = ViewPort / GameView.ASPECT_RATIO;
-        VIEWPORT_WIDTH = GameView.ASPECT_RATIO * ViewPort;
+        VIEWPORT_HEIGHT = (float) (ViewPort / GameView.ASPECT_RATIO * 1.2);
+        VIEWPORT_WIDTH = GameView.ASPECT_RATIO * 175;
 
         gameCam = new OrthographicCamera();
         gamePort = new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam);
-
-        texture = new Texture("Backgrounds/background_001.png");
+        texture = new Texture("Backgrounds/main_menu_screen.png");
         font = new BitmapFont();
-        text = "welcome press p to play";
+
+        title = "Lil bro's Adventure Back Home";
+        text = "Press p to play";
         layout = new GlyphLayout();
+        layout.setText(font, title);
         layout.setText(font, text);
+
         Gdx.graphics.setForegroundFPS(60);
         Gdx.input.setInputProcessor(processor);
 
@@ -66,6 +66,8 @@ public class MenuScreen implements Screen {
         batch.begin();
         //Fills the whole screen
         batch.draw(texture, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        //Draws the texts
+        font.draw(batch, title, (VIEWPORT_WIDTH / 2) - layout.width / 2, (VIEWPORT_HEIGHT / 4) * 3);
         font.draw(batch, text, (VIEWPORT_WIDTH / 2) - layout.width / 2, (VIEWPORT_HEIGHT / 2) - layout.height / 2);
         batch.end();
     }

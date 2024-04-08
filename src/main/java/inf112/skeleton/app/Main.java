@@ -9,6 +9,7 @@ import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.tiles.*;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door1;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door2;
+import inf112.skeleton.app.model.tiles.contactableTiles.Saw;
 import inf112.skeleton.app.model.tiles.contactableTiles.Spike;
 import inf112.skeleton.app.view.GameView;
 
@@ -19,7 +20,6 @@ public class Main {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setTitle("game");
         cfg.setWindowedMode(480, 320);
-
         EventBus bus = new EventBus();
 
         GameModel model = new GameModel(bus);
@@ -52,6 +52,7 @@ public class Main {
         TileFloatingGroundRightSlim.loadStatic();
 
         Spike.loadStatic();
+        Saw.loadStatic();
         Barrel.loadStatic();
 
         Door1.loadStatic();
