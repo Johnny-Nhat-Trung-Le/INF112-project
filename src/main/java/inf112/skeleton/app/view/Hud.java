@@ -4,20 +4,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.view.texturepack.ITexturePack;
 
 public class Hud extends Stage {
@@ -32,7 +28,7 @@ public class Hud extends Stage {
     private final Image effectDuration;
 
     public Hud(SpriteBatch batch, ViewableGameModel model, ITexturePack texturePack) {
-        super(new ExtendViewport(GameView.VIEWPORT_WIDTH * 20,GameView.VIEWPORT_HEIGHT / GameView.VIEWPORT_WIDTH * 20, new OrthographicCamera()), batch);
+        super(new ExtendViewport(GameView.VIEWPORT_WIDTH * 20, GameView.VIEWPORT_HEIGHT / GameView.VIEWPORT_WIDTH * 20, new OrthographicCamera()), batch);
         this.model = model;
         this.texturePack = texturePack;
 
@@ -95,9 +91,9 @@ public class Hud extends Stage {
                 effectIcon.setDrawable(new SpriteDrawable(new Sprite(texturePack.getItemTexture(effect.getItem()))));
             }
             float wp = model.getViewablePlayer().getEffect().getDuration().remaining() / (float) model.getViewablePlayer().getEffect().getDuration().maximum();
-            Pixmap pm = new Pixmap(IMG_SIZE,IMG_SIZE / 4, Pixmap.Format.RGBA8888);
+            Pixmap pm = new Pixmap(IMG_SIZE, IMG_SIZE / 4, Pixmap.Format.RGBA8888);
             pm.setColor(Color.GREEN);
-            pm.fillRectangle(0,0, (int) (IMG_SIZE * wp), IMG_SIZE / 4);
+            pm.fillRectangle(0, 0, (int) (IMG_SIZE * wp), IMG_SIZE / 4);
             effectDuration.setDrawable(new SpriteDrawable(new Sprite(new Texture(pm))));
         } else {
             if (isFilled) {
