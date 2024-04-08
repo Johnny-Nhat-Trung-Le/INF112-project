@@ -1,10 +1,7 @@
 package inf112.skeleton.app.model;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.event.EventBus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +30,7 @@ public class TestPlayerModel {
     public void reset() {
         world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
         player = new PlayerModel(world, new EventBus(),INIT_X, INIT_Y);
+        world.setContactListener(player);
     }
 
     @Test
@@ -92,8 +90,6 @@ public class TestPlayerModel {
         }
     }
 
-    // TODO - FIX ME isGrounded is the problem hmmm...
-    // make static body, tick it down
     @Test
     public void testMoveUp() {
 
@@ -107,27 +103,31 @@ public class TestPlayerModel {
         Body groundBody = world.createBody(ground);
         PolygonShape groundShape = new PolygonShape();
         groundShape.setAsBox(width / 2, height / 2);
-        groundBody.createFixture(groundShape, 0.0f);
-        groundShape.dispose();
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.density = 1;
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0;
+        fixtureDef.shape = groundShape;
+        groundBody.createFixture(fixtureDef);
+
 
         world.setGravity(new Vector2(GRAVITY_X, -20));
 
-        float initialY = player.getY();
-        System.out.println(initialY + " meow");
+
+        player.moveUp(true);
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
         }
 
+        world.setGravity(new Vector2(GRAVITY_X, -20));
         // it does fall down to the platform
-
+        float initialY = player.getY();
         float previousY = player.getY();
-        System.out.println(previousY + " here");
-//        player.moveUp(true);
         while (true) {
-            player.moveUp(true);
             step();
 
             float currentY = player.getY();
+            System.out.println(currentY);
             if (currentY < previousY) {
                 System.out.println("meow");
                 break;
