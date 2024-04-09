@@ -94,7 +94,8 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         return player;
     }
 
-    public AssetsManager getMusicManager() {
+    @Override
+    public AssetsManager getAssetsManager() {
         return this.assetsManager;
     }
     @Override

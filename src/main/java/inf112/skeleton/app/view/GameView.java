@@ -1,13 +1,11 @@
 package inf112.skeleton.app.view;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.AssetsManager;
 import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.GameState;
-import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.screen.GameOverScreen;
 import inf112.skeleton.app.view.screen.GameScreen;
 
@@ -30,7 +28,7 @@ public class GameView extends Game {
         this.model = model;
         this.bus = bus;
         this.processor = processor;
-        assetsManager = model.getMusicManager();
+        assetsManager = model.getAssetsManager();
         this.gameState = GameState.MAIN_MENU;
     }
 
