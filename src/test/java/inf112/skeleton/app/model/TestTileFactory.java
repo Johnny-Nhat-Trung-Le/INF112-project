@@ -59,15 +59,12 @@ public class TestTileFactory {
                 ------G
                 """;
         List<TileModel> tiles = factory.generate(input, world, eventBus);
-        assertEquals(41, tiles.size(), "Should generate twelve tile objects");
+        assertEquals(41, tiles.size(), "Should generate 41 tile objects");
     }
 
     // DO NOT OPEN *aware*
     @Test
     public void testCheckPosition() {
-        // x = 0, y = 10
-        // x = 0, y = 5 | x = 5, y = 5
-        // x = 0, y = 0 | x = 5, y = 0 | x = 10, y = 0
         String input = """
                 g               
                 Gg

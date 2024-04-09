@@ -92,7 +92,6 @@ public class TestPlayerModel {
 
     @Test
     public void testMoveUp() {
-
         // Create Static Body under Player
         float width = 10;
         float height = 2;
@@ -110,26 +109,20 @@ public class TestPlayerModel {
         fixtureDef.shape = groundShape;
         groundBody.createFixture(fixtureDef);
 
-
         world.setGravity(new Vector2(GRAVITY_X, -20));
 
-
-        player.moveUp(true);
-        for (int i = 0; i < NUM_ITERATIONS; i++) {
+        for (int i = 0; i < NUM_ITERATIONS * 2; i++) {
             step();
         }
-
-        world.setGravity(new Vector2(GRAVITY_X, -20));
-        // it does fall down to the platform
         float initialY = player.getY();
-        float previousY = player.getY();
+        float previousY = initialY;
+        player.moveUp(true);
         while (true) {
             step();
 
             float currentY = player.getY();
-            System.out.println(currentY);
             if (currentY < previousY) {
-                System.out.println("meow");
+                player.moveUp(false);
                 break;
             }
 
@@ -137,16 +130,14 @@ public class TestPlayerModel {
         }
 
         float topY = player.getY();
-        System.out.println(topY);
         assertTrue(topY > initialY);
 
-        for (int i = 0; i < NUM_ITERATIONS; i++) {
+        for (int i = 0; i < NUM_ITERATIONS * 2; i++) {
             step();
         }
-
         float finalY = player.getY();
         assertTrue(finalY < topY);
-
+        assertEquals(finalY, initialY);
         // Reset the gravity
         world.setGravity(new Vector2(GRAVITY_X, GRAVITY_Y));
     }
