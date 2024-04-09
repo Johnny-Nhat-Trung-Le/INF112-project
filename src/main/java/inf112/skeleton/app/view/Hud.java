@@ -42,15 +42,12 @@ public class Hud extends Stage {
         itemIcon = new Image(new BaseDrawable());
         itemDurability = new Label("", labelStyle);
         effectIcons = new HorizontalGroup();
-        effectIcons.setDebug(true);
         effectIconImages = new HashMap<>();
         effectDurations = new HorizontalGroup();
-        effectDurations.setDebug(true);
         effectDutationImages = new HashMap<>();
 
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
         fillTable(table);
         addActor(table);
     }
