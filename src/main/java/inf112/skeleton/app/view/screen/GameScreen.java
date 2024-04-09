@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -34,6 +35,7 @@ public class GameScreen implements Screen {
     private final SpriteBatch batchHud;
     private final ITexturePack texturePack;
     private final Stage hud;
+    private Box2DDebugRenderer debug;
 
     public GameScreen(ViewableGameModel model, EventBus bus, InputProcessor processor) {
         Gdx.graphics.setForegroundFPS(60);
@@ -51,6 +53,7 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         batchHud = new SpriteBatch();
         hud = new Hud(batch,model,texturePack);
+        debug = new Box2DDebugRenderer();
     }
 
     @Override
@@ -63,7 +66,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         eventBus.post(new EventStep(delta));
         updateCamToPlayer();
-
+        
         ViewablePlayerModel player = model.getViewablePlayer();
 
         ScreenUtils.clear(0, 0, 0, 0);
@@ -88,7 +91,7 @@ public class GameScreen implements Screen {
         );
 
         batch.end();
-
+        debug.render(model.getWorld(),gameCam.combined);  
         hud.getViewport().apply();
         hud.draw();
     }

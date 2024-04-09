@@ -44,9 +44,9 @@ public class Spike extends TileModel implements ContactableTiles {
     @Override
     protected Shape createShape(float w, float h) {
         Vector2[] vecBottom = new Vector2[3];
-        vecBottom[0] = new Vector2(-TILE_WIDTH / 2, -TILE_HEIGHT / 2); // BL
-        vecBottom[1] = new Vector2(TILE_WIDTH / 2, -TILE_HEIGHT / 2); // BR
-        vecBottom[2] = new Vector2(0, TILE_HEIGHT / 4 + TILE_HEIGHT / 14); // C
+        vecBottom[0] = new Vector2(-TILE_WIDTH / 4, -TILE_HEIGHT / 4); // BL
+        vecBottom[1] = new Vector2(TILE_WIDTH / 4, -TILE_HEIGHT / 4); // BR
+        vecBottom[2] = new Vector2(0, TILE_HEIGHT / 8 + TILE_HEIGHT / 14); // C
         PolygonShape shape = new PolygonShape();
         shape.set(vecBottom);
         return shape;

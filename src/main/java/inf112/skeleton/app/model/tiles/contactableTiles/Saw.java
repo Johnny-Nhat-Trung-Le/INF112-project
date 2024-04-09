@@ -1,5 +1,6 @@
 package inf112.skeleton.app.model.tiles.contactableTiles;
 
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.event.EventBus;
@@ -43,24 +44,17 @@ public class Saw extends TileModel implements ContactableTiles {
 
     @Override
     protected Shape createShape(float w, float h) {
-        PolygonShape halfCircleShape = new PolygonShape();
-        float radius = w / 8; //
-        float[] vertices = new float[12];
-        for (int i = 0; i < 6; i++) {
-            float angle = (i / 6.0f) * 90f; // Angle ranges from 0 to 90 degrees
-            vertices[i * 2] = (float) Math.cos(Math.toRadians(angle)) * radius; // x-coordinate
-            vertices[i * 2 + 1] = (float) Math.sin(Math.toRadians(angle)) * radius; // y-coordinate
-        }
+        CircleShape circle = new CircleShape();
+        circle.setRadius(w/2);
+        return circle;
 
-        halfCircleShape.set(vertices);
-        return halfCircleShape;
     }
 
     @Override
     protected Body createBody(float x, float y) {
         BodyDef bDef = new BodyDef();
         bDef.type = BodyDef.BodyType.StaticBody;
-        bDef.position.set(x, y);
+        bDef.position.set(x, y-(this.getHeight()/2));
         FixtureDef fDef = new FixtureDef();
         fDef.density = 1;
         fDef.friction = 0.5f;
@@ -68,8 +62,8 @@ public class Saw extends TileModel implements ContactableTiles {
         fDef.shape = createShape(this.getWidth(), this.getHeight());
 
         Body b = world.createBody(bDef);
-        Fixture spikeFixture = b.createFixture(fDef);
-        spikeFixture.setUserData(USERDATA);
+        Fixture sawFixture = b.createFixture(fDef);
+        sawFixture.setUserData(USERDATA);
         return b;
     }
 
@@ -97,4 +91,9 @@ public class Saw extends TileModel implements ContactableTiles {
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
+    @Override
+    public float getY(){
+        return getBody().getPosition().y;
+    }
+
 }

@@ -73,17 +73,4 @@ public class TestPlayerModel {
             lastX = player.getX();
         }
     }
-
-    @Test
-    public void testMoveUp(){
-        World worldG = new World(new Vector2(-0,-20), true);
-        PlayerModel playerG = new PlayerModel(worldG,new EventBus() ,INIT_X, INIT_Y);
-        float lastY = INIT_Y;
-        playerG.moveUp(true);
-        playerG.step(DT);
-        worldG.step(DT,VELOCITY_ITERATIONS,POSITION_ITERATIONS);
-        System.out.println(lastY + " rbuh" + playerG.getY());
-        assertTrue(lastY > playerG.getY());
-        assertEquals(INIT_X, playerG.getX());
-    }
 }

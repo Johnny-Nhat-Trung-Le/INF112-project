@@ -22,7 +22,9 @@ public class MenuScreen implements Screen {
     private final Texture texture;
     //943*689
     private final BitmapFont font;
-    private final GlyphLayout layout;
+    private final GlyphLayout textLayout;
+
+    private final GlyphLayout titleLayout;
     private final String text;
     private final String title;
 
@@ -33,14 +35,15 @@ public class MenuScreen implements Screen {
 
         gameCam = new OrthographicCamera();
         gamePort = new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam);
-        texture = new Texture("Backgrounds/main_menu_screen.png");
+        texture = new Texture("Backgrounds/menu_screen.png");
         font = new BitmapFont();
 
         title = "Lil bro's Adventure Back Home";
         text = "Press p to play";
-        layout = new GlyphLayout();
-        layout.setText(font, title);
-        layout.setText(font, text);
+        textLayout = new GlyphLayout();
+        titleLayout = new GlyphLayout();
+        titleLayout.setText(font, title);
+        textLayout.setText(font, text);
 
         Gdx.graphics.setForegroundFPS(60);
         Gdx.input.setInputProcessor(processor);
@@ -67,8 +70,8 @@ public class MenuScreen implements Screen {
         //Fills the whole screen
         batch.draw(texture, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         //Draws the texts
-        font.draw(batch, title, (VIEWPORT_WIDTH / 2) - layout.width / 2, (VIEWPORT_HEIGHT / 4) * 3);
-        font.draw(batch, text, (VIEWPORT_WIDTH / 2) - layout.width / 2, (VIEWPORT_HEIGHT / 2) - layout.height / 2);
+        font.draw(batch, title, (VIEWPORT_WIDTH / 2) - titleLayout.width / 2, (VIEWPORT_HEIGHT / 4) * 3);
+        font.draw(batch, text, (VIEWPORT_WIDTH / 2) - textLayout.width / 2, (VIEWPORT_HEIGHT / 2) - textLayout.height / 2);
         batch.end();
     }
 

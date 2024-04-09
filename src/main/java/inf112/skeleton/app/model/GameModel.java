@@ -28,7 +28,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private final List<TileModel> foreground;
     private final List<TileModel> background;
     private final List<Item> items;
-    private final World world;
+    private final  World world;
     private final PlayerModel player;
     private final EventBus bus;
     private GameState state;
@@ -122,6 +122,11 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     @Override
     public Iterable<ViewableItem> getItems() {
         return items.stream().map((i) -> (ViewableItem) i).toList();
+    }
+
+    @Override
+    public World getWorld() {
+        return world;
     }
 
     @Override

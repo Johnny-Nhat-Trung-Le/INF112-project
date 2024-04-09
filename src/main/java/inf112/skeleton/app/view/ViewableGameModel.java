@@ -28,4 +28,6 @@ public interface ViewableGameModel extends GameStateGettable {
      */
     Iterable<ViewableItem> getItems();
 
+    World getWorld();
+
 }
