@@ -61,6 +61,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                        """,
                 world,bus);
         foreground.addAll(tiles);
+        // background
     }
 
     @Override
