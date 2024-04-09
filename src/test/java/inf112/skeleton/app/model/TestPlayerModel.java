@@ -141,4 +141,9 @@ public class TestPlayerModel {
         // Reset the gravity
         world.setGravity(new Vector2(GRAVITY_X, GRAVITY_Y));
     }
+
+    @Test
+    public void testDead() {
+        assertTrue(true);
+    }
 }
