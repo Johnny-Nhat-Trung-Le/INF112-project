@@ -38,6 +38,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         background = new ArrayList<>();
         items = new ArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
+        assetsManager = new AssetsManager();
         this.bus = bus;
         bus.addEventHandler(this);
         player = new PlayerModel(world, bus,1.5f, 6.5f);
