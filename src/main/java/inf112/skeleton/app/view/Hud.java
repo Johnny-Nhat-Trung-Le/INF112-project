@@ -30,7 +30,7 @@ public class Hud extends Stage {
     private final HorizontalGroup effectIcons;
     private final Map<ViewableEffect, Image> effectIconImages;
     private final HorizontalGroup effectDurations;
-    private final Map<ViewableEffect, Image> effectDutationImages;
+    private final Map<ViewableEffect, Image> effectDurationImages;
 
     public Hud(SpriteBatch batch, ViewableGameModel model, ITexturePack texturePack) {
         super(new ExtendViewport(GameView.VIEWPORT_WIDTH * 20, GameView.VIEWPORT_HEIGHT / GameView.VIEWPORT_WIDTH * 20, new OrthographicCamera()), batch);
@@ -44,7 +44,7 @@ public class Hud extends Stage {
         effectIcons = new HorizontalGroup();
         effectIconImages = new HashMap<>();
         effectDurations = new HorizontalGroup();
-        effectDutationImages = new HashMap<>();
+        effectDurationImages = new HashMap<>();
 
         Table table = new Table();
         table.setFillParent(true);
@@ -100,11 +100,11 @@ public class Hud extends Stage {
             }
             // DURATION
             Image duration = new Image(getEffectDuration(effect));
-            if (effectDutationImages.containsKey(effect)) {
-                Image old = effectDutationImages.get(effect);
+            if (effectDurationImages.containsKey(effect)) {
+                Image old = effectDurationImages.get(effect);
                 effectDurations.removeActor(old);
             }
-            effectDutationImages.put(effect, duration);
+            effectDurationImages.put(effect, duration);
             effectDurations.addActor(duration);
         }
         // Remove expired effects
@@ -113,9 +113,9 @@ public class Hud extends Stage {
             effectIcons.removeActor(icon);
             effectIconImages.remove(effect);
 
-            Image duration = effectDutationImages.get(effect);
+            Image duration = effectDurationImages.get(effect);
             effectDurations.removeActor(duration);
-            effectDutationImages.remove(effect);
+            effectDurationImages.remove(effect);
         }
     }
 
