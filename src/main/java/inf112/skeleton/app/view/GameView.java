@@ -30,7 +30,7 @@ public class GameView extends Game {
         this.model = model;
         this.bus = bus;
         this.processor = processor;
-        assetsManager = new AssetsManager();
+        assetsManager = model.getMusicManager();
         this.gameState = GameState.MAIN_MENU;
     }
 
@@ -58,6 +58,8 @@ public class GameView extends Game {
                 case GAME_OVER -> {
                     resetGame = true;
                     setScreen(new GameOverScreen(processor));
+                    assetsManager.stopMusic();
+                    assetsManager.playMusic("DEAD");
                 }
             }
         }

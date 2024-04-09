@@ -18,6 +18,7 @@ public class AssetsManager {
         // ADD MUSIC AND SOUNDS
         addMusic("MAIN", "assets/MiiPlaza.mp3");
         addMusic("BACKGROUND", "assets/shop.mp3");
+        addMusic("DEAD","assets/dead.mp3");
     }
 
     private void addMusic(String key, String filePath) {

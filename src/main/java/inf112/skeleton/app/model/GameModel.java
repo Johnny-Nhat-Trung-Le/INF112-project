@@ -94,6 +94,9 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         return player;
     }
 
+    public AssetsManager getMusicManager() {
+        return this.assetsManager;
+    }
     @Override
     public void setState(GameState state) {
         if (state == GameState.ACTIVE && this.state != GameState.ACTIVE) {
