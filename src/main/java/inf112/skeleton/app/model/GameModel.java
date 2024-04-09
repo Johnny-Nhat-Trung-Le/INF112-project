@@ -30,6 +30,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private final PlayerModel player;
     private final EventBus bus;
     private GameState state;
+    private AssetsManager assetsManager;
 
 
     public GameModel(EventBus bus) {
@@ -94,6 +95,18 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
 
     @Override
     public void setState(GameState state) {
+        if (state == GameState.ACTIVE && this.state != GameState.ACTIVE) {
+            if (this.state == GameState.MAIN_MENU) {
+                assetsManager.stopMusic();
+            }
+            if (this.state == GameState.PAUSE) {
+                assetsManager.resumeMusic();
+            } else {
+                assetsManager.playMusic("BACKGROUND");
+            }
+        } else if (this.state == GameState.ACTIVE && state != GameState.ACTIVE) {
+            assetsManager.pauseMusic();
+        }
         this.state = state;
     }
 
