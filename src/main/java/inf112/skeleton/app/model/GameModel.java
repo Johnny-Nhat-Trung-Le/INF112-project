@@ -41,7 +41,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         world = new World(new Vector2(WIND, GRAVITY), true);
         this.bus = bus;
         bus.addEventHandler(this);
-        player = new PlayerModel(world, bus,1.5f, 6.5f);
+        player = new PlayerModel(world, bus,1.5f, 20f);
         bus.addEventHandler(this);
         state = GameState.MAIN_MENU;
         world.setContactListener(this); // If more bodies need to be ContactListener
@@ -54,11 +54,14 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private void fillWorld() {
         List<TileModel> tiles = TileFactory.generate(
                 """
-                       --i---------------------
-                       B---
-                       qwe--------lgr-9i--|--I
-                       ----Ss--B------8
-                       LGGGGGGGGGGGGGGGGGGGGGR
+                       --B--------------------
+                       qwe--------------------lgr
+                       ------ssB----------w------
+                       -----lggr-------------w---
+                       LGR--gggg----------------i-----sss--S-S--S
+                       GGG--gggg---S------S-SS-B------LGGGGGGGGGR-----------w-------9
+                       G---qg------lgr--lggggggggr----GGGGGGGGGGG---g--s-B----------8
+                       GGG---------------------------------------------qwe-------LGgR
                        """,
                 world,bus);
         foreground.addAll(tiles);
