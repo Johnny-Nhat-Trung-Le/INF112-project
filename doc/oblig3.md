@@ -9,7 +9,6 @@
 * Trenger dere andre roller?
     * Vi trenger ikke andre roller. For noen roller har alle sammen (eks tester, programmør, gamedesign osv)
 
-
 * Skriv ned noen linjer om hva de ulike rollene faktisk innebærer for dere.
     * Teamleder:
         * Tar siste avgjørelse, styrer prosjektet i riktig retning, passer på at alle har noe å bidra med.
@@ -18,8 +17,6 @@
         * Kommunisere/viderføre spørsmål som er rettet mot gruppeleder og foreleser
     * Referat:
         * Skriver referat, holder styr på referat.
-
-
 
 * Er det noen erfaringer enten team-messig eller mtp prosjektmetodikk som er verdt å nevne?
     * Vi så tidlig at det var fordelaktig å ha flere møter ukentlig slik at man kan ha oppfølging på hverandre og motivere hverandre.
@@ -32,9 +29,13 @@
       Vi erstatte prosjektmetodikkens formål ved å ha flere møter, slik at alle deloppgaver som egentlig ligger i "boardet" blir gjennomført felles.
       Som et resultat, gir vi da mindre deloppgaver ut, fordi møtene våre forekomme ofte og vi gjør ting mer felles.
 
+  TODO
+    * Begynt å ta bruke issue board.
+    * Mer selvstendig arbeid, mer effektiv mer ting gjort,
+    * Arbeid blir mer individuell siden kodebasen er på plass. OwO
 
 * Synes teamet at de valgene dere har tatt er gode? Hvis ikke, hva kan dere gjøre annerledes for å forbedre måten teamet fungerer på?
-    * Ja, vi har gjort gode valg. Inntil nå har det ikke vært tegn på dårlige valg. Alt går som det skal, og hvis det er problemer som dukker opp, er vi fleksible til å ha møter eller kommuniser med hverandre.
+    * Ja, OwO
 
 * Hvordan er gruppedynamikken?
     * Vi kjenner hverandre fra før av, derfor er vi ganske trygge på hverandre og gruppedynamikken er fin.
@@ -50,39 +51,49 @@
       Dessuten har alle til nå oversikt over alt som er i prosjektet, noe som betyr at alle er innaforstått hvordan kodene funker, hvordan strukturen er osv.
       Prosjektmetodikken har man ikke satt så stor fokus i denne sprinten, siden vi føler det ikke har vært en verktøy vi trenger å bruke tid på.
       Dette er fordi vi har god kommunikasjon med hverandre og jobber ofte sammen, så når det trengs at man jobber individuelt er man displinert nok til å ta ansvaret uten press på sprinter som er i prosjektmetodikkene
+      TODO
 
 * Under vurdering vil det vektlegges at alle bidrar til kodebasen.
   Hvis det er stor forskjell i hvem som committer, må dere legge ved en kort forklaring for hvorfor det er sånn. Husk å committe alt. (Også designfiler)
-    * Vi jobber ofte felles under gruppemøtene. Så det blir en type parprogrammering hele tiden.
-    * Derfor vil det se i committs at noen bidrar mer enn andre.
-    * Vi bør til videre nevne når vi parprogrammere i referatene.
+    * Relativt jevnt fordeling av committs, men vi fortsetter en del med parprogrammering under møtene.
+    * På merges så jobber vi sammen.
 
 * Referat fra møter siden forrige leveranse skal legges ved (mange av punktene over er typisk ting som havner i referat).
-    * Se fra dato:Tirsdag 20.februar [i referatfilen](referat.md)
+    * Se fra dato: TODO
 * Bli enige om maks tre forbedringspunkter fra retrospektivet, som skal følges opp under neste sprint.
-    * Integrere prosjektmetodikken mer i prosjektflyten vår. Altså assigne mer indivduelle oppgaver
+    * TODO
 
 
 
 # Krav og spesifikasjon:
-
 * Oppdater hvilke krav dere har prioritert, hvor langt dere har kommet og hva dere har gjort siden forrige gang.
   Er dere kommet forbi MVP? Forklar hvordan dere prioriterer ny funksjonalitet.
-    * Vi har nesten nådd vår MVP. Vi hadde i utgangspunkt 10 MVP punkter, hvor vi nå mangler 4/10.
-    * Vi har tenkt å prioritere dem slik
-        1. Mål for spiller (komme seg til enden og rømme)
-        2. Spiller kan dø (ved kontakt med fiender, eller ved å falle utfor skjermen/ feller)
-        3. Plukke opp "items" som skal gi en egenskap (raskere movement, høyere hopp, etc.)
-        4. Hopp/run lyd avhengig av terreng.
-           Men de viktigste/ de med høyest prioritering er på plass.
-           Hva vi har gjort siden forrige var å genrere verden vha objektfabrikk, vise spiller og verden i programmet,
-           også har vi fått inn kontroller på spilleren slik at man kan styre spilleren.
-
+    * Siden forrige gang har vi gått gjennom kravene som vi hadde mål om å nå.
+    * Alle våre 10 MVP mål har nå blitt nødd :D, men finpussing gjenstår.
+    * Fra forrige gang har vi nå:
+      1. Lagt til musikk i bakgrunn, samt Main menu
+      2. Lagt HUD som visualliserer Items og HP.
+      3. Lagt til Items
+      4. Kan dø og vinne
+      5. Når man dør kan man starte spillet på nytt
+      6. Har begynt å planlegge og teste hvordan level 1
+      7. Lagt til MenuScreen,men kan forbedres.
+      8. Begynt å lage tester
+    * Krav til neste sprint:
+      * Mer tester
+      * Legge til Victory og Help screen
+      * Forbedre level design
+      * Forbedre og finpusse alt
+      * Enkel fiende.
 
 * For hvert krav dere jobber med, må dere lage
 1) ordentlige brukerhistorier,
 2) akseptansekriterier
 3) arbeidsoppgaver. Husk at akseptansekriterier ofte skrives mer eller mindre som tester
+
+    1. Mer tester
+        * Brukerhistorie:
+            - Som utvikler trenger jeg en måte å sjekke om koden min fungerer slik den skal 
 
     1. Mål for spiller (komme seg til enden og rømme)
         * Brukerhistorie:
