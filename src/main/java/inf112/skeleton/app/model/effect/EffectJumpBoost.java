@@ -5,6 +5,8 @@ public class EffectJumpBoost extends Effect {
     private static final float JUMP_BOOST = 2;
 
     /**
+     * Makes you jump twice as high.
+     *
      * @param duration of effect in ticks/steps
      */
     public EffectJumpBoost(int duration) {
