@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -15,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import inf112.skeleton.app.view.texturepack.ITexturePack;
+
+import java.util.*;
 
 public class Hud extends Stage {
     private static final int IMG_SIZE = 16;
@@ -24,20 +27,26 @@ public class Hud extends Stage {
     private final ITexturePack texturePack;
     private final Image itemIcon;
     private final Label itemDurability;
-    private final Image effectIcon;
-    private final Image effectDuration;
+    private final HorizontalGroup effectIcons;
+    private final Map<ViewableEffect, Image> effectIconImages;
+    private final HorizontalGroup effectDurations;
+    private final Map<ViewableEffect, Image> effectDutationImages;
 
     public Hud(SpriteBatch batch, ViewableGameModel model, ITexturePack texturePack) {
         super(new ExtendViewport(GameView.VIEWPORT_WIDTH * 20, GameView.VIEWPORT_HEIGHT / GameView.VIEWPORT_WIDTH * 20, new OrthographicCamera()), batch);
         this.model = model;
         this.texturePack = texturePack;
 
-        Label.LabelStyle style = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
         itemIcon = new Image(new BaseDrawable());
-        itemDurability = new Label("", style);
-        effectIcon = new Image(new BaseDrawable());
-        effectDuration = new Image(new BaseDrawable());
+        itemDurability = new Label("", labelStyle);
+        effectIcons = new HorizontalGroup();
+        effectIcons.setDebug(true);
+        effectIconImages = new HashMap<>();
+        effectDurations = new HorizontalGroup();
+        effectDurations.setDebug(true);
+        effectDutationImages = new HashMap<>();
 
         Table table = new Table();
         table.setFillParent(true);
@@ -54,9 +63,9 @@ public class Hud extends Stage {
 
         Table effects = new Table();
         effects.left();
-        effects.add(effectIcon);
+        effects.add(effectIcons);
         effects.row().left();
-        effects.add(effectDuration);
+        effects.add(effectDurations);
 
         table.top().left();
         table.padLeft(10).padTop(10);
@@ -83,24 +92,46 @@ public class Hud extends Stage {
     }
 
     private void updateEffectActors() {
-        ViewableEffect effect = model.getViewablePlayer().getEffect();
-        boolean isFilled = effectIcon.getWidth() != 0;
-
-        if (effect != null) {
-            if (!isFilled) {
-                effectIcon.setDrawable(new SpriteDrawable(new Sprite(texturePack.getItemTexture(effect.getItem()))));
+        Set<ViewableEffect> valid = new HashSet<>();
+        for (ViewableEffect effect : model.getViewablePlayer().getEffects()) {
+            valid.add(effect);
+            // ICON
+            if (!effectIconImages.containsKey(effect)) {
+                Image icon = new Image(texturePack.getEffectTexture(effect));
+                effectIconImages.put(effect, icon);
+                effectIcons.addActor(icon);
             }
-            float wp = model.getViewablePlayer().getEffect().getDuration().remaining() / (float) model.getViewablePlayer().getEffect().getDuration().maximum();
-            Pixmap pm = new Pixmap(IMG_SIZE, IMG_SIZE / 4, Pixmap.Format.RGBA8888);
-            pm.setColor(Color.GREEN);
-            pm.fillRectangle(0, 0, (int) (IMG_SIZE * wp), IMG_SIZE / 4);
-            effectDuration.setDrawable(new SpriteDrawable(new Sprite(new Texture(pm))));
-        } else {
-            if (isFilled) {
-                effectIcon.setDrawable(new BaseDrawable());
+            // DURATION
+            Image duration = new Image(getEffectDuration(effect));
+            if (effectDutationImages.containsKey(effect)) {
+                Image old = effectDutationImages.get(effect);
+                effectDurations.removeActor(old);
             }
-            effectDuration.setDrawable(new BaseDrawable());
+            effectDutationImages.put(effect, duration);
+            effectDurations.addActor(duration);
         }
+        // Remove expired effects
+        for (ViewableEffect effect : effectIconImages.keySet().stream().filter((e) -> !valid.contains(e)).toList()) {
+            Image icon = effectIconImages.get(effect);
+            effectIcons.removeActor(icon);
+            effectIconImages.remove(effect);
+
+            Image duration = effectDutationImages.get(effect);
+            effectDurations.removeActor(duration);
+            effectDutationImages.remove(effect);
+        }
+    }
+
+    private Sprite getEffectDuration(ViewableEffect effect) {
+        float wp = effect.getDuration().remaining() / (float) effect.getDuration().maximum();
+        Pixmap pm = new Pixmap(IMG_SIZE, IMG_SIZE / 4, Pixmap.Format.RGBA8888);
+        pm.setColor(Color.GREEN);
+        pm.fillRectangle(0, 0, (int) (IMG_SIZE * wp), IMG_SIZE / 4);
+        return new Sprite(new Texture(pm));
+    }
+
+    private boolean sameEffectIn(List<ViewableEffect> list, ViewableEffect effect) {
+        return list.stream().anyMatch((e) -> e.getClass().equals(effect.getClass()));
     }
 
     private void update() {

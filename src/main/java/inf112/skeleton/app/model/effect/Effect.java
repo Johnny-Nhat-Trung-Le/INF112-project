@@ -1,10 +1,10 @@
-package inf112.skeleton.app.model;
+package inf112.skeleton.app.model.effect;
 
+import inf112.skeleton.app.model.Durability;
 import inf112.skeleton.app.view.ViewableEffect;
 import inf112.skeleton.app.view.ViewableItem;
 
-public class Effect implements ViewableEffect {
-    private final ViewableItem item;
+public abstract class Effect implements ViewableEffect {
     private final float speedBoost;
     private final float jumpBoost;
     private final int maxDuration;
@@ -15,8 +15,7 @@ public class Effect implements ViewableEffect {
      * @param speedBoost speed-boost multiplier
      * @param jumpBoost jump-boost multiplier
      */
-    public Effect(ViewableItem item, int duration, float speedBoost, float jumpBoost) {
-        this.item = item;
+    public Effect(int duration, float speedBoost, float jumpBoost) {
         this.speedBoost = speedBoost;
         this.jumpBoost = jumpBoost;
         this.maxDuration = duration;
@@ -54,10 +53,5 @@ public class Effect implements ViewableEffect {
     @Override
     public Durability getDuration() {
         return new Durability(duration, maxDuration);
-    }
-
-    @Override
-    public ViewableItem getItem() {
-        return item;
     }
 }

@@ -4,22 +4,29 @@ import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
-import inf112.skeleton.app.model.Effect;
+import inf112.skeleton.app.model.Durability;
 import inf112.skeleton.app.model.Physicable;
+import inf112.skeleton.app.model.effect.Effect;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.model.event.EventItemContact;
 import inf112.skeleton.app.model.event.EventItemPickedUp;
 import inf112.skeleton.app.model.event.EventItemUsedUp;
 import inf112.skeleton.app.view.ViewableItem;
 
+import java.util.function.Supplier;
+
 public abstract class ItemModel implements ViewableItem, Physicable, EventHandler, ContactListener {
     private static final float WIDTH = 2;
     private static final float HEIGHT = 2;
-    private final Body body;
+    private Body body;
     private Shape shape;
-    protected final EventBus bus;
+    private EventBus bus;
+    protected Durability durability;
+    protected Supplier<Effect> createEffect;
 
     /**
+     * {@code durability} and {@code createEffect} must be set manually.
+     *
      * @param bus   the {@link EventBus} that is used to call {@link EventItemUsedUp}
      * @param world that the {@link Body} is created in
      * @param x     left-most position of {@link ItemModel}
@@ -28,7 +35,6 @@ public abstract class ItemModel implements ViewableItem, Physicable, EventHandle
     public ItemModel(EventBus bus, World world, float x, float y) {
         this.bus = bus;
         body = createBody(world, x, y);
-
         bus.addEventHandler(this);
     }
 
@@ -64,7 +70,17 @@ public abstract class ItemModel implements ViewableItem, Physicable, EventHandle
      *
      * @return a new {@link Effect} of the item
      */
-    public abstract Effect use();
+    public Effect use() {
+        reduceDurability();
+        if (durability.remaining() <= 0) {
+            bus.post(new EventItemUsedUp(this));
+        }
+        return createEffect.get();
+    }
+
+    private void reduceDurability() {
+        durability = new Durability(durability.remaining() - 1, durability.maximum());
+    }
 
     @Override
     public float getWidth() {
@@ -89,6 +105,11 @@ public abstract class ItemModel implements ViewableItem, Physicable, EventHandle
     @Override
     public Body getBody() {
         return body;
+    }
+
+    @Override
+    public Durability getDurability() {
+        return new Durability(durability.remaining(), durability.maximum());
     }
 
     @Override

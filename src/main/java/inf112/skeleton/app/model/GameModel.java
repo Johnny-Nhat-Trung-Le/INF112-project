@@ -11,6 +11,7 @@ import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.model.event.EventItemPickedUp;
 import inf112.skeleton.app.model.item.ItemEnergy;
 import inf112.skeleton.app.model.item.ItemModel;
+import inf112.skeleton.app.model.item.ItemMushroom;
 import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.model.tiles.contactableTiles.ContactableTiles;
 import inf112.skeleton.app.view.ViewableGameModel;
@@ -64,6 +65,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                 world, bus);
         foreground.addAll(tiles);
         items.add(new ItemEnergy(bus, world, 15, 7));
+        items.add(new ItemMushroom(bus, world, 30, 7));
     }
 
     @Override

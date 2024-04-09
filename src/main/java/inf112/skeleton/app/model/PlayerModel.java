@@ -7,13 +7,18 @@ import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
+import inf112.skeleton.app.model.effect.Effect;
 import inf112.skeleton.app.model.event.*;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.view.ViewableEffect;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.function.Predicate;
 
 public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
     public static final String USER_DATA_BOTTOM = "PlayerBottom";
@@ -41,7 +46,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int contactCountSensor = 0;
     private ItemModel item;
-    private Effect effect;
+    private final List<Effect> effects;
     private Integer Hp;
     private float immunityCoolDown = 1;
     private boolean tookDamage = false;
@@ -78,6 +83,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         moveDown = false;
         moveLeft = false;
         moveRight = false;
+        effects = new ArrayList<>();
 
         bus.addEventHandler(this);
         userDataSet = createUserDataSet();
@@ -121,7 +127,16 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     @Override
     public void useItem() {
         if (item == null) return;
-        this.effect = item.use();
+        Effect effect = item.use();
+        Predicate<? super Effect> same = (e) -> effect.getClass().equals(e.getClass());
+
+        if (effects.stream().anyMatch(same)) {
+            List<Effect> newEffects = effects.stream().map((e) -> same.test(e) ? effect : e).toList();
+            effects.clear();
+            effects.addAll(newEffects);
+        } else {
+            effects.add(effect);
+        }
     }
 
     @Override
@@ -152,17 +167,18 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     @Override
     public void step(float timeStep) {
         // EFFECT
-        if (effect != null) {
-            if (effect.hasEnded()) effect = null;
+        for (int i = effects.size() - 1; i >= 0; i--) {
+            Effect effect = effects.get(i);
+            if (effect.hasEnded()) effects.remove(effect);
             else effect.step();
         }
 
         // MOVEMENT
         float dx = DX;
-        dx *= effect == null ? 1 : effect.getSpeedBoost();
+        dx *= effects.stream().reduce((float) 1, (v, e) -> v * e.getSpeedBoost(), (a, b) -> a * b);
         dx *= isGrounded() ? 1 : AIR_CONTROL;
         float dy = DY;
-        dy *= effect == null ? 1 : effect.getJumpBoost();
+        dy *= effects.stream().reduce((float) 1, (v, e) -> v * e.getJumpBoost(), (a, b) -> a * b);
 
         if (moveUp && !moveDown && isGrounded()) move(0, dy);
         if (moveDown && !moveUp && !isGrounded()) move(0, -DY);
@@ -190,9 +206,9 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         Vector2 d = body.getLinearVelocity();
 
         float maxDx = MAX_DX;
-        maxDx *= effect == null ? 1 : effect.getSpeedBoost();
+        maxDx *= effects.stream().reduce((float) 1, (v, e) -> v * e.getSpeedBoost(), (a, b) -> a * b);
         float maxDy = MAX_DY;
-        maxDy *= effect == null ? 1 : effect.getJumpBoost();
+        maxDy *= effects.stream().reduce((float) 1, (v, e) -> v * e.getJumpBoost(), (a, b) -> a * b);
 
         if (dx > 0 && d.x < maxDx || dx < 0 && d.x > -maxDx) {
             body.applyLinearImpulse(dx, 0, getX(), getY(), true);
@@ -430,8 +446,8 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     @Override
-    public ViewableEffect getEffect() {
-        return effect;
+    public List<ViewableEffect> getEffects() {
+        return Collections.unmodifiableList(effects);
     }
 
     @Override

@@ -1,6 +1,9 @@
 package inf112.skeleton.app.view;
 
 import inf112.skeleton.app.model.PlayerStateGettable;
+import inf112.skeleton.app.model.effect.Effect;
+
+import java.util.List;
 
 public interface ViewablePlayerModel extends Sizeable, Positionable, PlayerStateGettable {
     /**
@@ -10,9 +13,9 @@ public interface ViewablePlayerModel extends Sizeable, Positionable, PlayerState
     Integer getHp();
 
     /**
-     * @return the current effect, if there is any
+     * @return the current {@link Effect}s, if there is any
      */
-    ViewableEffect getEffect();
+    List<ViewableEffect> getEffects();
 
     /**
      * @return players item, if there is any
