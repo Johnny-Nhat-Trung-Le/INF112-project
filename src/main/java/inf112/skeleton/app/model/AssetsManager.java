@@ -7,7 +7,7 @@ import java.util.Map;
 
 
 // maybe just make a play/ pause/ stop/ resume for every single one ;__;
-public class AssetsManager {
+public class AssetsManager implements IAssetsManager {
     private Map<String, String> musicMap;
     private Map<String, String> soundEffectMap;
     private Music nowPlaying;
@@ -29,6 +29,7 @@ public class AssetsManager {
         soundEffectMap.put(key, filePath);
     }
 
+    @Override
     public void playMusic(String key) {
         nowPlaying = Gdx.audio.newMusic(Gdx.files.internal(musicMap.get(key)));
         if (nowPlaying != null && !nowPlaying.isPlaying()) {
@@ -38,19 +39,27 @@ public class AssetsManager {
         }
     }
 
+    @Override
     public void stopMusic() {
         this.nowPlaying.stop();
     }
 
+    @Override
     public void pauseMusic() {
         if (nowPlaying != null && nowPlaying.isPlaying()) {
             nowPlaying.pause();
         }
     }
 
+    @Override
     public void resumeMusic() {
         if (nowPlaying != null && !nowPlaying.isPlaying()) {
             nowPlaying.play();
         }
+    }
+
+    @Override
+    public void playSoundEffect(String key) {
+
     }
 }
