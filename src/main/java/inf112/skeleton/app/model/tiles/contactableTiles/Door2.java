@@ -1,15 +1,16 @@
-package inf112.skeleton.app.model.tiles;
+package inf112.skeleton.app.model.tiles.contactableTiles;
 
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.model.TileFactory;
+import inf112.skeleton.app.model.tiles.TileModel;
 
-public class Door1 extends TileModel {
+public class Door2 extends TileModel {
 
     public static void loadStatic(){}
 
     static {
-        TileFactory.register('9', (world, eventBus, x, y) -> {
-            return new Door1(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT);
+        TileFactory.register('8', (world, eventBus, x, y) -> {
+            return new Door2(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 4, TILE_WIDTH/2, TILE_HEIGHT/2);
         });
     }
 
@@ -23,7 +24,7 @@ public class Door1 extends TileModel {
      * @param w     width of body
      * @param h     height of body
      */
-    public Door1(World world, float x, float y, float w, float h) {
+    public Door2(World world, float x, float y, float w, float h) {
         super(world, x, y, w, h);
     }
 }
