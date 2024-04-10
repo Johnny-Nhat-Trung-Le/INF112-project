@@ -1,10 +1,7 @@
 package inf112.skeleton.app.view;
 
-import com.badlogic.gdx.physics.box2d.World;
+import inf112.skeleton.app.model.AssetsManager;
 import inf112.skeleton.app.model.GameStateGettable;
-import inf112.skeleton.app.model.PlayerModel;
-
-import java.util.List;
 
 
 public interface ViewableGameModel extends GameStateGettable {
@@ -28,6 +25,9 @@ public interface ViewableGameModel extends GameStateGettable {
      */
     Iterable<ViewableItem> getItems();
 
-    World getWorld();
+    /**
+     * @return AssetsManager
+     */
+    AssetsManager getAssetsManager();
 
 }
