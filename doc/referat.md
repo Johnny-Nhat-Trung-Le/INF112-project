@@ -76,3 +76,8 @@
 ## Dato: Tirsdag 09 April 2024
     Full oppmøte, updaterte hverandre på hva vi hadde gjort og spurte gruppeleder om noen spørmål angående tester.
     Begynte å tenke på selve level desginet samt kommende oblig.
+
+## Dato: Onsdag 10 April 2024
+    Full oppmøte hvor dagens agenda var oblig3
+    Svare på spørsmål og begynte å merge ting inn i main branch
+    Fikset klassediagrammet.
