@@ -1,12 +1,11 @@
 package inf112.skeleton.app.view;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import inf112.skeleton.app.event.EventBus;
+import inf112.skeleton.app.model.AssetsManager;
 import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.GameState;
-import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.screen.GameOverScreen;
 import inf112.skeleton.app.view.screen.GameScreen;
 
@@ -23,18 +22,20 @@ public class GameView extends Game {
     private final InputProcessor processor;
     private GameState gameState;
     private boolean resetGame = false;
+    private AssetsManager assetsManager;
 
     public GameView(GameModel model, EventBus bus, InputProcessor processor) {
         this.model = model;
         this.bus = bus;
         this.processor = processor;
+        assetsManager = model.getAssetsManager();
         this.gameState = GameState.MAIN_MENU;
     }
 
     @Override
     public void create() {
         setScreen(new MenuScreen(processor));
-
+        assetsManager.playMusic("MAIN");
     }
 
     public void render() {
@@ -55,6 +56,8 @@ public class GameView extends Game {
                 case GAME_OVER -> {
                     resetGame = true;
                     setScreen(new GameOverScreen(processor));
+                    assetsManager.stopMusic();
+                    assetsManager.playMusic("DEAD");
                 }
             }
         }

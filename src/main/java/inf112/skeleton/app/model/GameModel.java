@@ -7,7 +7,6 @@ import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
-import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.model.tiles.contactableTiles.ContactableTiles;
@@ -31,6 +30,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private final PlayerModel player;
     private final EventBus bus;
     private GameState state;
+    private AssetsManager assetsManager;
 
 
     public GameModel(EventBus bus) {
@@ -38,6 +38,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         background = new ArrayList<>();
         items = new ArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
+        assetsManager = new AssetsManager();
         this.bus = bus;
         bus.addEventHandler(this);
         player = new PlayerModel(world, bus,1.5f, 6.5f);
@@ -95,7 +96,23 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     }
 
     @Override
+    public AssetsManager getAssetsManager() {
+        return this.assetsManager;
+    }
+    @Override
     public void setState(GameState state) {
+        if (state == GameState.ACTIVE && this.state != GameState.ACTIVE) {
+            if (this.state == GameState.MAIN_MENU) {
+                assetsManager.stopMusic();
+            }
+            if (this.state == GameState.PAUSE) {
+                assetsManager.resumeMusic();
+            } else {
+                assetsManager.playMusic("BACKGROUND");
+            }
+        } else if (this.state == GameState.ACTIVE && state != GameState.ACTIVE) {
+            assetsManager.pauseMusic();
+        }
         this.state = state;
     }
 
