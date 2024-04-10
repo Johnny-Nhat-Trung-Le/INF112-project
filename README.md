@@ -14,4 +14,14 @@
 * Det er en bug når spilleren hopper mot en vegg, så "bouncer" den tilbake
 
 ## Credits
-* Heftig inspirasjon fra mario
+* **Spritesheet:**
+  * **Tittel:** Free Tiny Hero Sprites Pixel Art
+  * **Artist:** Free Game Assets (GUI, Sprite, Tilesets)
+  * **Utgivelses dato:** 12.08.2019
+  * **Link:** https://free-game-assets.itch.io/free-tiny-hero-sprites-pixel-art
+* **Tileset:**
+  * **Tittel:** Basic Platfomer Tileset
+  * **Artist:** Myna Studios
+  * **Utgivelses dato:** 17.0.2022
+  * **Link:** https://mynastudios.itch.io/basic-platformer-tileset
+  

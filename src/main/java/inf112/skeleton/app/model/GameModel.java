@@ -35,6 +35,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private final World world;
     private final PlayerModel player;
     private GameState state;
+    private AssetsManager assetsManager;
 
     public GameModel(EventBus bus) {
         this.bus = bus;
@@ -43,6 +44,8 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         items = new CopyOnWriteArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
         player = new PlayerModel(bus, world, 1.5f, 6.5f);
+        assetsManager = new AssetsManager();
+        this.bus = bus;
         state = GameState.MAIN_MENU;
 
         bus.addEventHandler(this);
@@ -102,7 +105,23 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     }
 
     @Override
+    public AssetsManager getAssetsManager() {
+        return this.assetsManager;
+    }
+    @Override
     public void setState(GameState state) {
+        if (state == GameState.ACTIVE && this.state != GameState.ACTIVE) {
+            if (this.state == GameState.MAIN_MENU) {
+                assetsManager.stopMusic();
+            }
+            if (this.state == GameState.PAUSE) {
+                assetsManager.resumeMusic();
+            } else {
+                assetsManager.playMusic("BACKGROUND");
+            }
+        } else if (this.state == GameState.ACTIVE && state != GameState.ACTIVE) {
+            assetsManager.pauseMusic();
+        }
         this.state = state;
     }
 

@@ -64,3 +64,15 @@
     Deretter så på tester og diskuterte hva som var denne uken plan.
     Jobbet sammen for å fikse animasjon for hopping og begynte med å tenke på vinn og tap betingelse.
     Avsluttet med å fordele oppgave som skal jobbes med til neste møte.
+
+## Dato: Tirsdag 19 Mars 2024
+    Full oppmøte. Par programmering, og satte opp ulike "issues" på issue board-et om hva som kan jobbes med i låpet av påsken.
+
+## Dato: Tirsdag 02 April 2024
+    Full oppmøte, så på hva vi hadde gjort i påsken, fikset HUD og diskuterte hvordan vi ville at layout-en skulle være.
+    Fikset music for backgrunn og main menu.
+    Lagte en main menu bilde.
+
+## Dato: Tirsdag 09 April 2024
+    Full oppmøte, updaterte hverandre på hva vi hadde gjort og spurte gruppeleder om noen spørmål angående tester.
+    Begynte å tenke på selve level desginet samt kommende oblig.
