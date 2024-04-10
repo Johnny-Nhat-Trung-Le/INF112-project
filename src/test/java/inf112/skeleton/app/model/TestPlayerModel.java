@@ -29,7 +29,7 @@ public class TestPlayerModel {
     @BeforeEach
     public void reset() {
         world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
-        player = new PlayerModel(world, new EventBus(),INIT_X, INIT_Y);
+        player = new PlayerModel(new EventBus(), world, INIT_X, INIT_Y);
         world.setContactListener(player);
     }
 

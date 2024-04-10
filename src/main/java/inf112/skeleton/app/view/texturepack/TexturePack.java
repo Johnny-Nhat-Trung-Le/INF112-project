@@ -6,7 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.model.PlayerState;
+import inf112.skeleton.app.model.effect.EffectJumpBoost;
+import inf112.skeleton.app.model.effect.EffectSpeedBoost;
+import inf112.skeleton.app.model.item.ItemMushroom;
+import inf112.skeleton.app.view.ViewableEffect;
+import inf112.skeleton.app.model.item.ItemEnergy;
 import inf112.skeleton.app.model.tiles.*;
+import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door1;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door2;
 import inf112.skeleton.app.model.tiles.contactableTiles.Spike;
@@ -97,5 +103,25 @@ public class TexturePack implements ITexturePack {
         return new Animation<TextureRegion>(1f / 16f, animationFrames);
     }
 
-    ;
+    @Override
+    public TextureRegion getItemTexture(ViewableItem item) {
+        if (item instanceof ItemEnergy) return new TextureRegion(atlas.findRegion(TILE_NAME,156));
+        if (item instanceof ItemMushroom) return new TextureRegion(atlas.findRegion(TILE_NAME, 106));
+        return null;
+    }
+
+    @Override
+    public TextureRegion getEffectTexture(ViewableEffect item) {
+        if (item instanceof EffectSpeedBoost) return new TextureRegion(atlas.findRegion(TILE_NAME,156));
+        if (item instanceof EffectJumpBoost) return new TextureRegion(atlas.findRegion(TILE_NAME, 106));
+        return null;
+    }
+
+    @Override
+    public TextureRegion getInventorySlot() {
+        return atlas.findRegion(TILE_NAME, 85);
+        /*
+        85,87,101,117,144,148
+         */
+    }
 }
