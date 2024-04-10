@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -34,6 +35,9 @@ public class GameScreen implements Screen {
     private final SpriteBatch batchHud;
     private final ITexturePack texturePack;
     private final Stage hud;
+
+    // test
+    private Texture texture;
 
     public GameScreen(ViewableGameModel model, EventBus bus, InputProcessor processor) {
         Gdx.graphics.setForegroundFPS(60);
@@ -70,13 +74,13 @@ public class GameScreen implements Screen {
 
         gamePort.apply();
 
-        sRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderBackground();
-        renderWorld();
+        sRenderer.begin(ShapeRenderer.ShapeType.Line);
+
         renderPlayer();
         sRenderer.end();
 
         batch.begin();
+        renderBackground();
         renderTiles();
         // Draws the player
         batch.draw(
@@ -103,13 +107,10 @@ public class GameScreen implements Screen {
     }
 
     private void renderBackground() {
-        sRenderer.setColor(Color.BLACK);
-        sRenderer.rect(-VIEWPORT_WIDTH, -VIEWPORT_HEIGHT, VIEWPORT_WIDTH * 3, VIEWPORT_HEIGHT * 3);
-    }
-
-    private void renderWorld() {
-        sRenderer.setColor(Color.BLUE);
-        sRenderer.rect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+//        sRenderer.setColor(Color.BLACK);
+//        sRenderer.rect(-VIEWPORT_WIDTH, -VIEWPORT_HEIGHT, VIEWPORT_WIDTH * 3, VIEWPORT_HEIGHT * 3);
+        texture = new Texture(Gdx.files.internal("noB.png"));
+        batch.draw(texture, 20, 5, 30, 30);
     }
 
     private void renderTiles() {
@@ -127,7 +128,6 @@ public class GameScreen implements Screen {
 
     private void renderPlayer() {
         ViewablePlayerModel player = model.getViewablePlayer();
-
         sRenderer.setColor(Color.ORANGE);
         sRenderer.rect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
     }
