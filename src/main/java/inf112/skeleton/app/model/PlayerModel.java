@@ -26,7 +26,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private static final float DY = 40;
     private static final float AIR_CONTROL = 0.5f;
     private static final float MAX_DX = 10;
-    private static final float MAX_DY = 30;
+    private static final float MAX_DY = 10;
     private static final float DENSITY = 0.5f;
     private static final float FRICTION = 0;
     private static final float FRICTION_BOTTOM = 10;

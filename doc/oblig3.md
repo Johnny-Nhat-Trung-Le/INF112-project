@@ -1,6 +1,6 @@
 # Rapport – innlevering 3
 **Team:** *The_Googlers* – *Fredrik Rød, Johnny Nhat Trung Le, Isak Yau*
-
+**Link til google doc* - https://docs.google.com/document/d/1C1gdFduhjKWybFJDakmo6ZVFcGNxVnuHKYxVyz2ZYdo/edit?usp=sharing
 # Prosjektrapport
 * Hvordan fungerer rollene i teamet?
     * Rollene funker som det skal. Alle holder sitt ansvar for sine roller.
