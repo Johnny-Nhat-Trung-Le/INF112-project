@@ -41,7 +41,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         world = new World(new Vector2(WIND, GRAVITY), true);
         this.bus = bus;
         bus.addEventHandler(this);
-        player = new PlayerModel(world, bus,1.5f, 20f);
+        player = new PlayerModel(bus,world,1.5f, 20f);
         bus.addEventHandler(this);
         state = GameState.MAIN_MENU;
         world.setContactListener(this); // If more bodies need to be ContactListener

@@ -49,7 +49,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
      * @param x     left-most position of player
      * @param y     bottom-most position of player
      */
-    public PlayerModel(World world, EventBus eventbus, float x, float y) {
+    public PlayerModel(EventBus eventbus, World world, float x, float y) {
         Hp = 3;
         this.world = world;
         body = createBody(x + WIDTH / 2, y + HEIGHT / 2);
