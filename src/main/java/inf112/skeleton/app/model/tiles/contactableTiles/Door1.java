@@ -57,10 +57,9 @@ public class Door1 extends TileModel implements ContactableTiles{
 
     @Override
     public void beginContact(Contact contact) {
-        Fixture fA = contact.getFixtureA();
         Fixture fB = contact.getFixtureB();
 
-        if (fB.getUserData() != null && fB.getUserData().equals(USERDATA) && PlayerModel.isContacted(fA)) {
+        if (USERDATA.equals(fB.getUserData())) {
             eventBus.post(new EventGameState(GameState.VICTORY));
         }
     }

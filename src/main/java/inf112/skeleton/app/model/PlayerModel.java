@@ -21,10 +21,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
-    public static final String USER_DATA_BOTTOM = "PlayerBottom";
-    public static final String USER_DATA_LEFT = "PlayerLeft";
-    public static final String USER_DATA_RIGHT = "PlayerRight";
-    public static final String USER_DATA_TOP = "PlayerTop";
+    private static final String USER_DATA_BOTTOM = "PlayerBottom";
+    private static final String USER_DATA_LEFT = "PlayerLeft";
+    private static final String USER_DATA_RIGHT = "PlayerRight";
+    private static final String USER_DATA_TOP = "PlayerTop";
     private static final String USER_DATA_SENSOR = "PlayerSensor";
     private static final float WIDTH = 3;
     private static final float HEIGHT = 3;
@@ -58,7 +58,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
      * @param fixture to check
      * @return if the {@link Fixture} belongs to the player
      */
-    public static boolean isContacted(Fixture fixture) {
+    private boolean isContacted(Fixture fixture) {
         return userDataSet.contains(fixture.getUserData());
     }
 
@@ -344,12 +344,17 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         } else if (event instanceof EventItemUsedUp e) {
             if (!e.item().equals(item)) return;
             item = null;
-        } else if (event instanceof EventDamage) {
-            if (!tookDamage && immunityCoolDown <= 0) {
-                tookDamage = true;
-                updateHp(((EventDamage) event).damage());
-                immunityCoolDown = 1;
+        } else if (event instanceof EventDamage e) {
+            if(isContacted(e.fixture())) {
+                takeDamage(e.damage());
             }
+        }
+    }
+    private void takeDamage(int damage){
+        if (!tookDamage && immunityCoolDown <= 0) {
+            tookDamage = true;
+            updateHp(damage);
+            immunityCoolDown = 1;
         }
     }
 
