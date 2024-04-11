@@ -9,6 +9,9 @@ import inf112.skeleton.app.model.tiles.TileModel;
 
 
 public class Spike extends TileModel implements ContactableTiles {
+    private static final int DAMAGE = 1;
+    private static final String USERDATA = "spikeData";
+
     static {
         TileFactory.register('S', (world, eventBus, x, y) -> {
             return new Spike(world, eventBus, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 4, TILE_WIDTH / 2, TILE_HEIGHT / 2);
@@ -16,8 +19,6 @@ public class Spike extends TileModel implements ContactableTiles {
     }
 
     private final EventBus eventBus;
-    private final int DAMAGE = 1;
-    private final String USERDATA = "spikeData";
 
     /**
      * Creates a {@link TileModel} and places its body in

@@ -2,19 +2,17 @@ package inf112.skeleton.app.model.tiles.contactableTiles;
 
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.event.EventBus;
-import inf112.skeleton.app.model.GameState;
 import inf112.skeleton.app.model.TileFactory;
-import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.model.event.EventReachedDoor;
 import inf112.skeleton.app.model.tiles.TileModel;
 
 public class Door1 extends TileModel implements ContactableTiles {
-    private static final float DOORWIDTH = TILE_WIDTH / 2;
-    private static final float DOORHEIGHT = TILE_HEIGHT / 2;
+    private static final float DOOR_WIDTH = TILE_WIDTH / 2;
+    private static final float DOOR_HEIGHT = TILE_HEIGHT / 2;
 
     static {
         TileFactory.register('9', (world, eventBus, x, y) -> {
-            return new Door1(world, eventBus, x + TILE_WIDTH / 2, y - TILE_HEIGHT / 4, DOORWIDTH, DOORHEIGHT);
+            return new Door1(world, eventBus, x + TILE_WIDTH / 2, y - TILE_HEIGHT / 4, DOOR_WIDTH, DOOR_HEIGHT);
         });
     }
 
@@ -50,7 +48,7 @@ public class Door1 extends TileModel implements ContactableTiles {
         fDef.density = 1;
         fDef.friction = 0.5f;
         fDef.restitution = 0;
-        fDef.shape = super.createShape(DOORWIDTH, DOORHEIGHT);
+        fDef.shape = super.createShape(DOOR_WIDTH, DOOR_HEIGHT);
 
         Body b = world.createBody(bDef);
         Fixture doorFixture = b.createFixture(fDef);

@@ -152,8 +152,10 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
             items.remove(e.item());
         } else if (event instanceof EventReachedDoor) {
             setState(GameState.VICTORY);
-        } else if (event instanceof EventPlayerDeath) {
-            setState(GameState.GAME_OVER);
+        } else if (event instanceof EventDeath e) {
+            if (player.equals(e.owner())){
+                setState(GameState.GAME_OVER);
+            }
         }
     }
 }

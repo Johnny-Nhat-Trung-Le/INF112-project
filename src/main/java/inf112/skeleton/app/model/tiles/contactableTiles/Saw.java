@@ -6,7 +6,6 @@ import inf112.skeleton.app.model.TileFactory;
 import inf112.skeleton.app.model.event.EventDamage;
 import inf112.skeleton.app.model.tiles.TileModel;
 
-
 public class Saw extends TileModel implements ContactableTiles {
     private static final int DAMAGE = 1;
 

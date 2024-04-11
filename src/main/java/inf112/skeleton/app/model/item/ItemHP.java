@@ -6,25 +6,24 @@ import inf112.skeleton.app.model.Durability;
 import inf112.skeleton.app.model.effect.EffectHpUp;
 import inf112.skeleton.app.view.ViewableItem;
 
-public class ItemHp extends ItemModel implements ViewableItem {
+public class ItemHP extends ItemModel implements ViewableItem {
     private static final int DURABILITY = 1;
     private static final int DURATION = 30;
 
-    public ItemHp(EventBus bus, World world, float x, float y) {
+    public ItemHP(EventBus bus, World world, float x, float y) {
         super(bus, world, x, y);
         createEffect = () -> new EffectHpUp(DURATION);
         durability = new Durability(DURABILITY, DURABILITY);
-
     }
 
     @Override
     public String getDescription() {
-        return "This is the players health point.\n Going to 0 means the player is dead";
+        return "Restores one HP for each use";
     }
 
     @Override
     public String getName() {
-        return "Hp";
+        return "HP";
     }
 
 
