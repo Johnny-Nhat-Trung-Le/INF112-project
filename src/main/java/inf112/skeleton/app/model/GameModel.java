@@ -55,7 +55,8 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private void fillWorld() {
         List<TileModel> tiles = TileFactory.generate(
                 """
-                        --B--------------------
+                        -9
+                        -8B--------------------
                         qwe--------------------lgr
                         ------ssB----------w------
                         -----lggr-------------w---

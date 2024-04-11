@@ -8,7 +8,7 @@ public interface IAssetsManager {
      * if there is already a music playing it resumes
      * if there is a new music stops last music and play the new one
      *
-     * @param key for retriving music
+     * @param key for retrieving music
      */
     void playMusic(String key);
 
@@ -30,7 +30,7 @@ public interface IAssetsManager {
     /**
      * Plays sound effect
      *
-     * @param key for retriving sound effect
+     * @param key for retrieving sound effect
      */
     void playSoundEffect(String key);
 }

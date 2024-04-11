@@ -56,7 +56,7 @@ public class GameView extends Game implements EventHandler {
             }
             case VICTORY -> {
                 setScreen(new VictoryScreen(processor));
-                assetsManager.stopMusic();
+                assetsManager.playMusic("VICTORY");
             }
         }
     }
