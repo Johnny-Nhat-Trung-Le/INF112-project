@@ -64,28 +64,32 @@ public class TexturePack implements ITexturePack {
         return new Animation<TextureRegion>(1f / 16f, animationFrames);
     }
 
+    private TextureRegion getTextureFromAtlas(int index) {
+        return new TextureRegion(atlas.findRegion(TILE_NAME, index));
+    }
+
     @Override
     public TextureRegion getTileTexture(ViewableTile tile) {
-        if (tile instanceof TileGroundSingle) return new TextureRegion(atlas.findRegion(TILE_NAME, 0));
-        if (tile instanceof TileGround) return new TextureRegion(atlas.findRegion(TILE_NAME, 2));
-        if (tile instanceof TileGroundLeft) return new TextureRegion(atlas.findRegion(TILE_NAME, 1));
-        if (tile instanceof TileGroundRight) return new TextureRegion(atlas.findRegion(TILE_NAME, 3));
+        if (tile instanceof TileGroundSingle) return getTextureFromAtlas(0);
+        if (tile instanceof TileGround) return getTextureFromAtlas(2);
+        if (tile instanceof TileGroundLeft) return getTextureFromAtlas(1);
+        if (tile instanceof TileGroundRight) return getTextureFromAtlas(3);
 
-        if (tile instanceof TileFloatingGroundSingle) return new TextureRegion(atlas.findRegion(TILE_NAME, 48));
-        if (tile instanceof TileFloatingGround) return new TextureRegion(atlas.findRegion(TILE_NAME, 50));
-        if (tile instanceof TileFloatingGroundLeft) return new TextureRegion(atlas.findRegion(TILE_NAME, 49));
-        if (tile instanceof TileFloatingGroundRight) return new TextureRegion(atlas.findRegion(TILE_NAME, 51));
+        if (tile instanceof TileFloatingGroundSingle) return getTextureFromAtlas(48);
+        if (tile instanceof TileFloatingGround) return getTextureFromAtlas(50);
+        if (tile instanceof TileFloatingGroundLeft) return getTextureFromAtlas(49);
+        if (tile instanceof TileFloatingGroundRight) return getTextureFromAtlas(51);
 
-        if (tile instanceof TileFloatingGroundSingleSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 64));
-        if (tile instanceof TileFloatingGroundSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 66));
-        if (tile instanceof TileFloatingGroundLeftSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 65));
-        if (tile instanceof TileFloatingGroundRightSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 67));
+        if (tile instanceof TileFloatingGroundSingleSlim) return getTextureFromAtlas(64);
+        if (tile instanceof TileFloatingGroundSlim) return getTextureFromAtlas(66);
+        if (tile instanceof TileFloatingGroundLeftSlim) return getTextureFromAtlas(65);
+        if (tile instanceof TileFloatingGroundRightSlim) return getTextureFromAtlas(67);
 
-        if (tile instanceof Barrel) return new TextureRegion(atlas.findRegion(TILE_NAME, 55));
-        if (tile instanceof Spike) return new TextureRegion(atlas.findRegion(TILE_NAME, 46));
-        if (tile instanceof Saw) return new TextureRegion(atlas.findRegion(TILE_NAME, 45));
-        if (tile instanceof Door1) return new TextureRegion(atlas.findRegion(TILE_NAME, 7));
-        if (tile instanceof Door2) return new TextureRegion(atlas.findRegion(TILE_NAME, 23));
+        if (tile instanceof Barrel) return getTextureFromAtlas(55);
+        if (tile instanceof Spike) return getTextureFromAtlas(46);
+        if (tile instanceof Saw) return getTextureFromAtlas(45);
+        if (tile instanceof Door1) return getTextureFromAtlas(7);
+        if (tile instanceof Door2) return getTextureFromAtlas(23);
 
         return null;
     }
@@ -110,20 +114,20 @@ public class TexturePack implements ITexturePack {
     @Override
     public TextureRegion getItemTexture(ViewableItem item) {
 
-        if (item instanceof ItemEnergy) return new TextureRegion(atlas.findRegion(TILE_NAME, 156));
-        if (item instanceof ItemMushroom) return new TextureRegion(atlas.findRegion(TILE_NAME, 106));
+        if (item instanceof ItemEnergy) return getTextureFromAtlas(156);
+        if (item instanceof ItemMushroom) return getTextureFromAtlas(106);
         return null;
     }
 
     @Override
     public TextureRegion getHpTexture() {
-        return new TextureRegion(atlas.findRegion(TILE_NAME, 139));
+        return getTextureFromAtlas(139);
     }
 
     @Override
     public TextureRegion getEffectTexture(ViewableEffect item) {
-        if (item instanceof EffectSpeedBoost) return new TextureRegion(atlas.findRegion(TILE_NAME, 156));
-        if (item instanceof EffectJumpBoost) return new TextureRegion(atlas.findRegion(TILE_NAME, 106));
+        if (item instanceof EffectSpeedBoost) return getTextureFromAtlas(156);
+        if (item instanceof EffectJumpBoost) return getTextureFromAtlas(106);
         return null;
     }
 
