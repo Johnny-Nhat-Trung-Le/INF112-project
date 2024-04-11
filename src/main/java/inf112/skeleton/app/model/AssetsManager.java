@@ -18,6 +18,7 @@ public class AssetsManager implements IAssetsManager {
     }};
     private final Map<String, Sound> currentEffects;
     private Music nowPlaying;
+    private String lastPlayed;
 
     public AssetsManager() {
         currentEffects = new HashMap<>();
@@ -25,6 +26,10 @@ public class AssetsManager implements IAssetsManager {
 
     @Override
     public void playMusic(String key) {
+        if (key.equals(lastPlayed)) {
+            resumeMusic();
+            return;
+        }
         stopMusic();
         if (!musicMap.containsKey(key)) return;
         nowPlaying = Gdx.audio.newMusic(Gdx.files.internal(musicMap.get(key)));
@@ -33,6 +38,7 @@ public class AssetsManager implements IAssetsManager {
             nowPlaying.setLooping(true);
             nowPlaying.play();
         }
+        lastPlayed = key;
     }
 
     @Override
@@ -66,4 +72,5 @@ public class AssetsManager implements IAssetsManager {
         currentEffects.put(key, effect);
         effect.play();
     }
+
 }

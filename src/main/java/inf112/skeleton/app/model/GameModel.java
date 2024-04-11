@@ -9,6 +9,7 @@ import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.model.event.EventItemPickedUp;
+import inf112.skeleton.app.model.event.EventResetGame;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.model.item.ItemMushroom;
 import inf112.skeleton.app.model.tiles.TileModel;
@@ -30,12 +31,10 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private final EventBus bus;
     private final List<TileModel> foreground;
     private final List<TileModel> background;
-
     private final List<ItemModel> items;
     private final World world;
     private final PlayerModel player;
     private GameState state;
-    private final AssetsManager assetsManager;
 
     public GameModel(EventBus bus) {
         this.bus = bus;
@@ -44,7 +43,6 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         items = new CopyOnWriteArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
         player = new PlayerModel(bus, world, 1.5f, 6.5f);
-        assetsManager = new AssetsManager();
         state = GameState.MAIN_MENU;
 
         bus.addEventHandler(this);
@@ -105,12 +103,6 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     public ControllablePlayerModel getControllablePlayer() {
         return player;
     }
-
-    @Override
-    public AssetsManager getAssetsManager() {
-        return this.assetsManager;
-    }
-
     @Override
     public GameState getState() {
         return state;
@@ -118,17 +110,12 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
 
     @Override
     public void setState(GameState state) {
-        if (state == GameState.ACTIVE && this.state != GameState.ACTIVE) {
-            if (this.state == GameState.MAIN_MENU) {
-                assetsManager.stopMusic();
-            }
-            if (this.state == GameState.PAUSE) {
-                assetsManager.resumeMusic();
-            } else {
-                assetsManager.playMusic("BACKGROUND");
-            }
-        } else if (this.state == GameState.ACTIVE && state != GameState.ACTIVE) {
-            assetsManager.pauseMusic();
+        bus.post(new EventGameState(state));
+        if (this.state == GameState.GAME_OVER) {
+            GameModel model = new GameModel(bus);
+            bus.post(new EventResetGame(model));
+            model.setState(state);
+            bus.removeEventHandler(this);
         }
         this.state = state;
     }

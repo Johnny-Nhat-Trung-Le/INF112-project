@@ -81,3 +81,6 @@
     Full oppmøte hvor dagens agenda var oblig3
     Svare på spørsmål og begynte å merge ting inn i main branch
     Fikset klassediagrammet.
+
+## Dato: Torsdag 11 April 2024
+    Alle var tilstede. Jobbet med oblig3. Merget, lagte klasse diagram, fikset kode.
