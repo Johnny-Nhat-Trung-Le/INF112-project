@@ -16,7 +16,7 @@ public abstract class AbstractScreen implements Screen {
     private static final float ViewPort = 400;
     public static float VIEWPORT_WIDTH = GameView.ASPECT_RATIO * 175;
     public static float VIEWPORT_HEIGHT = (float) (ViewPort / GameView.ASPECT_RATIO * 1.2);
-    protected final OrthographicCamera gameCam;
+    private final OrthographicCamera gameCam;
     private final Viewport gamePort;
 
     protected final BitmapFont font;

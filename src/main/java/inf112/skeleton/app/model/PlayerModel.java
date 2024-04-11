@@ -14,10 +14,7 @@ import inf112.skeleton.app.view.ViewableEffect;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
@@ -50,7 +47,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private int hp;
     private float immunityCoolDown = 1;
     private boolean tookDamage = false;
-    private static HashSet<Object> userDataSet;
+    private static Set<Object> userDataSet;
 
     /**
      * Checks if the {@link Fixture} belongs to the contactable player.
@@ -441,7 +438,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     @Override
-    public Integer getHp() {
+    public int getHp() {
         return hp;
     }
 

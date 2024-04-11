@@ -34,7 +34,7 @@ public class GameView extends Game {
         setScreen(new MenuScreen(processor));
         assetsManager.playMusic("MAIN");
     }
-
+    @Override
     public void render() {
         if (model.getState() != gameState) {
             gameState = model.getState();

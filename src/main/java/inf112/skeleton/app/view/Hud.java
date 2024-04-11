@@ -15,10 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import inf112.skeleton.app.model.item.ItemHp;
 import inf112.skeleton.app.view.texturepack.ITexturePack;
+
 import java.util.LinkedList;
 import java.util.*;
+
 public class Hud extends Stage {
     private static final int IMG_SIZE = 16;
     private static final int TEXT_WIDTH = 10;
@@ -32,14 +33,14 @@ public class Hud extends Stage {
     private final HorizontalGroup effectDurations;
     private final Map<ViewableEffect, Image> effectDurationImages;
     private final Table table;
-    private int hpCounter;
+    private final HorizontalGroup hpGroup;
+
     private final LinkedList<Image> hpIcons;
 
     public Hud(SpriteBatch batch, ViewableGameModel viewableGameModel, ITexturePack texturePack) {
-        super(new ExtendViewport(GameView.VIEWPORT_WIDTH*20,GameView.VIEWPORT_HEIGHT/GameView.VIEWPORT_WIDTH*20,new OrthographicCamera()),batch);
+        super(new ExtendViewport(GameView.VIEWPORT_WIDTH * 20, GameView.VIEWPORT_HEIGHT / GameView.VIEWPORT_WIDTH * 20, new OrthographicCamera()), batch);
         model = viewableGameModel;
         this.texturePack = texturePack;
-        hpCounter = model.getViewablePlayer().getHp();
         Label.LabelStyle labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
         itemIcon = new Image(new BaseDrawable());
@@ -50,18 +51,21 @@ public class Hud extends Stage {
         effectDurationImages = new HashMap<>();
 
         hpIcons = new LinkedList<>();
-        for (int i = 0; i < hpCounter; i++) {
+        for (int i = 0; i < model.getViewablePlayer().getHp(); i++) {
             hpIcons.add(new Image());
         }
 
         table = new Table();
+        hpGroup = new HorizontalGroup();
         table.setFillParent(true);
-        fillTable(table);
+        hpGroup.setFillParent(true);
+        fillTable();
         addActor(table);
+        addActor(hpGroup);
 
     }
 
-    private void fillTable(Table table) {
+    private void fillTable() {
         Table inventory = new Table();
         inventory.setBackground(new SpriteDrawable(new Sprite(texturePack.getInventorySlot())));
         inventory.add(itemIcon);
@@ -80,22 +84,20 @@ public class Hud extends Stage {
         table.row().left();
         table.add(effects);
 
-        table.top().right();
-        table.padTop(10); // Add padding to the top and left edges
+        hpGroup.top().right();
+        hpGroup.padTop(10); // Add padding to the top and left edges
         drawHp();
     }
 
     private void updateHp() {
         //Checks whether the player lost or gained hp.
-        //clears the table when removing hp, have to redraw
-        if (hpCounter > model.getViewablePlayer().getHp()) {
+        //clears the table when hp has been lost.
+        if (hpIcons.size() > model.getViewablePlayer().getHp()) {
             hpIcons.remove();
-            table.clear();
+            hpGroup.clear();
         } else {
             hpIcons.add(new Image());
         }
-        //updates the hpCounter
-        hpCounter = model.getViewablePlayer().getHp();
         drawHp();
 
     }
@@ -103,7 +105,7 @@ public class Hud extends Stage {
     private void drawHp() {
         for (Image hpIcon : hpIcons) {
             hpIcon.setDrawable(new SpriteDrawable(new Sprite(texturePack.getHpTexture())));
-            table.add(hpIcon).padLeft(5);
+            hpGroup.addActor(hpIcon);
         }
     }
 
@@ -169,7 +171,7 @@ public class Hud extends Stage {
 
     private void update() {
 
-        if (hpCounter != model.getViewablePlayer().getHp()) updateHp();
+        if (hpIcons.size() != model.getViewablePlayer().getHp()) updateHp();
         updateItemActors();
         updateEffectActors();
     }

@@ -10,7 +10,7 @@ public interface ViewablePlayerModel extends Sizeable, Positionable, PlayerState
      * Get the Hp of the player
      * @return the amount of Hp left of the player
      */
-    Integer getHp();
+    int getHp();
 
     /**
      * @return the current {@link Effect}s, if there is any
