@@ -8,6 +8,8 @@ import inf112.skeleton.app.model.tiles.TileModel;
 
 
 public class Saw extends TileModel implements ContactableTiles {
+    private static final int DAMAGE = 1;
+
     static {
         TileFactory.register('s', (world, eventBus, x, y) -> {
             return new Saw(world, eventBus, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 4, TILE_WIDTH / 2, TILE_HEIGHT / 2);
@@ -15,7 +17,6 @@ public class Saw extends TileModel implements ContactableTiles {
     }
 
     private final EventBus eventBus;
-    private final int DAMAGE = 1;
     private final String USERDATA = "SawData";
 
     /**
@@ -75,22 +76,19 @@ public class Saw extends TileModel implements ContactableTiles {
 
     @Override
     public void endContact(Contact contact) {
-
     }
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-
     }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-
     }
 
     @Override
     public float getY() {
-        return getBody().getPosition().y;
+        return body.getPosition().y;
     }
 
 }

@@ -17,7 +17,7 @@ import inf112.skeleton.app.view.ViewablePlayerModel;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
+public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, EventHandler, ContactListener {
     private static final String USER_DATA_BOTTOM = "PlayerBottom";
     private static final String USER_DATA_LEFT = "PlayerLeft";
     private static final String USER_DATA_RIGHT = "PlayerRight";
@@ -149,11 +149,6 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     @Override
     public float getHeight() {
         return HEIGHT;
-    }
-
-    @Override
-    public Body getBody() {
-        return body;
     }
 
     @Override

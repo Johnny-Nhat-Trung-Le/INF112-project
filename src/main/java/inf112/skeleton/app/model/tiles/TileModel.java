@@ -3,18 +3,16 @@ package inf112.skeleton.app.model.tiles;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventHandler;
-import inf112.skeleton.app.model.Physicable;
 import inf112.skeleton.app.model.Stepable;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.ViewableTile;
 
 
-public abstract class TileModel implements ViewableTile, Physicable, Stepable, EventHandler {
+public abstract class TileModel implements ViewableTile, Stepable, EventHandler {
     public static final float TILE_WIDTH = 5;
     public static final float TILE_HEIGHT = 5;
-
     protected final World world;
-    private final Body body;
+    protected final Body body;
     private final Shape shape;
     private final float width;
     private final float height;
@@ -69,11 +67,6 @@ public abstract class TileModel implements ViewableTile, Physicable, Stepable, E
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(w / 2, h / 2);
         return shape;
-    }
-
-    @Override
-    public Body getBody() {
-        return body;
     }
 
     @Override
