@@ -6,13 +6,19 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.model.PlayerState;
-import inf112.skeleton.app.model.item.Hp;
+
+import inf112.skeleton.app.model.item.ItemHp;
+import inf112.skeleton.app.model.effect.EffectJumpBoost;
+import inf112.skeleton.app.model.effect.EffectSpeedBoost;
+import inf112.skeleton.app.model.item.ItemMushroom;
+import inf112.skeleton.app.view.ViewableEffect;
+import inf112.skeleton.app.model.item.ItemEnergy;
 import inf112.skeleton.app.model.tiles.*;
+import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door1;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door2;
 import inf112.skeleton.app.model.tiles.contactableTiles.Saw;
 import inf112.skeleton.app.model.tiles.contactableTiles.Spike;
-import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewableTile;
 
 import java.util.HashMap;
@@ -107,8 +113,28 @@ public class TexturePack implements ITexturePack {
 
     @Override
     public TextureRegion getItemTexture(ViewableItem item) {
-        if(item instanceof Hp) return new TextureRegion(atlas.findRegion(TILE_NAME,139));
+
+        if (item instanceof ItemEnergy) return new TextureRegion(atlas.findRegion(TILE_NAME,156));
+        if (item instanceof ItemMushroom) return new TextureRegion(atlas.findRegion(TILE_NAME, 106));
+        return null;
+    }
+    @Override
+    public TextureRegion getHpTexture(){
+        return new TextureRegion(atlas.findRegion(TILE_NAME,139));
+    }
+
+    @Override
+    public TextureRegion getEffectTexture(ViewableEffect item) {
+        if (item instanceof EffectSpeedBoost) return new TextureRegion(atlas.findRegion(TILE_NAME,156));
+        if (item instanceof EffectJumpBoost) return new TextureRegion(atlas.findRegion(TILE_NAME, 106));
         return null;
     }
 
+    @Override
+    public TextureRegion getInventorySlot() {
+        return atlas.findRegion(TILE_NAME, 85);
+        /*
+        85,87,101,117,144,148
+         */
+    }
 }

@@ -45,7 +45,7 @@
     * På merges så jobber vi sammen.
 
 * Referat fra møter siden forrige leveranse skal legges ved (mange av punktene over er typisk ting som havner i referat).
-    * Se fra dato: TODO
+    * Se fra dato: Onsdag 10.April [i_referatfilen](referat.md)
   * Bli enige om maks tre forbedringspunkter fra retrospektivet, som skal følges opp under neste sprint.
     * Forbedre koden og kodestil.
 

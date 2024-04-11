@@ -73,7 +73,7 @@ public class Spike extends TileModel implements ContactableTiles {
     public void beginContact(Contact contact) {
         Fixture fA = contact.getFixtureA();
         Fixture fB = contact.getFixtureB();
-        if (fB.getUserData() != null && fB.getUserData().equals(USERDATA) && PlayerModel.userDataSet.contains((String) fA.getUserData())) {
+        if (fB.getUserData() != null && fB.getUserData().equals(USERDATA) && PlayerModel.isContacted(fA)) {
             eventBus.post(new EventDamage(DAMAGE));
         }
     }

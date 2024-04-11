@@ -41,7 +41,7 @@ public class AssetsManager implements IAssetsManager {
 
     @Override
     public void stopMusic() {
-        this.nowPlaying.stop();
+        if(nowPlaying!=null){this.nowPlaying.stop();}
     }
 
     @Override

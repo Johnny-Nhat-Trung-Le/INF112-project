@@ -7,22 +7,28 @@ import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
-import inf112.skeleton.app.model.event.EventDamage;
-import inf112.skeleton.app.model.event.EventDispose;
-import inf112.skeleton.app.model.event.EventGameState;
+import inf112.skeleton.app.model.effect.Effect;
+import inf112.skeleton.app.model.event.*;
+import inf112.skeleton.app.model.item.ItemModel;
+import inf112.skeleton.app.view.ViewableEffect;
+import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.function.Predicate;
 
 public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
-    private static final String USERDATASENSOR = "PlayerSensor";
-    private static final String USERDATATOP = "PlayerTop";
-    private static final String USERDATABOTTOM = "PlayerBottom";
-    private static final String USERDATALEFT = "PlayerLeft";
-    private static final String USERDATARIGHT = "PlayerRight";
+    public static final String USER_DATA_BOTTOM = "PlayerBottom";
+    public static final String USER_DATA_LEFT = "PlayerLeft";
+    public static final String USER_DATA_RIGHT = "PlayerRight";
+    public static final String USER_DATA_TOP = "PlayerTop";
+    private static final String USER_DATA_SENSOR = "PlayerSensor";
     private static final float WIDTH = 3;
     private static final float HEIGHT = 3;
-    private static final float DX = 10;
+    private static final float DX = 15;
     private static final float DY = 40;
     private static final float AIR_CONTROL = 0.5f;
     private static final float MAX_DX = 10;
@@ -31,50 +37,65 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private static final float FRICTION = 0;
     private static final float FRICTION_BOTTOM = 10;
     private static final float RESTITUTION = 0;
+    private final EventBus bus;
     private final World world;
     private final Body body;
     private Shape shapeTop, shapeBottom, shapeLeft, shapeRight;
     private Shape shapeSensor;
     private PlayerState state;
-    private final EventBus bus;
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int contactCountSensor = 0;
-    private Integer Hp;
+    private ItemModel item;
+    private final List<Effect> effects;
+    private int hp;
     private float immunityCoolDown = 1;
     private boolean tookDamage = false;
-    public static HashSet<String> userDataSet;
+    private static HashSet<Object> userDataSet;
+
+    /**
+     * Checks if the {@link Fixture} belongs to the contactable player.
+     *
+     * @param fixture to check
+     * @return if the {@link Fixture} belongs to the player
+     */
+    public static boolean isContacted(Fixture fixture) {
+        return userDataSet.contains(fixture.getUserData());
+    }
 
     /**
      * @param world which the player-{@link Body} is created in
      * @param x     left-most position of player
      * @param y     bottom-most position of player
      */
-    public PlayerModel(EventBus eventbus, World world, float x, float y) {
-        Hp = 3;
+
+    public PlayerModel(EventBus bus, World world, float x, float y) {
+        hp = 3;
+        this.bus = bus;
         this.world = world;
         body = createBody(x + WIDTH / 2, y + HEIGHT / 2);
-        bus = eventbus;
-        bus.addEventHandler(this);
         state = PlayerState.IDLE_RIGHT;
         moveUp = false;
         moveDown = false;
         moveLeft = false;
         moveRight = false;
+        effects = new ArrayList<>();
+
+        bus.addEventHandler(this);
         userDataSet = createUserDataSet();
     }
 
     /**
      * A collection of all the playerUserDatas
      *
-     * @return HashSet<String> of PlayerUserDatas
+     * @return {@code HashSet<String>} of PlayerUserDatas
      */
-    private HashSet<String> createUserDataSet() {
-        HashSet<String> set = new HashSet<>();
-        set.add(USERDATALEFT);
-        set.add(USERDATARIGHT);
-        set.add(USERDATATOP);
-        set.add(USERDATABOTTOM);
-        set.add(USERDATASENSOR);
+    private static HashSet<Object> createUserDataSet() {
+        HashSet<Object> set = new HashSet<>();
+        set.add(USER_DATA_LEFT);
+        set.add(USER_DATA_RIGHT);
+        set.add(USER_DATA_TOP);
+        set.add(USER_DATA_BOTTOM);
+        set.add(USER_DATA_SENSOR);
         return set;
     }
 
@@ -100,6 +121,17 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     @Override
     public void useItem() {
+        if (item == null) return;
+        Effect effect = item.use();
+        Predicate<? super Effect> same = (e) -> effect.getClass().equals(e.getClass());
+
+        if (effects.stream().anyMatch(same)) {
+            List<Effect> newEffects = effects.stream().map((e) -> same.test(e) ? effect : e).toList();
+            effects.clear();
+            effects.addAll(newEffects);
+        } else {
+            effects.add(effect);
+        }
     }
 
     @Override
@@ -129,10 +161,26 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     @Override
     public void step(float timeStep) {
-        if (moveUp && !moveDown && isGrounded()) move(0, DY);
+        // EFFECT
+        for (int i = effects.size() - 1; i >= 0; i--) {
+            Effect effect = effects.get(i);
+            if (effect.hasEnded()) effects.remove(effect);
+            else effect.step();
+        }
+
+        // MOVEMENT
+        float dx = DX;
+        dx *= effects.stream().reduce((float) 1, (v, e) -> v * e.getSpeedBoost(), (a, b) -> a * b);
+        dx *= isGrounded() ? 1 : AIR_CONTROL;
+        float dy = DY;
+        dy *= effects.stream().reduce((float) 1, (v, e) -> v * e.getJumpBoost(), (a, b) -> a * b);
+
+        if (moveUp && !moveDown && isGrounded()) move(0, dy);
         if (moveDown && !moveUp && !isGrounded()) move(0, -DY);
-        if (moveRight && !moveLeft) move(isGrounded() ? DX : DX * AIR_CONTROL, 0);
-        if (moveLeft && !moveRight) move(isGrounded() ? -DX : -DX * AIR_CONTROL, 0);
+        if (moveRight && !moveLeft) move(dx, 0);
+        if (moveLeft && !moveRight) move(-dx, 0);
+
+        // HP
         if (immunityCoolDown > 0) immunityCoolDown -= timeStep;
         else tookDamage = false;
         updateState();
@@ -142,16 +190,30 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         return contactCountSensor > 0;
     }
 
+    /**
+     * Applies the speed to the player-{@link Body}, taking into account
+     * the active {@link Effect} to set the maximum possible speed.
+     *
+     * @param dx {@code impulseX} used in {@code Body::applyLinearImpulse}
+     * @param dy {@code impulseY} used in {@code Body::applyLinearImpulse}
+     */
     private void move(float dx, float dy) {
         Vector2 d = body.getLinearVelocity();
-        float x = body.getPosition().x;
-        float y = body.getPosition().y;
 
-        if (dx > 0 && d.x < MAX_DX || dx < 0 && d.x > -MAX_DX) {
-            body.applyLinearImpulse(dx, 0, x, y, true);
+        float maxDx = MAX_DX;
+        maxDx *= effects.stream().reduce((float) 1, (v, e) -> v * e.getSpeedBoost(), (a, b) -> a * b);
+        float maxDy = MAX_DY;
+        maxDy *= effects.stream().reduce((float) 1, (v, e) -> v * e.getJumpBoost(), (a, b) -> a * b);
+
+        if (dx > 0 && d.x < maxDx || dx < 0 && d.x > -maxDx) {
+            body.applyLinearImpulse(dx, 0, getX(), getY(), true);
+        } else if (dx != 0) {
+            body.setLinearVelocity((dx > 0 ? 1 : -1) * maxDx, d.y);
         }
-        if (dy > 0 && d.y < MAX_DY || dy < 0 && d.y > -MAX_DY) {
-            body.applyLinearImpulse(0, dy, x, y, true);
+        if (dy > 0 && d.y < maxDy || dy < 0 && d.y > -maxDy) {
+            body.applyLinearImpulse(0, dy, getX(), getY(), true);
+        } else if (dy != 0) {
+            body.setLinearVelocity(d.x, (dy > 0 ? 1 : -1) * maxDy);
         }
     }
 
@@ -178,7 +240,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     /**
-     * Creates and fills the {@link Shape}-variables.
+     * Sets the {@link Shape}-variables.
      */
     private void createShapes() {
         float e = 0.02f;
@@ -259,11 +321,11 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         fDefRight.restitution = RESTITUTION;
         fDefRight.shape = shapeRight;
 
-        body.createFixture(fDefSensor).setUserData(USERDATASENSOR);
-        body.createFixture(fDefBottom).setUserData(USERDATABOTTOM);
-        body.createFixture(fDefTop).setUserData(USERDATATOP);
-        body.createFixture(fDefLeft).setUserData(USERDATALEFT);
-        body.createFixture(fDefRight).setUserData(USERDATARIGHT);
+        body.createFixture(fDefSensor).setUserData(USER_DATA_SENSOR);
+        body.createFixture(fDefBottom).setUserData(USER_DATA_BOTTOM);
+        body.createFixture(fDefTop).setUserData(USER_DATA_TOP);
+        body.createFixture(fDefLeft).setUserData(USER_DATA_LEFT);
+        body.createFixture(fDefRight).setUserData(USER_DATA_RIGHT);
     }
 
     @Override
@@ -274,6 +336,14 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
             shapeTop.dispose();
             shapeLeft.dispose();
             shapeRight.dispose();
+        } else if (event instanceof EventItemContact e) {
+            if (!isContacted(e.contact().getFixtureA()) && !isContacted(e.contact().getFixtureB())) return;
+            if (item != null) return;
+            item = e.item();
+            bus.post(new EventItemPickedUp(item));
+        } else if (event instanceof EventItemUsedUp e) {
+            if (!e.item().equals(item)) return;
+            item = null;
         } else if (event instanceof EventDamage) {
             if (!tookDamage && immunityCoolDown <= 0) {
                 tookDamage = true;
@@ -281,19 +351,19 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
                 immunityCoolDown = 1;
             }
         }
-
     }
 
     /**
      * Updates the Hp when player takes damage
+     *
      * @param dmg the amount of damage the player should receive
      */
     private void updateHp(int dmg) {
-        int newHp = Hp - dmg;
+        int newHp = hp - dmg;
         if (newHp == 0) {
             bus.post(new EventGameState(GameState.GAME_OVER));
         } else {
-            Hp = newHp;
+            hp = newHp;
         }
     }
 
@@ -332,19 +402,13 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     @Override
     public void beginContact(Contact contact) {
-        Fixture fA = contact.getFixtureA();
-
-        if (contactPlayerSensor(contact)) contactCountSensor++;
-        if (fA.getUserData() != null) {
-            if (fA.getUserData().equals(USERDATABOTTOM)) body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            if (fA.getUserData().equals(USERDATALEFT)) body.setLinearVelocity(0, body.getLinearVelocity().y);
-            if (fA.getUserData().equals(USERDATARIGHT)) body.setLinearVelocity(0, body.getLinearVelocity().y);
-        }
+        if (isSensorToGroundContact(contact)) contactCountSensor++;
+        if (isBottomToGroundContact(contact)) body.setLinearVelocity(body.getLinearVelocity().x, 0);
     }
 
     @Override
     public void endContact(Contact contact) {
-        if (contactPlayerSensor(contact)) contactCountSensor--;
+        if (isSensorToGroundContact(contact)) contactCountSensor--;
     }
 
     @Override
@@ -355,18 +419,34 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     public void postSolve(Contact contact, ContactImpulse contactImpulse) {
     }
 
-    private boolean contactPlayerSensor(Contact contact) {
+    private boolean isSensorToGroundContact(Contact contact) {
         Fixture fA = contact.getFixtureA();
         Fixture fB = contact.getFixtureB();
-        Object udA = fA.getUserData();
-        Object udB = fB.getUserData();
 
-        return udA != null && udA.equals(USERDATASENSOR)
-                || udB != null && udB.equals(USERDATASENSOR);
+        return (USER_DATA_SENSOR.equals(fA.getUserData()) && !fB.isSensor())
+                || (USER_DATA_SENSOR.equals(fB.getUserData()) && !fA.isSensor());
+    }
+
+    private boolean isBottomToGroundContact(Contact contact) {
+        Fixture fA = contact.getFixtureA();
+        Fixture fB = contact.getFixtureB();
+
+        return (USER_DATA_BOTTOM.equals(fA.getUserData()) && !fB.isSensor())
+                || (USER_DATA_BOTTOM.equals(fB.getUserData()) && !fA.isSensor());
     }
 
     @Override
     public Integer getHp() {
-        return Hp;
+        return hp;
+    }
+
+    @Override
+    public List<ViewableEffect> getEffects() {
+        return Collections.unmodifiableList(effects);
+    }
+
+    @Override
+    public ViewableItem getItem() {
+        return item;
     }
 }
