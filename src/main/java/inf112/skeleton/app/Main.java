@@ -2,7 +2,6 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-
 import inf112.skeleton.app.controller.Controller;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.GameModel;

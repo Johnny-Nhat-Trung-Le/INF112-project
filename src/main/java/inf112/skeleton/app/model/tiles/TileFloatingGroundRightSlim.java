@@ -5,8 +5,6 @@ import inf112.skeleton.app.model.TileFactory;
 
 public class TileFloatingGroundRightSlim extends TileHalf {
 
-    public static void loadStatic(){}
-
     static {
         TileFactory.register('e', (world, eventBus, x, y) -> {
             return new TileFloatingGroundRightSlim(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT);
@@ -25,6 +23,9 @@ public class TileFloatingGroundRightSlim extends TileHalf {
      */
     public TileFloatingGroundRightSlim(World world, float x, float y, float w, float h) {
         super(world, x, y, w, h);
+    }
+
+    public static void loadStatic() {
     }
 }
 

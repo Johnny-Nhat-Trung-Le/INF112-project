@@ -18,11 +18,11 @@ import java.util.function.Supplier;
 public abstract class ItemModel implements ViewableItem, Physicable, EventHandler, ContactListener {
     private static final float WIDTH = 2;
     private static final float HEIGHT = 2;
-    private Body body;
-    private Shape shape;
-    private EventBus bus;
     protected Durability durability;
     protected Supplier<Effect> createEffect;
+    private final Body body;
+    private Shape shape;
+    private final EventBus bus;
 
     /**
      * {@code durability} and {@code createEffect} must be set manually.

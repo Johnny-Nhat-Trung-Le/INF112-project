@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import inf112.skeleton.app.view.texturepack.ITexturePack;
 
-import java.util.LinkedList;
 import java.util.*;
 
 public class Hud extends Stage {
@@ -90,6 +89,8 @@ public class Hud extends Stage {
     }
 
     private void updateHp() {
+        if (hpIcons.size() == model.getViewablePlayer().getHp()) return;
+
         //Checks whether the player lost or gained hp.
         //clears the table when hp has been lost.
         if (hpIcons.size() > model.getViewablePlayer().getHp()) {
@@ -170,8 +171,7 @@ public class Hud extends Stage {
     }
 
     private void update() {
-
-        if (hpIcons.size() != model.getViewablePlayer().getHp()) updateHp();
+        updateHp();
         updateItemActors();
         updateEffectActors();
     }

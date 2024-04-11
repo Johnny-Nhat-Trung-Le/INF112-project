@@ -5,11 +5,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -17,11 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.model.event.EventStep;
-import inf112.skeleton.app.view.Hud;
-import inf112.skeleton.app.view.ViewableGameModel;
-import inf112.skeleton.app.view.ViewableItem;
-import inf112.skeleton.app.view.ViewablePlayerModel;
-import inf112.skeleton.app.view.ViewableTile;
+import inf112.skeleton.app.view.*;
 import inf112.skeleton.app.view.texturepack.ITexturePack;
 import inf112.skeleton.app.view.texturepack.TexturePack;
 
@@ -37,7 +31,6 @@ public class GameScreen implements Screen {
     private final SpriteBatch batchHud;
     private final ITexturePack texturePack;
     private final Stage hud;
-
 
 
     public GameScreen(ViewableGameModel model, EventBus bus, InputProcessor processor) {
@@ -69,7 +62,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         eventBus.post(new EventStep(delta));
         updateCamToPlayer();
-        
+
         ViewablePlayerModel player = model.getViewablePlayer();
 
         ScreenUtils.clear(0, 0, 0, 0);
@@ -154,7 +147,7 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
-        hud.getViewport().update(width,height,true);
+        hud.getViewport().update(width, height, true);
     }
 
     @Override

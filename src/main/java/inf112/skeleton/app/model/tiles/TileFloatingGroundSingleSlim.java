@@ -1,10 +1,9 @@
 package inf112.skeleton.app.model.tiles;
+
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.model.TileFactory;
 
 public class TileFloatingGroundSingleSlim extends TileHalf {
-
-    public static void loadStatic(){}
 
     static {
         TileFactory.register('|', (world, eventBus, x, y) -> {
@@ -24,6 +23,9 @@ public class TileFloatingGroundSingleSlim extends TileHalf {
      */
     public TileFloatingGroundSingleSlim(World world, float x, float y, float w, float h) {
         super(world, x, y, w, h);
+    }
+
+    public static void loadStatic() {
     }
 
 

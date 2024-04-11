@@ -6,32 +6,28 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.model.PlayerState;
-
-import inf112.skeleton.app.model.item.ItemHp;
 import inf112.skeleton.app.model.effect.EffectJumpBoost;
 import inf112.skeleton.app.model.effect.EffectSpeedBoost;
-import inf112.skeleton.app.model.item.ItemMushroom;
-import inf112.skeleton.app.view.ViewableEffect;
 import inf112.skeleton.app.model.item.ItemEnergy;
+import inf112.skeleton.app.model.item.ItemMushroom;
 import inf112.skeleton.app.model.tiles.*;
-import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door1;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door2;
 import inf112.skeleton.app.model.tiles.contactableTiles.Saw;
 import inf112.skeleton.app.model.tiles.contactableTiles.Spike;
+import inf112.skeleton.app.view.ViewableEffect;
+import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewableTile;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TexturePack implements ITexturePack {
-    private static final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("atlas/gameAtlas.atlas"));
     public static final String TILE_NAME = "tile";
+    private static final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("atlas/gameAtlas.atlas"));
     private final static int TILE_WIDTH = 32;
     private final static int TILE_HEIGHT = 32;
     private final static Map<PlayerState, Animation<TextureRegion>> PLAYER_ANIMATION_MAP;
-    private float playerStateTime;
-    private PlayerState playerLastState;
 
     static {
         PLAYER_ANIMATION_MAP = new HashMap<PlayerState, Animation<TextureRegion>>() {{
@@ -45,51 +41,8 @@ public class TexturePack implements ITexturePack {
         }};
     }
 
-    @Override
-    public TextureRegion getTileTexture(ViewableTile tile) {
-        if (tile instanceof TileGroundSingle) return new TextureRegion(atlas.findRegion(TILE_NAME,0));
-        if (tile instanceof TileGround) return new TextureRegion(atlas.findRegion(TILE_NAME, 2));
-        if (tile instanceof TileGroundLeft) return new TextureRegion(atlas.findRegion(TILE_NAME, 1));
-        if (tile instanceof TileGroundRight) return new TextureRegion(atlas.findRegion(TILE_NAME, 3));
-
-        if (tile instanceof TileFloatingGroundSingle) return new TextureRegion(atlas.findRegion(TILE_NAME,48));
-        if (tile instanceof TileFloatingGround) return new TextureRegion(atlas.findRegion(TILE_NAME, 50));
-        if (tile instanceof TileFloatingGroundLeft) return new TextureRegion(atlas.findRegion(TILE_NAME, 49));
-        if (tile instanceof TileFloatingGroundRight) return new TextureRegion(atlas.findRegion(TILE_NAME, 51));
-
-        if (tile instanceof TileFloatingGroundSingleSlim) return new TextureRegion(atlas.findRegion(TILE_NAME,64));
-        if (tile instanceof TileFloatingGroundSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 66));
-        if (tile instanceof TileFloatingGroundLeftSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 65));
-        if (tile instanceof TileFloatingGroundRightSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 67));
-
-        if (tile instanceof Barrel) return new TextureRegion(atlas.findRegion(TILE_NAME, 55));
-        if (tile instanceof Spike) return  new TextureRegion(atlas.findRegion(TILE_NAME,46));
-        if(tile instanceof Saw) return new TextureRegion(atlas.findRegion(TILE_NAME,45));
-        if (tile instanceof Door1) return new TextureRegion(atlas.findRegion(TILE_NAME,7));
-        if (tile instanceof Door2) return new TextureRegion(atlas.findRegion(TILE_NAME,23));
-
-        return null;
-    }
-
-    @Override
-    public TextureRegion getPlayerTexture(PlayerState state, float stateTime) {
-        updatePlayerVariables(state, stateTime);
-        boolean looping = true;
-        if(state.equals(PlayerState.JUMP_RIGHT) || state.equals(PlayerState.JUMP_LEFT)) {
-                looping = false;
-        }
-        return PLAYER_ANIMATION_MAP.get(state).getKeyFrame(this.playerStateTime, looping);
-
-    }
-
-    private void updatePlayerVariables(PlayerState state, float stateTime) {
-        if (state.equals(playerLastState)) {
-            playerStateTime += stateTime;
-        } else {
-            playerStateTime = 0;
-        }
-        playerLastState = state;
-    }
+    private float playerStateTime;
+    private PlayerState playerLastState;
 
     /**
      * Get the specific Texture for the Animation it should be in
@@ -112,20 +65,64 @@ public class TexturePack implements ITexturePack {
     }
 
     @Override
+    public TextureRegion getTileTexture(ViewableTile tile) {
+        if (tile instanceof TileGroundSingle) return new TextureRegion(atlas.findRegion(TILE_NAME, 0));
+        if (tile instanceof TileGround) return new TextureRegion(atlas.findRegion(TILE_NAME, 2));
+        if (tile instanceof TileGroundLeft) return new TextureRegion(atlas.findRegion(TILE_NAME, 1));
+        if (tile instanceof TileGroundRight) return new TextureRegion(atlas.findRegion(TILE_NAME, 3));
+
+        if (tile instanceof TileFloatingGroundSingle) return new TextureRegion(atlas.findRegion(TILE_NAME, 48));
+        if (tile instanceof TileFloatingGround) return new TextureRegion(atlas.findRegion(TILE_NAME, 50));
+        if (tile instanceof TileFloatingGroundLeft) return new TextureRegion(atlas.findRegion(TILE_NAME, 49));
+        if (tile instanceof TileFloatingGroundRight) return new TextureRegion(atlas.findRegion(TILE_NAME, 51));
+
+        if (tile instanceof TileFloatingGroundSingleSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 64));
+        if (tile instanceof TileFloatingGroundSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 66));
+        if (tile instanceof TileFloatingGroundLeftSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 65));
+        if (tile instanceof TileFloatingGroundRightSlim) return new TextureRegion(atlas.findRegion(TILE_NAME, 67));
+
+        if (tile instanceof Barrel) return new TextureRegion(atlas.findRegion(TILE_NAME, 55));
+        if (tile instanceof Spike) return new TextureRegion(atlas.findRegion(TILE_NAME, 46));
+        if (tile instanceof Saw) return new TextureRegion(atlas.findRegion(TILE_NAME, 45));
+        if (tile instanceof Door1) return new TextureRegion(atlas.findRegion(TILE_NAME, 7));
+        if (tile instanceof Door2) return new TextureRegion(atlas.findRegion(TILE_NAME, 23));
+
+        return null;
+    }
+
+    @Override
+    public TextureRegion getPlayerTexture(PlayerState state, float stateTime) {
+        updatePlayerVariables(state, stateTime);
+        boolean looping = !state.equals(PlayerState.JUMP_RIGHT) && !state.equals(PlayerState.JUMP_LEFT);
+        return PLAYER_ANIMATION_MAP.get(state).getKeyFrame(this.playerStateTime, looping);
+
+    }
+
+    private void updatePlayerVariables(PlayerState state, float stateTime) {
+        if (state.equals(playerLastState)) {
+            playerStateTime += stateTime;
+        } else {
+            playerStateTime = 0;
+        }
+        playerLastState = state;
+    }
+
+    @Override
     public TextureRegion getItemTexture(ViewableItem item) {
 
-        if (item instanceof ItemEnergy) return new TextureRegion(atlas.findRegion(TILE_NAME,156));
+        if (item instanceof ItemEnergy) return new TextureRegion(atlas.findRegion(TILE_NAME, 156));
         if (item instanceof ItemMushroom) return new TextureRegion(atlas.findRegion(TILE_NAME, 106));
         return null;
     }
+
     @Override
-    public TextureRegion getHpTexture(){
-        return new TextureRegion(atlas.findRegion(TILE_NAME,139));
+    public TextureRegion getHpTexture() {
+        return new TextureRegion(atlas.findRegion(TILE_NAME, 139));
     }
 
     @Override
     public TextureRegion getEffectTexture(ViewableEffect item) {
-        if (item instanceof EffectSpeedBoost) return new TextureRegion(atlas.findRegion(TILE_NAME,156));
+        if (item instanceof EffectSpeedBoost) return new TextureRegion(atlas.findRegion(TILE_NAME, 156));
         if (item instanceof EffectJumpBoost) return new TextureRegion(atlas.findRegion(TILE_NAME, 106));
         return null;
     }

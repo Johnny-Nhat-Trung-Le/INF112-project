@@ -6,11 +6,9 @@ import inf112.skeleton.app.model.tiles.TileModel;
 
 public class Door2 extends TileModel {
 
-    public static void loadStatic(){}
-
     static {
         TileFactory.register('8', (world, eventBus, x, y) -> {
-            return new Door2(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 4, TILE_WIDTH/2, TILE_HEIGHT/2);
+            return new Door2(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 4, TILE_WIDTH / 2, TILE_HEIGHT / 2);
         });
     }
 
@@ -26,5 +24,8 @@ public class Door2 extends TileModel {
      */
     public Door2(World world, float x, float y, float w, float h) {
         super(world, x, y, w, h);
+    }
+
+    public static void loadStatic() {
     }
 }

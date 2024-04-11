@@ -6,6 +6,7 @@ public interface ControllablePlayerModel extends Stepable {
     /**
      * Sets the player's upwards facing directional movement-variable
      * to the specified value.
+     *
      * @param value boolean deciding if the player is trying to move upwards.
      */
     void moveUp(boolean value);
@@ -13,6 +14,7 @@ public interface ControllablePlayerModel extends Stepable {
     /**
      * Sets the player's downwards facing directional movement-variable
      * to the specified value.
+     *
      * @param value boolean deciding if the player is trying to move downwards.
      */
     void moveDown(boolean value);
@@ -20,6 +22,7 @@ public interface ControllablePlayerModel extends Stepable {
     /**
      * Sets the player's leftwards facing directional movement-variable
      * to the specified value.
+     *
      * @param value boolean deciding if the player is trying to move leftwards.
      */
     void moveLeft(boolean value);
@@ -27,6 +30,7 @@ public interface ControllablePlayerModel extends Stepable {
     /**
      * Sets the player's rightwards facing directional movement-variable
      * to the specified value.
+     *
      * @param value boolean deciding if the player is trying to move rightwards.
      */
     void moveRight(boolean value);

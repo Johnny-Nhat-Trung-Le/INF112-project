@@ -1,7 +1,5 @@
 package inf112.skeleton.app.model;
 
-import com.badlogic.gdx.Gdx;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.controller.ControllableGameModel;
@@ -11,7 +9,6 @@ import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.model.event.EventItemPickedUp;
-import inf112.skeleton.app.model.item.ItemEnergy;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.model.item.ItemMushroom;
 import inf112.skeleton.app.model.tiles.TileModel;
@@ -38,7 +35,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private final World world;
     private final PlayerModel player;
     private GameState state;
-    private AssetsManager assetsManager;
+    private final AssetsManager assetsManager;
 
     public GameModel(EventBus bus) {
         this.bus = bus;
@@ -61,16 +58,16 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private void fillWorld() {
         List<TileModel> tiles = TileFactory.generate(
                 """
-                       --B--------------------
-                       qwe--------------------lgr
-                       ------ssB----------w------
-                       -----lggr-------------w---
-                       LGR--gggg----------------i-----sss--S-S--S
-                       GG---gggg---S------S-SS-B------LGGGGGGGGGR-----------w-------9
-                       ----qg------lgr--lggggggggr----GGGGGGGGGGG---g--s-B----------8
-                       GGG---------------------------------------------qwe-------LGgR
-                       """,
-                world,bus);
+                        --B--------------------
+                        qwe--------------------lgr
+                        ------ssB----------w------
+                        -----lggr-------------w---
+                        LGR--gggg----------------i-----sss--S-S--S
+                        GG---gggg---S------S-SS-B------LGGGGGGGGGR-----------w-------9
+                        ----qg------lgr--lggggggggr----GGGGGGGGGGG---g--s-B----------8
+                        GGG---------------------------------------------qwe-------LGgR
+                        """,
+                world, bus);
         foreground.addAll(tiles);
         //ditems.add(new ItemEnergy(bus, world, 15, 7));
         items.add(new ItemMushroom(bus, world, 15, 7));
@@ -113,6 +110,12 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     public AssetsManager getAssetsManager() {
         return this.assetsManager;
     }
+
+    @Override
+    public GameState getState() {
+        return state;
+    }
+
     @Override
     public void setState(GameState state) {
         if (state == GameState.ACTIVE && this.state != GameState.ACTIVE) {
@@ -128,11 +131,6 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
             assetsManager.pauseMusic();
         }
         this.state = state;
-    }
-
-    @Override
-    public GameState getState() {
-        return state;
     }
 
     @Override

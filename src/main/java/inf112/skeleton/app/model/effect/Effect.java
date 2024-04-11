@@ -2,7 +2,6 @@ package inf112.skeleton.app.model.effect;
 
 import inf112.skeleton.app.model.Durability;
 import inf112.skeleton.app.view.ViewableEffect;
-import inf112.skeleton.app.view.ViewableItem;
 
 public abstract class Effect implements ViewableEffect {
     private final float speedBoost;
@@ -11,9 +10,9 @@ public abstract class Effect implements ViewableEffect {
     private int duration;
 
     /**
-     * @param duration number of steps the effect is applied
+     * @param duration   number of steps the effect is applied
      * @param speedBoost speed-boost multiplier
-     * @param jumpBoost jump-boost multiplier
+     * @param jumpBoost  jump-boost multiplier
      */
     public Effect(int duration, float speedBoost, float jumpBoost) {
         this.speedBoost = speedBoost;

@@ -34,30 +34,20 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private static final float FRICTION = 0;
     private static final float FRICTION_BOTTOM = 10;
     private static final float RESTITUTION = 0;
+    private static Set<Object> userDataSet;
     private final EventBus bus;
     private final World world;
     private final Body body;
+    private final List<Effect> effects;
     private Shape shapeTop, shapeBottom, shapeLeft, shapeRight;
     private Shape shapeSensor;
     private PlayerState state;
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int contactCountSensor = 0;
     private ItemModel item;
-    private final List<Effect> effects;
     private int hp;
     private float immunityCoolDown = 1;
     private boolean tookDamage = false;
-    private static Set<Object> userDataSet;
-
-    /**
-     * Checks if the {@link Fixture} belongs to the contactable player.
-     *
-     * @param fixture to check
-     * @return if the {@link Fixture} belongs to the player
-     */
-    private boolean isContacted(Fixture fixture) {
-        return userDataSet.contains(fixture.getUserData());
-    }
 
     /**
      * @param world which the player-{@link Body} is created in
@@ -94,6 +84,16 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         set.add(USER_DATA_BOTTOM);
         set.add(USER_DATA_SENSOR);
         return set;
+    }
+
+    /**
+     * Checks if the {@link Fixture} belongs to the contactable player.
+     *
+     * @param fixture to check
+     * @return if the {@link Fixture} belongs to the player
+     */
+    private boolean isContacted(Fixture fixture) {
+        return userDataSet.contains(fixture.getUserData());
     }
 
     @Override
@@ -342,12 +342,13 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
             if (!e.item().equals(item)) return;
             item = null;
         } else if (event instanceof EventDamage e) {
-            if(isContacted(e.fixture())) {
+            if (isContacted(e.fixture())) {
                 takeDamage(e.damage());
             }
         }
     }
-    private void takeDamage(int damage){
+
+    private void takeDamage(int damage) {
         if (!tookDamage && immunityCoolDown <= 0) {
             tookDamage = true;
             updateHp(damage);

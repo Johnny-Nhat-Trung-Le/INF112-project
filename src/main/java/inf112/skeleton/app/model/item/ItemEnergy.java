@@ -3,7 +3,6 @@ package inf112.skeleton.app.model.item;
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.Durability;
-import inf112.skeleton.app.model.effect.Effect;
 import inf112.skeleton.app.model.effect.EffectSpeedBoost;
 
 public class ItemEnergy extends ItemModel {

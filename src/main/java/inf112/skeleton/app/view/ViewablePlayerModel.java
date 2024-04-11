@@ -8,6 +8,7 @@ import java.util.List;
 public interface ViewablePlayerModel extends Sizeable, Positionable, PlayerStateGettable {
     /**
      * Get the Hp of the player
+     *
      * @return the amount of Hp left of the player
      */
     int getHp();

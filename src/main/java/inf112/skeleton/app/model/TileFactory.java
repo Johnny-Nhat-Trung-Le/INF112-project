@@ -6,7 +6,7 @@ import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.utils.Function4;
 
 import java.util.*;
-    
+
 public class TileFactory {
     public static final Map<Character, Function4<World, EventBus, Float, Float, TileModel>> translation = new HashMap<>();
 

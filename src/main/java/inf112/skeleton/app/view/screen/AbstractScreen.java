@@ -12,14 +12,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.view.GameView;
 
 public abstract class AbstractScreen implements Screen {
-    protected final SpriteBatch batch;
     private static final float ViewPort = 400;
     public static float VIEWPORT_WIDTH = GameView.ASPECT_RATIO * 175;
     public static float VIEWPORT_HEIGHT = (float) (ViewPort / GameView.ASPECT_RATIO * 1.2);
+    protected final SpriteBatch batch;
+    protected final BitmapFont font;
     private final OrthographicCamera gameCam;
     private final Viewport gamePort;
-
-    protected final BitmapFont font;
 
     public AbstractScreen(InputProcessor processor) {
         batch = new SpriteBatch();

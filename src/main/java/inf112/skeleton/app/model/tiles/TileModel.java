@@ -5,8 +5,6 @@ import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.Physicable;
 import inf112.skeleton.app.model.Stepable;
-import inf112.skeleton.app.model.TileFactory;
-import inf112.skeleton.app.model.event.EventDamage;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.ViewableTile;
 
@@ -20,12 +18,6 @@ public abstract class TileModel implements ViewableTile, Physicable, Stepable, E
     private final Shape shape;
     private final float width;
     private final float height;
-
-    /**
-     * Loads the class into memory. Used to load
-     * static blocks in class.
-     */
-    public static void loadStatic() {}
 
     /**
      * Creates a {@link TileModel} and places its body in
@@ -43,6 +35,13 @@ public abstract class TileModel implements ViewableTile, Physicable, Stepable, E
         height = h;
         shape = createShape(w, h);
         body = createBody(x, y);
+    }
+
+    /**
+     * Loads the class into memory. Used to load
+     * static blocks in class.
+     */
+    public static void loadStatic() {
     }
 
     /**
@@ -98,7 +97,8 @@ public abstract class TileModel implements ViewableTile, Physicable, Stepable, E
     }
 
     @Override
-    public void step(float timeStep) {}
+    public void step(float timeStep) {
+    }
 
     @Override
     public void handleEvent(Event event) {

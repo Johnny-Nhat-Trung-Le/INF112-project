@@ -1,7 +1,6 @@
 package inf112.skeleton.app.view.texturepack;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.model.PlayerState;
 import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.view.ViewableEffect;
@@ -50,6 +49,7 @@ public interface ITexturePack {
 
     /**
      * Get the texture of the Hp Icon
+     *
      * @return {@link TextureRegion} for the given Hp texture
      */
     TextureRegion getHpTexture();

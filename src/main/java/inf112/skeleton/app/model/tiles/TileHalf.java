@@ -24,7 +24,7 @@ public abstract class TileHalf extends TileModel {
     @Override
     protected Shape createShape(float w, float h) {
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(TILE_WIDTH / 2, TILE_HEIGHT/4, new Vector2(0, TILE_HEIGHT / 4), 0);
+        shape.setAsBox(TILE_WIDTH / 2, TILE_HEIGHT / 4, new Vector2(0, TILE_HEIGHT / 4), 0);
         return shape;
     }
 }

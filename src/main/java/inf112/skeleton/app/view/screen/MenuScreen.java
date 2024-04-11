@@ -11,9 +11,9 @@ public class MenuScreen extends AbstractScreen {
     //943*689
     private final GlyphLayout textLayout;
 
-    private  final GlyphLayout titleLayout;
-    private  final String text;
-    private  final String title;
+    private final GlyphLayout titleLayout;
+    private final String text;
+    private final String title;
 
     public MenuScreen(InputProcessor processor) {
         super(processor);
@@ -38,7 +38,6 @@ public class MenuScreen extends AbstractScreen {
         font.draw(batch, text, (VIEWPORT_WIDTH / 2) - textLayout.width / 2, (VIEWPORT_HEIGHT / 2) - textLayout.height / 2);
         batch.end();
     }
-
 
 
 }

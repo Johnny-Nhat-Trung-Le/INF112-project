@@ -7,19 +7,22 @@ import inf112.skeleton.app.model.AssetsManager;
 import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.GameState;
 import inf112.skeleton.app.model.event.EventResetGame;
-import inf112.skeleton.app.view.screen.*;
+import inf112.skeleton.app.view.screen.GameOverScreen;
+import inf112.skeleton.app.view.screen.GameScreen;
+import inf112.skeleton.app.view.screen.MenuScreen;
+import inf112.skeleton.app.view.screen.PauseScreen;
 
 
 public class GameView extends Game {
     public static final float VIEWPORT_WIDTH = 20;
     public static final float VIEWPORT_HEIGHT = 20;
     public static final float ASPECT_RATIO = 2;
-    private  GameModel model;
     private final EventBus bus;
     private final InputProcessor processor;
+    private final AssetsManager assetsManager;
+    private GameModel model;
     private GameState gameState;
     private boolean resetGame = false;
-    private AssetsManager assetsManager;
 
     public GameView(GameModel model, EventBus bus, InputProcessor processor) {
         this.model = model;
@@ -34,6 +37,7 @@ public class GameView extends Game {
         setScreen(new MenuScreen(processor));
         assetsManager.playMusic("MAIN");
     }
+
     @Override
     public void render() {
         if (model.getState() != gameState) {
@@ -42,13 +46,14 @@ public class GameView extends Game {
                 case ACTIVE -> {
                     setScreen(new GameScreen(model, bus, processor));
                 }
-                case MAIN_MENU-> {
+                case MAIN_MENU -> {
                     if (resetGame) {
                         model = new GameModel(bus);
                         updateController();
                         resetGame = false;
                     }
-                    setScreen(new MenuScreen(processor));}
+                    setScreen(new MenuScreen(processor));
+                }
                 case PAUSE -> setScreen(new PauseScreen(processor));
                 case GAME_OVER -> {
                     resetGame = true;
@@ -60,7 +65,8 @@ public class GameView extends Game {
         }
         super.render();
     }
-    private void updateController(){
+
+    private void updateController() {
         bus.post(new EventResetGame(model));
     }
 }

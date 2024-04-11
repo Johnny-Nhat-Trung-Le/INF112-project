@@ -5,5 +5,5 @@ public interface GameStateGettable {
     /**
      * @return current {@link GameState} of game
      */
-    public GameState getState();
+    GameState getState();
 }
