@@ -1,36 +1,32 @@
 package inf112.skeleton.app.model;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
-// maybe just make a play/ pause/ stop/ resume for every single one ;__;
 public class AssetsManager implements IAssetsManager {
-    private Map<String, String> musicMap;
-    private Map<String, String> soundEffectMap;
+    private static final Map<String, String> soundEffectMap = new HashMap<>() {{
+        put("BUTTON", "assets/blipp.ogg");
+    }};
+    private static final Map<String, String> musicMap = new HashMap<>() {{
+        put("MAIN", "assets/MiiPlaza.mp3");
+        put("BACKGROUND", "assets/shop.mp3");
+        put("DEAD", "assets/dead.mp3");
+    }};
+    private final Map<String, Sound> currentEffects;
     private Music nowPlaying;
+
     public AssetsManager() {
-        musicMap = new HashMap<>();
-        soundEffectMap = new HashMap<>();
-
-        // ADD MUSIC AND SOUNDS
-        addMusic("MAIN", "assets/MiiPlaza.mp3");
-        addMusic("BACKGROUND", "assets/shop.mp3");
-        addMusic("DEAD","assets/dead.mp3");
-    }
-
-    private void addMusic(String key, String filePath) {
-        musicMap.put(key, filePath);
-    }
-
-    private void addSoundEffect(String key, String filePath) {
-        soundEffectMap.put(key, filePath);
+        currentEffects = new HashMap<>();
     }
 
     @Override
     public void playMusic(String key) {
+        stopMusic();
+        if (!musicMap.containsKey(key)) return;
         nowPlaying = Gdx.audio.newMusic(Gdx.files.internal(musicMap.get(key)));
         if (nowPlaying != null && !nowPlaying.isPlaying()) {
             nowPlaying.setVolume(0.5f);
@@ -41,7 +37,9 @@ public class AssetsManager implements IAssetsManager {
 
     @Override
     public void stopMusic() {
-        if(nowPlaying!=null){this.nowPlaying.stop();}
+        if (nowPlaying == null) return;
+        nowPlaying.stop();
+        nowPlaying = null;
     }
 
     @Override
@@ -60,6 +58,12 @@ public class AssetsManager implements IAssetsManager {
 
     @Override
     public void playSoundEffect(String key) {
-
+        if (!soundEffectMap.containsKey(key)) return;
+        Sound effect = Gdx.audio.newSound(Gdx.files.internal(soundEffectMap.get(key)));
+        if (currentEffects.containsKey(key)) {
+            currentEffects.get(key).stop();
+        }
+        currentEffects.put(key, effect);
+        effect.play();
     }
 }
