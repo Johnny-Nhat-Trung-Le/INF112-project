@@ -160,6 +160,11 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
             else effect.step();
         }
 
+        // CHECK FOR VOID
+        if (getY() < GameModel.VOID_HEIGHT) {
+            bus.post(new EventPlayerDeath());
+        }
+
         // MOVEMENT
         float dx = DX;
         dx *= effects.stream().reduce((float) 1, (v, e) -> v * e.getSpeedBoost(), (a, b) -> a * b);

@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener, EventHandler {
+    public static final float VOID_HEIGHT = -20;
     private static final float GRAVITY = -20;
     private static final float WIND = 0;
     private static final int VELOCITY_ITERATIONS = 6;
