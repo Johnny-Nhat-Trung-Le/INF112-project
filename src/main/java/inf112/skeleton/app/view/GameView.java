@@ -7,10 +7,7 @@ import inf112.skeleton.app.model.AssetsManager;
 import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.GameState;
 import inf112.skeleton.app.model.event.EventResetGame;
-import inf112.skeleton.app.view.screen.GameOverScreen;
-import inf112.skeleton.app.view.screen.GameScreen;
-import inf112.skeleton.app.view.screen.MenuScreen;
-import inf112.skeleton.app.view.screen.PauseScreen;
+import inf112.skeleton.app.view.screen.*;
 
 
 public class GameView extends Game {
