@@ -7,9 +7,7 @@ import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
-import inf112.skeleton.app.model.event.EventGameState;
-import inf112.skeleton.app.model.event.EventItemPickedUp;
-import inf112.skeleton.app.model.event.EventResetGame;
+import inf112.skeleton.app.model.event.*;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.model.item.ItemMushroom;
 import inf112.skeleton.app.model.tiles.TileModel;
@@ -103,6 +101,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     public ControllablePlayerModel getControllablePlayer() {
         return player;
     }
+
     @Override
     public GameState getState() {
         return state;
@@ -150,13 +149,10 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     public void handleEvent(Event event) {
         if (event instanceof EventItemPickedUp e) {
             items.remove(e.item());
-        } else if (event instanceof EventGameState e) {
-            GameState gamestate = e.gameState();
-            if (gamestate.equals(GameState.VICTORY)) {
-                System.out.println("VICTORY ROYALE");
-            } else if (gamestate.equals(GameState.GAME_OVER)) {
-                state = GameState.GAME_OVER;
-            }
+        } else if (event instanceof EventReachedDoor) {
+            setState(GameState.VICTORY);
+        } else if (event instanceof EventPlayerDeath) {
+            setState(GameState.GAME_OVER);
         }
     }
 }

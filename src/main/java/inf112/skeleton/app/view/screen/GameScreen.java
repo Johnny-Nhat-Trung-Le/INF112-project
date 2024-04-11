@@ -32,7 +32,6 @@ public class GameScreen implements Screen {
     private final ITexturePack texturePack;
     private final Stage hud;
 
-
     public GameScreen(ViewableGameModel model, EventBus bus, InputProcessor processor) {
         Gdx.graphics.setForegroundFPS(60);
         Gdx.input.setInputProcessor(processor);

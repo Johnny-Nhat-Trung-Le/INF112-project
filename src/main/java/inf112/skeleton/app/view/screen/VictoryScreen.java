@@ -1,25 +1,30 @@
 package inf112.skeleton.app.view.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
-public class MenuScreen extends AbstractScreen {
-    private final Texture texture; //943*689
+public class VictoryScreen extends AbstractScreen {
+    private final Texture texture;
     private final GlyphLayout textLayout;
     private final GlyphLayout titleLayout;
     private final String text;
     private final String title;
 
-    public MenuScreen(InputProcessor processor) {
+    public VictoryScreen(InputProcessor processor) {
         super(processor);
+
         texture = new Texture("Backgrounds/menu_screen.png");
-        title = "Lil bro's Adventure Back Home";
-        text = "Press p to play";
+        title = "Victory";
+        text = "You won the game!\nThank you for playing!";
         textLayout = new GlyphLayout();
         titleLayout = new GlyphLayout();
         titleLayout.setText(font, title);
         textLayout.setText(font, text);
+
+        Gdx.graphics.setForegroundFPS(60);
+        Gdx.input.setInputProcessor(processor);
     }
 
     @Override

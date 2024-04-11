@@ -19,7 +19,6 @@ public class GameOverScreen extends AbstractScreen {
 
         Gdx.graphics.setForegroundFPS(60);
         Gdx.input.setInputProcessor(processor);
-
     }
 
     @Override
@@ -31,6 +30,5 @@ public class GameOverScreen extends AbstractScreen {
         font.draw(batch, "GAME OVER", (VIEWPORT_WIDTH / 2) - layout.width / 2, (VIEWPORT_HEIGHT / 4) * 3 - (layout.height / 2));
         font.draw(batch, "Press R to restart", (VIEWPORT_WIDTH / 2) - layout.width / 2, ((VIEWPORT_HEIGHT / 4) * 2) - layout.height / 2);
         batch.end();
-
     }
 }

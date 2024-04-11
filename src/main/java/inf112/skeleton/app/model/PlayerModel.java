@@ -359,7 +359,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private void updateHp(int dmg) {
         int newHp = hp - dmg;
         if (newHp == 0) {
-            bus.post(new EventGameState(GameState.GAME_OVER));
+            bus.post(new EventPlayerDeath());
         } else {
             hp = newHp;
         }

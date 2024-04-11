@@ -11,11 +11,7 @@ import inf112.skeleton.app.model.GameState;
 import inf112.skeleton.app.model.IAssetsManager;
 import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.model.event.EventResetGame;
-import inf112.skeleton.app.view.screen.GameOverScreen;
-import inf112.skeleton.app.view.screen.GameScreen;
-import inf112.skeleton.app.view.screen.MenuScreen;
-import inf112.skeleton.app.view.screen.PauseScreen;
-
+import inf112.skeleton.app.view.screen.*;
 
 public class GameView extends Game implements EventHandler {
     public static final float VIEWPORT_WIDTH = 20;
@@ -25,6 +21,7 @@ public class GameView extends Game implements EventHandler {
     private final InputProcessor processor;
     private final IAssetsManager assetsManager;
     private GameModel model;
+
     public GameView(GameModel model, EventBus bus, InputProcessor processor) {
         this.model = model;
         this.bus = bus;
@@ -56,6 +53,10 @@ public class GameView extends Game implements EventHandler {
             case PAUSE -> {
                 setScreen(new PauseScreen(processor));
                 assetsManager.pauseMusic();
+            }
+            case VICTORY -> {
+                setScreen(new VictoryScreen(processor));
+                assetsManager.stopMusic();
             }
         }
     }

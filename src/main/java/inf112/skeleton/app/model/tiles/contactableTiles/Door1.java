@@ -5,6 +5,7 @@ import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.GameState;
 import inf112.skeleton.app.model.TileFactory;
 import inf112.skeleton.app.model.event.EventGameState;
+import inf112.skeleton.app.model.event.EventReachedDoor;
 import inf112.skeleton.app.model.tiles.TileModel;
 
 public class Door1 extends TileModel implements ContactableTiles {
@@ -62,7 +63,7 @@ public class Door1 extends TileModel implements ContactableTiles {
         Fixture fB = contact.getFixtureB();
 
         if (USERDATA.equals(fB.getUserData())) {
-            eventBus.post(new EventGameState(GameState.VICTORY));
+            eventBus.post(new EventReachedDoor());
         }
     }
 
