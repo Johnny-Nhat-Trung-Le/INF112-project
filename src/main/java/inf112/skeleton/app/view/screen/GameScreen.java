@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        gameCam.zoom = 2f;
+        gameCam.zoom = 3f;
         updateCamToPlayer();
     }
 

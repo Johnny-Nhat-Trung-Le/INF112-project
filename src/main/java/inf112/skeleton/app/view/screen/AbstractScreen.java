@@ -12,11 +12,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.view.GameView;
 
 public abstract class AbstractScreen implements Screen {
+    protected static final BitmapFont font = new BitmapFont();
     private static final float ViewPort = 400;
     public static float VIEWPORT_WIDTH = GameView.ASPECT_RATIO * 175;
     public static float VIEWPORT_HEIGHT = (float) (ViewPort / GameView.ASPECT_RATIO * 1.2);
     protected final SpriteBatch batch;
-    protected final BitmapFont font;
     private final OrthographicCamera gameCam;
     private final Viewport gamePort;
 
@@ -26,17 +26,13 @@ public abstract class AbstractScreen implements Screen {
         gameCam = new OrthographicCamera();
         gamePort = new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam);
 
-        font = new BitmapFont();
-
         Gdx.graphics.setForegroundFPS(60);
         Gdx.input.setInputProcessor(processor);
-
     }
 
 
     @Override
     public void show() {
-
     }
 
     private void update() {
@@ -49,8 +45,6 @@ public abstract class AbstractScreen implements Screen {
     public void render(float delta) {
         update();
         ScreenUtils.clear(0, 0, 0, 0);
-
-
     }
 
     @Override
@@ -61,12 +55,10 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
