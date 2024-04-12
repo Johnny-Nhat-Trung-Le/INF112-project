@@ -23,7 +23,6 @@ public class GameScreen implements Screen {
     private static final float VIEWPORT_WIDTH = 20;
     private static final float VIEWPORT_HEIGHT = 20;
     private final EventBus eventBus;
-    private final ShapeRenderer sRenderer;
     private final ViewableGameModel model;
     private final OrthographicCamera gameCam;
     private final Viewport gamePort;
@@ -44,7 +43,6 @@ public class GameScreen implements Screen {
 
         texturePack = new TexturePack();
 
-        sRenderer = new ShapeRenderer();
         batch = new SpriteBatch();
         batchHud = new SpriteBatch();
 
@@ -68,11 +66,6 @@ public class GameScreen implements Screen {
 
         gamePort.apply();
 
-        sRenderer.begin(ShapeRenderer.ShapeType.Line);
-        renderBackground();
-        renderPlayer();
-        sRenderer.end();
-
         batch.begin();
         renderTiles();
         renderItems();
@@ -93,15 +86,9 @@ public class GameScreen implements Screen {
     private void updateCamToPlayer() {
         ViewablePlayerModel p = model.getViewablePlayer();
         gameCam.position.set(p.getX() + p.getWidth() / 2, p.getY() + p.getHeight() / 2, 0);
-        sRenderer.setProjectionMatrix(gameCam.combined);
         batch.setProjectionMatrix(gameCam.combined);
         batchHud.setProjectionMatrix(gameCam.combined);
         gameCam.update();
-    }
-
-    private void renderBackground() {
-        sRenderer.setColor(Color.BLACK);
-        sRenderer.rect(-VIEWPORT_WIDTH, -VIEWPORT_HEIGHT, VIEWPORT_WIDTH * 3, VIEWPORT_HEIGHT * 3);
     }
 
     private void renderTiles() {
@@ -130,15 +117,8 @@ public class GameScreen implements Screen {
         }
     }
 
-    private void renderPlayer() {
-        ViewablePlayerModel player = model.getViewablePlayer();
-        sRenderer.setColor(Color.ORANGE);
-        sRenderer.rect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
-    }
-
     @Override
     public void dispose() {
-        sRenderer.dispose();
         batch.dispose();
         eventBus.post(new EventDispose());
     }
