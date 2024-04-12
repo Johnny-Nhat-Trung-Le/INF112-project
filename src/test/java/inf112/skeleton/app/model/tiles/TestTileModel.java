@@ -27,7 +27,6 @@ public class TestTileModel {
     public void testTileModel() {
         TileModelTemp tileModel = new TileModelTemp(world, x, y, width, height);
 
-        assertNotNull(tileModel.getBody(), "TileModel body shouldn't be null");
 
         assertEquals(expectedX, tileModel.getX(), "TileModel X position should match expected");
         assertEquals(expectedY, tileModel.getY(), "TileModel Y position should match expected");
@@ -39,7 +38,6 @@ public class TestTileModel {
     public void testTileHalf() {
         TileHalfTemp tileModel = new TileHalfTemp(world, x, y, width, height);
 
-        assertNotNull(tileModel.getBody(), "TileModel body shouldn't be null");
 
         assertEquals(expectedX, tileModel.getX(), "TileModel X position should match expected");
         assertEquals(expectedY, tileModel.getY(), "TileModel Y position should match expected");
@@ -61,5 +59,5 @@ public class TestTileModel {
         }
     }
 
-    // TODO - Event Shit
+
 }

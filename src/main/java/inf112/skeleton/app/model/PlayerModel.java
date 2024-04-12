@@ -51,7 +51,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private int contactCountSensor = 0;
     private ItemModel item;
     private IHealth hp;
-    private float immunityCoolDown = 1;
+    private float immunityCoolDown = 0;
 
     /**
      * @param world which the player-{@link Body} is created in
@@ -182,6 +182,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
         // HP
         if (immunityCoolDown > 0) immunityCoolDown -= timeStep;
+        else if(immunityCoolDown<0) immunityCoolDown = 0;
         updateState();
     }
 
@@ -345,13 +346,18 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
             item = null;
         } else if (event instanceof EventDamage e) {
             if (isContacted(e.fixture())) {
-                takeDamage(e.damage());
+                handleDamage(e.damage());
             }
         }
     }
 
-    private void takeDamage(int damage) {
-        if (immunityCoolDown <= 0) {
+    /**
+     * Handles if the player should
+     * take damage whether the player has immunity or not
+     * @param damage the amount of damage the player should take
+     */
+    private void handleDamage(int damage) {
+        if (immunityCoolDown == 0) {
             hp.damage(damage);
             immunityCoolDown = 1;
         }

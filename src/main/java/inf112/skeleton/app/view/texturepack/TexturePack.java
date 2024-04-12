@@ -64,6 +64,11 @@ public class TexturePack implements ITexturePack {
         return new Animation<TextureRegion>(1f / 16f, animationFrames);
     }
 
+    /**
+     * Get the specific texture from the textureAtlas
+     * @param index the index of the specific texture in the textureAtlas
+     * @return TextureRegion from the textureAtlas
+     */
     private TextureRegion getTextureFromAtlas(int index) {
         return new TextureRegion(atlas.findRegion(TILE_NAME, index));
     }
