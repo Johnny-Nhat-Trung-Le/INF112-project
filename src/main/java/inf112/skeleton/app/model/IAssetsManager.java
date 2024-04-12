@@ -4,8 +4,8 @@ public interface IAssetsManager {
 
     /**
      * Plays music given a key
-     * if there is no music then the music stops
-     * if there is already a music playing it resumes
+     * if there is no music then the music stops,
+     * if there is already a music playing it resumes and
      * if there is a new music stops last music and play the new one
      *
      * @param key for retrieving music
@@ -18,12 +18,12 @@ public interface IAssetsManager {
     void stopMusic();
 
     /**
-     * Pauses music currently playing
+     * Pause music currently playing
      */
     void pauseMusic();
 
     /**
-     * Resumes music being played
+     * Resume music being played
      */
     void resumeMusic();
 
