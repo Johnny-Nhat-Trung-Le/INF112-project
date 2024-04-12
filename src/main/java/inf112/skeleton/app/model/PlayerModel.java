@@ -46,8 +46,8 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private int contactCountSensor = 0;
     private ItemModel item;
     private int hp;
-    private float immunityCoolDown = 1;
-    private boolean tookDamage = false;
+    private float immunityCoolDown = 0;
+
 
     /**
      * @param world which the player-{@link Body} is created in
@@ -179,7 +179,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
         // HP
         if (immunityCoolDown > 0) immunityCoolDown -= timeStep;
-        else tookDamage = false;
+        else if(immunityCoolDown<0) immunityCoolDown = 0;
         updateState();
     }
 
@@ -349,8 +349,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     private void takeDamage(int damage) {
-        if (!tookDamage && immunityCoolDown <= 0) {
-            tookDamage = true;
+        if ( immunityCoolDown == 0) {
             updateHp(damage);
             immunityCoolDown = 1;
         }
