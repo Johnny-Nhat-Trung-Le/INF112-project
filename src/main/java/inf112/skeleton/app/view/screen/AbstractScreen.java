@@ -3,6 +3,7 @@ package inf112.skeleton.app.view.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,6 +11,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.view.GameView;
+
+import java.awt.*;
 
 public abstract class AbstractScreen implements Screen {
     protected static final BitmapFont font = new BitmapFont();
@@ -25,7 +28,7 @@ public abstract class AbstractScreen implements Screen {
 
         gameCam = new OrthographicCamera();
         gamePort = new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam);
-
+        font.setColor(Color.WHITE);
         Gdx.graphics.setForegroundFPS(60);
         Gdx.input.setInputProcessor(processor);
     }

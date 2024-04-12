@@ -1,19 +1,22 @@
 package inf112.skeleton.app.view.screen;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 public class MenuScreen extends AbstractScreen {
     private static final float TEXTURE_RATIO = 640 / (float) 352;
     private static final Texture texture = new Texture("Backgrounds/map.png"); //640*352
     private static final String title = "Lil bro's Adventure Back Home";
-    private static final String text = "Press p to play";
+    private static final String text = "Press P to play";
     private static final GlyphLayout titleLayout = new GlyphLayout(font, title);
     private static final GlyphLayout textLayout = new GlyphLayout(font, text);
 
     public MenuScreen(InputProcessor processor) {
         super(processor);
+        font.setColor(Color.BLACK);
     }
 
     @Override
