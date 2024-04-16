@@ -189,6 +189,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         } else if (event instanceof EventGameState e) {
             GameState gamestate = e.gameState();
             if (gamestate.equals(GameState.VICTORY)) {
+                state = GameState.VICTORY;
                 System.out.println("VICTORY ROYALE");
             } else if (gamestate.equals(GameState.GAME_OVER)) {
                 state = GameState.GAME_OVER;

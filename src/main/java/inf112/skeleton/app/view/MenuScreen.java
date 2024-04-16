@@ -1,4 +1,4 @@
-package inf112.skeleton.app.view.screen;
+package inf112.skeleton.app.view;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
