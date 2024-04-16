@@ -33,7 +33,6 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
 
         bus.addEventHandler(this);
         fillLevels();
-        level = levels.keySet().stream().toList().get(0); // FIXME
     }
 
     /**
@@ -67,6 +66,11 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
                 i1
         );
         levels.put("1", l1);
+
+        // SET DEFAULT
+        if (!levels.isEmpty()) {
+            level = levels.keySet().stream().toList().get(0);
+        }
     }
 
     @Override
