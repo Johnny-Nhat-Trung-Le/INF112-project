@@ -2,13 +2,14 @@ package inf112.skeleton.app.event;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EventBus {
 
     private final List<EventHandler> handlers;
 
     public EventBus() {
-        handlers = new ArrayList<>();
+        handlers = new CopyOnWriteArrayList<>();
     }
 
     /**

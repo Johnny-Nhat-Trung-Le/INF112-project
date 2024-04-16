@@ -23,7 +23,7 @@ public class Hud extends Stage {
     private static final int IMG_SIZE = 16;
     private static final int TEXT_WIDTH = 10;
     private static final int TEXT_HEIGHT = 20;
-    private final ViewableGameModel model;
+    private final ViewableLevel level;
     private final ITexturePack texturePack;
     private final Image itemIcon;
     private final Label itemDurability;
@@ -36,9 +36,9 @@ public class Hud extends Stage {
 
     private final LinkedList<Image> hpIcons;
 
-    public Hud(SpriteBatch batch, ViewableGameModel viewableGameModel, ITexturePack texturePack) {
+    public Hud(SpriteBatch batch, ViewableLevel viewableLevel, ITexturePack texturePack) {
         super(new ExtendViewport(GameView.VIEWPORT_WIDTH * 20, GameView.VIEWPORT_HEIGHT / GameView.VIEWPORT_WIDTH * 20, new OrthographicCamera()), batch);
-        model = viewableGameModel;
+        level = viewableLevel;
         this.texturePack = texturePack;
         Label.LabelStyle labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
@@ -50,7 +50,7 @@ public class Hud extends Stage {
         effectDurationImages = new HashMap<>();
 
         hpIcons = new LinkedList<>();
-        for (int i = 0; i < model.getViewablePlayer().getHp(); i++) {
+        for (int i = 0; i < level.getViewablePlayer().getHp(); i++) {
             hpIcons.add(new Image());
         }
 
@@ -89,11 +89,11 @@ public class Hud extends Stage {
     }
 
     private void updateHp() {
-        if (hpIcons.size() == model.getViewablePlayer().getHp()) return;
+        if (hpIcons.size() == level.getViewablePlayer().getHp()) return;
 
         //Checks whether the player lost or gained hp.
         //clears the table when hp has been lost.
-        if (hpIcons.size() > model.getViewablePlayer().getHp()) {
+        if (hpIcons.size() > level.getViewablePlayer().getHp()) {
             hpIcons.remove();
             hpGroup.clear();
         } else {
@@ -111,7 +111,7 @@ public class Hud extends Stage {
     }
 
     private void updateItemActors() {
-        ViewableItem item = model.getViewablePlayer().getItem();
+        ViewableItem item = level.getViewablePlayer().getItem();
         boolean isFilled = itemIcon.getWidth() != 0;
 
         if (item != null) {
@@ -129,7 +129,7 @@ public class Hud extends Stage {
 
     private void updateEffectActors() {
         Set<ViewableEffect> valid = new HashSet<>();
-        for (ViewableEffect effect : model.getViewablePlayer().getEffects()) {
+        for (ViewableEffect effect : level.getViewablePlayer().getEffects()) {
             valid.add(effect);
             // ICON
             if (!effectIconImages.containsKey(effect)) {

@@ -42,6 +42,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     private final EventBus bus;
     private final World world;
+    private final float void_height;
     private final Body body;
     private final List<Effect> effects;
     private Shape shapeTop, shapeBottom, shapeLeft, shapeRight;
@@ -50,7 +51,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int contactCountSensor = 0;
     private ItemModel item;
-    private IHealth hp;
+    private final IHealth hp;
     private float immunityCoolDown = 0;
 
     /**
@@ -58,10 +59,14 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
      * @param x     left-most position of player
      * @param y     bottom-most position of player
      */
-
     public PlayerModel(EventBus bus, World world, float x, float y) {
+        this(bus, world, -20, x, y);
+    }
+
+    public PlayerModel(EventBus bus, World world, float void_height, float x, float y) {
         this.bus = bus;
         this.world = world;
+        this.void_height = void_height;
         body = createBody(x + WIDTH / 2, y + HEIGHT / 2);
         state = PlayerState.IDLE_RIGHT;
         moveUp = false;
@@ -164,7 +169,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         }
 
         // CHECK FOR VOID
-        if (getY() < GameModel.VOID_HEIGHT) {
+        if (getY() < void_height) {
             bus.post(new EventDeath(this));
         }
 
