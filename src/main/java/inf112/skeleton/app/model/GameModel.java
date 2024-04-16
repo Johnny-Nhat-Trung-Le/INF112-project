@@ -30,6 +30,16 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private final EventBus bus;
     private final List<TileModel> foreground;
     private final List<TileModel> background;
+    private String bruh = """
+                        --B--------------------
+                        qwe--------------------lgr
+                        ------ssB----------w------
+                        -----lggr-------------w---
+                        LGR--gggg----------------i-----sss--S-S--S
+                        GG---gggg---S------S-SS-B------LGGGGGGGGGR-----------w-------9
+                        ----qg------lgr--lggggggggr----GGGGGGGGGGG---g--s-B----------8
+                        GGG---------------------------------------------qwe-------LGgR
+                        """;
 
     private final List<ItemModel> items;
     private final World world;
@@ -43,7 +53,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         background = new ArrayList<>();
         items = new CopyOnWriteArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
-        player = new PlayerModel(bus, world, 1.5f, 6.5f);
+        player = new PlayerModel(bus, world, 15.5f, 22f);
         assetsManager = new AssetsManager();
         state = GameState.MAIN_MENU;
 
@@ -56,21 +66,34 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
      * Used for testing
      */
     private void fillWorld() {
-        List<TileModel> tiles = TileFactory.generate(
-                """
-                        --B--------------------
-                        qwe--------------------lgr
-                        ------ssB----------w------
-                        -----lggr-------------w---
-                        LGR--gggg----------------i-----sss--S-S--S
-                        GG---gggg---S------S-SS-B------LGGGGGGGGGR-----------w-------9
-                        ----qg------lgr--lggggggggr----GGGGGGGGGGG---g--s-B----------8
-                        GGG---------------------------------------------qwe-------LGgR
+        List<TileModel> tiles = TileFactory.generate("""
+                        ---------------------------------------------------------9
+                        ---------------------------------------------------------8
+                        ----------------------------------------------LGGGGGGGGGGR
+                        LGGGGGR--------------------------------------qGGGGGGGGGGGG
+                        GGGGGGG------------------------------------B----------GGGG
+                        GGGGGGG------------------------------------i----------GGGG
+                        GGGGGGG----------------------------------------LR-----GGGG
+                        GGGGGGG----------------------------------------GGGr---GGGG
+                        GGGGGGG----|------lr---------------------------------BGGGG
+                        GGGGGGGe-----LR------------------------------------GGGGGGG
+                        GGGGGGG---G--GG--------------------------------S-GGGGGGGGG
+                        GGGGGGG--eG--GG--------i------------------s---LGGGGGGGGGGG
+                        GGGGGGGB-----GG----------------------s---lgr--GGGGGGGGGGGG
+                        GGGGGGGwe----GG---------------SS----lgr-------------------
+                        GGG-------|--GG-----------I--lgggr------------------------
+                        GGG---------BGG-----------G-------------------------------
+                        GGG--------qwGGSSSSSSSSS--G-------------------------------
+                        GGGGGGGGR----GGGGGGGGGGR--G-------------------------------
+                        GGGGGGGGG----GGGGGGGGGGG--G-------------------------------
+                        GGGGGGGGG----GGGGGGGGGGG--G-------------------------------
+                        GGGGGGGGG----GGGGGGGGGGG----------------------------------
                         """,
+                
                 world, bus);
         foreground.addAll(tiles);
         //ditems.add(new ItemEnergy(bus, world, 15, 7));
-        items.add(new ItemMushroom(bus, world, 15, 7));
+        //items.add(new ItemMushroom(bus, world, 18f, 20f));
     }
 
     @Override
