@@ -53,6 +53,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
      * Used for testing
      */
     private void fillWorld() {
+        TileFactory.initialize();
         List<TileModel> tiles = TileFactory.generate(
                 """
                         -9
@@ -67,7 +68,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                         """,
                 world, bus);
         foreground.addAll(tiles);
-        //ditems.add(new ItemEnergy(bus, world, 15, 7));
+        // items.add(new ItemEnergy(bus, world, 15, 7));
         items.add(new ItemMushroom(bus, world, 15, 7));
     }
 

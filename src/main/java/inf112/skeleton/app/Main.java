@@ -5,6 +5,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import inf112.skeleton.app.controller.Controller;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.GameModel;
+import inf112.skeleton.app.model.TileFactory;
 import inf112.skeleton.app.model.tiles.*;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door1;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door2;
@@ -14,10 +15,10 @@ import inf112.skeleton.app.view.GameView;
 
 public class Main {
     public static void main(String[] args) {
-        loadClasses();
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setTitle("game");
         cfg.setWindowedMode(480, 320);
+
         EventBus bus = new EventBus();
 
         GameModel model = new GameModel(bus);
@@ -29,31 +30,5 @@ public class Main {
 
         new Lwjgl3Application(view, cfg);
 
-    }
-
-    private static void loadClasses() {
-        TileModel.loadStatic();
-
-        TileGroundSingle.loadStatic();
-        TileGround.loadStatic();
-        TileGroundLeft.loadStatic();
-        TileGroundRight.loadStatic();
-
-        TileFloatingGroundSingle.loadStatic();
-        TileFloatingGround.loadStatic();
-        TileFloatingGroundLeft.loadStatic();
-        TileFloatingGroundRight.loadStatic();
-
-        TileFloatingGroundSingleSlim.loadStatic();
-        TileFloatingGroundSlim.loadStatic();
-        TileFloatingGroundLeftSlim.loadStatic();
-        TileFloatingGroundRightSlim.loadStatic();
-
-        Spike.loadStatic();
-        Saw.loadStatic();
-        Barrel.loadStatic();
-
-        Door1.loadStatic();
-        Door2.loadStatic();
     }
 }

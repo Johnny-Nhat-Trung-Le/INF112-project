@@ -1,9 +1,11 @@
 package inf112.skeleton.app.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.utils.Function4;
+import inf112.skeleton.app.utils.PluginLoader;
 
 import java.util.*;
 
@@ -55,5 +57,19 @@ public class TileFactory {
      */
     public static void register(char key, Function4<World, EventBus, Float, Float, TileModel> function) {
         translation.put(key, function);
+    }
+
+    /**
+     * Initialize with {@link TileModel}s.
+     */
+    public static void initialize() {
+        PluginLoader.loadClasses(TileFactory.class, "./tiles", TileModel.class).forEach(c -> {
+            Character key = PluginLoader.getConstant(c, "KEY", char.class);
+            Function4<World, EventBus, Float, Float, TileModel> factory = PluginLoader.makeFactory(c, World.class, EventBus.class, Float.TYPE, Float.TYPE);
+            if (factory != null && key != null) {
+                translation.put(key, factory);
+//                Gdx.app.log("ModelFactory", String.format("Loaded ‘%s’ (from %s)", key, c.getName()));
+            }
+        });
     }
 }
