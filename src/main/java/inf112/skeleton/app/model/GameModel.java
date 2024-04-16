@@ -77,9 +77,9 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                         GGGGGGG----------------------------------------GGGr---GGGG
                         GGGGGGG----|------lr---------------------------------BGGGG
                         GGGGGGGe-----LR------------------------------------GGGGGGG
-                        GGGGGGG---G--GG--------------------------------S-GGGGGGGGG
-                        GGGGGGG--eG--GG--------i------------------s---LGGGGGGGGGGG
-                        GGGGGGGB-----GG----------------------s---lgr--GGGGGGGGGGGG
+                        GGGGGGG---G--GG-------G------------------------S-GGGGGGGGG
+                        GGGGGGG--eG--GG-------G------------------s---LGGGGGGGGGGG
+                        GGGGGGGB-----GG--------e-------------s---lgr--GGGGGGGGGGGG
                         GGGGGGGwe----GG---------------SS----lgr-------------------
                         GGG-------|--GG-----------I--lgggr------------------------
                         GGG---------BGG-----------G-------------------------------
@@ -92,7 +92,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                 
                 world, bus);
         foreground.addAll(tiles);
-        //ditems.add(new ItemEnergy(bus, world, 15, 7));
+        //items.add(new ItemEnergy(bus, world, 15, 7));
         //items.add(new ItemMushroom(bus, world, 18f, 20f));
     }
 
