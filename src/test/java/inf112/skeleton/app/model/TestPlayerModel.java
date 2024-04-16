@@ -142,4 +142,11 @@ public class TestPlayerModel {
         world.setGravity(new Vector2(GRAVITY_X, GRAVITY_Y));
     }
 
+    // Health(this, bus, 3, 5);
+    @Test
+    public void testGetHP() {
+        int playerHp = player.getHp();
+        assertEquals(3,playerHp, "Player HP should be 3");
+    }
+
 }
