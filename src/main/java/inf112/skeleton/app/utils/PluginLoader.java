@@ -61,11 +61,13 @@ public class PluginLoader {
     public static List<String> listFiles(Class<?> origin, String path, boolean recurse) {
         Path prefix = Path.of("/", origin.getPackageName().replace('.', '/'));
         Path p = prefix.resolve(path).normalize();
+        String resourcePath = p.toString();
 
-        URL url = origin.getResource(p.toString());
+        URL url = origin.getResource(resourcePath);
         if (url == null) {
             // Fix for windows
-            url = origin.getResource(p.toString().substring(1).replace("\\","."));
+            resourcePath = p.toString().substring(1).replace("\\","/");
+            url = origin.getResource(resourcePath);
             if (url == null) {
 //                Gdx.app.error("PluginLoader", "Resource inaccessible: " + p);
                 return List.of();
@@ -78,7 +80,7 @@ public class PluginLoader {
             return List.of();
         }
 
-        try (var reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(origin.getResourceAsStream(p.toString()))))) {
+        try (var reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(origin.getResourceAsStream(resourcePath))))) {
             List<String> list = reader.lines().toList();// read everything into a list before we return
             List<String> result = new ArrayList<>();
             for (var s : list) {
