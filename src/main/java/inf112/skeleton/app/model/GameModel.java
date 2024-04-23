@@ -12,6 +12,7 @@ import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.model.item.ItemMushroom;
 import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.model.tiles.contactableTiles.ContactableTiles;
+import inf112.skeleton.app.utils.ContactListeners;
 import inf112.skeleton.app.view.ViewableGameModel;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener, EventHandler {
+public class GameModel implements ViewableGameModel, ControllableGameModel, EventHandler {
     public static final float VOID_HEIGHT = -20;
     private static final float GRAVITY = -20;
     private static final float WIND = 0;
@@ -34,6 +35,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     private final World world;
     private final PlayerModel player;
     private GameState state;
+    private ContactListeners contactListeners;
 
     public GameModel(EventBus bus) {
         this.bus = bus;
@@ -43,10 +45,11 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         world = new World(new Vector2(WIND, GRAVITY), true);
         player = new PlayerModel(bus, world, 1.5f, 6.5f);
         state = GameState.MAIN_MENU;
-
+        contactListeners = new ContactListeners();
         bus.addEventHandler(this);
-        world.setContactListener(this); // If more bodies need to be ContactListener
+        world.setContactListener(contactListeners); // If more bodies need to be ContactListener
         fillWorld();
+        initializeContactListeners();
     }
 
     /**
@@ -71,33 +74,16 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         // items.add(new ItemEnergy(bus, world, 15, 7));
         items.add(new ItemMushroom(bus, world, 15, 7));
     }
-
-    @Override
-    public void beginContact(Contact contact) {
-        player.beginContact(contact);
-        for (TileModel tile : foreground.stream().toList()) {
-            if (tile instanceof ContactableTiles) {
-                ((ContactableTiles) tile).beginContact(contact);
+    public void initializeContactListeners(){
+        contactListeners.add(player);
+        for(ViewableTile tile : foreground){
+            if(tile instanceof ContactableTiles t){
+                contactListeners.add(t);
             }
         }
-        for (ItemModel item : items) {
-            item.beginContact(contact);
+        for(ItemModel item: items){
+            contactListeners.add(item);
         }
-    }
-
-    @Override
-    public void endContact(Contact contact) {
-        player.endContact(contact);
-    }
-
-    @Override
-    public void preSolve(Contact contact, Manifold manifold) {
-        player.preSolve(contact, manifold);
-    }
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse contactImpulse) {
-        player.postSolve(contact, contactImpulse);
     }
 
     @Override
@@ -152,6 +138,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
     public void handleEvent(Event event) {
         if (event instanceof EventItemPickedUp e) {
             items.remove(e.item());
+            contactListeners.remove(e.item());
         } else if (event instanceof EventReachedDoor) {
             setState(GameState.VICTORY);
         } else if (event instanceof EventDeath e) {

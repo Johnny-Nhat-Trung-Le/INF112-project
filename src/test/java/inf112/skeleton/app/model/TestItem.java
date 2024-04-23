@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.item.ItemEnergy;
 import inf112.skeleton.app.model.item.ItemMushroom;
+import inf112.skeleton.app.utils.ContactListeners;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -56,25 +57,42 @@ public class TestItem {
         step();
         assertNotNull(player.getItem(), "Suppose to have an item in the player inventory");
     }
-
     @Test
-    public void pickUpItemAfterUsed(){
+    public void pickUpOnlyOneItem() {
+        player.moveRight(true);
+        ItemMushroom mushroom = new ItemMushroom(bus, world, INIT_X + player.getWidth(), player.getY());
+        ItemEnergy energy = new ItemEnergy(bus, world, INIT_X + (2 * player.getWidth()), player.getY());
+        ContactListeners contactL = new ContactListeners();
+        contactL.add(mushroom);
+        contactL.add(energy);
+        world.setContactListener(contactL);
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+        }
+        System.out.println(player.getX());
+        System.out.println(player.getItem());
+        assertNotNull(player.getItem(), "Suppose to have an item in the player inventory");
+        assertEquals(mushroom.toString(), player.getItem().toString(), "Should be the first item which is mushroom");
+    }
+    @Test
+    public void pickUpItemAfterUsed() {
         player.moveLeft(true);
         assertNull(player.getItem(), "player should not start with an item");
         ItemMushroom mushroom = new ItemMushroom(bus, world, player.getX(), player.getY());
         world.setContactListener(mushroom);
         step();
-        assertEquals( mushroom.toString(),player.getItem().toString(), "The item should be a mushroom");
-        for(int i=0; i<mushroom.getDurability().maximum(); i++){
+        assertEquals(mushroom.toString(), player.getItem().toString(), "The item should be a mushroom");
+        for (int i = 0; i < mushroom.getDurability().maximum(); i++) {
             player.useItem();
             step();
         }
-        ItemEnergy energy = new ItemEnergy(bus,world, player.getX(), player.getY());
+        ItemEnergy energy = new ItemEnergy(bus, world, player.getX(), player.getY());
         world.setContactListener(energy);
         step();
-        assertEquals( energy.toString(),player.getItem().toString(),"The item should now be energy");
+        assertEquals(energy.toString(), player.getItem().toString(), "The item should now be energy");
 
     }
+
     @Test
     public void testUseEnergyDistance() {
         player.moveRight(true);
@@ -97,7 +115,7 @@ public class TestItem {
     }
 
     @Test
-    public void testNoDuplicateUseEnergy(){
+    public void testNoDuplicateUseEnergy() {
         player.moveRight(true);
         ItemEnergy energy = new ItemEnergy(bus, world, player.getX(), player.getY());
         world.setContactListener(energy);
@@ -107,7 +125,7 @@ public class TestItem {
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
         }
-        float diffX= player.getX()-startX;
+        float diffX = player.getX() - startX;
         //Using energy item twice or more should not give more speed.
         player.useItem();
         player.useItem();
@@ -117,8 +135,103 @@ public class TestItem {
         }
         //Approximating the difference since we are working with floating points
         float tolerance = 1f;
-        float doubleEnergyDiff = player.getX()-startX;
-        assertTrue(diffX-tolerance< doubleEnergyDiff && doubleEnergyDiff< diffX+tolerance);
+        float doubleEnergyDiff = player.getX() - startX;
+        assertTrue(diffX - tolerance < doubleEnergyDiff && doubleEnergyDiff < diffX + tolerance);
+    }
+
+    @Test
+    public void testUseMushroomJump() {
+        float maxHeight = jump();
+        reset();
+        world.setGravity(new Vector2(GRAVITY_X, -20));
+        ItemMushroom mushroom = new ItemMushroom(bus, world, player.getX(), player.getY());
+        world.setContactListener(mushroom);
+        step();
+        world.setContactListener(player);
+        createStaticBody();
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+        }
+        assertNotNull(player.getItem(), "Player should have gotten ItemMushroom");
+        float previousY = player.getY();
+        player.useItem();
+        player.moveUp(true);
+        float maxHeightItem = 0;
+        while (true) {
+            step();
+            float currentY = player.getY();
+            if (currentY < previousY) {
+                maxHeightItem = previousY;
+                break;
+            }
+            previousY = currentY;
+        }
+        assertTrue(maxHeightItem > maxHeight, "using mushroom should make you jump higher");
+    }
+
+    /**
+     * Makes the player jump to its max Height and returns the height it jumped to.
+     * @return the height the player jumped to
+     */
+    private float jump() {
+        createStaticBody();
+        world.setGravity(new Vector2(GRAVITY_X, -20));
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+        }
+        float previousY = player.getY();
+        player.moveUp(true);
+        while (true) {
+            step();
+
+            float currentY = player.getY();
+            if (currentY < previousY) {
+                player.moveUp(false);
+                break;
+            }
+
+            previousY = currentY;
+        }
+        return previousY;
+    }
+
+    /**
+     * creates a static body which the player can stand on in the world
+     */
+    private void createStaticBody() {
+        float width = 10;
+        float height = 2;
+        BodyDef ground = new BodyDef();
+        ground.type = BodyDef.BodyType.StaticBody;
+        float groundY = INIT_Y - 10;
+        ground.position.set(0, groundY);
+        Body groundBody = world.createBody(ground);
+        PolygonShape groundShape = new PolygonShape();
+        groundShape.setAsBox(width / 2, height / 2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.density = 1;
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0;
+        fixtureDef.shape = groundShape;
+        groundBody.createFixture(fixtureDef);
+    }
+
+    @Test
+    public void testNoDuplicateUseMushroom() {
+        ItemMushroom mushroom = new ItemMushroom(bus, world, player.getX(), player.getY());
+        world.setContactListener(mushroom);
+        step();
+        world.setContactListener(player);
+        createStaticBody();
+        player.useItem();
+        float maxHeight = jump();
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+        }
+        player.useItem();
+        player.useItem();
+        float maxHeightDouble = jump();
+        assertEquals(maxHeight, maxHeightDouble, "Using a mushroom more than once should not give you more jump boost");
     }
 
 }
