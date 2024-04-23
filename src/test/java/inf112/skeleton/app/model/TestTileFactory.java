@@ -14,20 +14,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestTileFactory {
     private static final float GRAVITY_X = 0;
     private static final float GRAVITY_Y = 0;
-    private TileFactory factory;
     private World world;
     private EventBus eventBus;
 
     @BeforeEach
     public void setUp() {
-        factory = new TileFactory();
         world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
         eventBus = new EventBus();
 
-        TileGround.loadStatic();
-        TileFloatingGroundSlim.loadStatic();
-        TileFloatingGround.loadStatic();
-        TileFloatingGroundSingle.loadStatic();
+        TileFactory.register('G', (w, b, x, y) -> new TileGround(w, b, x, y));
+        TileFactory.register('w', (w, b, x, y) -> new TileFloatingGroundSlim(w, b, x, y));
+        TileFactory.register('g', (w, b, x, y) -> new TileFloatingGround(w, b, x, y));
+        TileFactory.register('i', (w, b, x, y) -> new TileFloatingGroundSingle(w, b, x, y));
+
+        TileFactory.initialize();
     }
 
     @Test
@@ -35,7 +35,7 @@ public class TestTileFactory {
         String input = "G";
         List<TileModel> tiles = TileFactory.generate(input, world, eventBus);
         assertEquals(1, tiles.size(), "Should generate one tile object");
-        assertInstanceOf(TileGround.class, tiles.get(0), "Should generate a TileGround tile object");
+        assertTrue(tiles.get(0) instanceof TileGround, "Should generate a TileGround tile object");
     }
 
     @Test
@@ -43,7 +43,7 @@ public class TestTileFactory {
         String input = "w";
         List<TileModel> tiles = TileFactory.generate(input, world, eventBus);
         assertEquals(1, tiles.size(), "Should generate one tile object");
-        assertInstanceOf(TileFloatingGroundSlim.class, tiles.get(0), "Should generate a TileFloatingGroundSlim tile object");
+        assertTrue(tiles.get(0) instanceof TileFloatingGroundSlim, "Should generate a TileFloatingGroundSlim tile object");
     }
 
     @Test
@@ -73,37 +73,37 @@ public class TestTileFactory {
         assertEquals(6, tiles.size(), "Should generate six tile objects");
 
         // Check positions and sizes
-        assertInstanceOf(TileFloatingGround.class, tiles.get(0), "First tile should be TileFloatingGround");
+        assertTrue(tiles.get(0) instanceof TileFloatingGround, "First tile should be TileFloatingGround");
         assertEquals(0, tiles.get(0).getX(), "First tile should be at x=0");
         assertEquals(10, tiles.get(0).getY(), "First tile should be at y=10");
         assertEquals(TileFloatingGround.TILE_WIDTH, tiles.get(0).getWidth(), "First tile should have correct width");
         assertEquals(TileFloatingGround.TILE_HEIGHT, tiles.get(0).getHeight(), "First tile should have correct height");
 
-        assertInstanceOf(TileGround.class, tiles.get(1), "Second tile should be TileGround");
+        assertTrue(tiles.get(1) instanceof TileGround, "Second tile should be TileGround");
         assertEquals(0, tiles.get(1).getX(), "Second tile should be at x=0");
         assertEquals(5, tiles.get(1).getY(), "Second tile should be at y=5");
         assertEquals(TileGround.TILE_WIDTH, tiles.get(1).getWidth(), "Second tile should have correct width");
         assertEquals(TileGround.TILE_HEIGHT, tiles.get(1).getHeight(), "Second tile should have correct height");
 
-        assertInstanceOf(TileFloatingGround.class, tiles.get(2), "Third tile should be TileFloatingGround");
+        assertTrue(tiles.get(2) instanceof TileFloatingGround, "Third tile should be TileFloatingGround");
         assertEquals(5, tiles.get(2).getX(), "Third tile should be at x=5");
         assertEquals(5, tiles.get(2).getY(), "Third tile should be at y=5");
         assertEquals(TileFloatingGround.TILE_WIDTH, tiles.get(2).getWidth(), "Third tile should have correct width");
         assertEquals(TileFloatingGround.TILE_HEIGHT, tiles.get(2).getHeight(), "Third tile should have correct height");
 
-        assertInstanceOf(TileFloatingGround.class, tiles.get(3), "Fourth tile should be TileFloatingGround");
+        assertTrue(tiles.get(3) instanceof TileFloatingGround, "Fourth tile should be TileFloatingGround");
         assertEquals(0, tiles.get(3).getX(), "Fourth tile should be at x=0");
         assertEquals(0, tiles.get(3).getY(), "Fourth tile should be at y=0");
         assertEquals(TileFloatingGround.TILE_WIDTH, tiles.get(3).getWidth(), "Fourth tile should have correct width");
         assertEquals(TileFloatingGround.TILE_HEIGHT, tiles.get(3).getHeight(), "Fourth tile should have correct height");
 
-        assertInstanceOf(TileFloatingGroundSlim.class, tiles.get(4), "Fifth tile should be TileFloatingGroundSlim");
+        assertTrue(tiles.get(4) instanceof TileFloatingGroundSlim, "Fifth tile should be TileFloatingGroundSlim");
         assertEquals(5, tiles.get(4).getX(), "Fifth tile should be at x=5");
         assertEquals(0, tiles.get(4).getY(), "Fifth tile should be at y=0");
         assertEquals(TileFloatingGround.TILE_WIDTH, tiles.get(4).getWidth(), "Fifth tile should have correct width");
         assertEquals(TileFloatingGround.TILE_HEIGHT, tiles.get(4).getHeight(), "Fifth tile should have correct height");
 
-        assertInstanceOf(TileFloatingGroundSingle.class, tiles.get(5), "Sixth tile should be TileFloatingGroundSingle");
+        assertTrue(tiles.get(5) instanceof TileFloatingGroundSingle, "Sixth tile should be TileFloatingGroundSingle");
         assertEquals(10, tiles.get(5).getX(), "Sixth tile should be at x=5");
         assertEquals(0, tiles.get(5).getY(), "Sixth tile should be at y=0");
         assertEquals(TileFloatingGround.TILE_WIDTH, tiles.get(5).getWidth(), "Sixth tile should have correct width");
