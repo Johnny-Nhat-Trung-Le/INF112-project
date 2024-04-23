@@ -31,7 +31,6 @@ public class TexturePack implements ITexturePack {
 
     static {
         PLAYER_ANIMATION_MAP = new HashMap<PlayerState, Animation<TextureRegion>>() {{
-            put(PlayerState.DOWN, loadAnimation("Pink_Monster/Pink_Monster_Climb_4.png", 4));
             put(PlayerState.JUMP_RIGHT, loadAnimation("Pink_Monster/Pink_Monster_Jump_6.png", 2));
             put(PlayerState.JUMP_LEFT, loadAnimation("Pink_Monster/Pink_Monster_LeftJump_6.png", 2));
             put(PlayerState.LEFT, loadAnimation("Pink_Monster/Pink_Monster_LeftRun_6.png", 6));
