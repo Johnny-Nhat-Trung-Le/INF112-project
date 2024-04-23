@@ -81,8 +81,9 @@ public class TestItem {
         ItemMushroom mushroom = new ItemMushroom(bus, world, player.getX(), player.getY());
         world.setContactListener(mushroom);
         step();
+        int durability = player.getItem().getDurability().maximum();
         assertEquals(mushroom.toString(), player.getItem().toString(), "The item should be a mushroom");
-        for (int i = 0; i < mushroom.getDurability().maximum(); i++) {
+        for (int i = 0; i < durability; i++) {
             player.useItem();
             step();
         }
@@ -152,7 +153,7 @@ public class TestItem {
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
         }
-        assertNotNull(player.getItem(), "Player should have gotten ItemMushroom");
+        assertNotNull(player.getItem(), "Player should have an Item Mushroom");
         float previousY = player.getY();
         player.useItem();
         player.moveUp(true);
@@ -234,4 +235,25 @@ public class TestItem {
         assertEquals(maxHeight, maxHeightDouble, "Using a mushroom more than once should not give you more jump boost");
     }
 
+    @Test
+    public void testDoubleEffect(){
+        ItemMushroom mushroom = new ItemMushroom(bus,world, player.getX(), player.getY());
+        world.setContactListener(mushroom);
+        step();
+        assertNotNull(player.getItem());
+        int itemDurability = player.getItem().getDurability().maximum();
+        for(int i=0; i<itemDurability;i++){
+            player.useItem();
+            step();
+        }
+        assertEquals(1,player.getEffects().size(), "should only have 1 effect");
+        assertNull(player.getItem(), "Should have no items in inventory since all is used up");
+        player.moveRight(true);
+        ItemEnergy energy = new ItemEnergy(bus,world,player.getX(), player.getY());
+        world.setContactListener(energy);
+        step();
+        player.useItem();
+        step();
+        assertEquals(2,player.getEffects().size(), "Should have 2 effects");
+    }
 }
