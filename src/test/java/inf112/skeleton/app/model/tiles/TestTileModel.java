@@ -38,7 +38,6 @@ public class TestTileModel {
     public void testTileHalf() {
         TileHalfTemp tileModel = new TileHalfTemp(world, x, y, width, height);
 
-
         assertEquals(expectedX, tileModel.getX(), "TileModel X position should match expected");
         assertEquals(expectedY, tileModel.getY(), "TileModel Y position should match expected");
         assertEquals(width, tileModel.getWidth(), "TileModel width should match width");
