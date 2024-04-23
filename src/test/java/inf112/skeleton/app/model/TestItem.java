@@ -12,206 +12,208 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestItem{
-    privatestaticfinalintVELOCITY_ITERATIONS=6;
-    privatestaticfinalintPOSITION_ITERATIONS=2;
-    privatestaticfinalintNUM_ITERATIONS=60;
-    privatestaticfinalfloatDT=1/60f;
-    privatestaticfinalfloatINIT_X=0;
-    privatestaticfinalfloatINIT_Y=30;
-    privatestaticfinalfloatGRAVITY_X=0;
-    privatestaticfinalfloatGRAVITY_Y=0;
-    privateWorldworld;
-    privatePlayerModelplayer;
-    privateEventBusbus;
+    private static final int VELOCITY_ITERATIONS = 6;
+    private static final int POSITION_ITERATIONS = 2;
+    private static final int NUM_ITERATIONS = 60;
+    private static final float DT = 1/60f;
+    private static final float INIT_X = 0;
+    private static final float INIT_Y = 30;
+    private static final float GRAVITY_X = 0;
+    private static final float GRAVITY_Y = 0;
+    private World world;
+    private PlayerModel player;
+    private EventBus bus;
 
-    privatevoidstep(){
+    private void step(){
         player.step(DT);
-        world.step(DT,VELOCITY_ITERATIONS,POSITION_ITERATIONS);
+        world.step(DT, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     }
 
     @BeforeEach
-            publicvoidreset(){
-        world=newWorld(newVector2(GRAVITY_X,GRAVITY_Y),true);
-        bus=newEventBus();
-        player=newPlayerModel(bus,world,INIT_X,INIT_Y);
+    public void reset(){
+        world = new World(new Vector2(GRAVITY_X, GRAVITY_Y),true);
+        bus= new EventBus();
+        player= new PlayerModel(bus,world, INIT_X, INIT_Y);
         world.setContactListener(player);
     }
 
     @Test
-            publicvoidpickUpEnergy(){
+    public void pickUpEnergy(){
         player.moveRight(true);
-        assertNull(player.getItem(),"playershouldnotstartwithanitem");
-        ItemEnergyenergy=newItemEnergy(bus,world,player.getX(),player.getY());
+        assertNull(player.getItem(),"player should not start with an item");
+        ItemEnergy energy = new ItemEnergy(bus, world,player.getX(), player.getY());
         world.setContactListener(energy);
         step();
-        assertNotNull(player.getItem(),"Supposetohaveanitemintheplayerinventory");
+        assertNotNull(player.getItem(),"Suppose to have an item in the player inventory");
 
     }
 
     @Test
-            publicvoidpickUpMushroom(){
+    public void pickUpMushroom(){
         player.moveLeft(true);
-        assertNull(player.getItem(),"playershouldnotstartwithanitem");
-        ItemMushroommushroom=newItemMushroom(bus,world,player.getX(),player.getY());
+        assertNull(player.getItem(),"player should not start with an item");
+        ItemMushroom mushroom = new ItemMushroom(bus, world, player.getX(), player.getY());
         world.setContactListener(mushroom);
         step();
-        assertNotNull(player.getItem(),"Supposetohaveanitemintheplayerinventory");
+        assertNotNull(player.getItem(),"Suppose to have an item in the player inventory");
     }
 
     @Test
-            publicvoidpickUpOnlyOneItem(){
+    public void pickUpOnlyOneItem(){
         player.moveRight(true);
-//TODOFIXHasmushroominsteadofenergy
-        ItemMushroommushroom=newItemMushroom(bus,world,INIT_X+player.getWidth(),player.getY());
-        ItemEnergyenergy=newItemEnergy(bus,world,INIT_X+(2*player.getWidth()),player.getY());
+        //TODO FIX Has mushroom instead of energy
+        ItemMushroom mushroom = new ItemMushroom(bus, world,INIT_X + player.getWidth(), player.getY());
+        ItemEnergy energy = new ItemEnergy(bus, world,INIT_X + (2 * player.getWidth()), player.getY());
         world.setContactListener(mushroom);
         world.setContactListener(energy);
-        System.out.println(mushroom.getX()+"mushroomX");
-        System.out.println(energy.getX()+"energyX");
-        for(inti=0;i<NUM_ITERATIONS;i++){
+        System.out.println(mushroom.getX() + " mushroomX");
+        System.out.println(energy.getX() + " energyX");
+        for(int i = 0; i < NUM_ITERATIONS; i++){
             step();
         }
         System.out.println(player.getX());
         System.out.println(player.getItem());
-        assertNotNull(player.getItem(),"Supposetohaveanitemintheplayerinventory");
-        assertEquals(mushroom.toString(),player.getItem().toString(),"Shouldbethefirstitemwhichismushroom");
+        assertNotNull(player.getItem(),"Suppose to have an item in the player inventory");
+        assertEquals(mushroom.toString(),player.getItem().toString(),"Should be the first item which is mushroom");
 
     }
     @Test
-            publicvoidpickUpItemAfterUsed(){
+    public void pickUpItemAfterUsed(){
         player.moveLeft(true);
-        assertNull(player.getItem(),"playershouldnotstartwithanitem");
-        ItemMushroommushroom=newItemMushroom(bus,world,player.getX(),player.getY());
+        assertNull(player.getItem(),"player should not start with an item");
+        ItemMushroom mushroom= new ItemMushroom(bus, world, player.getX(), player.getY());
         world.setContactListener(mushroom);
         step();
-        assertEquals(mushroom.toString(),player.getItem().toString(),"Theitemshouldbeamushroom");
-        for(inti=0;i<mushroom.getDurability().maximum();i++){
+        assertEquals(mushroom.toString(), player.getItem().toString(),"The item should be a mushroom");
+        for(int i = 0; i < mushroom.getDurability().maximum(); i++){
             player.useItem();
             step();
         }
-        ItemEnergyenergy=newItemEnergy(bus,world,player.getX(),player.getY());
+        ItemEnergy energy = new ItemEnergy(bus,world, player.getX(), player.getY());
         world.setContactListener(energy);
         step();
-        assertEquals(energy.toString(),player.getItem().toString(),"Theitemshouldnowbeenergy");
+        assertEquals(energy.toString(),player.getItem().toString(),"The item should now been energy");
 
     }
     @Test
-            publicvoidtestUseEnergyDistance(){
+    public void testUseEnergyDistance(){
         player.moveRight(true);
-
-        for(inti=0;i<NUM_ITERATIONS;i++){
+        for(int i = 0; i < NUM_ITERATIONS; i++){
             step();
         }
-        floatdiffX=player.getX()-INIT_X;
-//AddenergyItemtotheworldandlettheplayeruseit
-        ItemEnergyenergy=newItemEnergy(bus,world,player.getX(),player.getY());
+        float diffX = player.getX() - INIT_X;
+        //Add energy Item to the world and let the player use it
+        ItemEnergy energy = new ItemEnergy(bus, world, player.getX(), player.getY());
         world.setContactListener(energy);
         step();
-        floatstartXWithItem=player.getX();
+        float startXWithItem = player.getX();
         player.useItem();
-        for(inti=0;i<NUM_ITERATIONS;i++){
+        for(int i = 0; i < NUM_ITERATIONS; i++){
             step();
         }
-        floatdiffXWithItem=player.getX()-startXWithItem;
-        assertTrue(diffXWithItem>diffX,"Thedistanceusedwiththeenergyitemshouldbelargerthandistancewithoutusingenergyitem");
+        float diffXWithItem = player.getX() - startXWithItem;
+        assertTrue(diffXWithItem > diffX,"The distance used with the energy item should be larger " +
+                "than distance without using energy item");
     }
 
 
     @Test
-            publicvoidtestUseMushroomJump(){
-        floatmaxHeight=jumpWithoutItem();
+    public void testUseMushroomJump(){
+        float maxHeight = jumpWithoutItem();
         reset();
-        world.setGravity(newVector2(GRAVITY_X,-20));
-        ItemMushroommushroom=newItemMushroom(bus,world,player.getX(),player.getY());
+        world.setGravity(new Vector2(GRAVITY_X,-20));
+        ItemMushroom mushroom = new ItemMushroom(bus, world,player.getX(), player.getY());
         world.setContactListener(mushroom);
         step();
+        world.setContactListener(player);
         createStaticBody();
-        assertNotNull(player.getItem(),"PlayershouldhavegottenItemMushroom");
-        floatpreviousY=player.getY()+player.getHeight();
-        player.moveUp(true);
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+        }
+        assertNotNull(player.getItem(),"Player should have gotten ItemMushroom");
+        float previousY = player.getY();
         player.useItem();
-        floatmaxHeightItem=0;
-        while(true){
-            step();
-            floatcurrentY=player.getY();
-            if(currentY<previousY){
-                maxHeightItem=previousY;
-                break;
-            }
-            previousY=currentY;
-        }
-        System.out.println(maxHeightItem);
-        System.out.println(maxHeight);
-        assertTrue(maxHeightItem>maxHeight,"usingmushroomshouldmakeyoujumphigher");
-
-
-    }
-
-    privatefloatjumpWithoutItem(){
-        createStaticBody();
-        world.setGravity(newVector2(GRAVITY_X,-20));
-        floatinitialY=player.getY()+player.getHeight();
-        floatpreviousY=initialY;
-        floatmaxHeight=0;
         player.moveUp(true);
+        float maxHeightItem = 0;
         while(true){
             step();
-            floatcurrentY=player.getY();
-            if(currentY<previousY){
-
-                maxHeight=previousY;
+            float currentY = player.getY();
+            if(currentY < previousY){
+                maxHeightItem = previousY;
                 break;
             }
-            previousY=currentY;
+            previousY = currentY;
         }
-        returnmaxHeight;
+        assertTrue(maxHeightItem > maxHeight,"using mushroom should make you jump higher");
     }
-    privatevoidcreateStaticBody(){
-        floatwidth=10;
-        floatheight=2;
-        BodyDefground=newBodyDef();
-        ground.type=BodyDef.BodyType.StaticBody;
-        floatgroundY=INIT_Y-10;
-        ground.position.set(0,groundY);
-        BodygroundBody=world.createBody(ground);
-        PolygonShapegroundShape=newPolygonShape();
+
+    private float jumpWithoutItem(){
+        createStaticBody();
+        world.setGravity(new Vector2(GRAVITY_X,-20));
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+        }
+        float initialY = player.getY();
+        float previousY = initialY;
+        player.moveUp(true);
+        while (true) {
+            step();
+
+            float currentY = player.getY();
+            if (currentY < previousY) {
+                player.moveUp(false);
+                break;
+            }
+
+            previousY = currentY;
+        }
+        return previousY;
+    }
+    private void createStaticBody(){
+        float width = 10;
+        float height = 2;
+        BodyDef ground = new BodyDef();
+        ground.type = BodyDef.BodyType.StaticBody;
+        float groundY = INIT_Y - 10;
+        ground.position.set(0, groundY);
+        Body groundBody = world.createBody(ground);
+        PolygonShape groundShape = new PolygonShape();
         groundShape.setAsBox(width/2,height/2);
-        FixtureDeffixtureDef=newFixtureDef();
+        FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density=1;
         fixtureDef.friction=0.5f;
         fixtureDef.restitution=0;
         fixtureDef.shape=groundShape;
         groundBody.createFixture(fixtureDef);
-
-
     }
 
 
     @Test
-            publicvoidtestNoDuplicateUseEnergy(){
+    public void testNoDuplicateUseEnergy(){
         player.moveRight(true);
-        ItemEnergyenergy=newItemEnergy(bus,world,player.getX(),player.getY());
+        ItemEnergy energy = new ItemEnergy(bus,world,player.getX(),player.getY());
         world.setContactListener(energy);
         step();
-        floatstartX=player.getX();
+        float startX=player.getX();
         player.useItem();
-        for(inti=0;i<NUM_ITERATIONS;i++){
+        for(int i = 0; i < NUM_ITERATIONS; i++){
             step();
         }
-        floatdiffX=player.getX()-startX;
-//Usingenergyitemtwiceormoreshouldnotgivemorespeed.
+        float diffX = player.getX() - startX;
+        //Using energy item  twice or more should not give more speed.
         player.useItem();
         player.useItem();
-        startX=player.getX();
-        for(inti=0;i<NUM_ITERATIONS;i++){
+        startX = player.getX();
+        for(int i = 0; i < NUM_ITERATIONS; i++){
             step();
         }
-//Approximatingthedifferencesinceweareworkingwithfloatingpoints
-        floattolerance=1f;
-        floatdoubleEnergyDiff=player.getX()-startX;
-        assertTrue(diffX-tolerance<doubleEnergyDiff&&doubleEnergyDiff<diffX+tolerance);
+        //Approximating the differences, we are working with floating points
+        float tolerance=1f;
+        float doubleEnergyDiff = player.getX() - startX;
+        assertTrue(diffX - tolerance < doubleEnergyDiff && doubleEnergyDiff < diffX + tolerance);
     }
     @Test
-            publicvoidtestNoDuplicateUseMushroom(){
-//TODO
+    public void testNoDuplicateUseMushroom() {
+        //TODO
     }
+}
