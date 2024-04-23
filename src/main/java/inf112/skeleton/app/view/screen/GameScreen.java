@@ -3,14 +3,15 @@ package inf112.skeleton.app.view.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.event.EventDispose;
@@ -31,6 +32,7 @@ public class GameScreen implements Screen {
     private final ITexturePack texturePack;
     private final Stage hud;
 
+
     public GameScreen(ViewableGameModel model, EventBus bus, InputProcessor processor) {
         Gdx.graphics.setForegroundFPS(60);
         Gdx.input.setInputProcessor(processor);
@@ -47,12 +49,14 @@ public class GameScreen implements Screen {
         batchHud = new SpriteBatch();
 
         hud = new Hud(batch, model, texturePack);
+
     }
 
     @Override
     public void show() {
         gameCam.zoom = 3f;
         updateCamToPlayer();
+
     }
 
     @Override
@@ -66,9 +70,11 @@ public class GameScreen implements Screen {
 
         gamePort.apply();
 
+
         batch.begin();
         renderTiles();
         renderItems();
+
         // Draws the player
         batch.draw(
                 texturePack.getPlayerTexture(player.getState(), Gdx.graphics.getDeltaTime()),
@@ -79,6 +85,7 @@ public class GameScreen implements Screen {
         );
 
         batch.end();
+
         hud.getViewport().apply();
         hud.draw();
     }
@@ -103,6 +110,7 @@ public class GameScreen implements Screen {
             batch.draw(tileTexture, tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
         }
     }
+
 
     private void renderItems() {
         for (ViewableItem item : model.getItems()) {
