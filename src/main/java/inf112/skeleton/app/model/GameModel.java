@@ -41,7 +41,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         background = new ArrayList<>();
         items = new CopyOnWriteArrayList<>();
         world = new World(new Vector2(WIND, GRAVITY), true);
-        player = new PlayerModel(bus, world, 1.5f, 6.5f);
+        player = new PlayerModel(bus, world, 20f, 20f);
         state = GameState.MAIN_MENU;
 
         bus.addEventHandler(this);
@@ -56,15 +56,27 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
         TileFactory.initialize();
         List<TileModel> tiles = TileFactory.generate(
                 """
-                        -9
-                        -8B--------------------
-                        qwe--------------------lgr
-                        ------ssB----------w------
-                        -----lggr-------------w---
-                        LGR--gggg----------------i-----sss--S-S--S
-                        GG---gggg---S------S-SS-B------LGGGGGGGGGR-----------w-------9
-                        ----qg------lgr--lggggggggr----GGGGGGGGGGG---g--s-B----------8
-                        GGG---------------------------------------------qwe-------LGgR
+                        ---------------------------------------------------------9
+                        ---------------------------------------------------------8
+                        ----------------------------------------------LGGGGGGGGGGR
+                        LGGGGGR--------------------------------------qGGGGGGGGGGGG
+                        GGGGGGG------------------------------------B----------GGGG
+                        GGGGGGG------------------------------------i----------GGGG
+                        GGGGGGG----------------------------------------LR-----GGGG
+                        GGGGGGG----------------------------------------GGGr---GGGG
+                        GGGGGGG----|------lr---------------------------------BGGGG
+                        GGGGGGGe-----LR------------------------------------GGGGGGG
+                        GGGGGGG---G--GG-------G------------------------S-GGGGGGGGG
+                        GGGGGGG--eG--GG-------G------------------s---LGGGGGGGGGGG
+                        GGGGGGGB-----GG--------e-------------s---lgr--GGGGGGGGGGGG
+                        GGGGGGGwe----GG---------------SS----lgr-------------------
+                        GGG-------|--GG-----------I--lgggr------------------------
+                        GGG---------BGG-----------G-------------------------------
+                        GGG--------qwGGSSSSSSSSS--G-------------------------------
+                        GGGGGGGGR----GGGGGGGGGGR--G-------------------------------
+                        GGGGGGGGG----GGGGGGGGGGG--G-------------------------------
+                        GGGGGGGGG----GGGGGGGGGGG--G-------------------------------
+                        GGGGGGGGG----GGGGGGGGGGG----------------------------------
                         """,
                 world, bus);
         foreground.addAll(tiles);

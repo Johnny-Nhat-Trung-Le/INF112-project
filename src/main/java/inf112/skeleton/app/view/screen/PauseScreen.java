@@ -9,7 +9,6 @@ public class PauseScreen extends AbstractScreen {
     private final String title = "Pause!";
     private final String text ="Press P to continue";
     private final GlyphLayout titleLayout = new GlyphLayout(font,title);
-
     private final GlyphLayout textLayout = new GlyphLayout(font,text);
 
 
