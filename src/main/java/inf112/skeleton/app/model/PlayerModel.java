@@ -176,7 +176,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         dy *= effects.stream().reduce((float) 1, (v, e) -> v * e.getJumpBoost(), (a, b) -> a * b);
 
         if (moveUp && !moveDown && isGrounded()) move(0, dy);
-        if (moveDown && !moveUp && !isGrounded()) move(0, -DY);
+        if (moveDown && !moveUp && !isGrounded() && body.getLinearVelocity().y > - MAX_DY) move(0, - MAX_DY);
         if (moveRight && !moveLeft) move(dx, 0);
         if (moveLeft && !moveRight) move(-dx, 0);
 
