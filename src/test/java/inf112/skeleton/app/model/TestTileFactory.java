@@ -24,7 +24,6 @@ public class TestTileFactory {
         world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
         eventBus = new EventBus();
 
-        // hmm maybe not BeforeEach
         TileGround.loadStatic();
         TileFloatingGroundSlim.loadStatic();
         TileFloatingGround.loadStatic();

@@ -84,3 +84,6 @@
 
 ## Dato: Torsdag 11 April 2024
     Alle var tilstede. Jobbet med oblig3. Merget, lagte klasse diagram, fikset kode sammen (par programmering).
+
+## Dato: Tirsdag 16 April 2024
+    Full oppmøte, dagens agenda fortsette fra hvor vi stoppet sist. Lagte tester og la til en PluginLoader. Samt, fikset kode sammen.
