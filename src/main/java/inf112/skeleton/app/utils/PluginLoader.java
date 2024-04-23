@@ -64,8 +64,12 @@ public class PluginLoader {
 
         URL url = origin.getResource(p.toString());
         if (url == null) {
-//            Gdx.app.error("PluginLoader", "Resource inaccessible: " + p);
-            return List.of();
+            // Fix for windows
+            url = origin.getResource(p.toString().substring(1).replace("\\","."));
+            if (url == null) {
+//                Gdx.app.error("PluginLoader", "Resource inaccessible: " + p);
+                return List.of();
+            }
         } else if (url.getProtocol().equals("jar")) {
             String jarPath = url.getFile();
             String jarFile = jarPath.substring(5, jarPath.indexOf('!'));
@@ -155,6 +159,21 @@ public class PluginLoader {
         } catch (ClassNotFoundException e) {
 //            Gdx.app.debug("PluginLoader", "Failed load class " + fullName, e);
             return null;
+        } catch (NoClassDefFoundError e) {
+            // Fix for windows
+            try {
+                Class<?> c = Class.forName(fullName.substring(2).replace("\\","."));
+                int mods = c.getModifiers();
+                if ((mods & (Modifier.ABSTRACT | Modifier.INTERFACE)) != 0)
+                    return null;
+                // check that we actually have a Class<T>
+                if (!requiredInterface.isAssignableFrom(c))
+                    return null;
+                return (Class<T>) c;
+            } catch (ClassNotFoundException e2) {
+//            Gdx.app.debug("PluginLoader", "Failed load class " + fullName, e);
+                return null;
+            }
         }
     }
 
