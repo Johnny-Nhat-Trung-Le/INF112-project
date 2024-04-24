@@ -5,7 +5,6 @@ import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.Durability;
-import inf112.skeleton.app.model.Physicable;
 import inf112.skeleton.app.model.effect.Effect;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.model.event.EventItemContact;
@@ -15,7 +14,7 @@ import inf112.skeleton.app.view.ViewableItem;
 
 import java.util.function.Supplier;
 
-public abstract class ItemModel implements ViewableItem, Physicable, EventHandler, ContactListener {
+public abstract class ItemModel implements ViewableItem, EventHandler, ContactListener {
     private static final float WIDTH = 2;
     private static final float HEIGHT = 2;
     protected Durability durability;
@@ -79,7 +78,7 @@ public abstract class ItemModel implements ViewableItem, Physicable, EventHandle
     }
 
     private void reduceDurability() {
-        durability = new Durability(durability.remaining() - 1, durability.maximum());
+        durability = new Durability(Math.max(durability.remaining() - 1,0), durability.maximum());
     }
 
     @Override
@@ -100,11 +99,6 @@ public abstract class ItemModel implements ViewableItem, Physicable, EventHandle
     @Override
     public float getY() {
         return body.getPosition().y - HEIGHT / 2;
-    }
-
-    @Override
-    public Body getBody() {
-        return body;
     }
 
     @Override

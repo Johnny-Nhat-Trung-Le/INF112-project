@@ -17,15 +17,15 @@ public abstract class Effect implements ViewableEffect {
     public Effect(int duration, float speedBoost, float jumpBoost) {
         this.speedBoost = speedBoost;
         this.jumpBoost = jumpBoost;
-        this.maxDuration = duration;
-        this.duration = duration;
+        this.maxDuration = Math.max(duration, 0);
+        this.duration = Math.max(duration, 0);
     }
 
     /**
      * Decrements the duration of the {@link Effect}
      */
     public void step() {
-        duration -= 1;
+        duration = Math.max(duration - 1, 0);
     }
 
     /**

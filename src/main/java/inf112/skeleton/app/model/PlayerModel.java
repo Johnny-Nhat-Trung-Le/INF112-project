@@ -17,12 +17,12 @@ import inf112.skeleton.app.view.ViewablePlayerModel;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, Physicable, EventHandler, ContactListener {
-    private static final String USER_DATA_BOTTOM = "PlayerBottom";
-    private static final String USER_DATA_LEFT = "PlayerLeft";
-    private static final String USER_DATA_RIGHT = "PlayerRight";
-    private static final String USER_DATA_TOP = "PlayerTop";
-    private static final String USER_DATA_SENSOR = "PlayerSensor";
+public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel, EventHandler, ContactListener {
+    private static final String USERDATA_BOTTOM = "PlayerBottom";
+    private static final String USERDATA_LEFT = "PlayerLeft";
+    private static final String USERDATA_RIGHT = "PlayerRight";
+    private static final String USERDATA_TOP = "PlayerTop";
+    private static final String USERDATA_SENSOR = "PlayerSensor";
     private static final float WIDTH = 3;
     private static final float HEIGHT = 3;
     private static final float DX = 15;
@@ -34,7 +34,12 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private static final float FRICTION = 0;
     private static final float FRICTION_BOTTOM = 10;
     private static final float RESTITUTION = 0;
-    private static Set<Object> userDataSet;
+    private static final Set<Object> USERDATA_SET;
+
+    static {
+        USERDATA_SET = createUserDataSet();
+    }
+
     private final EventBus bus;
     private final World world;
     private final Body body;
@@ -45,9 +50,8 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int contactCountSensor = 0;
     private ItemModel item;
-    private int hp;
+    private IHealth hp;
     private float immunityCoolDown = 0;
-
 
     /**
      * @param world which the player-{@link Body} is created in
@@ -56,7 +60,6 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
      */
 
     public PlayerModel(EventBus bus, World world, float x, float y) {
-        hp = 3;
         this.bus = bus;
         this.world = world;
         body = createBody(x + WIDTH / 2, y + HEIGHT / 2);
@@ -66,9 +69,9 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         moveLeft = false;
         moveRight = false;
         effects = new ArrayList<>();
+        hp = new Health(this, bus, 3, 5);
 
         bus.addEventHandler(this);
-        userDataSet = createUserDataSet();
     }
 
     /**
@@ -78,11 +81,11 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
      */
     private static HashSet<Object> createUserDataSet() {
         HashSet<Object> set = new HashSet<>();
-        set.add(USER_DATA_LEFT);
-        set.add(USER_DATA_RIGHT);
-        set.add(USER_DATA_TOP);
-        set.add(USER_DATA_BOTTOM);
-        set.add(USER_DATA_SENSOR);
+        set.add(USERDATA_LEFT);
+        set.add(USERDATA_RIGHT);
+        set.add(USERDATA_TOP);
+        set.add(USERDATA_BOTTOM);
+        set.add(USERDATA_SENSOR);
         return set;
     }
 
@@ -93,7 +96,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
      * @return if the {@link Fixture} belongs to the player
      */
     private boolean isContacted(Fixture fixture) {
-        return userDataSet.contains(fixture.getUserData());
+        return USERDATA_SET.contains(fixture.getUserData());
     }
 
     @Override
@@ -152,17 +155,17 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     }
 
     @Override
-    public Body getBody() {
-        return body;
-    }
-
-    @Override
     public void step(float timeStep) {
         // EFFECT
         for (int i = effects.size() - 1; i >= 0; i--) {
             Effect effect = effects.get(i);
             if (effect.hasEnded()) effects.remove(effect);
             else effect.step();
+        }
+
+        // CHECK FOR VOID
+        if (getY() < GameModel.VOID_HEIGHT) {
+            bus.post(new EventDeath(this));
         }
 
         // MOVEMENT
@@ -173,7 +176,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         dy *= effects.stream().reduce((float) 1, (v, e) -> v * e.getJumpBoost(), (a, b) -> a * b);
 
         if (moveUp && !moveDown && isGrounded()) move(0, dy);
-        if (moveDown && !moveUp && !isGrounded()) move(0, -DY);
+        if (moveDown && !moveUp && !isGrounded() && body.getLinearVelocity().y > - MAX_DY) move(0, - MAX_DY);
         if (moveRight && !moveLeft) move(dx, 0);
         if (moveLeft && !moveRight) move(-dx, 0);
 
@@ -318,11 +321,11 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         fDefRight.restitution = RESTITUTION;
         fDefRight.shape = shapeRight;
 
-        body.createFixture(fDefSensor).setUserData(USER_DATA_SENSOR);
-        body.createFixture(fDefBottom).setUserData(USER_DATA_BOTTOM);
-        body.createFixture(fDefTop).setUserData(USER_DATA_TOP);
-        body.createFixture(fDefLeft).setUserData(USER_DATA_LEFT);
-        body.createFixture(fDefRight).setUserData(USER_DATA_RIGHT);
+        body.createFixture(fDefSensor).setUserData(USERDATA_SENSOR);
+        body.createFixture(fDefBottom).setUserData(USERDATA_BOTTOM);
+        body.createFixture(fDefTop).setUserData(USERDATA_TOP);
+        body.createFixture(fDefLeft).setUserData(USERDATA_LEFT);
+        body.createFixture(fDefRight).setUserData(USERDATA_RIGHT);
     }
 
     @Override
@@ -343,29 +346,20 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
             item = null;
         } else if (event instanceof EventDamage e) {
             if (isContacted(e.fixture())) {
-                takeDamage(e.damage());
+                handleDamage(e.damage());
             }
         }
     }
 
-    private void takeDamage(int damage) {
-        if ( immunityCoolDown == 0) {
-            updateHp(damage);
-            immunityCoolDown = 1;
-        }
-    }
-
     /**
-     * Updates the Hp when player takes damage
-     *
-     * @param dmg the amount of damage the player should receive
+     * Handles if the player should
+     * take damage whether the player has immunity or not
+     * @param damage the amount of damage the player should take
      */
-    private void updateHp(int dmg) {
-        int newHp = hp - dmg;
-        if (newHp == 0) {
-            bus.post(new EventGameState(GameState.GAME_OVER));
-        } else {
-            hp = newHp;
+    private void handleDamage(int damage) {
+        if (immunityCoolDown == 0) {
+            hp.damage(damage);
+            immunityCoolDown = 1;
         }
     }
 
@@ -425,21 +419,21 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         Fixture fA = contact.getFixtureA();
         Fixture fB = contact.getFixtureB();
 
-        return (USER_DATA_SENSOR.equals(fA.getUserData()) && !fB.isSensor())
-                || (USER_DATA_SENSOR.equals(fB.getUserData()) && !fA.isSensor());
+        return (USERDATA_SENSOR.equals(fA.getUserData()) && !fB.isSensor())
+                || (USERDATA_SENSOR.equals(fB.getUserData()) && !fA.isSensor());
     }
 
     private boolean isBottomToGroundContact(Contact contact) {
         Fixture fA = contact.getFixtureA();
         Fixture fB = contact.getFixtureB();
 
-        return (USER_DATA_BOTTOM.equals(fA.getUserData()) && !fB.isSensor())
-                || (USER_DATA_BOTTOM.equals(fB.getUserData()) && !fA.isSensor());
+        return (USERDATA_BOTTOM.equals(fA.getUserData()) && !fB.isSensor())
+                || (USERDATA_BOTTOM.equals(fB.getUserData()) && !fA.isSensor());
     }
 
     @Override
     public int getHp() {
-        return hp;
+        return hp.getHealth();
     }
 
     @Override

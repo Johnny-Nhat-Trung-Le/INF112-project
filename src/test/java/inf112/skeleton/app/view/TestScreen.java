@@ -10,8 +10,8 @@ import inf112.skeleton.app.controller.Controller;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.GameState;
-import inf112.skeleton.app.model.TileFactory;
 import inf112.skeleton.app.model.event.EventGameState;
+import inf112.skeleton.app.view.screen.GameOverScreen;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

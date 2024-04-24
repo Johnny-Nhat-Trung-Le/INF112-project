@@ -24,4 +24,18 @@
   * **Artist:** Myna Studios
   * **Utgivelses dato:** 17.0.2022
   * **Link:** https://mynastudios.itch.io/basic-platformer-tileset
-  
+* **Music/Sound effects:**
+  * **Tittel:** Mister Exposition
+  * **Artist:** Kevin MacLeod
+  * **Utgivelses dato:** 30.12.2014
+  * **Link:** https://www.youtube.com/watch?v=QEWtJ7CYGaY&list=PLKH-YE4Goc7lZIe7l67TDDKURsRWWW0vc&index=42&ab_channel=KevinMacleod-Topic
+  * **Tittel:** Pixel Peeker Polka - faster
+  * **Artist:** Kevin MacLeod
+  * **Utgivelses dato:** 25.12.2014
+  * **Link:** https://www.youtube.com/watch?v=JbspWYbuxgE&list=PLKH-YE4Goc7lZIe7l67TDDKURsRWWW0vc&index=3&ab_channel=KevinMacleod-Topic
+  * **Tittel:** Cipher
+  * **Artist:** Kevin MacLeod
+  * **Utgivelses dato:** 27.12.2014
+  * **Link:** https://www.youtube.com/watch?v=4yV_gv299VM&list=PLKH-YE4Goc7lZIe7l67TDDKURsRWWW0vc&index=33&ab_channel=KevinMacleod-Topic
+  * **Tittel:** Game over trombone
+  * **Link:** https://mixkit.co/free-sound-effects/game-over/

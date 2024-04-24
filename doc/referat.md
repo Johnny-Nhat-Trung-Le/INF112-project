@@ -81,3 +81,13 @@
     Full oppmøte hvor dagens agenda var oblig3
     Svare på spørsmål og begynte å merge ting inn i main branch
     Fikset klassediagrammet.
+
+## Dato: Torsdag 11 April 2024
+    Alle var tilstede. Jobbet med oblig3. Merget, lagte klasse diagram, fikset kode sammen (par programmering).
+
+## Dato: Tirsdag 16 April 2024
+    Full oppmøte, dagens agenda fortsette fra hvor vi stoppet sist. Lagte tester og la til en PluginLoader (fra Anya). Samt, fikset kode sammen.
+
+## Date: Tirsdag 23 April 2024
+    Dagens agenda var se på tilbakemelding fra oblig3, prøve å fikse det. Lagte mer tester og fikset pluginloader. 
+    Full oppmøte, hvor vi fikset kode sammen.

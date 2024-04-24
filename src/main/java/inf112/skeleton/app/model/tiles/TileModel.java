@@ -2,22 +2,35 @@ package inf112.skeleton.app.model.tiles;
 
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.event.Event;
+import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
-import inf112.skeleton.app.model.Physicable;
 import inf112.skeleton.app.model.Stepable;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.ViewableTile;
 
 
-public abstract class TileModel implements ViewableTile, Physicable, Stepable, EventHandler {
+public abstract class TileModel implements ViewableTile, Stepable, EventHandler {
     public static final float TILE_WIDTH = 5;
     public static final float TILE_HEIGHT = 5;
-
     protected final World world;
-    private final Body body;
+    protected final Body body;
     private final Shape shape;
     private final float width;
     private final float height;
+
+    /**
+     * Creates a {@link TileModel} with default width and height.
+     *
+     * Used for {@link inf112.skeleton.app.model.TileFactory}.
+     *
+     * @param world that the body is added to
+     * @param bus   that is used for handling and posting {@link inf112.skeleton.app.event.Event}s
+     * @param x     left-most position in the horizontal axis
+     * @param y     bottom-most position in the vertical axis
+     */
+    public TileModel(World world, EventBus bus, float x, float y) {
+        this(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT);
+    }
 
     /**
      * Creates a {@link TileModel} and places its body in
@@ -69,11 +82,6 @@ public abstract class TileModel implements ViewableTile, Physicable, Stepable, E
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(w / 2, h / 2);
         return shape;
-    }
-
-    @Override
-    public Body getBody() {
-        return body;
     }
 
     @Override

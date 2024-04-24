@@ -84,7 +84,7 @@ public class Hud extends Stage {
         table.add(effects);
 
         hpGroup.top().right();
-        hpGroup.padTop(10); // Add padding to the top and left edges
+        hpGroup.padTop(10);
         drawHp();
     }
 

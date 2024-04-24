@@ -25,9 +25,4 @@ public interface ViewableGameModel extends GameStateGettable {
      */
     Iterable<ViewableItem> getItems();
 
-    /**
-     * @return AssetsManager
-     */
-    AssetsManager getAssetsManager();
-
 }

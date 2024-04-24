@@ -4,6 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import inf112.skeleton.app.event.Event;
+import inf112.skeleton.app.event.EventBus;
+import inf112.skeleton.app.model.TileFactory;
 
 public abstract class TileHalf extends TileModel {
 
@@ -19,6 +22,20 @@ public abstract class TileHalf extends TileModel {
      */
     public TileHalf(World world, float x, float y, float w, float h) {
         super(world, x, y, w, h);
+    }
+
+    /**
+     * Creates a {@link TileModel} with default width and height.
+     * <p>
+     * Used for {@link TileFactory}.
+     *
+     * @param world that the body is added to
+     * @param bus   that is used for handling and posting {@link Event}s
+     * @param x     left-most position in the horizontal axis
+     * @param y     bottom-most position in the vertical axis
+     */
+    public TileHalf(World world, EventBus bus, float x, float y) {
+        super(world, bus, x, y);
     }
 
     @Override

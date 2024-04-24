@@ -12,12 +12,14 @@ public class AssetsManager implements IAssetsManager {
         put("BUTTON", "assets/blipp.ogg");
     }};
     private static final Map<String, String> musicMap = new HashMap<>() {{
-        put("MAIN", "assets/MiiPlaza.mp3");
-        put("BACKGROUND", "assets/shop.mp3");
-        put("DEAD", "assets/dead.mp3");
+        put("MAIN", "assets/Main.mp3");
+        put("BACKGROUND", "assets/Background.mp3");
+        put("DEAD", "assets/gameOver.wav");
+        put("VICTORY", "assets/Win.mp3");
     }};
     private final Map<String, Sound> currentEffects;
     private Music nowPlaying;
+    private String lastPlayed;
 
     public AssetsManager() {
         currentEffects = new HashMap<>();
@@ -25,6 +27,10 @@ public class AssetsManager implements IAssetsManager {
 
     @Override
     public void playMusic(String key) {
+        if (key.equals(lastPlayed)) {
+            resumeMusic();
+            return;
+        }
         stopMusic();
         if (!musicMap.containsKey(key)) return;
         nowPlaying = Gdx.audio.newMusic(Gdx.files.internal(musicMap.get(key)));
@@ -33,6 +39,7 @@ public class AssetsManager implements IAssetsManager {
             nowPlaying.setLooping(true);
             nowPlaying.play();
         }
+        lastPlayed = key;
     }
 
     @Override
@@ -66,4 +73,5 @@ public class AssetsManager implements IAssetsManager {
         currentEffects.put(key, effect);
         effect.play();
     }
+
 }
