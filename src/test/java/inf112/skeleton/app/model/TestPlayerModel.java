@@ -3,6 +3,10 @@ package inf112.skeleton.app.model;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.event.EventBus;
+import inf112.skeleton.app.model.tiles.TileModel;
+import inf112.skeleton.app.model.tiles.contactableTiles.Saw;
+import inf112.skeleton.app.model.tiles.contactableTiles.Spike;
+import inf112.skeleton.app.utils.ContactListeners;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,10 +20,16 @@ public class TestPlayerModel {
     private static final float DT = 1 / 60f;
     private static final float INIT_X = 0;
     private static final float INIT_Y = 30;
+
+    private static final float width = TileModel.TILE_WIDTH;
+
+    private static final float height = TileModel.TILE_HEIGHT;
     private static final float GRAVITY_X = 0;
     private static final float GRAVITY_Y = 0;
     private World world;
+    private EventBus bus;
     private PlayerModel player;
+    private ContactListeners contacts;
 
     private void step() {
         player.step(DT);
@@ -29,8 +39,11 @@ public class TestPlayerModel {
     @BeforeEach
     public void reset() {
         world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
-        player = new PlayerModel(new EventBus(), world, INIT_X, INIT_Y);
-        world.setContactListener(player);
+        bus = new EventBus();
+        player = new PlayerModel(bus, world, INIT_X, INIT_Y);
+        contacts = new ContactListeners();
+        contacts.add(player);
+        world.setContactListener(contacts);
     }
 
     @Test
@@ -140,6 +153,48 @@ public class TestPlayerModel {
         assertEquals(finalY, initialY);
         // Reset the gravity
         world.setGravity(new Vector2(GRAVITY_X, GRAVITY_Y));
+    }
+
+    public void testSpike() {
+        Spike spike = new Spike(world, bus, INIT_X, player.getY(), width, height);
+        int init_Hp = player.getHp();
+        contacts.add(spike);
+        player.moveRight(true);
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+        }
+        assertTrue(init_Hp > player.getHp(), "Player is suppose to lose 1 hp");
+        assertEquals(init_Hp - 1, player.getHp());
+    }
+
+    @Test
+    public void testSaw() {
+        Saw saw = new Saw(world, bus, player.getX() - player.getWidth(), player.getY(), width, height);
+        int init_Hp = player.getHp();
+        contacts.add(saw);
+        player.moveLeft(true);
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+
+        }
+        assertTrue(init_Hp > player.getHp(), "Player is suppose to lose 1 hp");
+        assertEquals(init_Hp - 1, player.getHp());
+
+    }
+
+    @Test
+    public void testImmunityDoubleSaw() {
+        Saw saw = new Saw(world, bus, player.getX() - player.getWidth(), player.getY(), width, height);
+        Saw saw1 = new Saw(world, bus, saw.getX() - saw.getWidth(), saw.getY(), width, height);
+        contacts.add(saw);
+        contacts.add(saw1);
+        int init_Hp = player.getHp();
+        player.moveLeft(true);
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            step();
+        }
+        assertTrue(init_Hp > player.getHp(), "Player is suppose to lose 1 hp");
+        assertEquals(init_Hp - 1, player.getHp());
     }
 
 }
