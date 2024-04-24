@@ -8,6 +8,7 @@ import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.GameState;
 import inf112.skeleton.app.model.event.EventResetGame;
 import inf112.skeleton.app.model.event.EventStep;
+import inf112.skeleton.app.view.ParallaxBackground;
 
 
 public class Controller extends InputAdapter implements EventHandler {
