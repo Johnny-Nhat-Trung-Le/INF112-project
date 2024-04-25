@@ -12,9 +12,6 @@ public class ParallaxBackground extends Actor {
 
     public ParallaxBackground(Array<Texture> textures) {
         layers = textures;
-        for (int i = 0; i < textures.size; i++) {
-            layers.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
-        }
         x = y = 0;
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
