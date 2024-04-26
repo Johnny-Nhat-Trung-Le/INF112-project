@@ -18,7 +18,7 @@ public class ItemMushroom extends ItemModel {
     public ItemMushroom(EventBus bus, World world, float x, float y) {
         super(bus, world, x, y);
         durability = new Durability(DURABILITY, DURABILITY);
-        createEffect = () -> new EffectJumpBoost(600);
+        createEffect = () -> new EffectJumpBoost(DURATION);
     }
 
     @Override

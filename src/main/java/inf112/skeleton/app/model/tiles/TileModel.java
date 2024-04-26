@@ -8,6 +8,8 @@ import inf112.skeleton.app.model.Stepable;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.ViewableTile;
 
+import java.util.Objects;
+
 
 public abstract class TileModel implements ViewableTile, Stepable, EventHandler {
     public static final float TILE_WIDTH = 5;
@@ -20,7 +22,7 @@ public abstract class TileModel implements ViewableTile, Stepable, EventHandler 
 
     /**
      * Creates a {@link TileModel} with default width and height.
-     *
+     * <p>
      * Used for {@link inf112.skeleton.app.model.TileFactory}.
      *
      * @param world that the body is added to
@@ -78,6 +80,11 @@ public abstract class TileModel implements ViewableTile, Stepable, EventHandler 
         return b;
     }
 
+    /**
+     * @param w width
+     * @param h height
+     * @return {@link PolygonShape} with the specified width and height
+     */
     protected Shape createShape(float w, float h) {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(w / 2, h / 2);

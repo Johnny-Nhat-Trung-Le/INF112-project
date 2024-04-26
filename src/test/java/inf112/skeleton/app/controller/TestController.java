@@ -18,6 +18,7 @@ import static org.mockito.Mockito .*;
 
 public class TestController {
     private ControllableGameModel mockGameModel;
+    private ControllableLevel mockLevel;
     private ControllablePlayerModel mockPlayerModel;
     private Controller controller;
 
@@ -63,8 +64,10 @@ public class TestController {
     @BeforeEach
     public void setup() {
         mockGameModel = mock(ControllableGameModel.class);
+        mockLevel = mock(ControllableLevel.class);
         mockPlayerModel = mock(ControllablePlayerModel.class);
-        when(mockGameModel.getControllablePlayer()).thenReturn(mockPlayerModel);
+        when(mockGameModel.getControllableLevel()).thenReturn(mockLevel);
+        when(mockLevel.getControllablePlayer()).thenReturn(mockPlayerModel);
         controller = new Controller(mockGameModel);
 
         Application app = Mockito.mock(Application.class);

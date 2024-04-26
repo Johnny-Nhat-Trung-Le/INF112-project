@@ -6,11 +6,10 @@ import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.AssetsManager;
-import inf112.skeleton.app.model.GameModel;
 import inf112.skeleton.app.model.GameState;
 import inf112.skeleton.app.model.IAssetsManager;
 import inf112.skeleton.app.model.event.EventGameState;
-import inf112.skeleton.app.model.event.EventResetGame;
+import inf112.skeleton.app.model.event.EventLevelChanged;
 import inf112.skeleton.app.view.screen.*;
 
 public class GameView extends Game implements EventHandler {
@@ -20,9 +19,9 @@ public class GameView extends Game implements EventHandler {
     private final EventBus bus;
     private final InputProcessor processor;
     private final IAssetsManager assetsManager;
-    private GameModel model;
+    private final ViewableGameModel model;
 
-    public GameView(GameModel model, EventBus bus, InputProcessor processor) {
+    public GameView(ViewableGameModel model, EventBus bus, InputProcessor processor) {
         this.model = model;
         this.bus = bus;
         this.processor = processor;
@@ -39,7 +38,11 @@ public class GameView extends Game implements EventHandler {
     private void updateScreenAndMusic(GameState state) {
         switch (state) {
             case ACTIVE -> {
-                setScreen(new GameScreen(model, bus, processor));
+                if (model.getViewableLevel() == null) {
+                    System.out.println("No level selected!");
+                    return;
+                }
+                setScreen(new GameScreen(model.getViewableLevel(), bus, processor));
                 assetsManager.playMusic("BACKGROUND");
             }
             case MAIN_MENU -> {
@@ -63,11 +66,9 @@ public class GameView extends Game implements EventHandler {
 
     @Override
     public void handleEvent(Event event) {
-        if (event instanceof EventResetGame e) {
-            model = e.gameModel();
+        if (event instanceof EventLevelChanged) {
             updateScreenAndMusic(model.getState());
-        }
-        if (event instanceof EventGameState e) {
+        } else if (event instanceof EventGameState e) {
             GameState gameState = e.gameState();
             updateScreenAndMusic(gameState);
         }
