@@ -244,9 +244,19 @@ public class TestTexturePack {
         assertEquals(actualHpTexture.getRegionWidth(), texturePack.getHpTexture().getRegionWidth(), "Should have the same textureWidth");
         assertEquals(actualHpTexture.getRegionHeight(), texturePack.getHpTexture().getRegionHeight(), "Should have the same textureHeight");
     }
+    @Test
+    public void testInventorySlot() {
+        TextureRegion actualInventorySlot = atlas.findRegion(TILE, 85);
+        assertNotNull(texturePack.getInventorySlot());
+        assertEquals(actualInventorySlot.getRegionX(), texturePack.getInventorySlot().getRegionX(), " Should have the same texturePos X");
+        assertEquals(actualInventorySlot.getRegionY(), texturePack.getInventorySlot().getRegionY(), "Should have the same texturePos Y");
+        assertEquals(actualInventorySlot.getRegionWidth(), texturePack.getInventorySlot().getRegionWidth(), "Should have the same textureWidth");
+        assertEquals(actualInventorySlot.getRegionHeight(), texturePack.getInventorySlot().getRegionHeight(), "Should have the same textureHeight");
+    }
 
     @Test
     public void testGetDifferentTextures() {
+
         Door1 door1 = new Door1(world, bus, 0, 0);
         TextureRegion actualDoor1 = atlas.findRegion(TILE, 7);
         assertNotNull(texturePack.getTileTexture(door1));
