@@ -88,4 +88,5 @@ public class TestScreen {
         assertEquals(GameState.VICTORY, model.getState());
     }
     //TODO lag test for InfoScreen
+
 }
