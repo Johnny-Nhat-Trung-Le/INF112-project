@@ -2,13 +2,12 @@ package inf112.skeleton.app.controller;
 
 import inf112.skeleton.app.model.GameState;
 import inf112.skeleton.app.model.GameStateGettable;
-import inf112.skeleton.app.model.Stepable;
 
-public interface ControllableGameModel extends GameStateGettable, Stepable {
+public interface ControllableGameModel extends GameStateGettable {
     /**
-     * @return {@link ControllablePlayerModel} of the model
+     * @return {@link ControllableLevel} of the model, can be {@code null}
      */
-    ControllablePlayerModel getControllablePlayer();
+    ControllableLevel getControllableLevel();
 
     /**
      * Sets the current {@link GameState}
@@ -16,4 +15,11 @@ public interface ControllableGameModel extends GameStateGettable, Stepable {
      * @param state the new {@link GameState}
      */
     void setState(GameState state);
+
+    /**
+     * Sets the active {@link inf112.skeleton.app.model.ILevel}.
+     *
+     * @param key of level
+     */
+    void setLevel(String key);
 }

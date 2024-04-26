@@ -1,6 +1,5 @@
 package inf112.skeleton.app.model;
 
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
@@ -42,15 +41,16 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
     private final EventBus bus;
     private final World world;
+    private final float void_height;
     private final Body body;
     private final List<Effect> effects;
+    private final IHealth hp;
     private Shape shapeTop, shapeBottom, shapeLeft, shapeRight;
     private Shape shapeSensor;
     private PlayerState state;
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int contactCountSensor = 0;
     private ItemModel item;
-    private IHealth hp;
     private float immunityCoolDown = 0;
 
     /**
@@ -58,10 +58,14 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
      * @param x     left-most position of player
      * @param y     bottom-most position of player
      */
-
     public PlayerModel(EventBus bus, World world, float x, float y) {
+        this(bus, world, -20, x, y);
+    }
+
+    public PlayerModel(EventBus bus, World world, float void_height, float x, float y) {
         this.bus = bus;
         this.world = world;
+        this.void_height = void_height;
         body = createBody(x + WIDTH / 2, y + HEIGHT / 2);
         state = PlayerState.IDLE_RIGHT;
         moveUp = false;
@@ -164,7 +168,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         }
 
         // CHECK FOR VOID
-        if (getY() < GameModel.VOID_HEIGHT) {
+        if (getY() < void_height) {
             bus.post(new EventDeath(this));
         }
 
@@ -176,13 +180,13 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         dy *= effects.stream().reduce((float) 1, (v, e) -> v * e.getJumpBoost(), (a, b) -> a * b);
 
         if (moveUp && !moveDown && isGrounded()) move(0, dy);
-        if (moveDown && !moveUp && !isGrounded() && body.getLinearVelocity().y > - MAX_DY) move(0, - MAX_DY);
+        if (moveDown && !moveUp && !isGrounded() && body.getLinearVelocity().y > -MAX_DY) move(0, -MAX_DY);
         if (moveRight && !moveLeft) move(dx, 0);
         if (moveLeft && !moveRight) move(-dx, 0);
 
         // HP
         if (immunityCoolDown > 0) immunityCoolDown -= timeStep;
-        else if(immunityCoolDown<0) immunityCoolDown = 0;
+        else if (immunityCoolDown < 0) immunityCoolDown = 0;
         updateState();
     }
 
@@ -354,6 +358,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     /**
      * Handles if the player should
      * take damage whether the player has immunity or not
+     *
      * @param damage the amount of damage the player should take
      */
     private void handleDamage(int damage) {
