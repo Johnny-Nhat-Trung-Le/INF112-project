@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setTitle("game");
-        cfg.setWindowedMode(480, 320);
+        cfg.setWindowedMode(1280, 1024);
 
         EventBus bus = new EventBus();
 

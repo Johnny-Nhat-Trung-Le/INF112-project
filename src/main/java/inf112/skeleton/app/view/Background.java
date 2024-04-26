@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
 public class Background extends Actor {
-    private Array<Texture> layers;
+    private final Array<Texture> layers;
     private final float x, y, width, height;
 
     public Background(Array<Texture> textures) {

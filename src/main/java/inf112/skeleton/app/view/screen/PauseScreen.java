@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 public class PauseScreen extends AbstractScreen {
     private final Texture texture =new Texture("Backgrounds/background_005.png");;
     private final String title = "Pause!";
-    private final String text ="Press P to continue";
+    private final String text ="Press P to continue\n\n  Press H for help";
     private final GlyphLayout titleLayout = new GlyphLayout(font,title);
     private final GlyphLayout textLayout = new GlyphLayout(font,text);
 

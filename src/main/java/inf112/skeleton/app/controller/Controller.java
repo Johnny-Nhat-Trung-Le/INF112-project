@@ -9,10 +9,12 @@ import inf112.skeleton.app.model.GameState;
 import inf112.skeleton.app.model.event.EventResetGame;
 import inf112.skeleton.app.model.event.EventStep;
 
+import java.util.Objects;
+
 
 public class Controller extends InputAdapter implements EventHandler {
     private ControllableGameModel model;
-
+    private boolean wasMenu = true;
     public Controller(ControllableGameModel model) {
         this.model = model;
     }
@@ -69,6 +71,27 @@ public class Controller extends InputAdapter implements EventHandler {
             case Keys.R:
                 if (model.getState().equals(GameState.GAME_OVER)) {
                     model.setState(GameState.MAIN_MENU);
+                }
+                break;
+            case Keys.H:
+                switch (model.getState()) {
+                    case MAIN_MENU:
+                        model.setState(GameState.INFO);
+                        wasMenu = true;
+                        break;
+                    case PAUSE:
+                        model.setState(GameState.INFO);
+                        wasMenu = false;
+                        break;
+                }
+                break;
+            case Keys.B:
+                if (model.getState() == GameState.INFO) {
+                    if (wasMenu) {
+                        model.setState(GameState.MAIN_MENU);
+                    } else {
+                        model.setState(GameState.ACTIVE);
+                    }
                 }
                 break;
             case Keys.ESCAPE:

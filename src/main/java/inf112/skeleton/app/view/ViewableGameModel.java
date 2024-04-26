@@ -1,6 +1,5 @@
 package inf112.skeleton.app.view;
 
-import inf112.skeleton.app.model.AssetsManager;
 import inf112.skeleton.app.model.GameStateGettable;
 
 
