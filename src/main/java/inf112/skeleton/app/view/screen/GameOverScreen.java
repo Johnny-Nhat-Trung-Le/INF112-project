@@ -10,6 +10,7 @@ public class GameOverScreen extends AbstractScreen {
     private final GlyphLayout layout;
     private final String title = "Game Over !_!";
     private final String text = "Press R to restart!";
+
     public GameOverScreen(InputProcessor processor) {
         super(processor);
 

@@ -6,7 +6,6 @@ import com.badlogic.gdx.InputAdapter;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.GameState;
-import inf112.skeleton.app.model.event.EventResetGame;
 import inf112.skeleton.app.model.event.EventStep;
 
 

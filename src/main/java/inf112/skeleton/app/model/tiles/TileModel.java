@@ -53,13 +53,6 @@ public abstract class TileModel implements ViewableTile, Stepable, EventHandler 
     }
 
     /**
-     * Loads the class into memory. Used to load
-     * static blocks in class.
-     */
-    public static void loadStatic() {
-    }
-
-    /**
      * Must be called after {@link Shape} has been initialized
      * to set the body's shape.
      */
