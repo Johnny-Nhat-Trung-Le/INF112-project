@@ -1,13 +1,10 @@
 package inf112.skeleton.app.view.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -37,8 +34,6 @@ public class GameScreen implements Screen {
 
     // Testing
     private final Stage stageLayers;
-    private final Array<Texture> layers;
-    private final ParallaxBackground parallaxBackground;
 
     public GameScreen(ViewableGameModel model, EventBus bus, InputProcessor processor) {
         Gdx.graphics.setForegroundFPS(60);
@@ -59,10 +54,10 @@ public class GameScreen implements Screen {
 
         // testing
         stageLayers = new Stage(new ScreenViewport());
-        layers = new Array<>();
+        Array<Texture> layers = new Array<>();
         addBackground(layers);
-        parallaxBackground = new ParallaxBackground(layers);
-        stageLayers.addActor(parallaxBackground);
+        Background background = new Background(layers);
+        stageLayers.addActor(background);
     }
 
     @Override
@@ -140,7 +135,7 @@ public class GameScreen implements Screen {
 
     private void addBackground(Array<Texture> textures) {
         for (int i = 0; i <= 6; i++) {
-            textures.add(new Texture(Gdx.files.internal("parallax/img" + i + ".png")));
+            textures.add(new Texture(Gdx.files.internal("Layers/img" + i + ".png")));
             textures.get(textures.size - 1).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
         }
     }

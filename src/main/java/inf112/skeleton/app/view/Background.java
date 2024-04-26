@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
-public class ParallaxBackground extends Actor {
+public class Background extends Actor {
     private Array<Texture> layers;
     private final float x, y, width, height;
 
-    public ParallaxBackground(Array<Texture> textures) {
+    public Background(Array<Texture> textures) {
         layers = textures;
         x = y = 0;
         width = Gdx.graphics.getWidth();
