@@ -45,13 +45,13 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private final float void_height;
     private final Body body;
     private final List<Effect> effects;
+    private final IHealth hp;
     private Shape shapeTop, shapeBottom, shapeLeft, shapeRight;
     private Shape shapeSensor;
     private PlayerState state;
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int contactCountSensor = 0;
     private ItemModel item;
-    private final IHealth hp;
     private float immunityCoolDown = 0;
 
     /**
@@ -181,13 +181,13 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         dy *= effects.stream().reduce((float) 1, (v, e) -> v * e.getJumpBoost(), (a, b) -> a * b);
 
         if (moveUp && !moveDown && isGrounded()) move(0, dy);
-        if (moveDown && !moveUp && !isGrounded() && body.getLinearVelocity().y > - MAX_DY) move(0, -DY);
+        if (moveDown && !moveUp && !isGrounded() && body.getLinearVelocity().y > -MAX_DY) move(0, -DY);
         if (moveRight && !moveLeft) move(dx, 0);
         if (moveLeft && !moveRight) move(-dx, 0);
 
         // HP
         if (immunityCoolDown > 0) immunityCoolDown -= timeStep;
-        else if(immunityCoolDown<0) immunityCoolDown = 0;
+        else if (immunityCoolDown < 0) immunityCoolDown = 0;
         updateState();
     }
 
@@ -359,6 +359,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     /**
      * Handles if the player should
      * take damage whether the player has immunity or not
+     *
      * @param damage the amount of damage the player should take
      */
     private void handleDamage(int damage) {

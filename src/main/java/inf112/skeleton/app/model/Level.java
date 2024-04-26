@@ -9,12 +9,12 @@ import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.event.EventDeath;
+import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.model.event.EventItemPickedUp;
 import inf112.skeleton.app.model.event.EventReachedDoor;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.model.tiles.contactableTiles.ContactableTiles;
-import inf112.skeleton.app.utils.Function4;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.ViewablePlayerModel;
 import inf112.skeleton.app.view.ViewableTile;
@@ -43,16 +43,22 @@ public class Level implements ILevel {
     private List<ItemModel> items;
     private PlayerModel player;
 
+    private List<ItemModel> toBeRemoved;
+    private boolean isActive;
+    private boolean initialized;
+
     /**
-     * @param bus {@link EventBus} that {@link Event}s are posted in
+     * Creates a level that is disabled. Use {@code Level::activate} to activate.
+     *
+     * @param bus         {@link EventBus} that {@link Event}s are posted in
      * @param void_height where the player dies if is below
-     * @param gravity vertical gravity (down is negative)
-     * @param wind horizontal gravity (left is negative)
-     * @param player_x left-most horizontal position
-     * @param player_y bottom-most vertical position
-     * @param foreground string to be used in {@link TileFactory}::generate
-     * @param background string to be used in {@link TileFactory}::generate
-     * @param items to be used to create the {@link TileModel}s
+     * @param gravity     vertical gravity (down is negative)
+     * @param wind        horizontal gravity (left is negative)
+     * @param player_x    left-most horizontal position
+     * @param player_y    bottom-most vertical position
+     * @param foreground  string to be used in {@link TileFactory}::generate
+     * @param background  string to be used in {@link TileFactory}::generate
+     * @param items       to be used to create the {@link TileModel}s
      */
     public Level(
             EventBus bus,
@@ -74,6 +80,8 @@ public class Level implements ILevel {
         default_foreground = foreground;
         default_background = background;
         default_items = items;
+        isActive = false;
+        initialized = false;
 
         reset();
     }
@@ -82,7 +90,7 @@ public class Level implements ILevel {
     public void beginContact(Contact contact) {
         player.beginContact(contact);
 
-        for (TileModel tile : foreground.stream().toList()) {
+        for (TileModel tile : foreground) {
             if (tile instanceof ContactableTiles) {
                 ((ContactableTiles) tile).beginContact(contact);
             }
@@ -110,6 +118,7 @@ public class Level implements ILevel {
     public void handleEvent(Event event) {
         if (event instanceof EventItemPickedUp e) {
             items.remove(e.item());
+            toBeRemoved.add(e.item());
         } else if (event instanceof EventReachedDoor) {
             reset();
         } else if (event instanceof EventDeath e) {
@@ -123,6 +132,11 @@ public class Level implements ILevel {
     public void step(float timeStep) {
         player.step(timeStep);
         world.step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+
+        toBeRemoved.forEach(ItemModel::destroyBody);
+        toBeRemoved.forEach(bus::removeEventHandler);
+        toBeRemoved.forEach((i) -> i.handleEvent(new EventDispose()));
+        toBeRemoved.clear();
     }
 
     @Override
@@ -130,24 +144,59 @@ public class Level implements ILevel {
         return player;
     }
 
+    private void removeEventHandlers() {
+        bus.removeEventHandler(player);
+        foreground.forEach(bus::removeEventHandler);
+        background.forEach(bus::removeEventHandler);
+        items.forEach(bus::removeEventHandler);
+    }
+
+    private void addEventHandlers() {
+        bus.addEventHandler(player);
+        foreground.forEach(bus::addEventHandler);
+        background.forEach(bus::addEventHandler);
+        items.forEach(bus::addEventHandler);
+    }
+
+    private void disposeContents() {
+        player.handleEvent(new EventDispose());
+        foreground.forEach((t) -> t.handleEvent(new EventDispose()));
+        background.forEach((t) -> t.handleEvent(new EventDispose()));
+        items.forEach((i) -> i.handleEvent(new EventDispose()));
+    }
+
     @Override
     public void reset() {
+        if (initialized) {
+            disposeContents();
+            removeEventHandlers();
+        } else initialized = true;
+
         this.world = new World(new Vector2(wind, gravity), true);
+        this.world.setContactListener(this);
         this.player = new PlayerModel(bus, world, void_height, default_player_x, default_player_y);
         this.foreground = TileFactory.generate(default_foreground, world, bus);
-        this.background = TileFactory.generate(default_background, new World(new Vector2(0,0), true), bus);
+        this.background = TileFactory.generate(default_background, new World(new Vector2(0, 0), true), bus);
         this.items = new CopyOnWriteArrayList<>(default_items.stream().map(e -> e.apply(world)).toList());
-        world.setContactListener(this);
+
+        this.toBeRemoved = new CopyOnWriteArrayList<>();
+
+        if (!isActive) removeEventHandlers();
     }
 
     @Override
     public void activate() {
+        if (isActive) return;
         bus.addEventHandler(this);
+        addEventHandlers();
+        isActive = true;
     }
 
     @Override
     public void disable() {
         bus.removeEventHandler(this);
+        removeEventHandlers();
+        isActive = false;
     }
 
     @Override
@@ -156,17 +205,17 @@ public class Level implements ILevel {
     }
 
     @Override
-    public Iterable<ViewableTile> getForegroundTiles() {
+    public List<ViewableTile> getForegroundTiles() {
         return foreground.stream().map(e -> (ViewableTile) e).toList();
     }
 
     @Override
-    public Iterable<ViewableTile> getBackgroundTiles() {
+    public List<ViewableTile> getBackgroundTiles() {
         return background.stream().map(e -> (ViewableTile) e).toList();
     }
 
     @Override
-    public Iterable<ViewableItem> getItems() {
+    public List<ViewableItem> getItems() {
         return items.stream().map(e -> (ViewableItem) e).toList();
     }
 }
