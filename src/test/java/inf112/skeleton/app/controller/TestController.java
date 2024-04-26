@@ -67,8 +67,7 @@ public class TestController {
         when(mockGameModel.getControllablePlayer()).thenReturn(mockPlayerModel);
         controller = new Controller(mockGameModel);
 
-        Application app = Mockito.mock(Application.class);
-        Gdx.app = app;
+        Gdx.app = Mockito.mock(Application.class);
     }
 
     @Test

@@ -136,7 +136,6 @@ public class GameScreen implements Screen {
     private void addBackground(Array<Texture> textures) {
         for (int i = 0; i <= 6; i++) {
             textures.add(new Texture(Gdx.files.internal("Layers/img" + i + ".png")));
-            textures.get(textures.size - 1).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
         }
     }
 
