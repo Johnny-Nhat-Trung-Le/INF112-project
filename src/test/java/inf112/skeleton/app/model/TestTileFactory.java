@@ -14,21 +14,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestTileFactory {
     private static final float GRAVITY_X = 0;
     private static final float GRAVITY_Y = 0;
-    private TileFactory factory;
     private World world;
     private EventBus eventBus;
 
     @BeforeEach
     public void setUp() {
-        factory = new TileFactory();
         world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
         eventBus = new EventBus();
 
-        // hmm maybe not BeforeEach
-        TileGround.loadStatic();
-        TileFloatingGroundSlim.loadStatic();
-        TileFloatingGround.loadStatic();
-        TileFloatingGroundSingle.loadStatic();
+        TileFactory.register('G', TileGround::new);
+        TileFactory.register('w', TileFloatingGroundSlim::new);
+        TileFactory.register('g', TileFloatingGround::new);
+        TileFactory.register('i', TileFloatingGroundSingle::new);
+
+        TileFactory.initialize();
     }
 
     @Test

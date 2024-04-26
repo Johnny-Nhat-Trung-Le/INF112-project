@@ -82,7 +82,7 @@ public abstract class ItemModel implements ViewableItem, EventHandler, ContactLi
     }
 
     private void reduceDurability() {
-        durability = new Durability(durability.remaining() - 1, durability.maximum());
+        durability = new Durability(Math.max(durability.remaining() - 1,0), durability.maximum());
     }
 
     /**

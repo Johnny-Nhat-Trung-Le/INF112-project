@@ -61,11 +61,17 @@ public class PluginLoader {
     public static List<String> listFiles(Class<?> origin, String path, boolean recurse) {
         Path prefix = Path.of("/", origin.getPackageName().replace('.', '/'));
         Path p = prefix.resolve(path).normalize();
+        String resourcePath = p.toString();
 
-        URL url = origin.getResource(p.toString());
+        URL url = origin.getResource(resourcePath);
         if (url == null) {
-//            Gdx.app.error("PluginLoader", "Resource inaccessible: " + p);
-            return List.of();
+            // Fix for windows
+            resourcePath = p.toString().substring(1).replace("\\","/");
+            url = origin.getResource(resourcePath);
+            if (url == null) {
+//                Gdx.app.error("PluginLoader", "Resource inaccessible: " + p);
+                return List.of();
+            }
         } else if (url.getProtocol().equals("jar")) {
             String jarPath = url.getFile();
             String jarFile = jarPath.substring(5, jarPath.indexOf('!'));
@@ -74,7 +80,7 @@ public class PluginLoader {
             return List.of();
         }
 
-        try (var reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(origin.getResourceAsStream(p.toString()))))) {
+        try (var reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(origin.getResourceAsStream(resourcePath))))) {
             List<String> list = reader.lines().toList();// read everything into a list before we return
             List<String> result = new ArrayList<>();
             for (var s : list) {
@@ -155,6 +161,21 @@ public class PluginLoader {
         } catch (ClassNotFoundException e) {
 //            Gdx.app.debug("PluginLoader", "Failed load class " + fullName, e);
             return null;
+        } catch (NoClassDefFoundError e) {
+            // Fix for windows
+            try {
+                Class<?> c = Class.forName(fullName.substring(2).replace("\\","."));
+                int mods = c.getModifiers();
+                if ((mods & (Modifier.ABSTRACT | Modifier.INTERFACE)) != 0)
+                    return null;
+                // check that we actually have a Class<T>
+                if (!requiredInterface.isAssignableFrom(c))
+                    return null;
+                return (Class<T>) c;
+            } catch (ClassNotFoundException e2) {
+//            Gdx.app.debug("PluginLoader", "Failed load class " + fullName, e);
+                return null;
+            }
         }
     }
 

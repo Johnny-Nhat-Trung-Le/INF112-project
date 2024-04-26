@@ -39,9 +39,8 @@ public class EventBus {
      * Removes an {@link EventHandler} so it doesn't receive {@code EventHandler::handle}
      *
      * @param handler to be removed
-     * @return if the handler was removed
      */
-    public boolean removeEventHandler(EventHandler handler) {
-        return handlers.remove(handler);
+    public void removeEventHandler(EventHandler handler) {
+         handlers.remove(handler);
     }
 }
