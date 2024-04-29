@@ -12,6 +12,7 @@ import inf112.skeleton.app.model.event.EventItemPickedUp;
 import inf112.skeleton.app.model.event.EventItemUsedUp;
 import inf112.skeleton.app.view.ViewableItem;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public abstract class ItemModel implements ViewableItem, EventHandler, ContactListener {
@@ -20,6 +21,7 @@ public abstract class ItemModel implements ViewableItem, EventHandler, ContactLi
     protected Durability durability;
     protected Supplier<Effect> createEffect;
     private final Body body;
+    private final World world;
     private Shape shape;
     private final EventBus bus;
 
@@ -33,7 +35,9 @@ public abstract class ItemModel implements ViewableItem, EventHandler, ContactLi
      */
     public ItemModel(EventBus bus, World world, float x, float y) {
         this.bus = bus;
-        body = createBody(world, x, y);
+        this.world = world;
+        this.body = createBody(world, x, y);
+
         bus.addEventHandler(this);
     }
 
@@ -78,7 +82,14 @@ public abstract class ItemModel implements ViewableItem, EventHandler, ContactLi
     }
 
     private void reduceDurability() {
-        durability = new Durability(durability.remaining() - 1, durability.maximum());
+        durability = new Durability(Math.max(durability.remaining() - 1,0), durability.maximum());
+    }
+
+    /**
+     * Destroys the body from the world.
+     */
+    public void destroyBody() {
+        world.destroyBody(body);
     }
 
     @Override
@@ -109,9 +120,6 @@ public abstract class ItemModel implements ViewableItem, EventHandler, ContactLi
     @Override
     public void handleEvent(Event event) {
         if (event instanceof EventDispose) {
-            shape.dispose();
-        } else if (event instanceof EventItemPickedUp e) {
-            if (e.item() != this) return;
             shape.dispose();
         }
     }

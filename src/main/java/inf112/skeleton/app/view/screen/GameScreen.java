@@ -24,22 +24,21 @@ public class GameScreen implements Screen {
     private static final float VIEWPORT_WIDTH = 20;
     private static final float VIEWPORT_HEIGHT = 20;
     private final EventBus eventBus;
-    private final ViewableGameModel model;
+    private final ViewableLevel level;
     private final OrthographicCamera gameCam;
     private final Viewport gamePort;
     private final SpriteBatch batch;
     private final SpriteBatch batchHud;
     private final ITexturePack texturePack;
     private final Stage hud;
+    private final Stage BackgroundLayers;
 
-    // Testing
-    private final Stage stageLayers;
 
-    public GameScreen(ViewableGameModel model, EventBus bus, InputProcessor processor) {
+    public GameScreen(ViewableLevel level, EventBus bus, InputProcessor processor) {
         Gdx.graphics.setForegroundFPS(60);
         Gdx.input.setInputProcessor(processor);
 
-        this.model = model;
+        this.level = level;
         eventBus = bus;
 
         gameCam = new OrthographicCamera();
@@ -50,14 +49,14 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         batchHud = new SpriteBatch();
 
-        hud = new Hud(batch, model, texturePack);
 
         // testing
-        stageLayers = new Stage(new ScreenViewport());
+        BackgroundLayers = new Stage(new ScreenViewport());
         Array<Texture> layers = new Array<>();
         addBackground(layers);
         Background background = new Background(layers);
-        stageLayers.addActor(background);
+        BackgroundLayers.addActor(background);
+        hud = new Hud(batch, level, texturePack);
     }
 
     @Override
@@ -72,14 +71,14 @@ public class GameScreen implements Screen {
         eventBus.post(new EventStep(delta));
         updateCamToPlayer();
 
-        ViewablePlayerModel player = model.getViewablePlayer();
+        ViewablePlayerModel player = level.getViewablePlayer();
 
         ScreenUtils.clear(0, 0, 0, 0);
 
         gamePort.apply();
 
-        stageLayers.act();
-        stageLayers.draw();
+        BackgroundLayers.act();
+        BackgroundLayers.draw();
         batch.begin();
         renderTiles();
         renderItems();
@@ -99,7 +98,7 @@ public class GameScreen implements Screen {
     }
 
     private void updateCamToPlayer() {
-        ViewablePlayerModel p = model.getViewablePlayer();
+        ViewablePlayerModel p = level.getViewablePlayer();
         gameCam.position.set(p.getX() + p.getWidth() / 2, p.getY() + p.getHeight() / 2, 0);
         batch.setProjectionMatrix(gameCam.combined);
         batchHud.setProjectionMatrix(gameCam.combined);
@@ -107,7 +106,7 @@ public class GameScreen implements Screen {
     }
 
     private void renderTiles() {
-        for (ViewableTile tile : model.getForegroundTiles()) {
+        for (ViewableTile tile : level.getForegroundTiles()) {
             renderTile(tile);
         }
     }
@@ -121,7 +120,7 @@ public class GameScreen implements Screen {
 
 
     private void renderItems() {
-        for (ViewableItem item : model.getItems()) {
+        for (ViewableItem item : level.getItems()) {
             renderItem(item);
         }
     }

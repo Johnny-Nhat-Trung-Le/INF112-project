@@ -3,7 +3,6 @@ package inf112.skeleton.app.controller;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
@@ -14,10 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.mockito.Mockito .*;
+import static org.mockito.Mockito.*;
 
 public class TestController {
     private ControllableGameModel mockGameModel;
+    private ControllableLevel mockLevel;
     private ControllablePlayerModel mockPlayerModel;
     private Controller controller;
 
@@ -63,11 +63,13 @@ public class TestController {
     @BeforeEach
     public void setup() {
         mockGameModel = mock(ControllableGameModel.class);
+        mockLevel = mock(ControllableLevel.class);
         mockPlayerModel = mock(ControllablePlayerModel.class);
-        when(mockGameModel.getControllablePlayer()).thenReturn(mockPlayerModel);
+        when(mockGameModel.getControllableLevel()).thenReturn(mockLevel);
+        when(mockLevel.getControllablePlayer()).thenReturn(mockPlayerModel);
         controller = new Controller(mockGameModel);
-
-        Gdx.app = Mockito.mock(Application.class);
+        Application app = Mockito.mock(Application.class);
+        Gdx.app = app;
     }
 
     @Test
@@ -88,7 +90,6 @@ public class TestController {
         verify(mockPlayerModel, times(1)).moveUp(false);
     }
 
-    // can add more keyup and keydown
 
     @Test
     public void testKeyUpChangeStatePauseToActive() {

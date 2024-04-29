@@ -14,8 +14,8 @@ public class Health implements IHealth {
      * zero a {@link EventDeath} will be posted in the {@link EventBus}.
      *
      * @param owner of the health
-     * @param bus to post {@link EventDeath} on {@code health == 0}
-     * @param max allowed health
+     * @param bus   to post {@link EventDeath} on {@code health == 0}
+     * @param max   allowed health
      */
     public Health(Object owner, EventBus bus, int max) {
         this(owner, bus, max, max);
@@ -25,10 +25,10 @@ public class Health implements IHealth {
      * Creates a health for the owner. If the health is reduced to
      * zero a {@link EventDeath} will be posted in the {@link EventBus}.
      *
-     * @param owner of the health
-     * @param bus to post {@link EventDeath} when health is reduced to zero
+     * @param owner  of the health
+     * @param bus    to post {@link EventDeath} when health is reduced to zero
      * @param health at the start
-     * @param max allowed health
+     * @param max    allowed health
      */
     public Health(Object owner, EventBus bus, int health, int max) {
         this.owner = owner;

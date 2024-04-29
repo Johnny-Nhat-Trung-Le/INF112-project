@@ -6,22 +6,22 @@ import com.badlogic.gdx.InputAdapter;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.GameState;
-import inf112.skeleton.app.model.event.EventResetGame;
 import inf112.skeleton.app.model.event.EventStep;
-
-import java.util.Objects;
 
 
 public class Controller extends InputAdapter implements EventHandler {
-    private ControllableGameModel model;
+    private final ControllableGameModel model;
     private boolean wasMenu = true;
+
     public Controller(ControllableGameModel model) {
         this.model = model;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        ControllablePlayerModel player = model.getControllablePlayer();
+        if (model.getControllableLevel() == null) return false;
+        ControllablePlayerModel player = model.getControllableLevel().getControllablePlayer();
+
         switch (keycode) {
             case Keys.SPACE:
                 player.useItem();
@@ -44,7 +44,10 @@ public class Controller extends InputAdapter implements EventHandler {
 
     @Override
     public boolean keyUp(int keycode) {
-        ControllablePlayerModel player = model.getControllablePlayer();
+
+        if (model.getControllableLevel() == null) return false;
+        ControllablePlayerModel player = model.getControllableLevel().getControllablePlayer();
+
         switch (keycode) {
             case Keys.W:
                 player.moveUp(false);
@@ -103,10 +106,8 @@ public class Controller extends InputAdapter implements EventHandler {
     @Override
     public void handleEvent(Event event) {
         if (event instanceof EventStep e) {
-            model.step(e.timeStep());
-        }
-        if (event instanceof EventResetGame e) {
-            model = e.gameModel();
+            if (model.getControllableLevel() == null) return;
+            model.getControllableLevel().step(e.timeStep());
         }
     }
 

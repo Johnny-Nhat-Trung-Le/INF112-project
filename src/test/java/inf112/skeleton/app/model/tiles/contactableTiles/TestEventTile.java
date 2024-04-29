@@ -7,6 +7,7 @@ import inf112.skeleton.app.model.PlayerModel;
 import inf112.skeleton.app.model.tiles.TileModel;
 import inf112.skeleton.app.model.tiles.contactableTiles.Saw;
 import inf112.skeleton.app.model.tiles.contactableTiles.Spike;
+import inf112.skeleton.app.utils.ContactListeners;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +28,7 @@ public class TestEventTile {
     private static final float height = TileModel.TILE_HEIGHT;
     private World world;
     private PlayerModel player;
+    private ContactListeners contactListeners;
     private EventBus bus;
 
     private void step() {
@@ -39,14 +41,16 @@ public class TestEventTile {
         world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
         bus = new EventBus();
         player = new PlayerModel(bus, world, INIT_X, INIT_Y);
-        world.setContactListener(player);
+        contactListeners = new ContactListeners();
+        contactListeners.add(player);
+        world.setContactListener(contactListeners);
     }
 
     @Test
     public void testSpike() {
         Spike spike = new Spike(world, bus, x, player.getY(), width, height);
         int init_Hp = player.getHp();
-        world.setContactListener(spike);
+        contactListeners.add(spike);
         player.moveRight(true);
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
@@ -59,7 +63,7 @@ public class TestEventTile {
     public void testSaw() {
         Saw saw = new Saw(world, bus, player.getX() - player.getWidth(), player.getY(), width, height);
         int init_Hp = player.getHp();
-        world.setContactListener(saw);
+        contactListeners.add(saw);
         player.moveLeft(true);
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
@@ -74,8 +78,8 @@ public class TestEventTile {
     public void testImmunityDoubleSaw() {
         Saw saw = new Saw(world, bus, player.getX() - player.getWidth(), player.getY(), width, height);
         Saw saw1 = new Saw(world, bus, saw.getX() - saw.getWidth(), saw.getY(), width, height);
-        world.setContactListener(saw);
-        world.setContactListener(saw1);
+        contactListeners.add(saw);
+        contactListeners.add(saw1);
         int init_Hp = player.getHp();
         player.moveLeft(true);
         for (int i = 0; i < NUM_ITERATIONS; i++) {

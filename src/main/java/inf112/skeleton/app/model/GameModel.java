@@ -1,60 +1,54 @@
 package inf112.skeleton.app.model;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.controller.ControllableGameModel;
-import inf112.skeleton.app.controller.ControllablePlayerModel;
+import inf112.skeleton.app.controller.ControllableLevel;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
-import inf112.skeleton.app.model.event.*;
+import inf112.skeleton.app.model.event.EventDeath;
+import inf112.skeleton.app.model.event.EventGameState;
+import inf112.skeleton.app.model.event.EventLevelChanged;
+import inf112.skeleton.app.model.event.EventReachedDoor;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.model.item.ItemMushroom;
-import inf112.skeleton.app.model.tiles.TileModel;
-import inf112.skeleton.app.model.tiles.contactableTiles.ContactableTiles;
 import inf112.skeleton.app.view.ViewableGameModel;
-import inf112.skeleton.app.view.ViewableItem;
-import inf112.skeleton.app.view.ViewablePlayerModel;
-import inf112.skeleton.app.view.ViewableTile;
+import inf112.skeleton.app.view.ViewableLevel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.function.Function;
 
-public class GameModel implements ViewableGameModel, ControllableGameModel, ContactListener, EventHandler {
-    public static final float VOID_HEIGHT = -20;
-    private static final float GRAVITY = -20;
-    private static final float WIND = 0;
-    private static final int VELOCITY_ITERATIONS = 6;
-    private static final int POSITION_ITERATIONS = 8;
+public class GameModel implements ViewableGameModel, ControllableGameModel, EventHandler {
     private final EventBus bus;
-    private final List<TileModel> foreground;
-    private final List<TileModel> background;
-    private final List<ItemModel> items;
-    private final World world;
-    private final PlayerModel player;
+    private final Map<String, ILevel> levels;
+    private String level;
     private GameState state;
 
     public GameModel(EventBus bus) {
         this.bus = bus;
-        foreground = new ArrayList<>();
-        background = new ArrayList<>();
-        items = new CopyOnWriteArrayList<>();
-        world = new World(new Vector2(WIND, GRAVITY), true);
-        player = new PlayerModel(bus, world, 20f, 20f);
         state = GameState.MAIN_MENU;
+        levels = new HashMap<>();
 
         bus.addEventHandler(this);
-        world.setContactListener(this); // If more bodies need to be ContactListener
-        fillWorld();
+        fillLevels();
     }
 
-    /**
-     * Used for testing
-     */
-    private void fillWorld() {
+    private void fillLevels() {
         TileFactory.initialize();
-        List<TileModel> tiles = TileFactory.generate(
+
+        // LEVEL 1
+        List<Function<World, ItemModel>> i1 = new ArrayList<>();
+        i1.add((w) -> new ItemMushroom(bus, w, 15, 7));
+        ILevel l1 = new Level(
+                bus,
+                -20,
+                -20,
+                0,
+                1.5f,
+                6.5f,
                 """
                         ---------------------------------------------------------9
                         ---------------------------------------------------------8
@@ -78,43 +72,15 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
                         GGGGGGGGG----GGGGGGGGGGG--G-------------------------------
                         GGGGGGGGG----GGGGGGGGGGG----------------------------------
                         """,
-                world, bus);
-        foreground.addAll(tiles);
-        // items.add(new ItemEnergy(bus, world, 15, 7));
-        items.add(new ItemMushroom(bus, world, 15, 7));
-    }
+                "",
+                i1
+        );
+        levels.put("1", l1);
 
-    @Override
-    public void beginContact(Contact contact) {
-        player.beginContact(contact);
-        for (TileModel tile : foreground.stream().toList()) {
-            if (tile instanceof ContactableTiles) {
-                ((ContactableTiles) tile).beginContact(contact);
-            }
+        // SET DEFAULT
+        if (!levels.isEmpty()) {
+            level = levels.keySet().stream().toList().get(0);
         }
-        for (ItemModel item : items) {
-            item.beginContact(contact);
-        }
-    }
-
-    @Override
-    public void endContact(Contact contact) {
-        player.endContact(contact);
-    }
-
-    @Override
-    public void preSolve(Contact contact, Manifold manifold) {
-        player.preSolve(contact, manifold);
-    }
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse contactImpulse) {
-        player.postSolve(contact, contactImpulse);
-    }
-
-    @Override
-    public ControllablePlayerModel getControllablePlayer() {
-        return player;
     }
 
     @Override
@@ -124,52 +90,57 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Cont
 
     @Override
     public void setState(GameState state) {
-        bus.post(new EventGameState(state));
-        if (this.state == GameState.GAME_OVER) {
-            GameModel model = new GameModel(bus);
-            bus.post(new EventResetGame(model));
-            model.setState(state);
-            bus.removeEventHandler(this);
+        if (this.state == GameState.ACTIVE && !state.equals(this.state)) {
+            if (levels.containsKey(level)) {
+                levels.get(level).disable();
+            }
         }
+        if (state == GameState.ACTIVE && !state.equals(this.state)) {
+            if (levels.containsKey(level)) {
+                levels.get(level).activate();
+            }
+        }
+        if (state == GameState.GAME_OVER) {
+            if (levels.containsKey(level)) {
+                levels.get(level).reset();
+                bus.post(new EventLevelChanged());
+            }
+        }
+
+        bus.post(new EventGameState(state));
         this.state = state;
     }
 
     @Override
-    public ViewablePlayerModel getViewablePlayer() {
-        return player;
+    public ControllableLevel getControllableLevel() {
+        return levels.get(level);
     }
 
     @Override
-    public Iterable<ViewableTile> getForegroundTiles() {
-        return foreground.stream().map((t) -> (ViewableTile) t).toList();
-    }
-
-    @Override
-    public Iterable<ViewableTile> getBackgroundTiles() {
-        return background.stream().map((t) -> (ViewableTile) t).toList();
-    }
-
-    @Override
-    public Iterable<ViewableItem> getItems() {
-        return items.stream().map((i) -> (ViewableItem) i).toList();
-    }
-
-    @Override
-    public void step(float timeStep) {
-        player.step(timeStep);
-        world.step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    public void setLevel(String key) {
+        if (levels.containsKey(level)) {
+            levels.get(level).disable();
+        }
+        level = key;
+        if (levels.containsKey(level) && state == GameState.ACTIVE) {
+            levels.get(level).activate();
+        }
+        bus.post(new EventLevelChanged());
     }
 
     @Override
     public void handleEvent(Event event) {
-        if (event instanceof EventItemPickedUp e) {
-            items.remove(e.item());
-        } else if (event instanceof EventReachedDoor) {
+        if (event instanceof EventReachedDoor) {
             setState(GameState.VICTORY);
         } else if (event instanceof EventDeath e) {
-            if (player.equals(e.owner())){
+            if (e.owner() != null && e.owner().equals(levels.get(level).getControllablePlayer())) {
                 setState(GameState.GAME_OVER);
             }
         }
+    }
+
+    @Override
+    public ViewableLevel getViewableLevel() {
+        return levels.get(level);
     }
 }
