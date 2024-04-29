@@ -44,10 +44,8 @@ public class Controller extends InputAdapter implements EventHandler {
 
     @Override
     public boolean keyUp(int keycode) {
-
         if (model.getControllableLevel() == null) return false;
         ControllablePlayerModel player = model.getControllableLevel().getControllablePlayer();
-
         switch (keycode) {
             case Keys.W:
                 player.moveUp(false);

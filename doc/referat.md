@@ -98,3 +98,6 @@
 
 ## Dato: Fredag 26 April 2024
     Full oppmøte, hvor vi idag lagte tester og begynte med litt merging, samt begynte på siste screen, infoscreen.
+
+## Dato: Mandag 29 April 2024
+    Dagens møte handlet om å stille forelesningen spørsmål og merget de resterende "branches"-ene. Fikst konflikts og la til noen få ekstra tester.
