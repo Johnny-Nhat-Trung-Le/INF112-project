@@ -95,24 +95,6 @@ public class TestTexturePack {
         world.step(DT, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     }
 
-    private void createBody(float x) {
-        BodyDef ground = new BodyDef();
-        ground.type = BodyDef.BodyType.StaticBody;
-        float groundY = INIT_Y - 10;
-        ground.position.set(x, groundY);
-        Body groundBody = world.createBody(ground);
-        PolygonShape groundShape = new PolygonShape();
-        groundShape.setAsBox(tileWidth / 2, tileHeight / 2);
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.density = 1;
-        fixtureDef.friction = 0.5f;
-        fixtureDef.restitution = 0;
-        fixtureDef.shape = groundShape;
-        groundBody.createFixture(fixtureDef);
-
-
-    }
-
     @BeforeEach
     public void reset() {
         world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
@@ -201,6 +183,24 @@ public class TestTexturePack {
         assertEquals("Pink_Monster/Pink_Monster_LeftJump_6.png", jumpLeftTexture.getTexture().toString());
     }
 
+    private void createBody(float x) {
+        BodyDef ground = new BodyDef();
+        ground.type = BodyDef.BodyType.StaticBody;
+        float groundY = INIT_Y - 10;
+        ground.position.set(x, groundY);
+        Body groundBody = world.createBody(ground);
+        PolygonShape groundShape = new PolygonShape();
+        groundShape.setAsBox(tileWidth / 2, tileHeight / 2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.density = 1;
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0;
+        fixtureDef.shape = groundShape;
+        groundBody.createFixture(fixtureDef);
+
+
+    }
+
     @Test
     public void testGetItemEnergyTexture() {
         ItemEnergy energy = new ItemEnergy(bus, world, 0, 0);
@@ -244,6 +244,7 @@ public class TestTexturePack {
         assertEquals(actualHpTexture.getRegionWidth(), texturePack.getHpTexture().getRegionWidth(), "Should have the same textureWidth");
         assertEquals(actualHpTexture.getRegionHeight(), texturePack.getHpTexture().getRegionHeight(), "Should have the same textureHeight");
     }
+
     @Test
     public void testInventorySlot() {
         TextureRegion actualInventorySlot = atlas.findRegion(TILE, 85);

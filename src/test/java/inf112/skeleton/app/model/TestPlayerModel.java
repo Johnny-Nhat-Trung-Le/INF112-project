@@ -155,6 +155,7 @@ public class TestPlayerModel {
         world.setGravity(new Vector2(GRAVITY_X, GRAVITY_Y));
     }
 
+    @Test
     public void testSpike() {
         Spike spike = new Spike(world, bus, INIT_X, player.getY(), width, height);
         int init_Hp = player.getHp();
@@ -195,6 +196,11 @@ public class TestPlayerModel {
         }
         assertTrue(init_Hp > player.getHp(), "Player is suppose to lose 1 hp");
         assertEquals(init_Hp - 1, player.getHp());
+    }
+    @Test
+    public void testGetHP() {
+        int playerHp = player.getHp();
+        assertEquals(3,playerHp, "Player HP should be 3");
     }
 
 }
