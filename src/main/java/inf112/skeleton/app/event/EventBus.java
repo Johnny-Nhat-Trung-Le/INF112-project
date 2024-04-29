@@ -1,6 +1,5 @@
 package inf112.skeleton.app.event;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -41,6 +40,6 @@ public class EventBus {
      * @param handler to be removed
      */
     public void removeEventHandler(EventHandler handler) {
-         handlers.remove(handler);
+        handlers.remove(handler);
     }
 }

@@ -65,6 +65,7 @@ public class TexturePack implements ITexturePack {
 
     /**
      * Get the specific texture from the textureAtlas
+     *
      * @param index the index of the specific texture in the textureAtlas
      * @return TextureRegion from the textureAtlas
      */

@@ -12,8 +12,6 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.view.GameView;
 
-import java.awt.*;
-
 public abstract class AbstractScreen implements Screen {
     protected static final BitmapFont font = new BitmapFont();
     private static final float ViewPort = 400;

@@ -6,10 +6,15 @@
 
 package inf112.skeleton.app.utils;
 
+import com.badlogic.gdx.Gdx;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -21,17 +26,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import com.badlogic.gdx.Gdx;
-
 /**
- * Example of how to find an load classes at runtime.
- *
+ * Example of how to find and load classes at runtime.
  * <b>Doesn't work with modules or JAR files.</b>
- *
+ * <p>
  * Most of the methods accept an <code>origin</code> argument. When searching
  * for classes or files we start in the <em>same package</em> and classloader as
  * <code>origin</code>.
- *
+ * <p>
  * For example,
  * <ul>
  * <li><code>listClasses(com.example.Example.class)</code> will find all classes
@@ -43,11 +45,10 @@ import com.badlogic.gdx.Gdx;
  * </ul>
  *
  * @author anya
- *
  */
 public class PluginLoader {
-    static Pattern classPattern = Pattern.compile("/?([^$]*)\\.class");
     static final int CONSTANT_MODS = Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL;
+    static Pattern classPattern = Pattern.compile("/?([^$]*)\\.class");
 
     /**
      * List files in a classpath directory.
@@ -66,7 +67,7 @@ public class PluginLoader {
         URL url = origin.getResource(resourcePath);
         if (url == null) {
             // Fix for windows
-            resourcePath = p.toString().substring(1).replace("\\","/");
+            resourcePath = p.toString().substring(1).replace("\\", "/");
             url = origin.getResource(resourcePath);
             if (url == null) {
 //                Gdx.app.error("PluginLoader", "Resource inaccessible: " + p);
@@ -104,7 +105,7 @@ public class PluginLoader {
      *
      * @param origin Where to start looking
      * @return A stream of fully qualified class names (of classes in the same
-     *         package as <code>origin</code>)
+     * package as <code>origin</code>)
      */
     public static Stream<String> listClasses(Class<?> origin) {
         return listClasses(origin, "", false);
@@ -145,7 +146,7 @@ public class PluginLoader {
      * @param fullName          Package and class name
      * @param requiredInterface The interface
      * @return The loaded class, or <code>null</code> if it couldn't be found or
-     *         didn't implement <code>requiredInterface</code>
+     * didn't implement <code>requiredInterface</code>
      */
     @SuppressWarnings("unchecked") // safe, since we check type dynamically
     public static <T> Class<T> loadClass(String fullName, Class<T> requiredInterface) {
@@ -164,7 +165,7 @@ public class PluginLoader {
         } catch (NoClassDefFoundError e) {
             // Fix for windows
             try {
-                Class<?> c = Class.forName(fullName.substring(2).replace("\\","."));
+                Class<?> c = Class.forName(fullName.substring(2).replace("\\", "."));
                 int mods = c.getModifiers();
                 if ((mods & (Modifier.ABSTRACT | Modifier.INTERFACE)) != 0)
                     return null;
@@ -295,7 +296,7 @@ public class PluginLoader {
      * @return A <code>(a) -> new clazz(a)</code>
      */
     public static <T, U, V, G, H> Function4<U, V, G, H, T> makeFactory(Class<T> clazz, Class<U> constructorParam1,
-                                                            Class<V> constructorParam2,  Class<G> constructorParam3,  Class<H> constructorParam4) {
+                                                                       Class<V> constructorParam2, Class<G> constructorParam3, Class<H> constructorParam4) {
         Constructor<T> constructor;
         try {
             constructor = clazz.getDeclaredConstructor(constructorParam1, constructorParam2, constructorParam3, constructorParam4);

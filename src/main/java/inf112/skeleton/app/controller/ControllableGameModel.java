@@ -5,12 +5,12 @@ import inf112.skeleton.app.model.GameStateGettable;
 
 public interface ControllableGameModel extends GameStateGettable {
     /**
-     * @return {@link ControllableLevel} of the model, can be {@code null}
+     * @return {@link ControllableLevel} of the model, can be {@code null}.
      */
     ControllableLevel getControllableLevel();
 
     /**
-     * Sets the current {@link GameState}
+     * Sets the current {@link GameState}.
      *
      * @param state the new {@link GameState}
      */
