@@ -1,6 +1,5 @@
 package inf112.skeleton.app.model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.tiles.TileModel;

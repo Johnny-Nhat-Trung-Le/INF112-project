@@ -3,8 +3,6 @@ package inf112.skeleton.app.model.effect;
 import inf112.skeleton.app.model.Durability;
 import inf112.skeleton.app.view.ViewableEffect;
 
-import java.util.Objects;
-
 public abstract class Effect implements ViewableEffect {
     private final float speedBoost;
     private final float jumpBoost;
