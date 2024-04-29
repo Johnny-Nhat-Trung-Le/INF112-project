@@ -27,7 +27,6 @@ public class TestTileFactory {
         TileFactory.register('g', TileFloatingGround::new);
         TileFactory.register('i', TileFloatingGroundSingle::new);
 
-        TileFactory.initialize();
     }
 
     @Test
