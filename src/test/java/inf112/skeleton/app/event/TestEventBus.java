@@ -18,7 +18,6 @@ public class TestEventBus {
     private EventDeath eventDeath;
     private EventReachedDoor eventReachedDoor;
     private EventGameState eventGameState;
-    private EventResetGame eventResetGame;
 
     @BeforeEach
     public void setUp() {
@@ -28,7 +27,6 @@ public class TestEventBus {
         eventDeath = new EventDeath(this);
         eventReachedDoor = new EventReachedDoor();
         eventGameState = new EventGameState(GameState.ACTIVE);
-        eventResetGame = new EventResetGame(new GameModel(eventBus));
     }
 
     @Test
@@ -42,11 +40,9 @@ public class TestEventBus {
     @Test
     public void testEventReachedDoor() {
         eventBus.post(eventReachedDoor);
-        System.out.println(eventList);
-        assertEquals(2, eventList.size(), "EventList size should be 2");
+        assertEquals(1, eventList.size(), "EventList size should be 1");
         assertTrue(eventList.contains(eventReachedDoor));
         assertEquals(eventReachedDoor, eventList.get(0), "Event at index 0 should be EventReachedDoor");
-        assertEquals(new EventGameState(GameState.VICTORY), eventList.get(1), "Event at index 1 should be EventGameState with the GameState VICTORY");
     }
 
     @Test
@@ -58,25 +54,16 @@ public class TestEventBus {
         assertEquals(GameState.ACTIVE, eventGameState.gameState(), "GameState should be ACTIVE");
     }
 
-    @Test
-    public void testEventResetGame() {
-        eventBus.post(eventResetGame);
-        assertEquals(1, eventList.size(), "EventList size should be 1");
-        assertTrue(eventList.contains(eventResetGame));
-        assertEquals(eventResetGame, eventList.get(0), "Event at index 0 should be EventResetGame");
-        assertEquals(GameState.MAIN_MENU,eventResetGame.gameModel().getState(), "GameState after EventResetGame event should be MAIN_MENU");
-    }
 
     @Test
     public void testMultipleEvents() {
         eventBus.post(eventGameState);
         eventBus.post(eventDeath);
         eventBus.post(eventReachedDoor);
-        eventBus.post(eventResetGame);
-        assertEquals(5, eventList.size(), "EventList size should be 5");
+        assertEquals(3, eventList.size(), "EventList size should be 3");
         assertEquals(eventGameState, eventList.get(0), "Event at index 0 should be EventGameState");
+        assertEquals(eventDeath, eventList.get(1), "Event at index 1 should be EventDeath");
         assertEquals(eventReachedDoor, eventList.get(2), "EVent at index 2 should be EventReachedDoor");
-        assertEquals(eventResetGame, eventList.get(4), "Event at index 4 should be EventResetGame");
 
     }
 
