@@ -6,5 +6,4 @@ import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.view.ViewableLevel;
 
 public interface ILevel extends ViewableLevel, ControllableLevel, EventHandler, ContactListener {
-
 }

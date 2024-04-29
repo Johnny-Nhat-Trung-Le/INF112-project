@@ -8,22 +8,20 @@ import inf112.skeleton.app.model.Durability;
 import inf112.skeleton.app.model.effect.Effect;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.model.event.EventItemContact;
-import inf112.skeleton.app.model.event.EventItemPickedUp;
 import inf112.skeleton.app.model.event.EventItemUsedUp;
 import inf112.skeleton.app.view.ViewableItem;
 
-import java.util.Objects;
 import java.util.function.Supplier;
 
 public abstract class ItemModel implements ViewableItem, EventHandler, ContactListener {
     private static final float WIDTH = 2;
     private static final float HEIGHT = 2;
-    protected Durability durability;
-    protected Supplier<Effect> createEffect;
     private final Body body;
     private final World world;
-    private Shape shape;
     private final EventBus bus;
+    protected Durability durability;
+    protected Supplier<Effect> createEffect;
+    private Shape shape;
 
     /**
      * {@code durability} and {@code createEffect} must be set manually.
@@ -82,7 +80,7 @@ public abstract class ItemModel implements ViewableItem, EventHandler, ContactLi
     }
 
     private void reduceDurability() {
-        durability = new Durability(Math.max(durability.remaining() - 1,0), durability.maximum());
+        durability = new Durability(Math.max(durability.remaining() - 1, 0), durability.maximum());
     }
 
     /**

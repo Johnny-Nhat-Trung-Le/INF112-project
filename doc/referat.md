@@ -95,3 +95,6 @@
 ## Dato: Onsdag 24 April 2024
     Fokuset vårt for i dag var tester, fikse noen tester og finne ut hva som burdes testes, og då startet på de.
     Alle var tilstede.
+
+## Dato: Fredag 26 April 2024
+    Full oppmøte, hvor vi idag lagte tester og begynte med litt merging, samt begynte på siste screen, infoscreen.
