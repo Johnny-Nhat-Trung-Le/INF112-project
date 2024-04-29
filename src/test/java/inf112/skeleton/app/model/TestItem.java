@@ -1,5 +1,4 @@
 package inf112.skeleton.app.model;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.event.EventBus;
@@ -23,6 +22,7 @@ public class TestItem {
     private World world;
     private PlayerModel player;
     private EventBus bus;
+
 
     private void step() {
         player.step(DT);
@@ -49,6 +49,7 @@ public class TestItem {
     }
 
     @Test
+
     public void pickUpMushroom() {
         player.moveLeft(true);
         assertNull(player.getItem(), "player should not start with an item");
@@ -69,11 +70,11 @@ public class TestItem {
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
         }
-        System.out.println(player.getX());
-        System.out.println(player.getItem());
-        assertNotNull(player.getItem(), "Suppose to have an item in the player inventory");
-        assertEquals(mushroom.toString(), player.getItem().toString(), "Should be the first item which is mushroom");
+        assertNotNull(player.getItem(),"Suppose to have an item in the player inventory");
+        assertEquals(mushroom.toString(),player.getItem().toString(),"Should be the first item which is mushroom");
+
     }
+
     @Test
     public void pickUpItemAfterUsed() {
         player.moveLeft(true);
@@ -108,37 +109,14 @@ public class TestItem {
         step();
         float startXWithItem = player.getX();
         player.useItem();
-        for (int i = 0; i < NUM_ITERATIONS; i++) {
+        for(int i = 0; i < NUM_ITERATIONS; i++){
             step();
         }
         float diffXWithItem = player.getX() - startXWithItem;
-        assertTrue(diffXWithItem > diffX, "The distance used with the energy item should be larger than distance without using energy item");
+        assertTrue(diffXWithItem > diffX,"The distance used with the energy item should be larger " +
+                "than distance without using energy item");
     }
 
-    @Test
-    public void testNoDuplicateUseEnergy() {
-        player.moveRight(true);
-        ItemEnergy energy = new ItemEnergy(bus, world, player.getX(), player.getY());
-        world.setContactListener(energy);
-        step();
-        float startX = player.getX();
-        player.useItem();
-        for (int i = 0; i < NUM_ITERATIONS; i++) {
-            step();
-        }
-        float diffX = player.getX() - startX;
-        //Using energy item twice or more should not give more speed.
-        player.useItem();
-        player.useItem();
-        startX = player.getX();
-        for (int i = 0; i < NUM_ITERATIONS; i++) {
-            step();
-        }
-        //Approximating the difference since we are working with floating points
-        float tolerance = 1f;
-        float doubleEnergyDiff = player.getX() - startX;
-        assertTrue(diffX - tolerance < doubleEnergyDiff && doubleEnergyDiff < diffX + tolerance);
-    }
 
     @Test
     public void testUseMushroomJump() {
@@ -158,6 +136,7 @@ public class TestItem {
         player.useItem();
         player.moveUp(true);
         float maxHeightItem = 0;
+
         while (true) {
             step();
             float currentY = player.getY();
@@ -167,7 +146,7 @@ public class TestItem {
             }
             previousY = currentY;
         }
-        assertTrue(maxHeightItem > maxHeight, "using mushroom should make you jump higher");
+        assertTrue(maxHeightItem > maxHeight,"using mushroom should make you jump higher");
     }
 
     /**
@@ -208,14 +187,41 @@ public class TestItem {
         ground.position.set(0, groundY);
         Body groundBody = world.createBody(ground);
         PolygonShape groundShape = new PolygonShape();
-        groundShape.setAsBox(width / 2, height / 2);
+        groundShape.setAsBox(width/2,height/2);
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.density = 1;
-        fixtureDef.friction = 0.5f;
-        fixtureDef.restitution = 0;
-        fixtureDef.shape = groundShape;
+        fixtureDef.density=1;
+        fixtureDef.friction=0.5f;
+        fixtureDef.restitution=0;
+        fixtureDef.shape=groundShape;
         groundBody.createFixture(fixtureDef);
     }
+
+
+    @Test
+    public void testNoDuplicateUseEnergy(){
+        player.moveRight(true);
+        ItemEnergy energy = new ItemEnergy(bus,world,player.getX(),player.getY());
+        world.setContactListener(energy);
+        step();
+        float startX=player.getX();
+        player.useItem();
+        for(int i = 0; i < NUM_ITERATIONS; i++){
+            step();
+        }
+        float diffX = player.getX() - startX;
+        //Using energy item  twice or more should not give more speed.
+        player.useItem();
+        player.useItem();
+        startX = player.getX();
+        for(int i = 0; i < NUM_ITERATIONS; i++){
+            step();
+        }
+        //Approximating the differences, we are working with floating points
+        float tolerance=1f;
+        float doubleEnergyDiff = player.getX() - startX;
+        assertTrue(diffX - tolerance < doubleEnergyDiff && doubleEnergyDiff < diffX + tolerance);
+    }
+
 
     @Test
     public void testNoDuplicateUseMushroom() {

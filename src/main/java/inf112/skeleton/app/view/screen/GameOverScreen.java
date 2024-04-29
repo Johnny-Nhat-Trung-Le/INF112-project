@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import inf112.skeleton.app.view.screen.AbstractScreen;
 
 public class GameOverScreen extends AbstractScreen {
     private final Texture texture;

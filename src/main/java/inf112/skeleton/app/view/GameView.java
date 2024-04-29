@@ -78,3 +78,4 @@ public class GameView extends Game implements EventHandler {
         }
     }
 }
+

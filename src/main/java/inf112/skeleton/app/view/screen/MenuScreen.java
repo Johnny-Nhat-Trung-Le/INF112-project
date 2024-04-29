@@ -4,6 +4,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import inf112.skeleton.app.view.screen.AbstractScreen;
 
 public class MenuScreen extends AbstractScreen {
     private static final float TEXTURE_RATIO = 640 / (float) 352;

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestTileModel {
     private static final float x = 10;
@@ -15,15 +14,15 @@ public class TestTileModel {
     private static final float height = TileModel.TILE_HEIGHT;
     private static final float expectedX = x - width / 2;
     private static final float expectedY = y - height / 2;
-
-    private World world;
-    private float DT =  1/60f;
     private static final int VELOCITY_ITERATIONS = 6;
     private static final int POSITION_ITERATIONS = 2;
+    private World world;
+    private final float DT = 1 / 60f;
 
-    private void step(){
-        world.step(DT,VELOCITY_ITERATIONS,POSITION_ITERATIONS);
+    private void step() {
+        world.step(DT, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     }
+
     @BeforeEach
     public void setUp() {
         world = new World(new Vector2(0, 0), true);
@@ -39,8 +38,9 @@ public class TestTileModel {
 
 
     }
+
     @Test
-    public void testTileModelStep(){
+    public void testTileModelStep() {
         TileModelTemp tileModel = new TileModelTemp(world, x, y, width, height);
         step();
         assertEquals(expectedX, tileModel.getX(), "TileModel X position should not change step");

@@ -3,6 +3,7 @@ package inf112.skeleton.app.view.screen;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import inf112.skeleton.app.view.screen.AbstractScreen;
 
 public class PauseScreen extends AbstractScreen {
     private final Texture texture = new Texture("Backgrounds/background_005.png");
