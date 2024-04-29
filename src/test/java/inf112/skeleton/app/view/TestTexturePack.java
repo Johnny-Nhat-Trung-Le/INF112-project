@@ -32,9 +32,9 @@ public class TestTexturePack {
     private static final float GRAVITY_Y = -20;
     private final float tileWidth = 10;
     private final float tileHeight = 2;
+    private final ITexturePack texturePack = new TexturePack();
     private World world;
     private PlayerModel player;
-    private final ITexturePack texturePack = new TexturePack();
 
     @BeforeAll
     public static void beforeAll() {
@@ -92,27 +92,27 @@ public class TestTexturePack {
     @Test
     public void getPlayerTextureLeft() {
         createBody(-tileWidth);
-        createBody(-tileWidth*2);
+        createBody(-tileWidth * 2);
         player.moveLeft(true);
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
         }
         TextureRegion leftTexture = texturePack.getPlayerTexture(player.getState(), DT);
         assertNotNull(leftTexture);
-        assertEquals("Pink_Monster/Pink_Monster_LeftRun_6.png",leftTexture.getTexture().toString());
+        assertEquals("Pink_Monster/Pink_Monster_LeftRun_6.png", leftTexture.getTexture().toString());
     }
 
     @Test
     public void getPlayerTextureRight() {
         createBody(tileWidth);
-        createBody(tileWidth*2);
+        createBody(tileWidth * 2);
         player.moveRight(true);
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
         }
         TextureRegion rightTexture = texturePack.getPlayerTexture(player.getState(), DT);
         assertNotNull(rightTexture);
-        assertEquals("Pink_Monster/Pink_Monster_Run_6.png",rightTexture.getTexture().toString());
+        assertEquals("Pink_Monster/Pink_Monster_Run_6.png", rightTexture.getTexture().toString());
     }
 
     @Test
@@ -122,7 +122,7 @@ public class TestTexturePack {
         }
         TextureRegion idleTexture = texturePack.getPlayerTexture(player.getState(), DT);
         assertNotNull(idleTexture);
-        assertEquals("Pink_Monster/Pink_Monster_Idle_4.png",idleTexture.getTexture().toString());
+        assertEquals("Pink_Monster/Pink_Monster_Idle_4.png", idleTexture.getTexture().toString());
     }
 
     @Test
@@ -136,7 +136,7 @@ public class TestTexturePack {
         step();
         TextureRegion idleTexture = texturePack.getPlayerTexture(player.getState(), DT);
         assertNotNull(idleTexture);
-        assertEquals("Pink_Monster/Pink_Monster_Idle_Left_4.png",idleTexture.getTexture().toString());
+        assertEquals("Pink_Monster/Pink_Monster_Idle_Left_4.png", idleTexture.getTexture().toString());
     }
 
     @Test
@@ -150,7 +150,7 @@ public class TestTexturePack {
         }
         TextureRegion jumpTexture = texturePack.getPlayerTexture(player.getState(), DT);
         assertNotNull(jumpTexture);
-        assertEquals("Pink_Monster/Pink_Monster_Jump_6.png",jumpTexture.getTexture().toString());
+        assertEquals("Pink_Monster/Pink_Monster_Jump_6.png", jumpTexture.getTexture().toString());
     }
 
     @Test
@@ -165,7 +165,7 @@ public class TestTexturePack {
         }
         TextureRegion jumpLeftTexture = texturePack.getPlayerTexture(player.getState(), DT);
         assertNotNull(jumpLeftTexture);
-        assertEquals("Pink_Monster/Pink_Monster_LeftJump_6.png",jumpLeftTexture.getTexture().toString());
+        assertEquals("Pink_Monster/Pink_Monster_LeftJump_6.png", jumpLeftTexture.getTexture().toString());
     }
 
 

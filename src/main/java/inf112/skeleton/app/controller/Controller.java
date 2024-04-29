@@ -11,6 +11,7 @@ import inf112.skeleton.app.model.event.EventStep;
 
 public class Controller extends InputAdapter implements EventHandler {
     private final ControllableGameModel model;
+    private boolean wasMenu = true;
 
     public Controller(ControllableGameModel model) {
         this.model = model;
@@ -43,6 +44,7 @@ public class Controller extends InputAdapter implements EventHandler {
 
     @Override
     public boolean keyUp(int keycode) {
+
         if (model.getControllableLevel() == null) return false;
         ControllablePlayerModel player = model.getControllableLevel().getControllablePlayer();
 
@@ -72,6 +74,27 @@ public class Controller extends InputAdapter implements EventHandler {
             case Keys.R:
                 if (model.getState().equals(GameState.GAME_OVER)) {
                     model.setState(GameState.MAIN_MENU);
+                }
+                break;
+            case Keys.H:
+                switch (model.getState()) {
+                    case MAIN_MENU:
+                        model.setState(GameState.INFO);
+                        wasMenu = true;
+                        break;
+                    case PAUSE:
+                        model.setState(GameState.INFO);
+                        wasMenu = false;
+                        break;
+                }
+                break;
+            case Keys.B:
+                if (model.getState() == GameState.INFO) {
+                    if (wasMenu) {
+                        model.setState(GameState.MAIN_MENU);
+                    } else {
+                        model.setState(GameState.ACTIVE);
+                    }
                 }
                 break;
             case Keys.ESCAPE:

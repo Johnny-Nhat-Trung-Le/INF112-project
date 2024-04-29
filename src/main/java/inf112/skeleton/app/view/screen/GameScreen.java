@@ -4,11 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.event.EventDispose;
@@ -28,6 +31,8 @@ public class GameScreen implements Screen {
     private final SpriteBatch batchHud;
     private final ITexturePack texturePack;
     private final Stage hud;
+    private final Stage BackgroundLayers;
+
 
     public GameScreen(ViewableLevel level, EventBus bus, InputProcessor processor) {
         Gdx.graphics.setForegroundFPS(60);
@@ -44,6 +49,13 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         batchHud = new SpriteBatch();
 
+
+        // testing
+        BackgroundLayers = new Stage(new ScreenViewport());
+        Array<Texture> layers = new Array<>();
+        addBackground(layers);
+        Background background = new Background(layers);
+        BackgroundLayers.addActor(background);
         hud = new Hud(batch, level, texturePack);
     }
 
@@ -51,6 +63,7 @@ public class GameScreen implements Screen {
     public void show() {
         gameCam.zoom = 3f;
         updateCamToPlayer();
+
     }
 
     @Override
@@ -64,6 +77,8 @@ public class GameScreen implements Screen {
 
         gamePort.apply();
 
+        BackgroundLayers.act();
+        BackgroundLayers.draw();
         batch.begin();
         renderTiles();
         renderItems();
@@ -77,6 +92,7 @@ public class GameScreen implements Screen {
         );
 
         batch.end();
+
         hud.getViewport().apply();
         hud.draw();
     }
@@ -102,6 +118,7 @@ public class GameScreen implements Screen {
         }
     }
 
+
     private void renderItems() {
         for (ViewableItem item : level.getItems()) {
             renderItem(item);
@@ -114,6 +131,13 @@ public class GameScreen implements Screen {
             batch.draw(itemTexture, item.getX(), item.getY(), item.getWidth(), item.getHeight());
         }
     }
+
+    private void addBackground(Array<Texture> textures) {
+        for (int i = 0; i <= 6; i++) {
+            textures.add(new Texture(Gdx.files.internal("Layers/img" + i + ".png")));
+        }
+    }
+
 
     @Override
     public void dispose() {
