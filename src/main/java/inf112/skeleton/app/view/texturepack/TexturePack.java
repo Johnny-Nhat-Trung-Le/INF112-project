@@ -70,7 +70,23 @@ public class TexturePack implements ITexturePack {
      * @return TextureRegion from the textureAtlas
      */
     private TextureRegion getTextureFromAtlas(int index) {
-        return new TextureRegion(atlas.findRegion(TILE_NAME, index));
+        TextureAtlas.AtlasRegion ar = atlas.findRegion(TILE_NAME, index);
+        TextureRegion tr = new TextureRegion(ar);
+        switch (index) {
+            case 46: // Spike
+                // 14x13
+                tr.setRegionX(tr.getRegionX() + (16 - 14) / 2);
+                tr.setRegionWidth(14);
+                tr.setRegionY(tr.getRegionY() + 16 - 13);
+                tr.setRegionHeight(13);
+                break;
+            case 47: // Saw
+                // 16x8
+                tr.setRegionY(tr.getRegionY() + 16 - 8);
+                tr.setRegionHeight(8);
+                break;
+        }
+        return tr;
     }
 
     @Override

@@ -138,6 +138,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
             }
         }
     }
+
     @Override
     public ViewableLevel getViewableLevel() {
         return levels.get(level);

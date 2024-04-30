@@ -146,6 +146,8 @@ public class TestLevel {
         assertEquals(3, events.size(), "More than two events was posted");
         assertInstanceOf(EventItemContact.class, events.get(0), "The first event posted was not: " + EventItemContact.class);
         assertInstanceOf(EventItemPickedUp.class, events.get(1), "The second event posted was not: " + EventItemPickedUp.class);
+        assertInstanceOf(EventPlayerAction.class, events.get(2), "The third event posted was not: " + EventPlayerAction.class);
+        assertEquals(PlayerAction.PICKUP, ((EventPlayerAction) events.get(2)).action(), "The playerAction was not " + PlayerAction.PICKUP);
 
         assertEquals(numItems - 1, level.getItems().size(), "The item was not removed from the items-list");
 
@@ -162,6 +164,8 @@ public class TestLevel {
         assertEquals(3, events.size(), "More than two events was posted");
         assertInstanceOf(EventItemContact.class, events.get(0), "The first event posted was not: " + EventItemContact.class);
         assertInstanceOf(EventItemPickedUp.class, events.get(1), "The second event posted was not: " + EventItemPickedUp.class);
+        assertInstanceOf(EventPlayerAction.class, events.get(2), "The third event posted was not: " + EventPlayerAction.class);
+        assertEquals(PlayerAction.PICKUP, ((EventPlayerAction) events.get(2)).action(), "The playerAction was not " + PlayerAction.PICKUP);
 
         assertEquals(numItems - 1, level.getItems().size(), "The item was not removed from the items-list");
     }
@@ -260,6 +264,8 @@ public class TestLevel {
 
         assertEquals(2, events.size(), "More than one event was posted after player hit spike!");
         assertInstanceOf(EventDamage.class, events.get(0), "Event after player hit spike was not " + EventDamage.class);
+        assertInstanceOf(EventPlayerAction.class, events.get(1), "Second event after player hit spike was not " + EventPlayerAction.class);
+        assertEquals(PlayerAction.DAMAGE, ((EventPlayerAction) events.get(1)).action(), "The playerAction was not " + PlayerAction.DAMAGE);
 
         // RESET
         level.reset();
@@ -273,6 +279,8 @@ public class TestLevel {
 
         assertEquals(2, events.size(), "More than one event was posted after player hit spike!");
         assertInstanceOf(EventDamage.class, events.get(0), "Event after player hit spike was not " + EventDamage.class);
+        assertInstanceOf(EventPlayerAction.class, events.get(1), "Second event after player hit spike was not " + EventPlayerAction.class);
+        assertEquals(PlayerAction.DAMAGE, ((EventPlayerAction) events.get(1)).action(), "The playerAction was not " + PlayerAction.DAMAGE);
     }
 
     @Test

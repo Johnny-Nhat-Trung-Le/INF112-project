@@ -1,16 +1,15 @@
 package inf112.skeleton.app.model.tiles.contactableTiles;
 
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.event.EventBus;
-import inf112.skeleton.app.model.event.EventDamage;
 import inf112.skeleton.app.model.tiles.TileModel;
 
-public class Saw extends TileModel implements ContactableTiles {
+public class Saw extends DamageTileModel {
     public static final char KEY = 's';
     private static final int DAMAGE = 1;
-
-    private final EventBus eventBus;
-    private final String USERDATA = "SawData";
 
     /**
      * Creates a {@link TileModel} with default width and height.
@@ -23,7 +22,8 @@ public class Saw extends TileModel implements ContactableTiles {
      * @param y     bottom-most position in the vertical axis
      */
     public Saw(World world, EventBus bus, float x, float y) {
-        this(world, bus, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 4, TILE_WIDTH / 2, TILE_HEIGHT / 2);
+        // width=1, height=1/2, scale=2/3
+        this(world, bus, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 3, TILE_WIDTH * 2 / 3);
     }
 
     /**
@@ -33,14 +33,10 @@ public class Saw extends TileModel implements ContactableTiles {
      * @param world that the body is added to
      * @param x     center position in the horizontal axis
      * @param y     center position in the vertical axis
-     * @param w     width of body
-     * @param h     height of body
+     * @param d     diameter of body (equal to width and height/2)
      */
-    public Saw(World world, EventBus bus, float x, float y, float w, float h) {
-        super(world, x, y, w, h);
-        eventBus = bus;
-        eventBus.addEventHandler(this);
-
+    public Saw(World world, EventBus bus, float x, float y, float d) {
+        super(world, bus, x, y, d, d, DAMAGE);
     }
 
     @Override
@@ -48,46 +44,11 @@ public class Saw extends TileModel implements ContactableTiles {
         CircleShape circle = new CircleShape();
         circle.setRadius(w / 2);
         return circle;
-
     }
 
     @Override
     protected Body createBody(float x, float y) {
-        BodyDef bDef = new BodyDef();
-        bDef.type = BodyDef.BodyType.StaticBody;
-        bDef.position.set(x, y - (this.getHeight() / 2));
-        FixtureDef fDef = new FixtureDef();
-        fDef.density = 1;
-        fDef.friction = 0.5f;
-        fDef.restitution = 0;
-        fDef.shape = createShape(this.getWidth(), this.getHeight());
-
-        Body b = world.createBody(bDef);
-        Fixture sawFixture = b.createFixture(fDef);
-        sawFixture.setUserData(USERDATA);
-        return b;
-    }
-
-    @Override
-    public void beginContact(Contact contact) {
-        Fixture fA = contact.getFixtureA();
-        Fixture fB = contact.getFixtureB();
-        if (USERDATA.equals(fB.getUserData())) {
-            eventBus.post(new EventDamage(DAMAGE, fA));
-        }
-    }
-
-
-    @Override
-    public void endContact(Contact contact) {
-    }
-
-    @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-    }
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
+        return super.createBody(x, y - getHeight() / 2);
     }
 
     @Override

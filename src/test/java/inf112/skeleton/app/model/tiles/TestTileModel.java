@@ -16,8 +16,8 @@ public class TestTileModel {
     private static final float expectedY = y - height / 2;
     private static final int VELOCITY_ITERATIONS = 6;
     private static final int POSITION_ITERATIONS = 2;
+    private static final float DT = 1 / 60f;
     private World world;
-    private final float DT = 1 / 60f;
 
     private void step() {
         world.step(DT, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
@@ -35,8 +35,6 @@ public class TestTileModel {
         assertEquals(expectedY, tileModel.getY(), "TileModel Y position should match expected");
         assertEquals(width, tileModel.getWidth(), "TileModel width should match width");
         assertEquals(height, tileModel.getHeight(), "TileModel height should match height");
-
-
     }
 
     @Test
@@ -49,29 +47,10 @@ public class TestTileModel {
         assertEquals(height, tileModel.getHeight(), "TileModel height should not change after step");
     }
 
-    @Test
-    public void testTileHalf() {
-        TileHalfTemp tileModel = new TileHalfTemp(world, x, y, width, height);
-
-        assertEquals(expectedX, tileModel.getX(), "TileModel X position should match expected");
-        assertEquals(expectedY, tileModel.getY(), "TileModel Y position should match expected");
-        assertEquals(width, tileModel.getWidth(), "TileModel width should match width");
-        assertEquals(height, tileModel.getHeight(), "TileModel height should match height");
-    }
-
     // Temp Tile for Testing
     private static class TileModelTemp extends TileModel {
         public TileModelTemp(World world, float x, float y, float w, float h) {
             super(world, x, y, w, h);
         }
     }
-
-    // Temp TileHalf for Testing
-    private static class TileHalfTemp extends TileHalf {
-        public TileHalfTemp(World world, float x, float y, float w, float h) {
-            super(world, x, y, w, h);
-        }
-    }
-
-
 }

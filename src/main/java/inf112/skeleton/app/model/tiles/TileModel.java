@@ -16,7 +16,7 @@ public abstract class TileModel implements ViewableTile, Stepable, EventHandler 
     public static final float TILE_HEIGHT = 5;
     protected final World world;
     protected final Body body;
-    private final Shape shape;
+    protected final Shape shape;
     private final float width;
     private final float height;
 
@@ -55,6 +55,9 @@ public abstract class TileModel implements ViewableTile, Stepable, EventHandler 
     /**
      * Must be called after {@link Shape} has been initialized
      * to set the body's shape.
+     *
+     * @param x center
+     * @param y center
      */
     protected Body createBody(float x, float y) {
         BodyDef bDef = new BodyDef();
@@ -74,8 +77,8 @@ public abstract class TileModel implements ViewableTile, Stepable, EventHandler 
     }
 
     /**
-     * @param w width
-     * @param h height
+     * @param w full width
+     * @param h full height
      * @return {@link PolygonShape} with the specified width and height
      */
     protected Shape createShape(float w, float h) {

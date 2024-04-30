@@ -281,15 +281,20 @@ public class TestTexturePack {
         assertEquals(actualTfgsl.getRegionY(), texturePack.getTileTexture(tfgsl).getRegionY(), "Should have the same texturePos Y");
         assertEquals(actualTfgsl.getRegionWidth(), texturePack.getTileTexture(tfgsl).getRegionWidth(), "Should have the same textureWidth");
         assertEquals(actualTfgsl.getRegionHeight(), texturePack.getTileTexture(tfgsl).getRegionHeight(), "Should have the same textureHeight");
+    }
+
+    @Test
+    public void testGetSpikeTexture() {
+        int width = 14;
+        int height = 13;
+        int max = 16;
 
         Spike spike = new Spike(world, bus, 0, 0);
         TextureRegion actualSpike = atlas.findRegion(TILE, 46);
         assertNotNull(texturePack.getTileTexture(spike));
-        assertEquals(actualSpike.getRegionX(), texturePack.getTileTexture(spike).getRegionX(), " Should have the same texturePos X");
-        assertEquals(actualSpike.getRegionY(), texturePack.getTileTexture(spike).getRegionY(), "Should have the same texturePos Y");
-        assertEquals(actualSpike.getRegionWidth(), texturePack.getTileTexture(spike).getRegionWidth(), "Should have the same textureWidth");
-        assertEquals(actualSpike.getRegionHeight(), texturePack.getTileTexture(spike).getRegionHeight(), "Should have the same textureHeight");
-
-
+        assertEquals(actualSpike.getRegionX() + (max - width) / 2, texturePack.getTileTexture(spike).getRegionX(), " Should have the same texturePos X");
+        assertEquals(actualSpike.getRegionY() + max - height, texturePack.getTileTexture(spike).getRegionY(), "Should have the same texturePos Y");
+        assertEquals(width, texturePack.getTileTexture(spike).getRegionWidth(), "Should have the same textureWidth");
+        assertEquals(height, texturePack.getTileTexture(spike).getRegionHeight(), "Should have the same textureHeight");
     }
 }
