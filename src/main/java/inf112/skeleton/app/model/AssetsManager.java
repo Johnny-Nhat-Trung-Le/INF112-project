@@ -10,9 +10,9 @@ import java.util.Map;
 
 public class AssetsManager implements IAssetsManager {
     private static final Map<PlayerAction, String> soundEffectMap = new HashMap<>() {{
-        put(PlayerAction.JUMP, "assets/blipp.ogg");
-        put(PlayerAction.DAMAGE, "assets/blipp.ogg");
-        put(PlayerAction.PICKUP, "assets/blipp.ogg");
+        put(PlayerAction.JUMP, "assets/jumpSound.mp3");
+        put(PlayerAction.DAMAGE, "assets/damage.mp3");
+        put(PlayerAction.PICKUP, "assets/itemPickUp.mp3");
     }};
     private static final Map<String, String> musicMap = new HashMap<>() {{
         put("MAIN", "assets/Main.mp3");

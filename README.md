@@ -39,3 +39,12 @@
   * **Link:** https://www.youtube.com/watch?v=4yV_gv299VM&list=PLKH-YE4Goc7lZIe7l67TDDKURsRWWW0vc&index=33&ab_channel=KevinMacleod-Topic
   * **Tittel:** Game over trombone
   * **Link:** https://mixkit.co/free-sound-effects/game-over/
+  * **Tittel:** Cartoon Jump
+  * * **Artist:** PixelBay
+  * **Link:** https://pixabay.com/sound-effects/search/jump/
+  * **Tittel:** Item Pick Up
+  * * * **Artist:** PixelBay
+  * **Link:** https://pixabay.com/sound-effects/search/pick-up/
+  * **Tittel:** damage
+  * **Artist:** PixelBay
+  * **Link:** https://pixabay.com/sound-effects/search/damage/
