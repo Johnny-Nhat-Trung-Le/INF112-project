@@ -1,10 +1,13 @@
 package inf112.skeleton.app.model;
 
 import inf112.skeleton.app.controller.ControllableGameModel;
+import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
+import inf112.skeleton.app.model.event.EventDeath;
 import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.model.event.EventLevelChanged;
+import inf112.skeleton.app.model.event.EventReachedDoor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -59,6 +62,30 @@ public class TestGameModel {
         assertEquals(2, events.size(), "Should have been two event calls");
         assertEquals(new EventLevelChanged(), events.get(0), "The first event should have been a EventLevelChanged event");
         assertEquals(GameState.GAME_OVER, gameModel.getState(), "The state of GameModel should have switched to GameState.Game_Over");
+    }
+
+    @Test
+    public void handleEventReachedDoor() {
+        GameState initGameState = gameModel.getState();
+        assertEquals(GameState.MAIN_MENU, initGameState, "The gameState should start as Main_Menu");
+        bus.post(new EventReachedDoor());
+        assertEquals(2, events.size(), "There should have been two events posted");
+        assertEquals(new EventReachedDoor(), events.get(0), "The first event should be the event posted");
+        assertEquals(new EventGameState(GameState.VICTORY), events.get(1), "The second event should be of EventGameState");
+        assertEquals(GameState.VICTORY, gameModel.getState());
+    }
+
+    @Test
+    public void handleEventDeath() {
+        GameState initGameState = gameModel.getState();
+        ControllablePlayerModel playerModel = gameModel.getControllableLevel().getControllablePlayer();
+        assertEquals(GameState.MAIN_MENU, initGameState, "The gameState should start as Main_Menu");
+        bus.post(new EventDeath(playerModel));
+        assertEquals(3, events.size(), "There should have been three events posted");
+        assertEquals(new EventDeath(playerModel), events.get(0), "The first event should be the event posted");
+        assertEquals(new EventLevelChanged(), events.get(1), "The second should be of EventLevelChanged");
+        assertEquals(new EventGameState(GameState.GAME_OVER), events.get(2), "The third event should be of EventGameState");
+        assertEquals(GameState.GAME_OVER, gameModel.getState());
     }
 }
 
