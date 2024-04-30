@@ -16,9 +16,9 @@ import java.util.function.Supplier;
 public abstract class ItemModel implements ViewableItem, EventHandler, ContactListener {
     private static final float WIDTH = 2;
     private static final float HEIGHT = 2;
+    protected final EventBus bus;
     private final Body body;
     private final World world;
-    private final EventBus bus;
     protected Durability durability;
     protected Supplier<Effect> createEffect;
     private Shape shape;

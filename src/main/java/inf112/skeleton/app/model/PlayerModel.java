@@ -352,6 +352,8 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
             if (isContacted(e.fixture())) {
                 handleDamage(e.damage());
             }
+        } else if (event instanceof EventRegenerate e) {
+            hp.regenerate(e.amount());
         }
     }
 
