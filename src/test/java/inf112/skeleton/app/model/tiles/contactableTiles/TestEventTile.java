@@ -58,52 +58,52 @@ public class TestEventTile {
 
     @Test
     public void testEventDamageSpike() {
-        Spike spike = new Spike(world, bus, x, player.getY(), width, height);
+        Spike spike = new Spike(world, bus, x, player.getY() + (player.getHeight() / 2), width, height);
         contactListeners.add(spike);
         player.moveRight(true);
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
         }
-        //assertEquals(1,events.size(), "should have been posted an eventDamage");
+        assertEquals(1, events.size(), "should have been posted an eventDamage");
         assertInstanceOf(EventDamage.class, events.get(0), "should have been an eventDamage");
     }
 
     @Test
     public void testEventDamageSaw() {
-        Saw saw = new Saw(world, bus, player.getX() - player.getWidth(), player.getY(), width, height);
+        Saw saw = new Saw(world, bus, player.getX() - player.getWidth(), player.getY() + width, width, height);
         contactListeners.add(saw);
         player.moveLeft(true);
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
 
         }
-        //assertEquals(1, events.size(), "should post 1 event");
+        assertEquals(1, events.size(), "should post 1 event");
         assertInstanceOf(EventDamage.class, events.get(0), "should be an event of type EventDamage");
 
     }
 
     @Test
     public void testEventDoor() {
-        Door1 door = new Door1(world, bus, player.getX() + player.getWidth(), player.getY(), width, height);
+        Door1 door = new Door1(world, bus, player.getX() + player.getWidth(), player.getY() + 4, width, height);
         contactListeners.add(door);
 
         player.moveRight(true);
         step();
-        //assertEquals(1,events.size(), "Should be an event that was posted");
+        assertEquals(2, events.size(), "Should be an event that was posted");
         assertInstanceOf(EventReachedDoor.class, events.get(0), "Should be an event of reached door");
     }
 
     @Test
     public void testEventDamageDoubleSaw() {
-        Saw saw = new Saw(world, bus, player.getX() - player.getWidth(), player.getY(), width, height);
-        Saw saw1 = new Saw(world, bus, saw.getX() - saw.getWidth(), saw.getY(), width, height);
+        Saw saw = new Saw(world, bus, player.getX() - player.getWidth(), player.getY() + width, width, height);
+        Saw saw1 = new Saw(world, bus, saw.getX() - saw.getWidth(), saw.getY() + width, width, height);
         contactListeners.add(saw);
         contactListeners.add(saw1);
         player.moveLeft(true);
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
         }
-        //assertEquals(2, events.size(), "should post 2 event");
+        assertEquals(2, events.size(), "should post 2 event");
         assertInstanceOf(EventDamage.class, events.get(0), "should be an event of type EventDamage");
         assertEquals(events.get(0), events.get(1), "both events should be of type EventDamage");
 
@@ -111,9 +111,9 @@ public class TestEventTile {
 
     @Test
     public void testEventDamageTrippelSpike() {
-        Spike spike = new Spike(world, bus, player.getX() - player.getWidth(), player.getY());
-        Spike spike1 = new Spike(world, bus, spike.getX() - spike.getWidth(), spike.getY());
-        Spike spike2 = new Spike(world, bus, spike1.getX() - spike.getWidth(), spike.getY());
+        Spike spike = new Spike(world, bus, player.getX() - player.getWidth(), player.getY() + (player.getHeight() / 2));
+        Spike spike1 = new Spike(world, bus, spike.getX() - spike.getWidth(), spike.getY() + (player.getHeight() / 2));
+        Spike spike2 = new Spike(world, bus, spike1.getX() - spike.getWidth(), spike.getY() + (player.getHeight() / 2));
         contactListeners.add(spike);
         contactListeners.add(spike1);
         contactListeners.add(spike2);
@@ -121,7 +121,7 @@ public class TestEventTile {
         for (int i = 0; i < NUM_ITERATIONS; i++) {
             step();
         }
-        //assertEquals(3, events.size(), "should post 3 events");
+        assertEquals(3, events.size(), "should post 3 events");
         assertInstanceOf(EventDamage.class, events.get(0), "should be an event of type EventDamage");
         assertTrue(events.get(0).equals(events.get(1)) && events.get(1).equals(events.get(2)), "all events should be of type EventDamage");
 
