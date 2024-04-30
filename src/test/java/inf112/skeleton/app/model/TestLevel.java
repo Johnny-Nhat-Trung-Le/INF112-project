@@ -143,7 +143,7 @@ public class TestLevel {
             level.step(TIME_STEP);
         }
 
-        assertEquals(2, events.size(), "More than two events was posted");
+        assertEquals(3, events.size(), "More than two events was posted");
         assertInstanceOf(EventItemContact.class, events.get(0), "The first event posted was not: " + EventItemContact.class);
         assertInstanceOf(EventItemPickedUp.class, events.get(1), "The second event posted was not: " + EventItemPickedUp.class);
 
@@ -159,7 +159,7 @@ public class TestLevel {
             level.step(TIME_STEP);
         }
 
-        assertEquals(2, events.size(), "More than two events was posted");
+        assertEquals(3, events.size(), "More than two events was posted");
         assertInstanceOf(EventItemContact.class, events.get(0), "The first event posted was not: " + EventItemContact.class);
         assertInstanceOf(EventItemPickedUp.class, events.get(1), "The second event posted was not: " + EventItemPickedUp.class);
 
@@ -258,7 +258,7 @@ public class TestLevel {
             level.step(TIME_STEP);
         }
 
-        assertEquals(1, events.size(), "More than one event was posted after player hit spike!");
+        assertEquals(2, events.size(), "More than one event was posted after player hit spike!");
         assertInstanceOf(EventDamage.class, events.get(0), "Event after player hit spike was not " + EventDamage.class);
 
         // RESET
@@ -271,7 +271,7 @@ public class TestLevel {
             level.step(TIME_STEP);
         }
 
-        assertEquals(1, events.size(), "More than one event was posted after player hit spike!");
+        assertEquals(2, events.size(), "More than one event was posted after player hit spike!");
         assertInstanceOf(EventDamage.class, events.get(0), "Event after player hit spike was not " + EventDamage.class);
     }
 

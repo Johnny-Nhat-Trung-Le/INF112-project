@@ -101,3 +101,6 @@
 
 ## Dato: Mandag 29 April 2024
     Dagens møte handlet om å stille forelesningen spørsmål og merget de resterende "branches"-ene. Fikst konflikts og la til noen få ekstra tester.
+
+## Dato: Tirsdag 30 April 2024
+    Sammen fikset/ lagte mer tester, fikset/ la til "sound effects" og credits. Diskuterte om mulige endringer som kunne bli gjort, men fokuserte mest på komemnde innlevering. Alle var tilstede.
