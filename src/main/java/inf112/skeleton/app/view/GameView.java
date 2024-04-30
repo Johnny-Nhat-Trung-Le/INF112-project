@@ -10,6 +10,7 @@ import inf112.skeleton.app.model.GameState;
 import inf112.skeleton.app.model.IAssetsManager;
 import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.model.event.EventLevelChanged;
+import inf112.skeleton.app.model.event.EventPlayerAction;
 import inf112.skeleton.app.view.screen.*;
 
 public class GameView extends Game implements EventHandler {
@@ -75,6 +76,8 @@ public class GameView extends Game implements EventHandler {
         } else if (event instanceof EventGameState e) {
             GameState gameState = e.gameState();
             updateScreenAndMusic(gameState);
+        } else if (event instanceof EventPlayerAction e) {
+            assetsManager.playSoundEffect(e.action());
         }
     }
 }

@@ -7,9 +7,12 @@ import com.badlogic.gdx.audio.Sound;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class AssetsManager implements IAssetsManager {
-    private static final Map<String, String> soundEffectMap = new HashMap<>() {{
-        put("BUTTON", "assets/blipp.ogg");
+    private static final Map<PlayerAction, String> soundEffectMap = new HashMap<>() {{
+        put(PlayerAction.JUMP, "assets/blipp.ogg");
+        put(PlayerAction.DAMAGE, "assets/blipp.ogg");
+        put(PlayerAction.PICKUP, "assets/blipp.ogg");
     }};
     private static final Map<String, String> musicMap = new HashMap<>() {{
         put("MAIN", "assets/Main.mp3");
@@ -17,7 +20,7 @@ public class AssetsManager implements IAssetsManager {
         put("DEAD", "assets/gameOver.wav");
         put("VICTORY", "assets/Win.mp3");
     }};
-    private final Map<String, Sound> currentEffects;
+    private final Map<PlayerAction, Sound> currentEffects;
     private Music nowPlaying;
     private String lastPlayed;
 
@@ -64,7 +67,7 @@ public class AssetsManager implements IAssetsManager {
     }
 
     @Override
-    public void playSoundEffect(String key) {
+    public void playSoundEffect(PlayerAction key) {
         if (!soundEffectMap.containsKey(key)) return;
         Sound effect = Gdx.audio.newSound(Gdx.files.internal(soundEffectMap.get(key)));
         if (currentEffects.containsKey(key)) {

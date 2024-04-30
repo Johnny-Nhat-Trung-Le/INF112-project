@@ -41,14 +41,14 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
 
         // LEVEL 1
         List<Function<World, ItemModel>> i1 = new ArrayList<>();
-        i1.add((w) -> new ItemMushroom(bus, w, 15, 7));
+        i1.add((w) -> new ItemMushroom(bus, w, 24, 20));
         ILevel l1 = new Level(
                 bus,
                 -20,
                 -20,
                 0,
-                1.5f,
-                6.5f,
+                20f,
+                20f,
                 """
                         ---------------------------------------------------------9
                         ---------------------------------------------------------8
@@ -61,8 +61,8 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
                         GGGGGGG----|------lr---------------------------------BGGGG
                         GGGGGGGe-----LR------------------------------------GGGGGGG
                         GGGGGGG---G--GG-------G------------------------S-GGGGGGGGG
-                        GGGGGGG--eG--GG-------G------------------s---LGGGGGGGGGGG
-                        GGGGGGGB-----GG--------e-------------s---lgr--GGGGGGGGGGGG
+                        GGGGGGG--eG--GG-------G-------------------s---LGGGGGGGGGGG
+                        GGGGGGGB-----GG-------Ge-------------s---lgr--GGGGGGGGGGGG
                         GGGGGGGwe----GG---------------SS----lgr-------------------
                         GGG-------|--GG-----------I--lgggr------------------------
                         GGG---------BGG-----------G-------------------------------
@@ -138,7 +138,6 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
             }
         }
     }
-
     @Override
     public ViewableLevel getViewableLevel() {
         return levels.get(level);

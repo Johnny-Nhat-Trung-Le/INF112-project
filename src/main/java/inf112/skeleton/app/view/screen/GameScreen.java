@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
         // testing
         BackgroundLayers = new Stage(new ScreenViewport());
         Array<Texture> layers = new Array<>();
-        addBackground(layers);
+        addBackgroundLayers(layers);
         Background background = new Background(layers);
         BackgroundLayers.addActor(background);
         hud = new Hud(batch, level, texturePack);
@@ -132,7 +132,7 @@ public class GameScreen implements Screen {
         }
     }
 
-    private void addBackground(Array<Texture> textures) {
+    private void addBackgroundLayers(Array<Texture> textures) {
         for (int i = 0; i <= 6; i++) {
             textures.add(new Texture(Gdx.files.internal("Layers/img" + i + ".png")));
         }

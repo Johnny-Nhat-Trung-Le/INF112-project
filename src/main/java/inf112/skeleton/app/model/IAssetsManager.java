@@ -32,6 +32,6 @@ public interface IAssetsManager {
      *
      * @param key for retrieving sound effect
      */
-    void playSoundEffect(String key);
+    void playSoundEffect(PlayerAction key);
 }
 

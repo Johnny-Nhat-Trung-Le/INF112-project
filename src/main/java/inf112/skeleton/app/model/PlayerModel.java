@@ -179,7 +179,10 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         float dy = DY;
         dy *= effects.stream().reduce((float) 1, (v, e) -> v * e.getJumpBoost(), (a, b) -> a * b);
 
-        if (moveUp && !moveDown && isGrounded()) move(0, dy);
+        if (moveUp && !moveDown && isGrounded()) {
+            move(0, dy);
+            bus.post(new EventPlayerAction(PlayerAction.JUMP));
+        }
         if (moveDown && !moveUp && !isGrounded() && body.getLinearVelocity().y > -MAX_DY) move(0, -MAX_DY);
         if (moveRight && !moveLeft) move(dx, 0);
         if (moveLeft && !moveRight) move(-dx, 0);
@@ -345,6 +348,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
             if (item != null) return;
             item = e.item();
             bus.post(new EventItemPickedUp(item));
+            bus.post(new EventPlayerAction(PlayerAction.PICKUP));
         } else if (event instanceof EventItemUsedUp e) {
             if (!e.item().equals(item)) return;
             item = null;
@@ -364,6 +368,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     private void handleDamage(int damage) {
         if (immunityCoolDown == 0) {
             hp.damage(damage);
+            bus.post(new EventPlayerAction(PlayerAction.DAMAGE));
             immunityCoolDown = 1;
         }
     }
@@ -410,6 +415,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     @Override
     public void endContact(Contact contact) {
         if (isSensorToGroundContact(contact)) contactCountSensor--;
+
     }
 
     @Override
