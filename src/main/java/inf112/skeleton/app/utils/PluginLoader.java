@@ -16,9 +16,12 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -79,31 +82,33 @@ public class PluginLoader {
                 return List.of();
             }
         } else if (url.getProtocol().equals("jar")) {
-            String jarPath = url.getFile();
-            String jarFileStr = jarPath.substring(5, jarPath.indexOf('!'));
-            String subPath = jarPath.substring(jarPath.indexOf('!') + 1);
+            String jarPathStr = url.getFile();
+            String jarFileStr = jarPathStr.substring(5, jarPathStr.indexOf('!'));
+            String subPath = jarPathStr.substring(jarPathStr.indexOf('!') + 1);
 
             URL jarURL = origin.getProtectionDomain().getCodeSource().getLocation();
-            // Create a URLClassLoader for the JAR file
-            try (URLClassLoader classLoader = new URLClassLoader(new URL[]{jarURL})) {
-                // Open the JAR file
-                try (JarFile jarFile = new JarFile(jarURL.getPath())) {
-                    List<String> result = new ArrayList<>();
-                    // Iterate through the entries in the JAR file
-                    Enumeration<JarEntry> entries = jarFile.entries();
-                    while (entries.hasMoreElements()) {
-                        JarEntry entry = entries.nextElement();
-                        // Check if the entry is a class file in the specified package
-                        if (entry.getName().startsWith(subPath.substring(1)) && entry.getName().endsWith(".class")) {
-                            // Convert the entry name to a class name
-                            String className = "/" + entry.getName();
-                            result.add(className);
+            try {
+                Path jarPath = Paths.get(jarURL.toURI());
+                try {
+                    URL resolvedJarUrl = jarPath.toUri().toURL();
+                    // Open the JAR file
+                    try (JarFile jarFile = new JarFile(resolvedJarUrl.getPath())) {
+                        List<String> result = new ArrayList<>();
+                        // Iterate through the entries in the JAR file
+                        Enumeration<JarEntry> entries = jarFile.entries();
+                        while (entries.hasMoreElements()) {
+                            JarEntry entry = entries.nextElement();
+                            // Check if the entry is a class file in the specified package
+                            if (entry.getName().startsWith(subPath.substring(1)) && entry.getName().endsWith(".class")) {
+                                // Convert the entry name to a class name
+                                String className = "/" + entry.getName();
+                                result.add(className);
+                            }
                         }
+                        return result;
                     }
-                    return result;
-                }
-            } catch (IOException ignored) {
-            }
+                } catch (IOException ignored) {}
+            } catch (URISyntaxException ignored) {}
             return List.of();
         }
 
