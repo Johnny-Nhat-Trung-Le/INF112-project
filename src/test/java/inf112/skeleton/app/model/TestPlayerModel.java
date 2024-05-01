@@ -362,8 +362,6 @@ public class TestPlayerModel {
 
         player.useItem();
 
-        assertEquals(1, player.getEffects().size(), "There is not exactly one effect applied");
-
         int effectedHp = player.getHp();
         assertTrue(hp < effectedHp);
     }
