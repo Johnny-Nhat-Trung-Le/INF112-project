@@ -135,8 +135,8 @@ public class GameScreen implements Screen {
     }
 
     private void addBackgroundLayers(Array<Texture> textures) {
-        for (int i = 0; i <= 6; i++) {
-            textures.add(new Texture(Gdx.files.internal("Layers/img" + i + ".png")));
+        for (int i = 1; i <= 6; i++) {
+            textures.add(new Texture(Gdx.files.internal("Backgrounds/background_00" + i + ".png")));
         }
     }
 

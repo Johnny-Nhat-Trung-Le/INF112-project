@@ -15,7 +15,7 @@ public class VictoryScreen extends AbstractScreen {
     public VictoryScreen(InputProcessor processor) {
         super(processor);
 
-        texture = new Texture("Backgrounds/menu_screen.png");
+        texture = new Texture("Backgrounds/victoryScreen.png");
         title = "Victory";
         text = "You won the game!\nThank you for playing!\n Press B to go back to Main Menu\n Press ESC to quit";
         textLayout = new GlyphLayout();

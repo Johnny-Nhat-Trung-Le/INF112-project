@@ -4,11 +4,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import inf112.skeleton.app.view.screen.AbstractScreen;
 
 public class MenuScreen extends AbstractScreen {
     private static final float TEXTURE_RATIO = 640 / (float) 352;
-    private static final Texture texture = new Texture("Backgrounds/map.png"); //640*352
+    private static final Texture texture = new Texture("Backgrounds/main_menu.png"); //640*352
     private static final String title = "Lil bro's Adventure Back Home";
     private static final String text = "Press P to play\n\nPress H for help";
 
