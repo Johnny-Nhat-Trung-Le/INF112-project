@@ -65,6 +65,10 @@ public class GameView extends Game implements EventHandler {
                 setScreen(new InfoScreen(processor));
                 assetsManager.pauseMusic();
             }
+            case LEVEL -> {
+                setScreen(new LevelScreen(processor));
+                assetsManager.pauseMusic();
+            }
         }
     }
 

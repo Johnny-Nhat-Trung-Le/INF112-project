@@ -80,6 +80,39 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
                 i1
         );
         levels.put("1", l1);
+        List<Function<World, ItemModel>> i2 = new ArrayList<>();
+        ILevel l2 = new Level(
+                bus,
+                -20,
+                -20,
+                0,
+                20f,
+                20f,
+                """
+                        ---------------------------------------------------------9
+                        ---------------------------------------------------------8
+                        ----------------------------------------------LGGGGGGGGGGR
+                        LGGGGGR--------------------------------------qGGGGGGGGGGGG
+                        GGGGGGG------------------------------------B----------GGGG
+                        GGGGGGG------------------------------------i----------GGGG
+                        GGGGGGG----------------------------------------LR-----GGGG
+                        GGGGGGG----------------------------------------GGGr---GGGG
+                        GGGGGGG----|------lr---------------------------------BGGGG
+                        GGGGGGGe-----LR------------------------------------GGGGGGG
+                        GGGGGGG---G--GG-------G------------------------S-GGGGGGGGG
+                        GGGGGGG--eG--GG-------G-------------------s---LGGGGGGGGGGG
+                        GGGGGGGB-----GG-------Ge-------------s---lgr--GGGGGGGGGGGG
+                        GGGGGGGwe----GG---------------SS----lgr-------------------
+                        GGG-------|--GG-----------I--lgggr------------------------
+                        GGG---------BGG-----------G-------------------------------
+                        GGG---s-----G-------------------------------
+                        GGGGGGGGG----GGGGGGGGGGG--G-------------------------------
+                        GGGGGGGGG----GGGGGGGGGGG----------------------------------
+                        """,
+                "",
+                i2
+        );
+        levels.put("2",l2);
 
         // SET DEFAULT
         if (!levels.isEmpty()) {
@@ -122,9 +155,9 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
 
     @Override
     public void setLevel(String key) {
-        if (levels.containsKey(level)) {
+        /*if (levels.containsKey(level) ) {
             levels.get(level).disable();
-        }
+        }*/
         level = key;
         if (levels.containsKey(level) && state == GameState.ACTIVE) {
             levels.get(level).activate();

@@ -41,11 +41,27 @@ public class Controller extends InputAdapter implements EventHandler {
         }
         return true;
     }
+    private void chooseLevel(int keycode){
+        switch(keycode) {
+            case Keys.NUM_1:
+                model.setLevel("1");
+                model.setState(GameState.ACTIVE);
+                break;
+            case Keys.NUM_2:
+                model.setLevel("2");
+                model.setState(GameState.ACTIVE);
+                break;
+            case Keys.B:
+                model.setState(GameState.MAIN_MENU);
+                break;
+        }
 
+    }
     @Override
     public boolean keyUp(int keycode) {
         if (model.getControllableLevel() == null) return false;
         ControllablePlayerModel player = model.getControllableLevel().getControllablePlayer();
+        if(model.getState() == GameState.LEVEL) chooseLevel(keycode);
         switch (keycode) {
             case Keys.W:
                 player.moveUp(false);
@@ -61,7 +77,10 @@ public class Controller extends InputAdapter implements EventHandler {
                 break;
             case Keys.P:
                 switch (model.getState()) {
-                    case MAIN_MENU, PAUSE:
+                    case MAIN_MENU:
+                        model.setState(GameState.LEVEL);
+                        break;
+                    case  PAUSE:
                         model.setState(GameState.ACTIVE);
                         break;
                     case ACTIVE:

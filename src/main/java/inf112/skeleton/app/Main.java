@@ -21,7 +21,6 @@ public class Main {
         bus.addEventHandler(controller);
 
         GameView view = new GameView(model, bus, controller);
-
         new Lwjgl3Application(view, cfg);
 
     }
