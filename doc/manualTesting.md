@@ -37,6 +37,13 @@ Sjekk bruk av item:
     - Hvis man trykker på 'space', og man har en item i inventory, så skal spilleren få en effect
     - Se at item durability minker når man bruker opp en item
     - Se at item forsvinner fra inventory når durability er 0 og den har blitt brukt opp
+SJekk lyd:
+    - Sjekk at musikk spilles når programmet starter opp
+    - Sjekk at musikk enten byttes eller stoppes når man skifter til ulike skjerm
+    - Sjekk at det spilles en effekt når spiller plukke opp en item
+    - Sjekk at det spilles en effekt når spiller hopper.
+    - Sjekk at en effekt lyd ikke loopes når den spiller.
+    - Sjekk at effekten som spilles når man hopper, ikke loopes i lufta når man holder 'w' tasten
 Sjekk at spiller dør når man faller ut av "level"
 Sjekk at spillet skifter fra level til victory skjerm når spilleren når døren.
 Sjekk at spiller tar skade når den er i kontakt med 'damageable tiles'
