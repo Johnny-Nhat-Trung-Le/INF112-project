@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class LevelScreen extends AbstractScreen {
     private final Texture texture;
@@ -17,7 +19,7 @@ public class LevelScreen extends AbstractScreen {
 
     public LevelScreen(InputProcessor processor) {
         super(processor);
-        stage = new Stage(new ExtendViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
+        stage = new Stage(new FillViewport(VIEWPORT_WIDTH,VIEWPORT_HEIGHT,gameCam));
         texture = new Texture("Backgrounds/openBook.png");
         table = new Table();
         title = "Level";

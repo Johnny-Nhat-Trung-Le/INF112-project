@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.item.ItemEnergy;
 import inf112.skeleton.app.model.item.ItemHP;
@@ -37,8 +38,7 @@ public class InfoScreen extends AbstractScreen {
 
     public InfoScreen(InputProcessor processor) {
         super(processor);
-
-        stage = new Stage(new ExtendViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT / VIEWPORT_WIDTH));
+        stage = new Stage(new FillViewport(VIEWPORT_WIDTH,VIEWPORT_HEIGHT,gameCam));
         tableController = new Table();
         tableController.setFillParent(true);
         tableItem = new Table();
@@ -75,7 +75,7 @@ public class InfoScreen extends AbstractScreen {
     }
 
     private void createRightTable() {
-        tableItem.top().right().padRight(10).padTop(15);
+        tableItem.top().right().padRight(10).padTop(40);
         createItemGroup(mushroomImg, itemMushroom);
         createDescriptionContainer(itemMushroom);
         createItemGroup(energyImg, itemEnergy);
