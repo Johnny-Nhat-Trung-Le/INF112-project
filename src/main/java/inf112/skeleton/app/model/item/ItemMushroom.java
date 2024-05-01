@@ -23,7 +23,7 @@ public class ItemMushroom extends ItemModel {
 
     @Override
     public String getDescription() {
-        return "Increases the jump-power by a power of two";
+        return "Increases the jump-power";
     }
 
     @Override

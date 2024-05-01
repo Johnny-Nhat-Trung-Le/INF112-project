@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.item.ItemEnergy;
+import inf112.skeleton.app.model.item.ItemHP;
 import inf112.skeleton.app.model.item.ItemMushroom;
 import inf112.skeleton.app.view.ViewableItem;
 import inf112.skeleton.app.view.texturepack.ITexturePack;
@@ -29,6 +30,9 @@ public class InfoScreen extends AbstractScreen {
     private final ItemEnergy itemEnergy = new ItemEnergy(new EventBus(), new World(new Vector2(0, 0), true), 0, 0);
     private final Image mushroomImg = new Image(new TextureRegion(texturePack.getItemTexture(itemMushroom)));
     private final Image energyImg = new Image(new TextureRegion(texturePack.getItemTexture(itemEnergy)));
+
+    private final ItemHP itemHp = new ItemHP(new EventBus(), new World(new Vector2(0, 0), true), 0, 0);
+    private final Image hpImg = new Image(new TextureRegion(texturePack.getItemTexture(itemHp)));
 
 
     public InfoScreen(InputProcessor processor) {
@@ -71,11 +75,13 @@ public class InfoScreen extends AbstractScreen {
     }
 
     private void createRightTable() {
-        tableItem.top().right().padRight(30).padTop(40);
+        tableItem.top().right().padRight(10).padTop(15);
         createItemGroup(mushroomImg, itemMushroom);
         createDescriptionContainer(itemMushroom);
         createItemGroup(energyImg, itemEnergy);
         createDescriptionContainer(itemEnergy);
+        createItemGroup(hpImg,itemHp);
+        createDescriptionContainer(itemHp);
         //TODO the itemImg and itemDesc aint aligned on the left side
 
     }
@@ -88,7 +94,7 @@ public class InfoScreen extends AbstractScreen {
      */
     private void createItemGroup(Image itemImg, ViewableItem item) {
         HorizontalGroup grp = new HorizontalGroup();
-        grp.top().right().padRight(30).padTop(10);
+        grp.top().right().padRight(30);
         grp.addActor(itemImg);
         grp.addActor(new Label("- " + item.getName(), labelStyle));
         tableItem.add(grp);
@@ -105,10 +111,10 @@ public class InfoScreen extends AbstractScreen {
         Container<Label> descriptionContainer = new Container<>();
         Label description = new Label(item.getDescription(), labelStyle);
         descriptionContainer.right().top();
-        descriptionContainer.padLeft(20);
+        descriptionContainer.padLeft(40);
         description.setWrap(true);
         descriptionContainer.setActor(description);
-        descriptionContainer.width(item.getDescription().length() * 3);
+        descriptionContainer.width(item.getDescription().length() * 6);
         descriptionContainer.fillX(); // Fill the container horizontally
         tableItem.add(descriptionContainer);
         tableItem.row();

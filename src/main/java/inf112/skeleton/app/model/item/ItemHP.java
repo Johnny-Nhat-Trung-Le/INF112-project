@@ -18,7 +18,7 @@ public class ItemHP extends ItemModel implements ViewableItem {
 
     @Override
     public String getDescription() {
-        return "Restores one HP for each use";
+        return "Restores HP";
     }
 
     @Override

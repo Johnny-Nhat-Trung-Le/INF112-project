@@ -23,7 +23,7 @@ public class ItemEnergy extends ItemModel {
 
     @Override
     public String getDescription() {
-        return "Increases movement speed by a multiple of two";
+        return "Increases movement speed";
     }
 
     @Override

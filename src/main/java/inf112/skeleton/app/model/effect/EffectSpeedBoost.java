@@ -1,11 +1,11 @@
 package inf112.skeleton.app.model.effect;
 
 public class EffectSpeedBoost extends Effect {
-    private static final float SPEED_BOOST = 2;
+    private static final float SPEED_BOOST = 3/2f;
     private static final float JUMP_BOOST = 1;
 
     /**
-     * Makes you run twice as fast.
+     * Makes you run faster.
      *
      * @param duration of effect in ticks/steps
      */
