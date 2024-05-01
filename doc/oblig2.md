@@ -167,7 +167,7 @@ Er dere kommet forbi MVP? Forklar hvordan dere prioriterer ny funksjonalitet.
     Til nå har vi ingenting ettersom dette er vår første innlevering med spillkode
 I README.md:
 * Lag og lever et klassediagram.
-  * Vi har laget en [enkel klassediagram](../diagram/diagram.puml) som inneholder de viktigste klassene, metoder og felt-variabler 
+  * Vi har laget en [enkel klassediagram](diagram/diagram.puml) som inneholder de viktigste klassene, metoder og felt-variabler 
  - Vi prioriterte å få programmet til å kjøre spillet og få spillet i gang. Dermed  nedprioriterte vi testing for i denne omgang.
     Vi har til nå noen manuelle tester for det visuelle og kontrolleren.
     I tillegg har vi lagt til enkle unit-tester for playerModel.
