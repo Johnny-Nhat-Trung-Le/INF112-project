@@ -81,7 +81,8 @@ public class PluginLoader {
 //                Gdx.app.error("PluginLoader", "Resource inaccessible: " + p);
                 return List.of();
             }
-        } else if (url.getProtocol().equals("jar")) {
+        }
+        if (url.getProtocol().equals("jar")) {
             String jarPathStr = url.getFile();
             String jarFileStr = jarPathStr.substring(5, jarPathStr.indexOf('!'));
             String subPath = jarPathStr.substring(jarPathStr.indexOf('!') + 1);
@@ -89,26 +90,28 @@ public class PluginLoader {
             URL jarURL = origin.getProtectionDomain().getCodeSource().getLocation();
             try {
                 Path jarPath = Paths.get(jarURL.toURI());
-                try {
-                    URL resolvedJarUrl = jarPath.toUri().toURL();
-                    // Open the JAR file
-                    try (JarFile jarFile = new JarFile(resolvedJarUrl.getPath())) {
-                        List<String> result = new ArrayList<>();
-                        // Iterate through the entries in the JAR file
-                        Enumeration<JarEntry> entries = jarFile.entries();
-                        while (entries.hasMoreElements()) {
-                            JarEntry entry = entries.nextElement();
-                            // Check if the entry is a class file in the specified package
-                            if (entry.getName().startsWith(subPath.substring(1)) && entry.getName().endsWith(".class")) {
-                                // Convert the entry name to a class name
-                                String className = "/" + entry.getName();
-                                result.add(className);
-                            }
+                // Open the JAR file
+                try (JarFile jarFile = new JarFile(jarPath.toFile())) {
+                    List<String> result = new ArrayList<>();
+
+                    // Iterate through the entries in the JAR file
+                    Enumeration<JarEntry> entries = jarFile.entries();
+                    while (entries.hasMoreElements()) {
+                        JarEntry entry = entries.nextElement();
+                        // Check if the entry is a class file in the specified package
+                        if (entry.getName().startsWith(subPath.substring(1)) && entry.getName().endsWith(".class")) {
+                            // Convert the entry name to a class name
+                            String className = "/" + entry.getName();
+                            result.add(className);
                         }
-                        return result;
                     }
-                } catch (IOException ignored) {}
-            } catch (URISyntaxException ignored) {}
+                    return result;
+                } catch (SecurityException | IOException e) {
+//                    Gdx.app.debug("PluginLoader", "Failed to load classes", e);
+                }
+            } catch (URISyntaxException e) {
+//                Gdx.app.debug("PluginLoader", "Failed to load classes", e);
+            }
             return List.of();
         }
 
