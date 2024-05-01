@@ -20,6 +20,8 @@ import inf112.skeleton.app.view.*;
 import inf112.skeleton.app.view.texturepack.ITexturePack;
 import inf112.skeleton.app.view.texturepack.TexturePack;
 
+import java.util.List;
+
 public class GameScreen implements Screen {
     private static final float VIEWPORT_WIDTH = 20;
     private static final float VIEWPORT_HEIGHT = 20;
@@ -78,7 +80,8 @@ public class GameScreen implements Screen {
         BackgroundLayers.act();
         BackgroundLayers.draw();
         batch.begin();
-        renderTiles();
+        renderTiles(level.getBackgroundTiles(), 0.4f);
+        renderTiles(level.getForegroundTiles(), 1);
         renderItems();
         // Draws the player
         batch.draw(
@@ -103,15 +106,16 @@ public class GameScreen implements Screen {
         gameCam.update();
     }
 
-    private void renderTiles() {
-        for (ViewableTile tile : level.getForegroundTiles()) {
-            renderTile(tile);
+    private void renderTiles(List<ViewableTile> tiles, float alpha) {
+        for (ViewableTile tile : tiles) {
+            renderTile(tile, alpha);
         }
     }
 
-    private void renderTile(ViewableTile tile) {
+    private void renderTile(ViewableTile tile, float alpha) {
         TextureRegion tileTexture = texturePack.getTileTexture(tile);
         if (tileTexture != null) {
+            batch.setColor(alpha, alpha, alpha, 1);
             batch.draw(tileTexture, tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight());
         }
     }
