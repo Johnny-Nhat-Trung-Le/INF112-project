@@ -9,6 +9,7 @@ import inf112.skeleton.app.model.PlayerState;
 import inf112.skeleton.app.model.effect.EffectJumpBoost;
 import inf112.skeleton.app.model.effect.EffectSpeedBoost;
 import inf112.skeleton.app.model.item.ItemEnergy;
+import inf112.skeleton.app.model.item.ItemHP;
 import inf112.skeleton.app.model.item.ItemMushroom;
 import inf112.skeleton.app.model.tiles.*;
 import inf112.skeleton.app.model.tiles.contactableTiles.Door1;
@@ -137,6 +138,7 @@ public class TexturePack implements ITexturePack {
 
         if (item instanceof ItemEnergy) return getTextureFromAtlas(156);
         if (item instanceof ItemMushroom) return getTextureFromAtlas(106);
+        if (item instanceof ItemHP) return getTextureFromAtlas(139);
         return null;
     }
 

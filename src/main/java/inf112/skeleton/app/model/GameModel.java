@@ -10,6 +10,8 @@ import inf112.skeleton.app.model.event.EventDeath;
 import inf112.skeleton.app.model.event.EventGameState;
 import inf112.skeleton.app.model.event.EventLevelChanged;
 import inf112.skeleton.app.model.event.EventReachedDoor;
+import inf112.skeleton.app.model.item.ItemEnergy;
+import inf112.skeleton.app.model.item.ItemHP;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.model.item.ItemMushroom;
 import inf112.skeleton.app.view.ViewableGameModel;
@@ -41,7 +43,9 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
 
         // LEVEL 1
         List<Function<World, ItemModel>> i1 = new ArrayList<>();
-        i1.add((w) -> new ItemMushroom(bus, w, 24, 20));
+        //i1.add((w) -> new ItemMushroom(bus, w, 24, 20));
+        //i1.add((w) -> new ItemEnergy(bus, w, 26, 20));
+        i1.add((w) -> new ItemHP(bus, w, 28, 20));
         ILevel l1 = new Level(
                 bus,
                 -20,

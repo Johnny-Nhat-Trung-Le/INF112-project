@@ -8,6 +8,7 @@ import inf112.skeleton.app.model.event.EventDeath;
 import inf112.skeleton.app.model.event.EventItemContact;
 import inf112.skeleton.app.model.event.EventItemPickedUp;
 import inf112.skeleton.app.model.item.ItemEnergy;
+import inf112.skeleton.app.model.item.ItemHP;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.model.item.ItemMushroom;
 import inf112.skeleton.app.model.tiles.TileModel;
@@ -306,6 +307,7 @@ public class TestPlayerModel {
     public void testMultipleItemsWithEffects() {
         ItemModel item1 = new ItemEnergy(bus, world, INIT_X, INIT_Y);
         ItemModel item2 = new ItemMushroom(bus, world, INIT_X + WIDTH, INIT_Y);
+
         contacts.add(item1);
         contacts.add(item2);
 
@@ -347,5 +349,22 @@ public class TestPlayerModel {
         }
 
         assertTrue(noEffectDistance < effectDistance, "Traveled further without speed-boost");
+    }
+
+    @Test
+    public void testEffectHp() {
+        ItemModel item = new ItemHP(bus, world, INIT_X, INIT_Y);
+        contacts.add(item);
+
+        player.moveRight(true);
+        for (int i = 0; i < NUM_ITERATIONS; i++) step();
+        int hp = player.getHp();
+
+        player.useItem();
+
+        assertEquals(1, player.getEffects().size(), "There is not exactly one effect applied");
+
+        int effectedHp = player.getHp();
+        assertTrue(hp < effectedHp);
     }
 }

@@ -7,6 +7,7 @@ import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.effect.Effect;
+import inf112.skeleton.app.model.effect.EffectHpUp;
 import inf112.skeleton.app.model.event.*;
 import inf112.skeleton.app.model.item.ItemModel;
 import inf112.skeleton.app.view.ViewableEffect;
@@ -129,7 +130,10 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
         Effect effect = item.use();
         Predicate<? super Effect> same = (e) -> effect.getClass().equals(e.getClass());
 
-        if (effects.stream().anyMatch(same)) {
+        if (effect instanceof EffectHpUp) {
+            hp.regenerate(1);
+        }
+        else if (effects.stream().anyMatch(same)) {
             List<Effect> newEffects = effects.stream().map((e) -> same.test(e) ? effect : e).toList();
             effects.clear();
             effects.addAll(newEffects);
@@ -415,7 +419,6 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
     @Override
     public void endContact(Contact contact) {
         if (isSensorToGroundContact(contact)) contactCountSensor--;
-
     }
 
     @Override
