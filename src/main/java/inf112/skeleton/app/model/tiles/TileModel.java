@@ -5,10 +5,9 @@ import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.event.EventHandler;
 import inf112.skeleton.app.model.Stepable;
+import inf112.skeleton.app.model.TileFactory;
 import inf112.skeleton.app.model.event.EventDispose;
 import inf112.skeleton.app.view.ViewableTile;
-
-import java.util.Objects;
 
 
 public abstract class TileModel implements ViewableTile, Stepable, EventHandler {
@@ -21,14 +20,14 @@ public abstract class TileModel implements ViewableTile, Stepable, EventHandler 
     private final float height;
 
     /**
-     * Creates a {@link TileModel} with default width and height.
+     * Creates a {@link TileModel} with default size and position.
      * <p>
-     * Used for {@link inf112.skeleton.app.model.TileFactory}.
+     * Used for {@link TileFactory}.
      *
      * @param world that the body is added to
-     * @param bus   that is used for handling and posting {@link inf112.skeleton.app.event.Event}s
-     * @param x     left-most position in the horizontal axis
-     * @param y     bottom-most position in the vertical axis
+     * @param bus   that is used for handling and posting {@link Event}s
+     * @param x     left-most position of tile in the horizontal axis
+     * @param y     bottom-most position of tile in the vertical axis
      */
     public TileModel(World world, EventBus bus, float x, float y) {
         this(world, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT);

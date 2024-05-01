@@ -48,7 +48,7 @@ public class Level implements ILevel {
     private boolean initialized;
 
     /**
-     * Creates a level that is disabled. Use {@code Level::activate} to activate.
+     * Creates a level that is disabled. Use {@linkplain Level}::activate to activate.
      *
      * @param bus         {@link EventBus} that {@link Event}s are posted in
      * @param void_height where the player dies if is below

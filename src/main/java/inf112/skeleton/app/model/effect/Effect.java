@@ -10,15 +10,16 @@ public abstract class Effect implements ViewableEffect {
     private int duration;
 
     /**
-     * @param duration   number of steps the effect is applied
+     * @param duration   number of steps the effect is applied, is converted to positive
+     *                   if it is below zero
      * @param speedBoost speed-boost multiplier
      * @param jumpBoost  jump-boost multiplier
      */
     public Effect(int duration, float speedBoost, float jumpBoost) {
         this.speedBoost = speedBoost;
         this.jumpBoost = jumpBoost;
-        this.maxDuration = Math.max(duration, 0);
-        this.duration = Math.max(duration, 0);
+        this.maxDuration = Math.abs(duration);
+        this.duration = Math.abs(duration);
     }
 
     /**

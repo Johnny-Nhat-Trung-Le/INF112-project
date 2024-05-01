@@ -159,7 +159,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
 
     @Override
     public void setLevel(String key) {
-        if (levels.containsKey(level) ) {
+        if (levels.containsKey(level)) {
             levels.get(level).disable();
         }
         level = key;

@@ -3,7 +3,6 @@ package inf112.skeleton.app.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import inf112.skeleton.app.model.IAssetsManager;
 import inf112.skeleton.app.model.PlayerAction;
 
 import java.util.HashMap;

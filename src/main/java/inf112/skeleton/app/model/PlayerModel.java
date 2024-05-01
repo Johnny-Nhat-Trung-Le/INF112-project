@@ -132,8 +132,7 @@ public class PlayerModel implements ControllablePlayerModel, ViewablePlayerModel
 
         if (effect instanceof EffectHpUp) {
             hp.regenerate(1);
-        }
-        else if (effects.stream().anyMatch(same)) {
+        } else if (effects.stream().anyMatch(same)) {
             List<Effect> newEffects = effects.stream().map((e) -> same.test(e) ? effect : e).toList();
             effects.clear();
             effects.addAll(newEffects);

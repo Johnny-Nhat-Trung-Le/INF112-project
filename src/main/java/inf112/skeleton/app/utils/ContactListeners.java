@@ -25,16 +25,6 @@ public class ContactListeners implements ContactListener {
         return contactListeners.add(contactListener);
     }
 
-    /**
-     * Removes a {@link ContactListener} to stop receiving contacts.
-     *
-     * @param contactListener to be removed
-     * @return if the collection of {@link ContactListener} changed
-     */
-    public boolean remove(ContactListener contactListener) {
-        return contactListeners.remove(contactListener);
-    }
-
     @Override
     public void beginContact(Contact contact) {
         for (ContactListener contactL : contactListeners) {

@@ -7,19 +7,19 @@ import java.util.List;
 
 public interface ViewablePlayerModel extends Sizeable, Positionable, PlayerStateGettable {
     /**
-     * Get the Hp of the player
+     * Gets the HP of the player
      *
-     * @return the amount of Hp left of the player
+     * @return the amount of HP left of the player
      */
     int getHp();
 
     /**
-     * @return the current {@link Effect}s, if there is any
+     * @return all current {@link Effect}s, if there is any
      */
     List<ViewableEffect> getEffects();
 
     /**
-     * @return players item, if there is any
+     * @return players item, if there is any (can be {@code null})
      */
     ViewableItem getItem();
 }

@@ -40,10 +40,10 @@
   * **Tittel:** Game over trombone
   * **Link:** https://mixkit.co/free-sound-effects/game-over/
   * **Tittel:** Cartoon Jump
-  * * **Artist:** PixelBay
+  * **Artist:** PixelBay
   * **Link:** https://pixabay.com/sound-effects/search/jump/
   * **Tittel:** Item Pick Up
-  * * * **Artist:** PixelBay
+  * **Artist:** PixelBay
   * **Link:** https://pixabay.com/sound-effects/search/pick-up/
   * **Tittel:** damage
   * **Artist:** PixelBay
@@ -51,3 +51,4 @@
 * **PluginLoader class**
   * **Tittel:** PluginLoader class
   * **Forfatter:** Anya
+  * **Nedlastnings-dato** 

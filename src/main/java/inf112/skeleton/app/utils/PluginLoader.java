@@ -1,9 +1,10 @@
-// Class from https://git.app.uib.no/inf112/24v/libgdx-example/-/blob/main/src/main/java/inf112/util/PluginLoader.java?ref_type=heads
-// Created by Anya Helene Bagge
-// modified (
-//   added makeFactory : Function4
-//   added support for JAR-files (listFiles)
-// )
+// Class from:      https://git.app.uib.no/inf112/24v/libgdx-example/-/blob/main/src/main/java/inf112/util/PluginLoader.java?ref_type=heads
+// Author:          Anya Helene Bagge
+// Downloaded:      16.04.2024
+// changes from original:
+//      added PluginLoader::makeFactory : Function4
+//      modified PluginLoader::listFiles (added support for JAR-files)
+
 
 package inf112.skeleton.app.utils;
 
@@ -16,10 +17,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;

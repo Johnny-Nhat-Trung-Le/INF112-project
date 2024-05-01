@@ -12,17 +12,16 @@ public class Saw extends DamageTileModel {
     private static final int DAMAGE = 1;
 
     /**
-     * Creates a {@link TileModel} with default width and height.
+     * Creates a {@link TileModel} with default size and position.
      * <p>
      * Used for {@link inf112.skeleton.app.model.TileFactory}.
      *
      * @param world that the body is added to
      * @param bus   that is used for handling and posting {@link inf112.skeleton.app.event.Event}s
-     * @param x     left-most position in the horizontal axis
-     * @param y     bottom-most position in the vertical axis
+     * @param x     left-most position of tile in the horizontal axis
+     * @param y     bottom-most position of tile in the vertical axis
      */
     public Saw(World world, EventBus bus, float x, float y) {
-        // width=1, height=1/2, scale=2/3
         this(world, bus, x + TILE_WIDTH / 2, y + TILE_HEIGHT / 3, TILE_WIDTH * 2 / 3);
     }
 

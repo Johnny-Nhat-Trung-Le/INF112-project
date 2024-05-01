@@ -9,6 +9,15 @@ public abstract class DamageTileModel extends TileModel implements ContactableTi
     private final int DAMAGE;
     private final EventBus eventBus;
 
+    /**
+     * @param world  that the {@link Body} is created in
+     * @param bus    that {@link EventDamage} is posted in
+     * @param x      center in x-axis
+     * @param y      center in y-axis
+     * @param w      full width
+     * @param h      full width
+     * @param damage amount of damage on contact
+     */
     protected DamageTileModel(World world, EventBus bus, float x, float y, float w, float h, int damage) {
         super(world, x, y, w, h);
         DAMAGE = damage;
@@ -32,11 +41,14 @@ public abstract class DamageTileModel extends TileModel implements ContactableTi
 
 
     @Override
-    public void endContact(Contact contact) {}
+    public void endContact(Contact contact) {
+    }
 
     @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {}
+    public void preSolve(Contact contact, Manifold oldManifold) {
+    }
 
     @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {}
+    public void postSolve(Contact contact, ContactImpulse impulse) {
+    }
 }

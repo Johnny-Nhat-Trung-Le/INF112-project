@@ -9,7 +9,7 @@ public interface ViewableItem extends Positionable, Sizeable {
     String getDescription();
 
     /**
-     * @return the name of the item to be displayed
+     * @return the name of the item
      */
     String getName();
 

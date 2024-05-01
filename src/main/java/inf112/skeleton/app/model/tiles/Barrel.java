@@ -9,14 +9,14 @@ public class Barrel extends TileModel {
     public static final char KEY = 'B';
 
     /**
-     * Creates a {@link TileModel} with default width and height.
+     * Creates a {@link TileModel} with default size and position.
      * <p>
      * Used for {@link TileFactory}.
      *
      * @param world that the body is added to
      * @param bus   that is used for handling and posting {@link Event}s
-     * @param x     left-most position in the horizontal axis
-     * @param y     bottom-most position in the vertical axis
+     * @param x     left-most position of tile in the horizontal axis
+     * @param y     bottom-most position of tile in the vertical axis
      */
     public Barrel(World world, EventBus bus, float x, float y) {
         super(world, x + TILE_HEIGHT / 2, y + TILE_HEIGHT / 4, TILE_WIDTH / 2, TILE_HEIGHT / 2);

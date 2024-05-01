@@ -24,7 +24,8 @@ public abstract class ItemModel implements ViewableItem, EventHandler, ContactLi
     private Shape shape;
 
     /**
-     * {@code durability} and {@code createEffect} must be set manually.
+     * {@code durability} and {@code createEffect} must be set in
+     * the class constructor.
      *
      * @param bus   the {@link EventBus} that is used to call {@link EventItemUsedUp}
      * @param world that the {@link Body} is created in

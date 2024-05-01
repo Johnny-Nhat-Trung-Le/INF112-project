@@ -35,7 +35,8 @@ public class EventBus {
     }
 
     /**
-     * Removes an {@link EventHandler} so it doesn't receive {@code EventHandler::handle}
+     * Removes an {@link EventHandler} so it doesn't receive
+     * {@code EventHandler::handle}
      *
      * @param handler to be removed
      */

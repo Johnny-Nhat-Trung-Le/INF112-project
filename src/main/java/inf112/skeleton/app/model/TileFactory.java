@@ -9,6 +9,17 @@ import inf112.skeleton.app.utils.PluginLoader;
 import java.util.*;
 
 public class TileFactory {
+    /**
+     * Maps a key ({@linkplain Character}) to a factory ({@linkplain Function4})
+     * that takes in:
+     * <p>
+     * {@link World} to be created in <p>
+     * {@link EventBus} that {@link inf112.skeleton.app.event.Event}s are posted and handled from <p>
+     * {@link Float} left-most tile-position <p>
+     * {@link Float} bottom-most tile-position
+     * <p>
+     * The factory creates a {@linkplain TileModel} on call.
+     */
     public static final Map<Character, Function4<World, EventBus, Float, Float, TileModel>> translation = new HashMap<>();
 
     /**
@@ -59,7 +70,7 @@ public class TileFactory {
     }
 
     /**
-     * Initialize with {@link TileModel}s.
+     * Initialize {@code TileModel.translation} with keys to factories.
      */
     public static void initialize() {
         PluginLoader.loadClasses(TileFactory.class, "./tiles", TileModel.class).forEach(c -> {

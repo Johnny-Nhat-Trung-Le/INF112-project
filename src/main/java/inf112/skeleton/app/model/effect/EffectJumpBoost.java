@@ -2,7 +2,7 @@ package inf112.skeleton.app.model.effect;
 
 public class EffectJumpBoost extends Effect {
     private static final float SPEED_BOOST = 1;
-    private static final float JUMP_BOOST = 3/2f;
+    private static final float JUMP_BOOST = 3 / 2f;
 
     /**
      * Makes you higher.
