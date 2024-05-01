@@ -43,8 +43,8 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
 
         // LEVEL 2
         List<Function<World, ItemModel>> i2 = new ArrayList<>();
-        //i2.add((w) -> new ItemMushroom(bus, w, 24, 20));
-        //i2.add((w) -> new ItemEnergy(bus, w, 26, 20));
+        i2.add((w) -> new ItemMushroom(bus, w, 24, 20));
+        i2.add((w) -> new ItemEnergy(bus, w, 26, 20));
         i2.add((w) -> new ItemHP(bus, w, 28, 20));
         ILevel l2 = new Level(
                 bus,
@@ -57,24 +57,24 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
                         ---------------------------------------------------------9
                         ---------------------------------------------------------8
                         ----------------------------------------------LGGGGGGGGGGR
-                        LGGGGGR--------------------------------------qGGGGGGGGGGGG
-                        GGGGGGG------------------------------------B----------GGGG
-                        GGGGGGG------------------------------------i----------GGGG
-                        GGGGGGG----------------------------------------LR-----GGGG
-                        GGGGGGG----------------------------------------GGGr---GGGG
-                        GGGGGGG----|------lr---------------------------------BGGGG
-                        GGGGGGGe-----LR------------------------------------GGGGGGG
-                        GGGGGGG---G--GG-------G------------------------S-GGGGGGGGG
-                        GGGGGGG--eG--GG-------G-------------------s---LGGGGGGGGGGG
-                        GGGGGGGB-----GG-------Ge-------------s---lgr--GGGGGGGGGGGG
-                        GGGGGGGwe----GG---------------SS----lgr-------------------
-                        GGG-------|--GG-----------I--lgggr------------------------
-                        GGG---------BGG-----------G-------------------------------
-                        GGG---s----qwGGSSSSSSSSS--G-------------------------------
-                        GGGGGGGGR----GGGGGGGGGGR--G-------------------------------
-                        GGGGGGGGG----GGGGGGGGGGG--G-------------------------------
-                        GGGGGGGGG----GGGGGGGGGGG--G-------------------------------
-                        GGGGGGGGG----GGGGGGGGGGG----------------------------------
+                        LGGGGGR--------------------------------------qxhhhhhhhbbbn
+                        vbbbbbn------------------------------------B----------vbbn
+                        vbbbbbn------------------------------------i----------vbbn
+                        vbbbbbn----------------------------------------LR-----vbbn
+                        vbbbbbn----------------------------------------fzgr---vbbn
+                        vbbbbbn----|------lr---------------------------------Bvbbn
+                        vbbbbbme-----LR------------------------------------LGGabbn
+                        vbbbbbn---G--vn-------G------------------------S-LGabbbbbn
+                        vbbbbbn--qx--vn-------b-------------------s---LGGabbbbbbbn
+                        vbbbbbnB-----vn-------ze-------------s---lgr--fhhhhhhhhhhj
+                        vbbhhhzwe----vn---------------SS----lgr-------------------
+                        vbn-------|--vn-----------I--lgggr------------------------
+                        vbn---------Bvn-----------c-------------------------------
+                        vbn---s----qwanSSSSSSSSS--c-------------------------------
+                        vbmGGGGGR----vbbbbbbbbbR--c-------------------------------
+                        vbbbbbbbn----vbbbbbbbbbn--c-------------------------------
+                        vbbbbbbbn----vbbbbbbbbbn--d-------------------------------
+                        fhhhhhhhj----fhhhhhhhhhj----------------------------------
                         """,
                 "",
                 i2
@@ -94,7 +94,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
                 """
                         --------------SS------------9-
                         -----------LGGGGGR---s---B--8-
-                        lgggr–lggr–GGGGGGGgggggggggggr
+                        lgggr–lggr–fhhhhhzgggggggggggr
                         """,
                 "",
                 i1

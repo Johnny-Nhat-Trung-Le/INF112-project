@@ -97,6 +97,21 @@ public class TexturePack implements ITexturePack {
         if (tile instanceof TileGroundLeft) return getTextureFromAtlas(1);
         if (tile instanceof TileGroundRight) return getTextureFromAtlas(3);
 
+        if (tile instanceof  TileGrassCornerRight1) return getTextureFromAtlas(4);
+        if (tile instanceof  TileGrassCornerLeft1) return getTextureFromAtlas(6);
+        if (tile instanceof  TileGrassCornerRight2) return getTextureFromAtlas(20);
+        if (tile instanceof  TileGrassCornerLeft2) return getTextureFromAtlas(22);
+
+        if (tile instanceof TileSideLeft) return getTextureFromAtlas(17);
+        if (tile instanceof TileMiddle) return getTextureFromAtlas(18);
+        if (tile instanceof TileSideRight) return getTextureFromAtlas(19);
+        if (tile instanceof TileBottomLeft) return getTextureFromAtlas(33);
+        if (tile instanceof TileBottom) return getTextureFromAtlas(34);
+        if (tile instanceof TileBottomRight) return getTextureFromAtlas(35);
+
+        if (tile instanceof TilePillar) return getTextureFromAtlas(16);
+        if (tile instanceof TilePillarBottom) return getTextureFromAtlas(32);
+
         if (tile instanceof TileFloatingGroundSingle) return getTextureFromAtlas(48);
         if (tile instanceof TileFloatingGround) return getTextureFromAtlas(50);
         if (tile instanceof TileFloatingGroundLeft) return getTextureFromAtlas(49);
