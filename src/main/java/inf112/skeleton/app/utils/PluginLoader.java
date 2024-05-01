@@ -2,6 +2,7 @@
 // Created by Anya Helene Bagge
 // modified (
 //   added makeFactory : Function4
+//   added support for JAR-files
 // )
 
 package inf112.skeleton.app.utils;
@@ -16,12 +17,16 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -75,9 +80,30 @@ public class PluginLoader {
             }
         } else if (url.getProtocol().equals("jar")) {
             String jarPath = url.getFile();
-            String jarFile = jarPath.substring(5, jarPath.indexOf('!'));
+            String jarFileStr = jarPath.substring(5, jarPath.indexOf('!'));
             String subPath = jarPath.substring(jarPath.indexOf('!') + 1);
-//            Gdx.app.error("PluginLoader", "JAR files not supported: " + jarFile + " " + subPath);
+
+            URL jarURL = origin.getProtectionDomain().getCodeSource().getLocation();
+            // Create a URLClassLoader for the JAR file
+            try (URLClassLoader classLoader = new URLClassLoader(new URL[]{jarURL})) {
+                // Open the JAR file
+                try (JarFile jarFile = new JarFile(jarURL.getPath())) {
+                    List<String> result = new ArrayList<>();
+                    // Iterate through the entries in the JAR file
+                    Enumeration<JarEntry> entries = jarFile.entries();
+                    while (entries.hasMoreElements()) {
+                        JarEntry entry = entries.nextElement();
+                        // Check if the entry is a class file in the specified package
+                        if (entry.getName().startsWith(subPath.substring(1)) && entry.getName().endsWith(".class")) {
+                            // Convert the entry name to a class name
+                            String className = "/" + entry.getName();
+                            result.add(className);
+                        }
+                    }
+                    return result;
+                }
+            } catch (IOException ignored) {
+            }
             return List.of();
         }
 
