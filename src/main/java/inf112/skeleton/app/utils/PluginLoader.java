@@ -2,7 +2,7 @@
 // Created by Anya Helene Bagge
 // modified (
 //   added makeFactory : Function4
-//   added support for JAR-files
+//   added support for JAR-files (listFiles)
 // )
 
 package inf112.skeleton.app.utils;
@@ -72,15 +72,14 @@ public class PluginLoader {
         Path p = prefix.resolve(path).normalize();
         String resourcePath = p.toString();
 
+        // To work with windows
+        resourcePath = resourcePath.replace("\\", "/");
+        if (resourcePath.startsWith("//")) resourcePath = resourcePath.substring(1);
+
         URL url = origin.getResource(resourcePath);
         if (url == null) {
-            // Fix for windows
-            resourcePath = p.toString().substring(1).replace("\\", "/");
-            url = origin.getResource(resourcePath);
-            if (url == null) {
-//                Gdx.app.error("PluginLoader", "Resource inaccessible: " + p);
-                return List.of();
-            }
+//            Gdx.app.error("PluginLoader", "Resource inaccessible: " + p);
+            return List.of();
         }
         if (url.getProtocol().equals("jar")) {
             String jarPathStr = url.getFile();
