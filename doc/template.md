@@ -15,20 +15,19 @@ Pay attention to these folders:
 
 **TODO:** You should probably edit the `pom.xml` and fill in details such as the project `name` and `artifactId`:
 
-
 ```xml
 
-	< !-- FIXME - set group id -->
-	<groupId>inf112.skeleton.app</groupId>
-	< !-- FIXME - set artifact name -->
-	<artifactId>gdx-app</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
+< !-- FIXME - set group id -->
+<groupId>inf112.lilBro.app</groupId>
+< !-- FIXME - set artifact name -->
+<artifactId>gdx-app</artifactId>
+<version>1.0-SNAPSHOT</version>
+<packaging>jar</packaging>
 
-	< !-- FIXME - set app name -->
-	<name>mvn-app</name>
-	< !-- FIXME change it to the project's website -->
-	<url>http://www.example.com</url>
+< !-- FIXME - set app name -->
+<name>mvn-app</name>
+< !-- FIXME change it to the project's website -->
+<url>http://www.example.com</url>
 ```
 
 	
@@ -36,7 +35,7 @@ Pay attention to these folders:
 You can run the project with Maven using `mvn exec:java`. Change the main class by modifying the `main.class` setting in `pom.xml`:
 
 ```
-		<main.class>inf112.skeleton.app.Main</main.class>
+		<main.class>inf112.lilBro.app.Main</main.class>
 ```
 
 Running the program should open a window with the text “Hello, world!” and an alligator in the lower left corner.  Clicking inside the window should play a *blip* sound. Exit by pressing *Escape* or closing the window.
