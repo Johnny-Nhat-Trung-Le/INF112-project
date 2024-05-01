@@ -40,8 +40,7 @@ public class GameView extends Game implements EventHandler {
         switch (state) {
             case ACTIVE -> {
                 if (model.getViewableLevel() == null) {
-                    System.out.println("No level selected!");
-                    return;
+                    throw new NullPointerException("No level selected");
                 }
                 setScreen(new GameScreen(model.getViewableLevel(), bus, processor));
                 assetsManager.playMusic("BACKGROUND");

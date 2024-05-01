@@ -48,3 +48,6 @@
   * **Tittel:** damage
   * **Artist:** PixelBay
   * **Link:** https://pixabay.com/sound-effects/search/damage/
+* **PluginLoader class**
+  * **Tittel:** PluginLoader class
+  * **Forfatter:** Anya
