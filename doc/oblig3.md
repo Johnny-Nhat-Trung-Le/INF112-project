@@ -135,4 +135,4 @@
       Rengjort koden. 
       Lagt mer tester.
 * Lag og lever et klassediagram.
-    * Vi har laget en [enkel klassediagram](../diagram/diagram.puml) som inneholder de viktigste klassene, metoder og felt-variabler
+    * Vi har laget en [enkel klassediagram](diagram/diagram.puml) som inneholder de viktigste klassene, metoder og felt-variabler
