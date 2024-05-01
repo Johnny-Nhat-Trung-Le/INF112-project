@@ -41,6 +41,27 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
     private void fillLevels() {
         TileFactory.initialize();
 
+        // Level 1
+        List<Function<World, ItemModel>> i1 = new ArrayList<>();
+        i1.add((w) -> new ItemMushroom(bus, w, 40f, 5f));
+        ILevel l1 = new Level(
+                bus,
+                -20,
+                -20,
+                0,
+                3f,
+                5f,
+                """
+                        --------------SS------------9-
+                        -----------LGGGGGR---s---B--8-
+                        lgggr–lggr–fhhhhhzgggggggggggr
+                        """,
+                "",
+                i1
+        );
+        levels.put("1", l1);
+
+
         // LEVEL 2
         List<Function<World, ItemModel>> i2 = new ArrayList<>();
         i2.add((w) -> new ItemMushroom(bus, w, 24, 20));
@@ -99,30 +120,8 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
         );
         levels.put("2", l2);
 
-        // Level 1
-        List<Function<World, ItemModel>> i1 = new ArrayList<>();
-        i1.add((w) -> new ItemMushroom(bus, w, 40f, 5f));
-        ILevel l1 = new Level(
-                bus,
-                -20,
-                -20,
-                0,
-                3f,
-                5f,
-                """
-                        --------------SS------------9-
-                        -----------LGGGGGR---s---B--8-
-                        lgggr–lggr–fhhhhhzgggggggggggr
-                        """,
-                "",
-                i1
-        );
-        levels.put("1",l1);
-
         // SET DEFAULT
-        if (!levels.isEmpty()) {
-            level = levels.keySet().stream().toList().get(0);
-        }
+        level = levels.keySet().stream().toList().get(0);
     }
 
     @Override
@@ -160,9 +159,9 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
 
     @Override
     public void setLevel(String key) {
-        /*if (levels.containsKey(level) ) {
+        if (levels.containsKey(level) ) {
             levels.get(level).disable();
-        }*/
+        }
         level = key;
         if (levels.containsKey(level) && state == GameState.ACTIVE) {
             levels.get(level).activate();

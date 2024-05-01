@@ -3,10 +3,7 @@ package inf112.skeleton.app.model;
 import inf112.skeleton.app.controller.ControllablePlayerModel;
 import inf112.skeleton.app.event.Event;
 import inf112.skeleton.app.event.EventBus;
-import inf112.skeleton.app.model.event.EventDeath;
-import inf112.skeleton.app.model.event.EventGameState;
-import inf112.skeleton.app.model.event.EventLevelChanged;
-import inf112.skeleton.app.model.event.EventReachedDoor;
+import inf112.skeleton.app.model.event.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TestGameModel {
-    List<Event> events;
+    private static final float DT = 1 / 60f;
+    private List<Event> events;
     private GameModel model;
     private EventBus bus;
 
@@ -28,6 +26,10 @@ public class TestGameModel {
         bus.addEventHandler(this::handleEvent);
         model = new GameModel(bus);
 
+    }
+
+    private void step() {
+        bus.post(new EventStep(DT));
     }
 
     private void handleEvent(Event event) {
@@ -103,6 +105,33 @@ public class TestGameModel {
         assertNotNull(model.getControllableLevel());
         assertNotNull(model.getViewableLevel());
         assertEquals(new EventLevelChanged(), events.get(0));
+    }
+
+    @Test
+    public void testSetLevel() {
+        String levelKey = "1";
+        model.setLevel(levelKey);
+        model.setState(GameState.ACTIVE);
+
+        assertEquals(GameState.ACTIVE, model.getState(), "The game-state has not been set to " + GameState.ACTIVE);
+        assertNotNull(model.getViewableLevel(), "The level does not exist, key: " + levelKey);
+
+        model.setLevel(levelKey);
+        model.setLevel(levelKey);
+        model.setLevel(levelKey);
+        model.setLevel(levelKey);
+
+        model.getControllableLevel().getControllablePlayer().moveRight(true);
+
+        events.clear();
+        bus.post(new EventReachedDoor());
+
+        assertEquals(2, events.size(), "There should only be two events posted!");
+        assertInstanceOf(EventReachedDoor.class, events.get(0), "The first event should be " + EventReachedDoor.class);
+        assertInstanceOf(EventGameState.class, events.get(1), "The first event should be " + EventLevelChanged.class);
+        assertEquals(GameState.VICTORY, ((EventGameState) events.get(1)).gameState(), "The game-state should be set to " + GameState.VICTORY);
+
+        System.out.println(events);
     }
 
 }
