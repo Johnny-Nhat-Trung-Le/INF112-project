@@ -41,12 +41,12 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
     private void fillLevels() {
         TileFactory.initialize();
 
-        // LEVEL 1
-        List<Function<World, ItemModel>> i1 = new ArrayList<>();
-        //i1.add((w) -> new ItemMushroom(bus, w, 24, 20));
-        //i1.add((w) -> new ItemEnergy(bus, w, 26, 20));
-        i1.add((w) -> new ItemHP(bus, w, 28, 20));
-        ILevel l1 = new Level(
+        // LEVEL 2
+        List<Function<World, ItemModel>> i2 = new ArrayList<>();
+        //i2.add((w) -> new ItemMushroom(bus, w, 24, 20));
+        //i2.add((w) -> new ItemEnergy(bus, w, 26, 20));
+        i2.add((w) -> new ItemHP(bus, w, 28, 20));
+        ILevel l2 = new Level(
                 bus,
                 -20,
                 -20,
@@ -77,42 +77,29 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
                         GGGGGGGGG----GGGGGGGGGGG----------------------------------
                         """,
                 "",
-                i1
+                i2
         );
-        levels.put("1", l1);
-        List<Function<World, ItemModel>> i2 = new ArrayList<>();
-        ILevel l2 = new Level(
+        levels.put("2", l2);
+
+        // Level 1
+        List<Function<World, ItemModel>> i1 = new ArrayList<>();
+        i1.add((w) -> new ItemMushroom(bus, w, 40f, 5f));
+        ILevel l1 = new Level(
                 bus,
                 -20,
                 -20,
                 0,
-                20f,
-                20f,
+                3f,
+                5f,
                 """
-                        ---------------------------------------------------------9
-                        ---------------------------------------------------------8
-                        ----------------------------------------------LGGGGGGGGGGR
-                        LGGGGGR--------------------------------------qGGGGGGGGGGGG
-                        GGGGGGG------------------------------------B----------GGGG
-                        GGGGGGG------------------------------------i----------GGGG
-                        GGGGGGG----------------------------------------LR-----GGGG
-                        GGGGGGG----------------------------------------GGGr---GGGG
-                        GGGGGGG----|------lr---------------------------------BGGGG
-                        GGGGGGGe-----LR------------------------------------GGGGGGG
-                        GGGGGGG---G--GG-------G------------------------S-GGGGGGGGG
-                        GGGGGGG--eG--GG-------G-------------------s---LGGGGGGGGGGG
-                        GGGGGGGB-----GG-------Ge-------------s---lgr--GGGGGGGGGGGG
-                        GGGGGGGwe----GG---------------SS----lgr-------------------
-                        GGG-------|--GG-----------I--lgggr------------------------
-                        GGG---------BGG-----------G-------------------------------
-                        GGG---s-----G-------------------------------
-                        GGGGGGGGG----GGGGGGGGGGG--G-------------------------------
-                        GGGGGGGGG----GGGGGGGGGGG----------------------------------
+                        --------------SS------------9-
+                        -----------LGGGGGR---s---B--8-
+                        lgggr–lggr–GGGGGGGgggggggggggr
                         """,
                 "",
-                i2
+                i1
         );
-        levels.put("2",l2);
+        levels.put("1",l1);
 
         // SET DEFAULT
         if (!levels.isEmpty()) {

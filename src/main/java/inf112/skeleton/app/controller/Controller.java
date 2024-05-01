@@ -106,12 +106,18 @@ public class Controller extends InputAdapter implements EventHandler {
                 }
                 break;
             case Keys.B:
-                if (model.getState() == GameState.INFO) {
-                    if (wasMenu) {
+                switch (model.getState()) {
+                    case INFO:
+                        if (wasMenu) {
+                            model.setState(GameState.MAIN_MENU);
+                            break;
+                        } else {
+                            model.setState(GameState.ACTIVE);
+                            break;
+                        }
+                    case VICTORY:
                         model.setState(GameState.MAIN_MENU);
-                    } else {
-                        model.setState(GameState.ACTIVE);
-                    }
+                        break;
                 }
                 break;
             case Keys.ESCAPE:
