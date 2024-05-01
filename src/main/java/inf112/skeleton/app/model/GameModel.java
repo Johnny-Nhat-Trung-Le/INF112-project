@@ -71,7 +71,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
                         vbn-------|--vn-----------I--lgggr------------------------
                         vbn---------Bvn-----------c-------------------------------
                         vbn---s----qwanSSSSSSSSS--c-------------------------------
-                        vbmGGGGGR----vbbbbbbbbbR--c-------------------------------
+                        vbmGGGGGR----vbGGGGGGGGR--c-------------------------------
                         vbbbbbbbn----vbbbbbbbbbn--c-------------------------------
                         vbbbbbbbn----vbbbbbbbbbn--d-------------------------------
                         fhhhhhhhj----fhhhhhhhhhj----------------------------------

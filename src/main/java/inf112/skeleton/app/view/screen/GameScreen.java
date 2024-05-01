@@ -49,8 +49,6 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         batchHud = new SpriteBatch();
 
-
-        // testing
         BackgroundLayers = new Stage(new ScreenViewport());
         Array<Texture> layers = new Array<>();
         addBackgroundLayers(layers);
