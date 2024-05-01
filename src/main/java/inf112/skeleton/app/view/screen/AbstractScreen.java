@@ -21,6 +21,11 @@ public abstract class AbstractScreen implements Screen {
     protected final OrthographicCamera gameCam;
     private final Viewport gamePort;
 
+    /**
+     * An abstract class for all the screens
+     *
+     * @param processor the input processor
+     */
     public AbstractScreen(InputProcessor processor) {
         batch = new SpriteBatch();
 
@@ -36,6 +41,9 @@ public abstract class AbstractScreen implements Screen {
     public void show() {
     }
 
+    /**
+     * Updates all the calculations necessary for each render
+     */
     private void update() {
         gameCam.position.set(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
         batch.setProjectionMatrix(gameCam.combined);

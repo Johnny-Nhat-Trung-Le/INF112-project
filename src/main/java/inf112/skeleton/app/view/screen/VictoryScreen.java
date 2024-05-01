@@ -12,6 +12,11 @@ public class VictoryScreen extends AbstractScreen {
     private final String text;
     private final String title;
 
+    /**
+     * Creates the victory screen which should be displayed when player has won the level
+     *
+     * @param processor The input processor
+     */
     public VictoryScreen(InputProcessor processor) {
         super(processor);
 
@@ -31,11 +36,9 @@ public class VictoryScreen extends AbstractScreen {
     public void render(float delta) {
         super.render(delta);
         batch.begin();
-        //Fills the whole screen
         batch.draw(texture, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-        //Draws the texts
         font.draw(batch, title, (VIEWPORT_WIDTH / 2) - titleLayout.width / 2, (VIEWPORT_HEIGHT / 4) * 3);
-        font.draw(batch, text, (VIEWPORT_WIDTH / 2) - textLayout.width / 2, (VIEWPORT_HEIGHT / 2) - textLayout.height / 2);
+        font.draw(batch, text, (VIEWPORT_WIDTH / 2) - textLayout.width / 2, (VIEWPORT_HEIGHT / 4)*3 - textLayout.height / 2);
         batch.end();
     }
 }

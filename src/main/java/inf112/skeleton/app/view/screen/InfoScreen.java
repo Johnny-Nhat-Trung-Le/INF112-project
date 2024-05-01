@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import inf112.skeleton.app.event.EventBus;
 import inf112.skeleton.app.model.item.ItemEnergy;
@@ -35,10 +34,14 @@ public class InfoScreen extends AbstractScreen {
     private final ItemHP itemHp = new ItemHP(new EventBus(), new World(new Vector2(0, 0), true), 0, 0);
     private final Image hpImg = new Image(new TextureRegion(texturePack.getItemTexture(itemHp)));
 
-
+    /**
+     * Creates an infoScreen for all the information about the game
+     *
+     * @param processor The input processor
+     */
     public InfoScreen(InputProcessor processor) {
         super(processor);
-        stage = new Stage(new FillViewport(VIEWPORT_WIDTH,VIEWPORT_HEIGHT,gameCam));
+        stage = new Stage(new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam));
         tableController = new Table();
         tableController.setFillParent(true);
         tableItem = new Table();
@@ -52,7 +55,6 @@ public class InfoScreen extends AbstractScreen {
     }
 
     private void createLeftTable() {
-        // W, A, S, D, SPACE, P, H, B
         tableController.top().left().padLeft(40).padTop(40);
         tableController.add(new Label("Controls", labelStyle));
         tableController.row();
@@ -69,7 +71,6 @@ public class InfoScreen extends AbstractScreen {
         tableController.add(new Label("P - Pause/Continue", labelStyle));
         tableController.row();
         tableController.add(new Label("H - Help", labelStyle));
-        //TODO fix b-back
         tableController.row().left();
         tableController.add(new Label("B - Back", labelStyle));
     }
@@ -80,10 +81,8 @@ public class InfoScreen extends AbstractScreen {
         createDescriptionContainer(itemMushroom);
         createItemGroup(energyImg, itemEnergy);
         createDescriptionContainer(itemEnergy);
-        createItemGroup(hpImg,itemHp);
+        createItemGroup(hpImg, itemHp);
         createDescriptionContainer(itemHp);
-        //TODO the itemImg and itemDesc aint aligned on the left side
-
     }
 
     /**

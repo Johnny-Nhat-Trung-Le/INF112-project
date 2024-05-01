@@ -35,7 +35,13 @@ public class GameScreen implements Screen {
     private final Stage hud;
     private final Stage BackgroundLayers;
 
-
+    /**
+     * Creates a gamescreen for the gameplay
+     *
+     * @param level     The level the screen should display
+     * @param bus       The eventBus
+     * @param processor The input processor
+     */
     public GameScreen(ViewableLevel level, EventBus bus, InputProcessor processor) {
         Gdx.graphics.setForegroundFPS(60);
         Gdx.input.setInputProcessor(processor);

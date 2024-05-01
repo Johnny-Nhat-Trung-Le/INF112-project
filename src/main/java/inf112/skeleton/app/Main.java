@@ -10,7 +10,7 @@ import inf112.skeleton.app.view.GameView;
 public class Main {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
-        cfg.setTitle("game");
+        cfg.setTitle("Lil-Bros-Adventure-Back-Home");
         cfg.setWindowedMode(1280, 1024);
 
         EventBus bus = new EventBus();

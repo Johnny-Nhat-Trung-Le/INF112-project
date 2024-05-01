@@ -15,6 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import inf112.skeleton.app.model.effect.Effect;
+import inf112.skeleton.app.model.item.ItemHP;
+import inf112.skeleton.app.model.item.ItemModel;
+import inf112.skeleton.app.view.screen.GameScreen;
 import inf112.skeleton.app.view.texturepack.ITexturePack;
 
 import java.util.*;
@@ -36,6 +40,14 @@ public class Hud extends Stage {
 
     private final LinkedList<Image> hpIcons;
 
+    /**
+     * A HUD which overlaps the {@link GameScreen} and displays
+     * {@link ItemHP}, {@link Effect}, and {@link ItemModel}
+     *
+     * @param batch         The Batch from {@link GameScreen}
+     * @param viewableLevel The {@link ViewableLevel}
+     * @param texturePack   The {@link ITexturePack}
+     */
     public Hud(SpriteBatch batch, ViewableLevel viewableLevel, ITexturePack texturePack) {
         super(new ExtendViewport(GameView.VIEWPORT_WIDTH * 20, GameView.VIEWPORT_HEIGHT / GameView.VIEWPORT_WIDTH * 20, new OrthographicCamera()), batch);
         level = viewableLevel;
@@ -90,7 +102,6 @@ public class Hud extends Stage {
 
     private void updateHp() {
         if (hpIcons.size() == level.getViewablePlayer().getHp()) return;
-
         //Checks whether the player lost or gained hp.
         //clears the table when hp has been lost.
         if (hpIcons.size() > level.getViewablePlayer().getHp()) {
@@ -164,10 +175,6 @@ public class Hud extends Stage {
         pm.setColor(Color.GREEN);
         pm.fillRectangle(0, 0, (int) (IMG_SIZE * wp), IMG_SIZE / 4);
         return new Sprite(new Texture(pm));
-    }
-
-    private boolean sameEffectIn(List<ViewableEffect> list, ViewableEffect effect) {
-        return list.stream().anyMatch((e) -> e.getClass().equals(effect.getClass()));
     }
 
     private void update() {

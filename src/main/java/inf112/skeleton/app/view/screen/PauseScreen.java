@@ -3,16 +3,19 @@ package inf112.skeleton.app.view.screen;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import inf112.skeleton.app.view.screen.AbstractScreen;
 
 public class PauseScreen extends AbstractScreen {
     private final Texture texture = new Texture("Backgrounds/background_005.png");
     private final String title = "Pause!";
-    private final String text ="Press P to continue\n\n  Press H for help";
-    private final GlyphLayout titleLayout = new GlyphLayout(font,title);
-    private final GlyphLayout textLayout = new GlyphLayout(font,text);
+    private final String text = "Press P to continue\n\n  Press H for help";
+    private final GlyphLayout titleLayout = new GlyphLayout(font, title);
+    private final GlyphLayout textLayout = new GlyphLayout(font, text);
 
-
+    /**
+     * Creates a pause screen which should be displayed when the player pauses the game
+     *
+     * @param processor The input processor
+     */
     public PauseScreen(InputProcessor processor) {
         super(processor);
     }

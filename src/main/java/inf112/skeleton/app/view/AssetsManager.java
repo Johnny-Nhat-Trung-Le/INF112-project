@@ -25,6 +25,9 @@ public class AssetsManager implements IAssetsManager {
     private Music nowPlaying;
     private String lastPlayed;
 
+    /**
+     * Creates an object which manages all the assets such as music and sound effects
+     */
     public AssetsManager() {
         currentEffects = new HashMap<>();
     }

@@ -20,6 +20,13 @@ public class GameView extends Game implements EventHandler {
     private final IAssetsManager assetsManager;
     private final ViewableGameModel model;
 
+    /**
+     * Creates {@link Game}
+     *
+     * @param model     The {@link ViewableGameModel}
+     * @param bus       The {@link EventBus}
+     * @param processor The {@link InputProcessor}
+     */
     public GameView(ViewableGameModel model, EventBus bus, InputProcessor processor) {
         this.model = model;
         this.bus = bus;

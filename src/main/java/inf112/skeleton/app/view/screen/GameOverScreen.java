@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import inf112.skeleton.app.view.screen.AbstractScreen;
 
 public class GameOverScreen extends AbstractScreen {
     private final Texture texture;
@@ -12,6 +11,11 @@ public class GameOverScreen extends AbstractScreen {
     private final String title = "Game Over !_!";
     private final String text = "Press R to restart!";
 
+    /**
+     * Creates a screen for when the gamestate is Game Over
+     *
+     * @param processor input processor
+     */
     public GameOverScreen(InputProcessor processor) {
         super(processor);
 
@@ -28,7 +32,6 @@ public class GameOverScreen extends AbstractScreen {
     public void render(float delta) {
         super.render(delta);
         batch.begin();
-        //Fills the whole screen
         batch.draw(texture, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         font.draw(batch, title, (VIEWPORT_WIDTH / 2) - layout.width / 2, (VIEWPORT_HEIGHT / 4) * 3 - (layout.height / 2));
         font.draw(batch, text, (VIEWPORT_WIDTH / 2) - layout.width / 2, ((VIEWPORT_HEIGHT / 4) * 2) - layout.height / 2);
