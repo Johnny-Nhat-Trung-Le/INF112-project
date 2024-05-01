@@ -25,7 +25,7 @@ public class LevelScreen extends AbstractScreen {
         stage = new Stage(new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam));
         texture = new Texture("Backgrounds/openBook.png");
         table = new Table();
-        title = "Level";
+        title = "Select level by pressing\nthe corresponding number";
         table.setFillParent(true);
         createLevelTable();
         stage.addActor(table);
@@ -38,6 +38,8 @@ public class LevelScreen extends AbstractScreen {
         table.center().row();
         table.add(new Label("1", labelStyle)).right().padRight(150);
         table.add(new Label("2", labelStyle));
+        table.row().center();
+        table.add(new Label("B - Back", new Label.LabelStyle(font, Color.RED)));
 
     }
 
