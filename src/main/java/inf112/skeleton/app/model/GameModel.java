@@ -94,7 +94,7 @@ public class GameModel implements ViewableGameModel, ControllableGameModel, Even
                 """
                         --------------SS------------9-
                         -----------LGGGGGR---s---B--8-
-                        lgggr–lggr–GGGGGGGgggggggggggr
+                        lgggr–lggr–fhhhhhzgggggggggggr
                         """,
                 "",
                 i1
