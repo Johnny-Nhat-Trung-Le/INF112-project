@@ -130,8 +130,6 @@ public class TestGameModel {
         assertInstanceOf(EventReachedDoor.class, events.get(0), "The first event should be " + EventReachedDoor.class);
         assertInstanceOf(EventGameState.class, events.get(1), "The first event should be " + EventLevelChanged.class);
         assertEquals(GameState.VICTORY, ((EventGameState) events.get(1)).gameState(), "The game-state should be set to " + GameState.VICTORY);
-
-        System.out.println(events);
     }
 
 }
