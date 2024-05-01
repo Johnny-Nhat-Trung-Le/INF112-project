@@ -104,3 +104,14 @@
 
 ## Dato: Tirsdag 30 April 2024
     Sammen fikset/ lagte mer tester, fikset/ la til "sound effects" og credits. Diskuterte om mulige endringer som kunne bli gjort, men fokuserte mest på komemnde innlevering. Alle var tilstede.
+
+## Dato: Onsdag 01 Mai 2024
+    Siste innspurt før oblig4, siste innlevering, hvor alle møttet opp for sist økt med arbeid.
+    Prosjektet/ spillet er nå ferdig. Idag så fikset vi teksten på info, level og victory screen.
+    Vi la til background som kunnes tegnes på via characters. Lagte to enkle leveler.
+    Fikset Pluginloader sånn at den funker med måten vi kjører programemt på og la til credits for den.
+    Lagte og fikset de resterende tester og fjernet vi ulike ressurs filer som vi ikke lenger brukte.
+    Aller sist gikk vi alle gjennom sammen alt av kode og filer i prosjektet, fikset/ la til javadoc der det trengtes, 
+        fjernet kode som ikke lenger var til bruk, smat fikset litt kode her og der.
+    Før vi så oss ferdig skrev vi oblig4.md og la til klassediagram, samt fikset pom.xml filen.
+    
