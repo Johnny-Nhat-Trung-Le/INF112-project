@@ -12,13 +12,13 @@
     - 'A':Venstre
     - 'S':Ned 
     - 'D':Høyre 
-    - 'Space':Bruktingsomspillerenholder
+    - 'Space':Bruk item som spilleren holder
   * Brukeren kan bruke disse tastene for å interagere med de ulike skjermene:
     - 'P':Start/Pause 
-    - 'R':Startspilletpånytt
-    - 'H':Bytttilinformasjonskjerm
-    - 'B':Bytttilbaketilforrigeskjerm
-    - 'esc':Avsluttprogrammet
+    - 'R':Start spillet pånytt
+    - 'H':Bytt til informasjonskjerm
+    - 'B':Bytt tilbake til forrige skjerm
+    - 'esc':Avslutte programmet
 
 ## Kjøring
 * Kompileres med `mvn package`.
@@ -26,7 +26,7 @@
 * Krever Java 21 eller senere
 
 ## Test
-* Testerkompileresmed`mvntest`
+* Testerkompileresmed`mvn test`
 * Manuelle tester som ikke kan kjøres automatisk ligger [her](doc/manualTesting.md)
 
 
