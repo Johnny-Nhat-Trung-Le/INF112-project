@@ -59,16 +59,24 @@
       * Gjør et retrospektiv hvor dere vurderer hvordan hele prosjektet har gått. Hva har dere gjort bra, hva hadde dere gjort annerledes hvis dere begynte på nytt?
         * Det som har vært veldig bra var at vi kjente hverandre godt, og at vi så hverandre (nesten) hver dag.
           Dette gjorde det lett for oss å kommunisere om ulike problemer som dukket opp eller ting som måtte fikses med hverandre
+        * Det som var veldig bra var at vi brukte mye tid på planleggingsfasen i starten, noe som ga oss god struktur på hvordan prosjektet skulle se ut både når det gjaldt hvordan spillet skulle være og klassestruktern.
+            Selv om ikke alle detaljer ble med, og noen detaljer måtte endre om, så var det fint å ha en helhetelig struktur på hvordan sluttresultatet skulle være.
+            
         * Til neste gang tenker vi at det kan være lurt å delegere mer tid til ulike issues/oppgaver siden det ofte kom uforutsigbare problemer/bugs som man brukte mer tid enn forventet.
         * Til neste gang bør vi holde styr på issue boardet og utnytte verktøyet, siden vi brukte det ganske lite.
         * Til neste gang bør vi lage flere branches for ulike oppgavetyper.
+        * Til neste gang bør man ha en annen struktur for hvordan man lager en verden.
+          Måten vi gjorde det på nå var ikke den beste når det gjaldt å ha en tileFactory og laste inn de ulike tilesene.
+          Dessuten ga det oss utfordringer med å laste inn teksturen til de ulike tilesene, ettersom vi endte opp med å bruke mye tid på å implementere en PluginLoader som lastet inn alle teksturene.
+    
 
 
 # Krav og spesifikasjon:
 * Oppdater hvilke krav dere har prioritert, hvor langt dere har kommet og hva dere har gjort siden forrige gang.
   Er dere kommet forbi MVP? Forklar hvordan dere prioriterer ny funksjonalitet.
     * Siden forrige gang har vi gått gjennom kravene som vi hadde mål om å nå.
-    * Alle våre 10 MVP mål har nå blitt nådd :D. Så vi begynte å legge til ekstra features som vi ikke hadde tenkt i utgangspunktet
+    * Alle nesten alle 10 MVP mål har nå blitt nådd :D. Så vi begynte å legge til ekstra features som vi ikke hadde tenkt i utgangspunktet.
+    * MVP 10 ble ikke nådd ettersom den var lite relevant, mer om det kommer senere i oppgaven.
     * Fra forrige gang har vi nå:
         1. Lagt til effektlyd til hendelser som plukking av items og jump
         2. Lagt til en hjelpeskjerm som gir informasjon om kontroll og hva ulike items gjør.
@@ -97,7 +105,7 @@
         - Implementere grensesnittene slik at de kan bli brukt i programmet.
         - Lage en visning for verden og spilleren (skille mellom dem)
 
-      2. 
+      2. Hvordan kontrollere spiller
          * Brukerhistorie:
            - Som spiller trenger jeg å vite hvordan man beveger karakteren og hva karakteren kan gjøre slik at jeg kan spille spillet. 
          * Akseptansekriterier:
@@ -105,7 +113,7 @@
          * Arbeidsoppgaver:
            - Lage en hjelpemeny hvor den gir beskrivelse av hvordan spilleren skal bevege seg.
 
-      3. 
+      3. Mål
            * Brukerhistorie:
              - Som spiller trenger jeg å vite hva som er målet med spillet slik at jeg kan vinne/tape
            * Akseptansekriterier:
@@ -113,7 +121,7 @@
            * Arbeidsoppgaver:
              - SKrive i README eller i startskjerm scenen.
 
-      4. 
+      4. Items
            * Brukerhistorie:
              - Som spiller trenger jeg å vite hva de ulike items gjør og eventuelt hvordan jeg kan bruke dem.
            * Akseptansekriterier:
@@ -123,7 +131,7 @@
              - Ha en ikon for item hver gang man plukke dem opp
              - Lage visining som gir riktig info
 
-      5. 
+      5. Spillverden
          * Brukerhistorie:
            - Som spiller trenger jeg å vite hva de ulike plattformene/elementer sine funksjonalitet er slik at jeg kan vite hva som er trygge å gå på og hva som ikke er trygge.
          * Akseptansekriterier:
@@ -132,7 +140,7 @@
          * Arbeidsoppgaver:
            - Bruke ulike visninger på ulike type terreng/objekter for å forstå hva de skal gjøre.
 
-      6. 
+      6. Hvordan skal klassestrukturen se ut
         * Brukerhistorie:
            - Som systemutvikler trenger jeg å vite hvilke klasser og grensesnitter tilhører hverandre slik at jeg kan ha god innkapsling.
         * Akseptansekriterier:
@@ -141,7 +149,7 @@
         * Arbeidsoppgave:
            - Tydelig og beskrivende filer og mapper.
 
-      7. 
+      7. Hvordan skal spillverden se ut
        * Brukehistorie:
          - Som systemutvikler trenger jeg å vite hva slags plattformer/elementer vi skal ha med slik at jeg kan programmere funksjonaliteter knyttet til de ulike plattformene/elementer. (eks: hvis det er traps, så skal man dø, eller hvis det er trapdoor så kan man bevege opp eller ned.)
        * Akseptansekriterier:
@@ -149,7 +157,7 @@
        * Arbeidsoppgave:
          - Et dokument/notat hvor man har oversikt over hva som skal være med i programmet når det gjelder platform, terreng, spiller osv.
 
-      8. 
+      8. Hva skal en spiller kunne gjøre
          * Brukerhistorie:
            - Som systemutvikler trenger jeg å vite hva slags egenskaper en spiller skal ha slik at jeg kan ha med de nødvendige funksjonalitetene knyttet til en spiller.(Items, eneimes, movement)
          * Akseptansekriterier:
@@ -271,14 +279,17 @@
         * Arbeidsoppgave:
           - Implementere en fiende som kan skade spilleren og har muligheten å dø.
 
-   * Alle brukerhistorier, akseptansekriterier og arbeidsoppgaver har blitt fullført.
-   * Den eneste som kan diskuteres er brukerhistorie 19 der vi ikke har klart å ha god test coverage på klasser med grafikk og lyd.
-    Selv om vi har manuelle tester for det, så vil ikke test coveragen vår øke, dermed vil det se ut til at vi har lav test coverage.
-    Men vi har sørget for å laget manuelle tester for det som finnes [her](manualTesting.md)
+   * Nesten alle brukerhistorier, akseptansekriterier og arbeidsoppgaver har blitt fullført.
+   * Krav 20 var for ambisiøst, ettersom vi innså at tester tok mer tid enn forventet.
+     * I tillegg dukket det opp uforutsigbare problemer som vi måtte delegere ressursene våre til å fikse på istedet for å lage noe nytt.
+     * Vi hadde dermed ikke nok tid.
+   * Krav 19 kan diskuteres om det har blitt fullført, siden vi ikke har klart å ha god automatiske tester på klasser med grafikk og lyd.
+      Selv om vi har manuelle tester for det, så vil ikke test coveragen vår øke på rapporten, dermed vil det se ut til at vi har lav test coverage i rapporten.
+      Men vi har sørget for å ha laget manuelle tester som dekker det vi mangler [her](manualTesting.md)
 
 * Har dere gjort justeringer på kravene som er med i MVP?
     * Ja, vi endret siste MVP som handlet om at vi skulle legge til ulike lyder når spiller løper avhengig av terreng.
-      Dette ble lite nødvendig når vi bruker samme type tiles/terreng. Dermed endret vi det til at man har en lydeffekt når man plukker opp items og hopper.
+      Dette ble lite relevant når vi bruker samme type tiles/terreng. Dermed endret vi det til at man har en lydeffekt når man plukker opp items og hopper.
   
 * Oppdater hvilke krav dere har prioritert, hvor langt dere har kommet og hva dere har gjort siden forrige gang.
     * Se på svar til første spørsmål under Krav og spesifikasjon.
@@ -292,12 +303,15 @@
 * Utbedring av feil: hvis dere har rettet / forbedret noe som er påpekt tidligere, lag en liste med «Dette har vi fikset siden sist», så det er lett for gruppelederne å få oversikt.
     * Dette har vi fikset sist:
       Fikset README.md, hvor vi la til credits for tileset, spritesheet, musikk og PluginLoader klassen.
-      Forbedret bakgrunn
-      Lagt til victory og info skjerm
-      Fikset og implementert level design
-      Rengjort koden.
-      Lagt mer tester.
+      Forbedret bakgrunn.
+      Lagt til victory,level og info skjerm.
+      Fikset og implementert level design.
+      Refaktorert koder.
+      Lagt til javadocs og kommentarer til public og noen private metoder.
+      Laget mer tester.
+      Fjernet vekk unødvendige ressurser i resource package.
+      Fikset PluginLoader klassen slik at den funker ved å kjøre jar og i windows/mac/linux
     * Dette droppet vi:
       * Vi droppet fiende, ettersom vi måtte full prioritere på å lage tester, og fikse koder som ikke funket helt som de skulle etter å ha oppdaget dem via tester
 * Lag og lever et klassediagram.
-    * Vi har laget en [klassediagram](classDiagram.drawio) som inneholder de viktigste klassene, metoder og felt-variabler
+    * Vi har laget en [klassediagram](diagram/diagram.svg) som inneholder de viktigste klassene, metoder og felt-variabler
