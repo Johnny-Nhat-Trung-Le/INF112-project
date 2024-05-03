@@ -15,6 +15,7 @@ import inf112.lilBro.app.model.TileFactory;
 import inf112.lilBro.app.model.effect.EffectJumpBoost;
 import inf112.lilBro.app.model.effect.EffectSpeedBoost;
 import inf112.lilBro.app.model.item.ItemEnergy;
+import inf112.lilBro.app.model.item.ItemHP;
 import inf112.lilBro.app.model.item.ItemMushroom;
 import inf112.lilBro.app.model.tiles.TileFloatingGroundSingleSlim;
 import inf112.lilBro.app.model.tiles.TileGroundLeft;
@@ -220,6 +221,16 @@ public class TestTexturePack {
         assertEquals(actualMushroomTexture.getRegionY(), texturePack.getItemTexture(mushroom).getRegionY(), "Should have the same texturePos Y");
         assertEquals(actualMushroomTexture.getRegionWidth(), texturePack.getItemTexture(mushroom).getRegionWidth(), "Should have the same textureWidth");
         assertEquals(actualMushroomTexture.getRegionHeight(), texturePack.getItemTexture(mushroom).getRegionHeight(), "Should have the same textureHeight");
+    }
+    @Test
+    public void testGetItemHPTexture() {
+        ItemHP hp = new ItemHP(bus, world, 0, 0);
+        TextureRegion actualHpTexture = atlas.findRegion(TILE, 139);
+        assertNotNull(texturePack.getItemTexture(hp));
+        assertEquals(actualHpTexture.getRegionX(), texturePack.getItemTexture(hp).getRegionX(), " Should have the same texturePos X");
+        assertEquals(actualHpTexture.getRegionY(), texturePack.getItemTexture(hp).getRegionY(), "Should have the same texturePos Y");
+        assertEquals(actualHpTexture.getRegionWidth(), texturePack.getItemTexture(hp).getRegionWidth(), "Should have the same textureWidth");
+        assertEquals(actualHpTexture.getRegionHeight(), texturePack.getItemTexture(hp).getRegionHeight(), "Should have the same textureHeight");
     }
 
     @Test

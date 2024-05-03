@@ -1,12 +1,11 @@
 package inf112.lilBro.app.view.screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 public class GameOverScreen extends AbstractScreen {
-    private final Texture texture;
+    private final Texture texture = new Texture("Backgrounds/background_001.png");
     private final GlyphLayout layout;
     private final String title = "Game Over !_!";
     private final String text = "Press R to restart!";
@@ -18,14 +17,9 @@ public class GameOverScreen extends AbstractScreen {
      */
     public GameOverScreen(InputProcessor processor) {
         super(processor);
-
-        texture = new Texture("Backgrounds/background_001.png");
         layout = new GlyphLayout();
         layout.setText(font, title);
         layout.setText(font, text);
-
-        Gdx.graphics.setForegroundFPS(60);
-        Gdx.input.setInputProcessor(processor);
     }
 
     @Override
