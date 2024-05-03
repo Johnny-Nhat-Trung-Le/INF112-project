@@ -1,29 +1,14 @@
 @startuml
-interface ControllableGameModel {
-~ ControllableLevel getControllableLevel()
-~ void setState(GameState)
-~ void setLevel(String)
-}
-
-class TileGrassCornerRight1 {
-+ {static} char KEY
-+ <<Create>> TileGrassCornerRight1(World,EventBus,float,float)
-}
-
-
-abstract class DoorModel {
+abstract class DamageTileModel {
+- int DAMAGE
 - EventBus eventBus
-# <<Create>> DoorModel(World,EventBus,float,float,float,float)
+# <<Create>> DamageTileModel(World,EventBus,float,float,float,float,int)
 + void beginContact(Contact)
 + void endContact(Contact)
 + void preSolve(Contact,Manifold)
 + void postSolve(Contact,ContactImpulse)
 }
 
-
-interface GameStateGettable {
-~ GameState getState()
-}
 
 abstract class Effect {
 - float speedBoost
@@ -39,61 +24,69 @@ abstract class Effect {
 }
 
 
-class TileGroundLeft {
+class EffectSpeedBoost {
+- {static} float SPEED_BOOST
+- {static} float JUMP_BOOST
++ <<Create>> EffectSpeedBoost(int)
+}
+
+
+class Background {
+- Array<Texture> layers
+- float x
++ <<Create>> Background(Array<Texture>)
++ void draw(Batch,float)
+}
+
+
+class EffectJumpBoost {
+- {static} float SPEED_BOOST
+- {static} float JUMP_BOOST
++ <<Create>> EffectJumpBoost(int)
+}
+
+
+class TilePillarBottom {
 + {static} char KEY
-+ <<Create>> TileGroundLeft(World,EventBus,float,float)
++ <<Create>> TilePillarBottom(World,EventBus,float,float)
 }
 
 
-class ItemHP {
-- {static} int DURABILITY
-- {static} int DURATION
-+ <<Create>> ItemHP(EventBus,World,float,float)
-+ String getDescription()
-+ String getName()
+interface PlayerStateGettable {
+~ PlayerState getState()
 }
 
-
-class PauseScreen {
-- Texture texture
-- String title
-- String text
-- GlyphLayout titleLayout
-- GlyphLayout textLayout
-+ <<Create>> PauseScreen(InputProcessor)
-+ void render(float)
+interface ViewableLevel {
+~ ViewablePlayerModel getViewablePlayer()
+~ List<ViewableTile> getForegroundTiles()
+~ List<ViewableTile> getBackgroundTiles()
+~ List<ViewableItem> getItems()
 }
 
-
-class Controller {
-- ControllableGameModel model
-- boolean wasMenu
-+ <<Create>> Controller(ControllableGameModel)
-+ boolean keyDown(int)
-- void chooseLevel(int)
-+ boolean keyUp(int)
-+ void handleEvent(Event)
-}
-
-
-class TileFloatingGround {
+class Barrel {
 + {static} char KEY
-+ <<Create>> TileFloatingGround(World,EventBus,float,float)
++ <<Create>> Barrel(World,EventBus,float,float)
 }
 
 
-class TileMiddle {
+class TileFloatingGroundSingleSlim {
 + {static} char KEY
-+ <<Create>> TileMiddle(World,EventBus,float,float)
++ <<Create>> TileFloatingGroundSingleSlim(World,EventBus,float,float)
 }
 
 
-class EventBus {
-- List<EventHandler> handlers
-+ <<Create>> EventBus()
-+ void post(Event)
-+ void addEventHandler(EventHandler)
-+ void removeEventHandler(EventHandler)
+class TileFactory {
++ {static} Map<Character,Function4<World,EventBus,Float,Float,TileModel>> translation
++ {static} List<TileModel> generate(String,World,EventBus)
++ {static} void register(char,Function4<World,EventBus,Float,Float,TileModel>)
++ {static} void initialize()
+}
+
+
+class EventPlayerAction {
+- PlayerAction action
++ <<Create>> EventPlayerAction(PlayerAction)
++ PlayerAction action()
 }
 
 
@@ -119,11 +112,379 @@ class InfoScreen {
 }
 
 
+interface Function4 {
+~ R apply(A,B,C,D)
+}
+
+class EventReachedDoor {
++ <<Create>> EventReachedDoor()
+}
+
+class TileSideRight {
++ {static} char KEY
++ <<Create>> TileSideRight(World,EventBus,float,float)
+}
+
+
+interface IHealth {
+~ void regenerate(int)
+~ void damage(int)
+~ int getHealth()
+~ int getMaxHealth()
+}
+
+class TileGrassCornerLeft1 {
++ {static} char KEY
++ <<Create>> TileGrassCornerLeft1(World,EventBus,float,float)
+}
+
+
+class PluginLoader {
+~ {static} int CONSTANT_MODS
+~ {static} Pattern classPattern
++ {static} List<String> listFiles(Class<?>,String,boolean)
++ {static} Stream<String> listClasses(Class<?>)
++ {static} Stream<String> listClasses(Class<?>,String)
++ {static} Stream<String> listClasses(Class<?>,String,boolean)
++ {static} Class<T> loadClass(String,Class<T>)
++ {static} Stream<Class<T>> loadClasses(Class<?>,Class<T>)
++ {static} Stream<Class<T>> loadClasses(Class<?>,String,Class<T>)
++ {static} Function<U,T> makeFactory(Class<T>,Class<U>)
++ {static} BiFunction<U,V,T> makeFactory(Class<T>,Class<U>,Class<V>)
++ {static} Function4<U,V,G,H,T> makeFactory(Class<T>,Class<U>,Class<V>,Class<G>,Class<H>)
++ {static} T getConstant(Class<?>,String,Class<T>)
+}
+
+
+interface ControllableLevel {
+~ ControllablePlayerModel getControllablePlayer()
+~ void reset()
+~ void activate()
+~ void disable()
+}
+
+class EventStep {
+- float timeStep
++ <<Create>> EventStep(float)
++ float timeStep()
+}
+
+
+interface ViewableGameModel {
+~ ViewableLevel getViewableLevel()
+}
+
+abstract class AbstractScreen {
+# {static} BitmapFont font
+- {static} float ViewPort
++ {static} float VIEWPORT_WIDTH
++ {static} float VIEWPORT_HEIGHT
+# SpriteBatch batch
+# OrthographicCamera gameCam
+- Viewport gamePort
++ <<Create>> AbstractScreen(InputProcessor)
++ void show()
+- void update()
++ void render(float)
++ void resize(int,int)
++ void pause()
++ void resume()
++ void hide()
++ void dispose()
+}
+
+
+interface EventHandler {
+~ void handleEvent(Event)
+}
+
+class TileGroundSingle {
++ {static} char KEY
++ <<Create>> TileGroundSingle(World,EventBus,float,float)
+}
+
+
+class Spike {
++ {static} char KEY
+- {static} int DAMAGE
++ <<Create>> Spike(World,EventBus,float,float)
++ <<Create>> Spike(World,EventBus,float,float,float,float)
+# Shape createShape(float,float)
+}
+
+
+class GameOverScreen {
+- Texture texture
+- GlyphLayout layout
+- String title
+- String text
++ <<Create>> GameOverScreen(InputProcessor)
++ void render(float)
+}
+
+
+interface Stepable {
+~ void step(float)
+}
+
+class TileGrassCornerRight2 {
++ {static} char KEY
++ <<Create>> TileGrassCornerRight2(World,EventBus,float,float)
+}
+
+
+class TileFloatingGroundLeft {
++ {static} char KEY
++ <<Create>> TileFloatingGroundLeft(World,EventBus,float,float)
+}
+
+
+interface ViewablePlayerModel {
+~ int getHp()
+~ List<ViewableEffect> getEffects()
+~ ViewableItem getItem()
+}
+
+class LevelScreen {
+- Texture texture
+- Table table
+- Label.LabelStyle labelStyle
+- String title
+- Stage stage
++ <<Create>> LevelScreen(InputProcessor)
+- void createLevelTable()
++ void render(float)
+}
+
+
+class ContactListeners {
+- List<ContactListener> contactListeners
++ <<Create>> ContactListeners()
++ boolean add(ContactListener)
++ void beginContact(Contact)
++ void endContact(Contact)
++ void preSolve(Contact,Manifold)
++ void postSolve(Contact,ContactImpulse)
+}
+
+
+interface GameStateGettable {
+~ GameState getState()
+}
+
+class TileGrassCornerRight1 {
++ {static} char KEY
++ <<Create>> TileGrassCornerRight1(World,EventBus,float,float)
+}
+
+
+class EventBus {
+- List<EventHandler> handlers
++ <<Create>> EventBus()
++ void post(Event)
++ void addEventHandler(EventHandler)
++ void removeEventHandler(EventHandler)
+}
+
+
+class EventGameState {
+- GameState gameState
++ <<Create>> EventGameState(GameState)
++ GameState gameState()
+}
+
+
+class TilePillar {
++ {static} char KEY
++ <<Create>> TilePillar(World,EventBus,float,float)
+}
+
+
+enum PlayerState {
++  LEFT
++  RIGHT
++  JUMP_RIGHT
++  JUMP_LEFT
++  IDLE_RIGHT
++  IDLE_LEFT
+}
+
+class Level {
+- {static} int VELOCITY_ITERATIONS
+- {static} int POSITION_ITERATIONS
++ float void_height
+- EventBus bus
+- float gravity
+- float wind
+- String default_foreground
+- String default_background
+- List<Function<World,ItemModel>> default_items
+- float default_player_x
+- float default_player_y
+- World world
+- List<TileModel> foreground
+- List<TileModel> background
+- List<ItemModel> items
+- PlayerModel player
+- List<ItemModel> toBeRemoved
+- boolean isActive
+- boolean initialized
++ <<Create>> Level(EventBus,float,float,float,float,float,String,String,List<Function<World,ItemModel>>)
++ void beginContact(Contact)
++ void endContact(Contact)
++ void preSolve(Contact,Manifold)
++ void postSolve(Contact,ContactImpulse)
++ void handleEvent(Event)
++ void step(float)
++ ControllablePlayerModel getControllablePlayer()
+- void removeEventHandlers()
+- void addEventHandlers()
+- void disposeContents()
++ void reset()
++ void activate()
++ void disable()
++ ViewablePlayerModel getViewablePlayer()
++ List<ViewableTile> getForegroundTiles()
++ List<ViewableTile> getBackgroundTiles()
++ List<ViewableItem> getItems()
+}
+
+
+interface Sizeable {
+~ float getWidth()
+~ float getHeight()
+}
+
+enum GameState {
++  MAIN_MENU
++  ACTIVE
++  GAME_OVER
++  PAUSE
++  VICTORY
++  INFO
++  LEVEL
+}
+
+class Durability {
+- int remaining
+- int maximum
++ <<Create>> Durability(int,int)
++ int maximum()
++ int remaining()
+}
+
+
+class TileFloatingGroundRight {
++ {static} char KEY
++ <<Create>> TileFloatingGroundRight(World,EventBus,float,float)
+}
+
+
+class EventDispose {
+}
+class Controller {
+- ControllableGameModel model
+- boolean wasMenu
++ <<Create>> Controller(ControllableGameModel)
++ boolean keyDown(int)
+- void chooseLevel(int)
++ boolean keyUp(int)
++ void handleEvent(Event)
+}
+
+
+class TileBottomLeft {
++ {static} char KEY
++ <<Create>> TileBottomLeft(World,EventBus,float,float)
+}
+
+
+class GameView {
++ {static} float VIEWPORT_WIDTH
++ {static} float VIEWPORT_HEIGHT
++ {static} float ASPECT_RATIO
+- EventBus bus
+- InputProcessor processor
+- IAssetsManager assetsManager
+- ViewableGameModel model
++ <<Create>> GameView(ViewableGameModel,EventBus,InputProcessor)
++ void create()
+- void updateScreenAndMusic(GameState)
++ void handleEvent(Event)
+}
+
+
+class MenuScreen {
+- {static} float TEXTURE_RATIO
+- {static} Texture texture
+- {static} String title
+- {static} String text
+- {static} GlyphLayout titleLayout
+- {static} GlyphLayout textLayout
++ <<Create>> MenuScreen(InputProcessor)
++ void render(float)
+}
+
+
+interface ControllableGameModel {
+~ ControllableLevel getControllableLevel()
+~ void setState(GameState)
+~ void setLevel(String)
+}
+
+class TileGrassCornerLeft2 {
++ {static} char KEY
++ <<Create>> TileGrassCornerLeft2(World,EventBus,float,float)
+}
+
+
+class Saw {
++ {static} char KEY
+- {static} int DAMAGE
++ <<Create>> Saw(World,EventBus,float,float)
++ <<Create>> Saw(World,EventBus,float,float,float)
+# Shape createShape(float,float)
+# Body createBody(float,float)
++ float getY()
+}
+
+
 class TileGround {
 + {static} char KEY
 + <<Create>> TileGround(World,EventBus,float,float)
 }
 
+
+class ItemEnergy {
+- {static} int DURABILITY
+- {static} int DURATION
++ <<Create>> ItemEnergy(EventBus,World,float,float)
++ String getDescription()
++ String getName()
+}
+
+
+interface ViewableItem {
+~ String getDescription()
+~ String getName()
+~ Durability getDurability()
+}
+
+class TileBottomRight {
++ {static} char KEY
++ <<Create>> TileBottomRight(World,EventBus,float,float)
+}
+
+
+class TileFloatingGroundRightSlim {
++ {static} char KEY
++ <<Create>> TileFloatingGroundRightSlim(World,EventBus,float,float)
+}
+
+
+interface ViewableEffect {
+~ Durability getDuration()
+}
 
 class Hud {
 - {static} int IMG_SIZE
@@ -152,6 +513,84 @@ class Hud {
 }
 
 
+class TileSideLeft {
++ {static} char KEY
++ <<Create>> TileSideLeft(World,EventBus,float,float)
+}
+
+
+class TileBottom {
++ {static} char KEY
++ <<Create>> TileBottom(World,EventBus,float,float)
+}
+
+
+class Door1 {
++ {static} char KEY
++ <<Create>> Door1(World,EventBus,float,float)
++ <<Create>> Door1(World,EventBus,float,float,float,float)
+}
+
+
+class EventItemUsedUp {
+- ItemModel item
++ <<Create>> EventItemUsedUp(ItemModel)
++ ItemModel item()
+}
+
+
+class ItemMushroom {
+- {static} int DURABILITY
+- {static} int DURATION
++ <<Create>> ItemMushroom(EventBus,World,float,float)
++ String getDescription()
++ String getName()
+}
+
+
+abstract class DoorModel {
+- EventBus eventBus
+# <<Create>> DoorModel(World,EventBus,float,float,float,float)
++ void beginContact(Contact)
++ void endContact(Contact)
++ void preSolve(Contact,Manifold)
++ void postSolve(Contact,ContactImpulse)
+}
+
+
+interface ControllablePlayerModel {
+~ void moveUp(boolean)
+~ void moveDown(boolean)
+~ void moveLeft(boolean)
+~ void moveRight(boolean)
+~ void useItem()
+}
+
+class GameModel {
+- EventBus bus
+- Map<String,ILevel> levels
+- String level
+- GameState state
++ <<Create>> GameModel(EventBus)
+- void fillLevels()
++ GameState getState()
++ void setState(GameState)
++ ControllableLevel getControllableLevel()
++ void setLevel(String)
++ void handleEvent(Event)
++ ViewableLevel getViewableLevel()
+}
+
+
+interface ITexturePack {
+~ TextureRegion getTileTexture(ViewableTile)
+~ TextureRegion getPlayerTexture(PlayerState,float)
+~ TextureRegion getItemTexture(ViewableItem)
+~ TextureRegion getEffectTexture(ViewableEffect)
+~ TextureRegion getInventorySlot()
+~ TextureRegion getHpTexture()
+}
+
 class TexturePack {
 + {static} String TILE_NAME
 - {static} TextureAtlas atlas
@@ -172,108 +611,52 @@ class TexturePack {
 }
 
 
-class TileFloatingGroundLeftSlim {
-+ {static} char KEY
-+ <<Create>> TileFloatingGroundLeftSlim(World,EventBus,float,float)
+class EventLevelChanged {
++ <<Create>> EventLevelChanged()
 }
 
-
-class TileGrassCornerRight2 {
-+ {static} char KEY
-+ <<Create>> TileGrassCornerRight2(World,EventBus,float,float)
-}
-
-
-class MenuScreen {
-- {static} float TEXTURE_RATIO
-- {static} Texture texture
-- {static} String title
-- {static} String text
-- {static} GlyphLayout titleLayout
-- {static} GlyphLayout textLayout
-+ <<Create>> MenuScreen(InputProcessor)
-+ void render(float)
-}
-
-
-class ItemEnergy {
-- {static} int DURABILITY
-- {static} int DURATION
-+ <<Create>> ItemEnergy(EventBus,World,float,float)
-+ String getDescription()
-+ String getName()
-}
-
-
-class Saw {
-+ {static} char KEY
-- {static} int DAMAGE
-+ <<Create>> Saw(World,EventBus,float,float)
-+ <<Create>> Saw(World,EventBus,float,float,float)
-# Shape createShape(float,float)
-# Body createBody(float,float)
+abstract class ItemModel {
+- {static} float WIDTH
+- {static} float HEIGHT
+- Body body
+- World world
+- EventBus bus
+# Durability durability
+# Supplier<Effect> createEffect
+- Shape shape
++ <<Create>> ItemModel(EventBus,World,float,float)
+- Body createBody(World,float,float)
++ Effect use()
+- void reduceDurability()
++ void destroyBody()
++ float getWidth()
++ float getHeight()
++ float getX()
 + float getY()
-}
-
-
-abstract class DamageTileModel {
-- int DAMAGE
-- EventBus eventBus
-# <<Create>> DamageTileModel(World,EventBus,float,float,float,float,int)
++ Durability getDurability()
++ void handleEvent(Event)
 + void beginContact(Contact)
 + void endContact(Contact)
 + void preSolve(Contact,Manifold)
 + void postSolve(Contact,ContactImpulse)
+- boolean isContacted(Contact)
 }
 
+
+interface IAssetsManager {
+~ void playMusic(String)
+~ void stopMusic()
+~ void pauseMusic()
+~ void resumeMusic()
+~ void playSoundEffect(PlayerAction)
+}
 
 interface ViewableTile {
 }
-class Health {
-- Object owner
-- EventBus bus
-- int max
-- int health
-+ <<Create>> Health(Object,EventBus,int)
-+ <<Create>> Health(Object,EventBus,int,int)
-+ void regenerate(int)
-+ void damage(int)
-+ int getHealth()
-+ int getMaxHealth()
-}
-
-
 interface Positionable {
 ~ float getX()
 ~ float getY()
 }
-
-class VictoryScreen {
-- Texture texture
-- GlyphLayout textLayout
-- GlyphLayout titleLayout
-- String text
-- String title
-+ <<Create>> VictoryScreen(InputProcessor)
-+ void render(float)
-}
-
-
-class Main {
-+ {static} void main(String[])
-}
-
-class LevelScreen {
-- Texture texture
-- Table table
-- Label.LabelStyle labelStyle
-- String title
-- Stage stage
-+ <<Create>> LevelScreen(InputProcessor)
-- void createLevelTable()
-+ void render(float)
-}
-
 
 class Door2 {
 + {static} char KEY
@@ -281,45 +664,6 @@ class Door2 {
 + <<Create>> Door2(World,EventBus,float,float,float,float)
 }
 
-
-class ContactListeners {
-- List<ContactListener> contactListeners
-+ <<Create>> ContactListeners()
-+ boolean add(ContactListener)
-+ void beginContact(Contact)
-+ void endContact(Contact)
-+ void preSolve(Contact,Manifold)
-+ void postSolve(Contact,ContactImpulse)
-}
-
-
-class EventStep {
-- float timeStep
-+ <<Create>> EventStep(float)
-+ float timeStep()
-}
-
-
-class TileGrassCornerLeft2 {
-+ {static} char KEY
-+ <<Create>> TileGrassCornerLeft2(World,EventBus,float,float)
-}
-
-
-class EffectHpUp {
-- {static} float SPEED_BOOST
-- {static} float JUMP_BOOST
-+ <<Create>> EffectHpUp(int)
-}
-
-
-class EventReachedDoor {
-+ <<Create>> EventReachedDoor()
-}
-
-class EventLevelChanged {
-+ <<Create>> EventLevelChanged()
-}
 
 class GameScreen {
 - {static} float VIEWPORT_WIDTH
@@ -350,18 +694,127 @@ class GameScreen {
 }
 
 
-class EventItemPickedUp {
+enum PlayerAction {
++  JUMP
++  PICKUP
++  DAMAGE
+}
+
+abstract class TileModel {
++ {static} float TILE_WIDTH
++ {static} float TILE_HEIGHT
+# World world
+# Body body
+# Shape shape
+- float width
+- float height
++ <<Create>> TileModel(World,EventBus,float,float)
++ <<Create>> TileModel(World,float,float,float,float)
+# Body createBody(float,float)
+# Shape createShape(float,float)
++ float getX()
++ float getY()
++ float getWidth()
++ float getHeight()
++ void step(float)
++ void handleEvent(Event)
+}
+
+
+class TileFloatingGroundLeftSlim {
++ {static} char KEY
++ <<Create>> TileFloatingGroundLeftSlim(World,EventBus,float,float)
+}
+
+
+class TileGroundRight {
++ {static} char KEY
++ <<Create>> TileGroundRight(World,EventBus,float,float)
+}
+
+
+class TileGroundLeft {
++ {static} char KEY
++ <<Create>> TileGroundLeft(World,EventBus,float,float)
+}
+
+
+class TileFloatingGroundSlim {
++ {static} char KEY
++ <<Create>> TileFloatingGroundSlim(World,EventBus,float,float)
+}
+
+
+class TileFloatingGroundSingle {
++ {static} char KEY
++ <<Create>> TileFloatingGroundSingle(World,EventBus,float,float)
+}
+
+
+class EventItemContact {
+- Contact contact
 - ItemModel item
-+ <<Create>> EventItemPickedUp(ItemModel)
++ <<Create>> EventItemContact(Contact,ItemModel)
++ Contact contact()
 + ItemModel item()
 }
 
 
-interface Sizeable {
-~ float getWidth()
-~ float getHeight()
+class AssetsManager {
+- {static} Map<PlayerAction,String> soundEffectMap
+- {static} Map<String,String> musicMap
+- Map<PlayerAction,Sound> currentEffects
+- Music nowPlaying
+- String lastPlayed
++ <<Create>> AssetsManager()
++ void playMusic(String)
++ void stopMusic()
++ void pauseMusic()
++ void resumeMusic()
++ void playSoundEffect(PlayerAction)
 }
 
+
+class PauseScreen {
+- Texture texture
+- String title
+- String text
+- GlyphLayout titleLayout
+- GlyphLayout textLayout
++ <<Create>> PauseScreen(InputProcessor)
++ void render(float)
+}
+
+
+class TileFloatingGround {
++ {static} char KEY
++ <<Create>> TileFloatingGround(World,EventBus,float,float)
+}
+
+
+class Main {
++ {static} void main(String[])
+}
+
+abstract class TileHalf {
++ <<Create>> TileHalf(World,float,float,float,float)
++ <<Create>> TileHalf(World,EventBus,float,float)
+# Shape createShape(float,float)
+}
+
+class VictoryScreen {
+- Texture texture
+- GlyphLayout textLayout
+- GlyphLayout titleLayout
+- String text
+- String title
++ <<Create>> VictoryScreen(InputProcessor)
++ void render(float)
+}
+
+
+interface ContactableTiles {
+}
 class EventDamage {
 - int damage
 - Fixture fixture
@@ -437,342 +890,28 @@ class PlayerModel {
 }
 
 
-class GameView {
-+ {static} float VIEWPORT_WIDTH
-+ {static} float VIEWPORT_HEIGHT
-+ {static} float ASPECT_RATIO
+class Health {
+- Object owner
 - EventBus bus
-- InputProcessor processor
-- IAssetsManager assetsManager
-- ViewableGameModel model
-+ <<Create>> GameView(ViewableGameModel,EventBus,InputProcessor)
-+ void create()
-- void updateScreenAndMusic(GameState)
-+ void handleEvent(Event)
+- int max
+- int health
++ <<Create>> Health(Object,EventBus,int)
++ <<Create>> Health(Object,EventBus,int,int)
++ void regenerate(int)
++ void damage(int)
++ int getHealth()
++ int getMaxHealth()
 }
 
 
-interface EventHandler {
-~ void handleEvent(Event)
+interface ILevel {
 }
-
-abstract class TileHalf {
-+ <<Create>> TileHalf(World,float,float,float,float)
-+ <<Create>> TileHalf(World,EventBus,float,float)
-# Shape createShape(float,float)
-}
-
-class TileGroundRight {
+class TileMiddle {
 + {static} char KEY
-+ <<Create>> TileGroundRight(World,EventBus,float,float)
++ <<Create>> TileMiddle(World,EventBus,float,float)
 }
 
 
-class Level {
-- {static} int VELOCITY_ITERATIONS
-- {static} int POSITION_ITERATIONS
-+ float void_height
-- EventBus bus
-- float gravity
-- float wind
-- String default_foreground
-- String default_background
-- List<Function<World,ItemModel>> default_items
-- float default_player_x
-- float default_player_y
-- World world
-- List<TileModel> foreground
-- List<TileModel> background
-- List<ItemModel> items
-- PlayerModel player
-- List<ItemModel> toBeRemoved
-- boolean isActive
-- boolean initialized
-+ <<Create>> Level(EventBus,float,float,float,float,float,String,String,List<Function<World,ItemModel>>)
-+ void beginContact(Contact)
-+ void endContact(Contact)
-+ void preSolve(Contact,Manifold)
-+ void postSolve(Contact,ContactImpulse)
-+ void handleEvent(Event)
-+ void step(float)
-+ ControllablePlayerModel getControllablePlayer()
-- void removeEventHandlers()
-- void addEventHandlers()
-- void disposeContents()
-+ void reset()
-+ void activate()
-+ void disable()
-+ ViewablePlayerModel getViewablePlayer()
-+ List<ViewableTile> getForegroundTiles()
-+ List<ViewableTile> getBackgroundTiles()
-+ List<ViewableItem> getItems()
-}
-
-
-class EventItemUsedUp {
-- ItemModel item
-+ <<Create>> EventItemUsedUp(ItemModel)
-+ ItemModel item()
-}
-
-
-class GameModel {
-- EventBus bus
-- Map<String,ILevel> levels
-- String level
-- GameState state
-+ <<Create>> GameModel(EventBus)
-- void fillLevels()
-+ GameState getState()
-+ void setState(GameState)
-+ ControllableLevel getControllableLevel()
-+ void setLevel(String)
-+ void handleEvent(Event)
-+ ViewableLevel getViewableLevel()
-}
-
-
-class EffectSpeedBoost {
-- {static} float SPEED_BOOST
-- {static} float JUMP_BOOST
-+ <<Create>> EffectSpeedBoost(int)
-}
-
-
-class TilePillar {
-+ {static} char KEY
-+ <<Create>> TilePillar(World,EventBus,float,float)
-}
-
-
-class Background {
-- Array<Texture> layers
-- float x
-+ <<Create>> Background(Array<Texture>)
-+ void draw(Batch,float)
-}
-
-
-class TileFloatingGroundRight {
-+ {static} char KEY
-+ <<Create>> TileFloatingGroundRight(World,EventBus,float,float)
-}
-
-
-abstract class TileModel {
-+ {static} float TILE_WIDTH
-+ {static} float TILE_HEIGHT
-# World world
-# Body body
-# Shape shape
-- float width
-- float height
-+ <<Create>> TileModel(World,EventBus,float,float)
-+ <<Create>> TileModel(World,float,float,float,float)
-# Body createBody(float,float)
-# Shape createShape(float,float)
-+ float getX()
-+ float getY()
-+ float getWidth()
-+ float getHeight()
-+ void step(float)
-+ void handleEvent(Event)
-}
-
-
-interface ControllableLevel {
-~ ControllablePlayerModel getControllablePlayer()
-~ void reset()
-~ void activate()
-~ void disable()
-}
-
-interface Stepable {
-~ void step(float)
-}
-
-enum PlayerState {
-+  LEFT
-+  RIGHT
-+  JUMP_RIGHT
-+  JUMP_LEFT
-+  IDLE_RIGHT
-+  IDLE_LEFT
-}
-
-abstract class AbstractScreen {
-# {static} BitmapFont font
-- {static} float ViewPort
-+ {static} float VIEWPORT_WIDTH
-+ {static} float VIEWPORT_HEIGHT
-# SpriteBatch batch
-# OrthographicCamera gameCam
-- Viewport gamePort
-+ <<Create>> AbstractScreen(InputProcessor)
-+ void show()
-- void update()
-+ void render(float)
-+ void resize(int,int)
-+ void pause()
-+ void resume()
-+ void hide()
-+ void dispose()
-}
-
-
-class Durability {
-- int remaining
-- int maximum
-+ <<Create>> Durability(int,int)
-+ int remaining()
-+ int maximum()
-}
-
-
-class GameOverScreen {
-- Texture texture
-- GlyphLayout layout
-- String title
-- String text
-+ <<Create>> GameOverScreen(InputProcessor)
-+ void render(float)
-}
-
-
-class TileSideRight {
-+ {static} char KEY
-+ <<Create>> TileSideRight(World,EventBus,float,float)
-}
-
-
-interface ViewableItem {
-~ String getDescription()
-~ String getName()
-~ Durability getDurability()
-}
-
-class EventGameState {
-- GameState gameState
-+ <<Create>> EventGameState(GameState)
-+ GameState gameState()
-}
-
-
-abstract class ItemModel {
-- {static} float WIDTH
-- {static} float HEIGHT
-- Body body
-- World world
-- EventBus bus
-# Durability durability
-# Supplier<Effect> createEffect
-- Shape shape
-+ <<Create>> ItemModel(EventBus,World,float,float)
-- Body createBody(World,float,float)
-+ Effect use()
-- void reduceDurability()
-+ void destroyBody()
-+ float getWidth()
-+ float getHeight()
-+ float getX()
-+ float getY()
-+ Durability getDurability()
-+ void handleEvent(Event)
-+ void beginContact(Contact)
-+ void endContact(Contact)
-+ void preSolve(Contact,Manifold)
-+ void postSolve(Contact,ContactImpulse)
-- boolean isContacted(Contact)
-}
-
-
-interface ViewableEffect {
-~ Durability getDuration()
-}
-
-class TileGroundSingle {
-+ {static} char KEY
-+ <<Create>> TileGroundSingle(World,EventBus,float,float)
-}
-
-
-interface IHealth {
-~ void regenerate(int)
-~ void damage(int)
-~ int getHealth()
-~ int getMaxHealth()
-}
-
-class EffectJumpBoost {
-- {static} float SPEED_BOOST
-- {static} float JUMP_BOOST
-+ <<Create>> EffectJumpBoost(int)
-}
-
-
-class TileFloatingGroundLeft {
-+ {static} char KEY
-+ <<Create>> TileFloatingGroundLeft(World,EventBus,float,float)
-}
-
-
-class TileBottom {
-+ {static} char KEY
-+ <<Create>> TileBottom(World,EventBus,float,float)
-}
-
-
-interface ControllablePlayerModel {
-~ void moveUp(boolean)
-~ void moveDown(boolean)
-~ void moveLeft(boolean)
-~ void moveRight(boolean)
-~ void useItem()
-}
-
-interface PlayerStateGettable {
-~ PlayerState getState()
-}
-
-class TileBottomRight {
-+ {static} char KEY
-+ <<Create>> TileBottomRight(World,EventBus,float,float)
-}
-
-
-class ItemMushroom {
-- {static} int DURABILITY
-- {static} int DURATION
-+ <<Create>> ItemMushroom(EventBus,World,float,float)
-+ String getDescription()
-+ String getName()
-}
-
-
-class TileFloatingGroundRightSlim {
-+ {static} char KEY
-+ <<Create>> TileFloatingGroundRightSlim(World,EventBus,float,float)
-}
-
-
-interface ContactableTiles {
-}
-class EventDispose {
-}
-class TileBottomLeft {
-+ {static} char KEY
-+ <<Create>> TileBottomLeft(World,EventBus,float,float)
-}
-
-
-class TileFloatingGroundSingle {
-+ {static} char KEY
-+ <<Create>> TileFloatingGroundSingle(World,EventBus,float,float)
-}
-
-
-interface Event {
-}
 class EventDeath {
 - Object owner
 + <<Create>> EventDeath(Object)
@@ -780,261 +919,122 @@ class EventDeath {
 }
 
 
-interface ILevel {
+interface Event {
 }
-class Spike {
-+ {static} char KEY
-- {static} int DAMAGE
-+ <<Create>> Spike(World,EventBus,float,float)
-+ <<Create>> Spike(World,EventBus,float,float,float,float)
-# Shape createShape(float,float)
-}
-
-
-interface ViewableGameModel {
-~ ViewableLevel getViewableLevel()
-}
-
-class TileFloatingGroundSingleSlim {
-+ {static} char KEY
-+ <<Create>> TileFloatingGroundSingleSlim(World,EventBus,float,float)
+class ItemHP {
+- {static} int DURABILITY
+- {static} int DURATION
++ <<Create>> ItemHP(EventBus,World,float,float)
++ String getDescription()
++ String getName()
 }
 
 
-enum GameState {
-+  MAIN_MENU
-+  ACTIVE
-+  GAME_OVER
-+  PAUSE
-+  VICTORY
-+  INFO
-+  LEVEL
-}
-
-class TileSideLeft {
-+ {static} char KEY
-+ <<Create>> TileSideLeft(World,EventBus,float,float)
+class EffectHpUp {
+- {static} float SPEED_BOOST
+- {static} float JUMP_BOOST
++ <<Create>> EffectHpUp(int)
 }
 
 
-class TileFloatingGroundSlim {
-+ {static} char KEY
-+ <<Create>> TileFloatingGroundSlim(World,EventBus,float,float)
-}
-
-
-interface ViewableLevel {
-~ ViewablePlayerModel getViewablePlayer()
-~ List<ViewableTile> getForegroundTiles()
-~ List<ViewableTile> getBackgroundTiles()
-~ List<ViewableItem> getItems()
-}
-
-class EventItemContact {
-- Contact contact
+class EventItemPickedUp {
 - ItemModel item
-+ <<Create>> EventItemContact(Contact,ItemModel)
-+ Contact contact()
++ <<Create>> EventItemPickedUp(ItemModel)
 + ItemModel item()
 }
 
 
-enum PlayerAction {
-+  JUMP
-+  PICKUP
-+  DAMAGE
-}
-
-class TileFactory {
-+ {static} Map<Character,Function4<World,EventBus,Float,Float,TileModel>> translation
-+ {static} List<TileModel> generate(String,World,EventBus)
-+ {static} void register(char,Function4<World,EventBus,Float,Float,TileModel>)
-+ {static} void initialize()
-}
 
 
-interface IAssetsManager {
-~ void playMusic(String)
-~ void stopMusic()
-~ void pauseMusic()
-~ void resumeMusic()
-~ void playSoundEffect(PlayerAction)
-}
-
-class AssetsManager {
-- {static} Map<PlayerAction,String> soundEffectMap
-- {static} Map<String,String> musicMap
-- Map<PlayerAction,Sound> currentEffects
-- Music nowPlaying
-- String lastPlayed
-+ <<Create>> AssetsManager()
-+ void playMusic(String)
-+ void stopMusic()
-+ void pauseMusic()
-+ void resumeMusic()
-+ void playSoundEffect(PlayerAction)
-}
-
-
-interface ViewablePlayerModel {
-~ int getHp()
-~ List<ViewableEffect> getEffects()
-~ ViewableItem getItem()
-}
-
-interface ITexturePack {
-~ TextureRegion getTileTexture(ViewableTile)
-~ TextureRegion getPlayerTexture(PlayerState,float)
-~ TextureRegion getItemTexture(ViewableItem)
-~ TextureRegion getEffectTexture(ViewableEffect)
-~ TextureRegion getInventorySlot()
-~ TextureRegion getHpTexture()
-}
-
-class Door1 {
-+ {static} char KEY
-+ <<Create>> Door1(World,EventBus,float,float)
-+ <<Create>> Door1(World,EventBus,float,float,float,float)
-}
-
-
-interface Function4 {
-~ R apply(A,B,C,D)
-}
-
-class EventPlayerAction {
-- PlayerAction action
-+ <<Create>> EventPlayerAction(PlayerAction)
-+ PlayerAction action()
-}
-
-
-class TilePillarBottom {
-+ {static} char KEY
-+ <<Create>> TilePillarBottom(World,EventBus,float,float)
-}
-
-
-class PluginLoader {
-~ {static} int CONSTANT_MODS
-~ {static} Pattern classPattern
-+ {static} List<String> listFiles(Class<?>,String,boolean)
-+ {static} Stream<String> listClasses(Class<?>)
-+ {static} Stream<String> listClasses(Class<?>,String)
-+ {static} Stream<String> listClasses(Class<?>,String,boolean)
-+ {static} Class<T> loadClass(String,Class<T>)
-+ {static} Stream<Class<T>> loadClasses(Class<?>,Class<T>)
-+ {static} Stream<Class<T>> loadClasses(Class<?>,String,Class<T>)
-+ {static} Function<U,T> makeFactory(Class<T>,Class<U>)
-+ {static} BiFunction<U,V,T> makeFactory(Class<T>,Class<U>,Class<V>)
-+ {static} Function4<U,V,G,H,T> makeFactory(Class<T>,Class<U>,Class<V>,Class<G>,Class<H>)
-+ {static} T getConstant(Class<?>,String,Class<T>)
-}
-
-
-class Barrel {
-+ {static} char KEY
-+ <<Create>> Barrel(World,EventBus,float,float)
-}
-
-
-class TileGrassCornerLeft1 {
-+ {static} char KEY
-+ <<Create>> TileGrassCornerLeft1(World,EventBus,float,float)
-}
-
-
-
-
-GameStateGettable <|-- ControllableGameModel
-TileModel <|-- TileGrassCornerRight1
-ContactableTiles <|.. DoorModel
-TileModel <|-- DoorModel
-ViewableEffect <|.. Effect
-TileModel <|-- TileGroundLeft
-ViewableItem <|.. ItemHP
-ItemModel <|-- ItemHP
-AbstractScreen <|-- PauseScreen
-EventHandler <|.. Controller
-InputAdapter <|-- Controller
-TileModel <|-- TileFloatingGround
-TileModel <|-- TileMiddle
-AbstractScreen <|-- InfoScreen
-TileModel <|-- TileGround
-Stage <|-- Hud
-ITexturePack <|.. TexturePack
-TileHalf <|-- TileFloatingGroundLeftSlim
-TileModel <|-- TileGrassCornerRight2
-AbstractScreen <|-- MenuScreen
-ItemModel <|-- ItemEnergy
-DamageTileModel <|-- Saw
 ContactableTiles <|.. DamageTileModel
 TileModel <|-- DamageTileModel
+ViewableEffect <|.. Effect
+Effect <|-- EffectSpeedBoost
+Actor <|-- Background
+Effect <|-- EffectJumpBoost
+TileModel <|-- TilePillarBottom
+TileModel <|-- Barrel
+TileHalf <|-- TileFloatingGroundSingleSlim
+AbstractScreen <|-- InfoScreen
+TileModel <|-- TileSideRight
+TileModel <|-- TileGrassCornerLeft1
+Stepable <|-- ControllableLevel
+GameStateGettable <|-- ViewableGameModel
+Screen <|.. AbstractScreen
+TileModel <|-- TileGroundSingle
+DamageTileModel <|-- Spike
+AbstractScreen <|-- GameOverScreen
+TileModel <|-- TileGrassCornerRight2
+TileModel <|-- TileFloatingGroundLeft
+Sizeable <|-- ViewablePlayerModel
+Positionable <|-- ViewablePlayerModel
+PlayerStateGettable <|-- ViewablePlayerModel
+AbstractScreen <|-- LevelScreen
+ContactListener <|.. ContactListeners
+TileModel <|-- TileGrassCornerRight1
+TileModel <|-- TilePillar
+ILevel <|.. Level
+TileModel <|-- TileFloatingGroundRight
+Event <|.. EventDispose
+EventHandler <|.. Controller
+InputAdapter <|-- Controller
+TileModel <|-- TileBottomLeft
+EventHandler <|.. GameView
+Game <|-- GameView
+AbstractScreen <|-- MenuScreen
+GameStateGettable <|-- ControllableGameModel
+TileModel <|-- TileGrassCornerLeft2
+DamageTileModel <|-- Saw
+TileModel <|-- TileGround
+ItemModel <|-- ItemEnergy
+Positionable <|-- ViewableItem
+Sizeable <|-- ViewableItem
+TileModel <|-- TileBottomRight
+TileHalf <|-- TileFloatingGroundRightSlim
+Stage <|-- Hud
+TileModel <|-- TileSideLeft
+TileModel <|-- TileBottom
+DoorModel <|-- Door1
+ItemModel <|-- ItemMushroom
+ContactableTiles <|.. DoorModel
+TileModel <|-- DoorModel
+Stepable <|-- ControllablePlayerModel
+ViewableGameModel <|.. GameModel
+ControllableGameModel <|.. GameModel
+EventHandler <|.. GameModel
+ITexturePack <|.. TexturePack
+ViewableItem <|.. ItemModel
+EventHandler <|.. ItemModel
+ContactListener <|.. ItemModel
 Positionable <|-- ViewableTile
 Sizeable <|-- ViewableTile
-IHealth <|.. Health
-AbstractScreen <|-- VictoryScreen
-AbstractScreen <|-- LevelScreen
 DoorModel <|-- Door2
-ContactListener <|.. ContactListeners
-TileModel <|-- TileGrassCornerLeft2
-Effect <|-- EffectHpUp
 Screen <|.. GameScreen
+ViewableTile <|.. TileModel
+Stepable <|.. TileModel
+EventHandler <|.. TileModel
+TileHalf <|-- TileFloatingGroundLeftSlim
+TileModel <|-- TileGroundRight
+TileModel <|-- TileGroundLeft
+TileHalf <|-- TileFloatingGroundSlim
+TileModel <|-- TileFloatingGroundSingle
+IAssetsManager <|.. AssetsManager
+AbstractScreen <|-- PauseScreen
+TileModel <|-- TileFloatingGround
+TileModel <|-- TileHalf
+AbstractScreen <|-- VictoryScreen
+ContactListener <|-- ContactableTiles
 ControllablePlayerModel <|.. PlayerModel
 ViewablePlayerModel <|.. PlayerModel
 EventHandler <|.. PlayerModel
 ContactListener <|.. PlayerModel
-EventHandler <|.. GameView
-Game <|-- GameView
-TileModel <|-- TileHalf
-TileModel <|-- TileGroundRight
-ILevel <|.. Level
-ViewableGameModel <|.. GameModel
-ControllableGameModel <|.. GameModel
-EventHandler <|.. GameModel
-Effect <|-- EffectSpeedBoost
-TileModel <|-- TilePillar
-Actor <|-- Background
-TileModel <|-- TileFloatingGroundRight
-ViewableTile <|.. TileModel
-Stepable <|.. TileModel
-EventHandler <|.. TileModel
-Stepable <|-- ControllableLevel
-Screen <|.. AbstractScreen
-AbstractScreen <|-- GameOverScreen
-TileModel <|-- TileSideRight
-Positionable <|-- ViewableItem
-Sizeable <|-- ViewableItem
-ViewableItem <|.. ItemModel
-EventHandler <|.. ItemModel
-ContactListener <|.. ItemModel
-TileModel <|-- TileGroundSingle
-Effect <|-- EffectJumpBoost
-TileModel <|-- TileFloatingGroundLeft
-TileModel <|-- TileBottom
-Stepable <|-- ControllablePlayerModel
-TileModel <|-- TileBottomRight
-ItemModel <|-- ItemMushroom
-TileHalf <|-- TileFloatingGroundRightSlim
-ContactListener <|-- ContactableTiles
-Event <|.. EventDispose
-TileModel <|-- TileBottomLeft
-TileModel <|-- TileFloatingGroundSingle
+IHealth <|.. Health
 ViewableLevel <|-- ILevel
 ControllableLevel <|-- ILevel
 EventHandler <|-- ILevel
 ContactListener <|-- ILevel
-DamageTileModel <|-- Spike
-GameStateGettable <|-- ViewableGameModel
-TileHalf <|-- TileFloatingGroundSingleSlim
-TileModel <|-- TileSideLeft
-TileHalf <|-- TileFloatingGroundSlim
-IAssetsManager <|.. AssetsManager
-Sizeable <|-- ViewablePlayerModel
-Positionable <|-- ViewablePlayerModel
-PlayerStateGettable <|-- ViewablePlayerModel
-DoorModel <|-- Door1
-TileModel <|-- TilePillarBottom
-TileModel <|-- Barrel
-TileModel <|-- TileGrassCornerLeft1
+TileModel <|-- TileMiddle
+ViewableItem <|.. ItemHP
+ItemModel <|-- ItemHP
+Effect <|-- EffectHpUp
 @enduml
