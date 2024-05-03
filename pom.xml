@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>no.uib.Isak-Yau.the_googlers</groupId>
 	<artifactId>gdx-app-Lil-bros-adventure-home</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 	<name>gdx-app-Lil-bros-adventure-home</name>
 	<url>https://git.app.uib.no/Isak.Yau/the_googlers</url>

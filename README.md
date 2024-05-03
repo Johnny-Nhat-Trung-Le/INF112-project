@@ -23,7 +23,7 @@
 
 ## Kjøring
 * Kompileres med `mvn package`.
-* Kjøres med `java -jar target/gdx-app-Lil-bros-adventure-home-1.0-SNAPSHOT-fat.jar`
+* Kjøres med `java -jar target/gdx-app-Lil-bros-adventure-home-1.0-fat.jar`
 * Krever Java 21 eller senere
 
 ## Test
