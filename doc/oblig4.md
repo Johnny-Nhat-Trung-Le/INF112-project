@@ -112,6 +112,7 @@
            - Ha en oversikt hvordan man kan kontrollere spilleren.
          * Arbeidsoppgaver:
            - Lage en hjelpemeny hvor den gir beskrivelse av hvordan spilleren skal bevege seg.
+         * Løst ved å ha en hjelpemeny som man kan hente fram
 
       3. Mål
            * Brukerhistorie:
@@ -120,6 +121,7 @@
              - Er mulig å finne ut hva som er målet med spillet enten README.md eller i startskjerm.
            * Arbeidsoppgaver:
              - SKrive i README eller i startskjerm scenen.
+           * Løst ved at det står i README.
 
       4. Items
            * Brukerhistorie:
@@ -130,6 +132,7 @@
            * Arbeidsoppgaver:
              - Ha en ikon for item hver gang man plukke dem opp
              - Lage visining som gir riktig info
+           * Løst ved å ha hva de ulike items gjør i infoScreen
 
       5. Spillverden
          * Brukerhistorie:
@@ -139,7 +142,7 @@
            - Ulike objekter representere ulike terreng i objektfabrikken
          * Arbeidsoppgaver:
            - Bruke ulike visninger på ulike type terreng/objekter for å forstå hva de skal gjøre.
-
+         * Løst ved å ha tydelige tiles som skader og tiles som er solide.
       6. Hvordan skal klassestrukturen se ut
         * Brukerhistorie:
            - Som systemutvikler trenger jeg å vite hvilke klasser og grensesnitter tilhører hverandre slik at jeg kan ha god innkapsling.
@@ -172,7 +175,7 @@
           - Må ha en plass hvor man Vet hvordan man vinner.
          * ArbeidsOppgave:
            - Ha en plass enten i README eller i menuScreen som viser hvordan man kan vinne i spillet.
-      
+         * Løst ved at det er nevnt i README at karakteren skal hjem
       10. Hvordan vinne spillet
           * Brukerhistorie:
             - Som spiller trenger jeg å ha en måte å vinne spillet på slik at jeg kan gå for det.
@@ -259,8 +262,8 @@
         * Akseptansekriterier:
           - Skal ha et brett der man har en progresjon vei med hindringer til et endemål.
         * Arbeidsopppgave:
-          - Design et brett som tilfredstiller en viss vanskelighets krav og gir spiller et mål nå.
-
+          - Design et brett som tilfredstiller en viss vanskelighets krav og gir spiller et mål å nå.
+        * Løst ved å lage to unike levler
         19. Mer tester
         * Brukerhistorie:
           - Som utvikler trenger jeg en måte å sjekke om koden min fungerer slik den skal.
@@ -278,7 +281,7 @@
           -  Skal ha fiende som kan dø
         * Arbeidsoppgave:
           - Implementere en fiende som kan skade spilleren og har muligheten å dø.
-
+        
    * Nesten alle brukerhistorier, akseptansekriterier og arbeidsoppgaver har blitt fullført.
    * Krav 20 var for ambisiøst, ettersom vi innså at tester tok mer tid enn forventet.
      * I tillegg dukket det opp uforutsigbare problemer som vi måtte delegere ressursene våre til å fikse på istedet for å lage noe nytt.
