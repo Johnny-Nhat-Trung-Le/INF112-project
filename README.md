@@ -1,6 +1,6 @@
 # INF112 Project – *Lil bro's adventure back home*
 
-* Team: *The Googlers* (Gruppe 8): *, Fredrik Rød, Johnny Nhat Trung Le, Isak Yau*
+* Team: *The Googlers* (Gruppe 8): *Fredrik Rød, Johnny Nhat Trung Le, Isak Yau*
 * Lenke til GitLab: https://git.app.uib.no/Isak.Yau/the_googlers.
 
 ## Om spillet
@@ -8,7 +8,7 @@
 * Help Lil bro find his way back home safely by jumping and traversing through mountains and terrains.
 
 ## Kontroll
-  * Brukerenstyrerspillerenvedåbrukedissetastene:
+  * Brukeren styrer spilleren ved å bruke disse tastene:
     - 'W':Hopp
     - 'A':Venstre
     - 'S':Ned 
@@ -27,7 +27,7 @@
 * Krever Java 21 eller senere
 
 ## Test
-* Testerkompileresmed`mvn test`
+* Tester kompileres med `mvn test`
 * Manuelle tester som ikke kan kjøres automatisk ligger [her](doc/manualTesting.md)
 
 
