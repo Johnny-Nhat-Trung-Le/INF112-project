@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import inf112.lilBro.app.event.EventBus;
 import inf112.lilBro.app.model.item.ItemEnergy;
@@ -42,20 +43,20 @@ public class InfoScreen extends AbstractScreen {
     public InfoScreen(InputProcessor processor) {
         super(processor);
         stage = new Stage(new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam));
+
         tableController = new Table();
         tableController.setFillParent(true);
+        createLeftTable();
+        stage.addActor(tableController);
+
         tableItem = new Table();
         tableItem.setFillParent(true);
-        tableItem.setFillParent(true);
-        createLeftTable();
         createRightTable();
-        stage.addActor(tableController);
         stage.addActor(tableItem);
-
     }
 
     private void createLeftTable() {
-        tableController.top().left().padLeft(40).padTop(40);
+        tableController.left().padLeft(30);
         tableController.add(new Label("Controls", labelStyle));
         tableController.row();
         tableController.add(new Label("W - Jump", labelStyle));
@@ -71,12 +72,12 @@ public class InfoScreen extends AbstractScreen {
         tableController.add(new Label("P - Pause/Continue", labelStyle));
         tableController.row();
         tableController.add(new Label("H - Help", labelStyle));
-        tableController.row().left();
+        tableController.row();
         tableController.add(new Label("B - Back", labelStyle));
     }
 
     private void createRightTable() {
-        tableItem.top().right().padRight(10).padTop(40);
+        tableItem.right().padRight(30);
         createItemGroup(mushroomImg, itemMushroom);
         createDescriptionContainer(itemMushroom);
         createItemGroup(energyImg, itemEnergy);
@@ -93,12 +94,12 @@ public class InfoScreen extends AbstractScreen {
      */
     private void createItemGroup(Image itemImg, ViewableItem item) {
         HorizontalGroup grp = new HorizontalGroup();
-        grp.top().right().padRight(30);
+        grp.right();
         grp.addActor(itemImg);
-        grp.addActor(new Label("- " + item.getName(), labelStyle));
+        grp.addActor(new Label(" - " + item.getName(), labelStyle));
+
         tableItem.add(grp);
         tableItem.row();
-        tableItem.padLeft(20);
     }
 
     /**
@@ -107,14 +108,14 @@ public class InfoScreen extends AbstractScreen {
      * @param item ViewableItem
      */
     private void createDescriptionContainer(ViewableItem item) {
-        Container<Label> descriptionContainer = new Container<>();
         Label description = new Label(item.getDescription(), labelStyle);
-        descriptionContainer.right().top();
-        descriptionContainer.padLeft(40);
+        description.setAlignment(Align.center);
         description.setWrap(true);
+
+        Container<Label> descriptionContainer = new Container<>();
         descriptionContainer.setActor(description);
-        descriptionContainer.width(item.getDescription().length() * 6);
-        descriptionContainer.fillX(); // Fill the container horizontally
+        descriptionContainer.width(VIEWPORT_WIDTH / 3);
+
         tableItem.add(descriptionContainer);
         tableItem.row();
     }
@@ -123,11 +124,11 @@ public class InfoScreen extends AbstractScreen {
     public void render(float delta) {
         super.render(delta);
         batch.setProjectionMatrix(stage.getViewport().getCamera().combined);
+
         batch.begin();
         batch.draw(texture, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         batch.end();
+
         stage.draw();
-
     }
-
 }
