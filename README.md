@@ -5,7 +5,7 @@
 
 ## Om spillet
 * Lil bro has been on a journey and is starting his adventure back home.
-* Help Lil bro find his way back home by traversing through mountains and terrains.
+* Help Lil bro find his way back home safely by jumping and traversing through mountains and terrains.
 
 ## Kontroll
   * Brukerenstyrerspillerenvedåbrukedissetastene:
