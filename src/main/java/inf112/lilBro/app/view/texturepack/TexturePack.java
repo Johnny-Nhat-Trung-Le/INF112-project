@@ -140,7 +140,9 @@ public class TexturePack implements ITexturePack {
     }
 
     private void updatePlayerVariables(PlayerState state, float stateTime) {
-        if (state.equals(playerLastState)) {
+        if (state.equals(playerLastState)
+                || PlayerState.JUMP_RIGHT.equals(playerLastState) && PlayerState.JUMP_LEFT.equals(state)
+                || PlayerState.JUMP_LEFT.equals(playerLastState) && PlayerState.JUMP_RIGHT.equals(state)) {
             playerStateTime += stateTime;
         } else {
             playerStateTime = 0;
