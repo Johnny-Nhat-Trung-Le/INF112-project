@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setTitle("Lil-Bros-Adventure-Back-Home");
-        cfg.setWindowedMode(1280, 1024);
+        cfg.setWindowedMode(1400, 1024);
 
         EventBus bus = new EventBus();
 

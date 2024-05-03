@@ -116,8 +116,6 @@ public class TestController {
         when(mockGameModel.getState()).thenReturn(GameState.PAUSE);
         controller.keyUp(Input.Keys.H);
         verify(mockGameModel, times(1)).setState(GameState.INFO);
-        when(mockGameModel.getState()).thenReturn(GameState.INFO);
-
     }
 
     @Test
@@ -125,6 +123,36 @@ public class TestController {
         when(mockGameModel.getState()).thenReturn(GameState.INFO);
         controller.keyUp(Input.Keys.B);
         verify(mockGameModel, times(1)).setState(GameState.MAIN_MENU);
+    }
+
+    @Test
+    public void testKeyUpMainToLevel() {
+        when(mockGameModel.getState()).thenReturn(GameState.MAIN_MENU);
+        controller.keyUp(Input.Keys.P);
+        verify(mockGameModel, times(1)).setState(GameState.LEVEL);
+
+    }
+
+    @Test
+    public void testKeyUpLevelToGame() {
+        when(mockGameModel.getState()).thenReturn(GameState.LEVEL);
+        controller.keyUp(Input.Keys.NUM_1);
+        verify(mockGameModel, times(1)).setState(GameState.ACTIVE);
+
+    }
+
+    @Test
+    public void testKeyUpLevelToGame2() {
+        when(mockGameModel.getState()).thenReturn(GameState.LEVEL);
+        controller.keyUp(Input.Keys.NUM_2);
+        verify(mockGameModel, times(1)).setState(GameState.ACTIVE);
+    }
+
+    @Test
+    public void testKeyUpNonExistingLevel() {
+        when(mockGameModel.getState()).thenReturn(GameState.LEVEL);
+        controller.keyUp(Input.Keys.NUM_3);
+        verify(mockGameModel, times(0)).setState(GameState.ACTIVE);
     }
 
     @Test

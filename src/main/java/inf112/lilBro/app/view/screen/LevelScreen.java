@@ -9,10 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 
 public class LevelScreen extends AbstractScreen {
-    private final Texture texture;
+    private final Texture texture = new Texture("Backgrounds/openBook.png");
     private final Table table;
     private final Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.BLACK);
-    private final String title;
+    private final String title = "Select level by pressing\nthe corresponding number";
     private final Stage stage;
 
     /**
@@ -23,9 +23,7 @@ public class LevelScreen extends AbstractScreen {
     public LevelScreen(InputProcessor processor) {
         super(processor);
         stage = new Stage(new FillViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCam));
-        texture = new Texture("Backgrounds/openBook.png");
         table = new Table();
-        title = "Select level by pressing\nthe corresponding number";
         table.setFillParent(true);
         createLevelTable();
         stage.addActor(table);
